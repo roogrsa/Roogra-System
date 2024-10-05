@@ -20,149 +20,70 @@ import i18next from 'i18next';
 import arTranslation from "./../src/locales/ar/translation.json";
 import enTranslation from "./../src/locales/en/translation.json";
 import { I18nextProvider } from 'react-i18next';
-function App() {
+import {  useSelector } from 'react-redux';
+import { selectLanguage } from './store/slices/language';
+
+i18next.init({
+  interpolation: { escapeValue: false },
+  lng: 'ar',
+  resources: {
+    ar: { translation: arTranslation },
+    en: { translation: enTranslation },
+  },
+});
+
+const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
-  i18next.init({
-    interpolation: { escapeValue: false },
-    lng: 'ar',
-    resources: {
-      ar: {
-        translation: arTranslation,
-      },
-      en: {
-        translation: enTranslation,
-      },
-    },
-  });
+  const language = useSelector(selectLanguage)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer); // Clean up on unmount
   }, []);
+
+  const routes = [
+    { path: '/', element: <ECommerce />, title: "eCommerce Dashboard" },
+    { path: '/calendar', element: <Calendar />, title: "Calendar" },
+    { path: '/profile', element: <Profile />, title: "Profile" },
+    { path: '/forms/form-elements', element: <FormElements />, title: "Form Elements" },
+    { path: '/forms/form-layout', element: <FormLayout />, title: "Form Layout" },
+    { path: '/tables', element: <Tables />, title: "Tables" },
+    { path: '/settings', element: <Settings />, title: "Settings" },
+    { path: '/chart', element: <Chart />, title: "Basic Chart" },
+    { path: '/ui/alerts', element: <Alerts />, title: "Alerts" },
+    { path: '/ui/buttons', element: <Buttons />, title: "Buttons" },
+    { path: '/auth/signin', element: <SignIn />, title: "Signin" },
+    { path: '/auth/signup', element: <SignUp />, title: "Signup" },
+  ];
 
   return loading ? (
     <Loader />
   ) : (
     <I18nextProvider i18n={i18next}>
-      <div dir='rtl'>
-      <DefaultLayout>
-        <Routes>
-          <Route
-            index
-            element={
-              <>
-                <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <ECommerce />
-              </>
-            }
-          />
-          <Route
-            path="/calendar"
-            element={
-              <>
-                <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Calendar />
-              </>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <>
-                <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Profile />
-              </>
-            }
-          />
-          <Route
-            path="/forms/form-elements"
-            element={
-              <>
-                <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <FormElements />
-              </>
-            }
-          />
-          <Route
-            path="/forms/form-layout"
-            element={
-              <>
-                <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <FormLayout />
-              </>
-            }
-          />
-          <Route
-            path="/tables"
-            element={
-              <>
-                <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Tables />
-              </>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <>
-                <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Settings />
-              </>
-            }
-          />
-          <Route
-            path="/chart"
-            element={
-              <>
-                <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Chart />
-              </>
-            }
-          />
-          <Route
-            path="/ui/alerts"
-            element={
-              <>
-                <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Alerts />
-              </>
-            }
-          />
-          <Route
-            path="/ui/buttons"
-            element={
-              <>
-                <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Buttons />
-              </>
-            }
-          />
-          <Route
-            path="/auth/signin"
-            element={
-              <>
-                <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <SignIn />
-              </>
-            }
-          />
-          <Route
-            path="/auth/signup"
-            element={
-              <>
-                <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <SignUp />
-              </>
-            }
-          />
-        </Routes>
-      </DefaultLayout>
-      </div>
-    </I18nextProvider>
+        <div dir={language=='ar'?'rtl':'ltr'}>
+          <DefaultLayout>
+            <Routes>
+              {routes.map(({ path, element, title }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    <>
+                      <PageTitle title={`${title} | TailAdmin - Tailwind CSS Admin Dashboard Template`} />
+                      {element}
+                    </>
+                  }
+                />
+              ))}
+            </Routes>
+          </DefaultLayout>
+        </div>
+      </I18nextProvider>
   );
-}
+};
 
 export default App;
