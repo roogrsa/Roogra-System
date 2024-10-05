@@ -22,6 +22,7 @@ import enTranslation from "./../src/locales/en/translation.json";
 import { I18nextProvider } from 'react-i18next';
 import {  useSelector } from 'react-redux';
 import { selectLanguage } from './store/slices/language';
+import { checkIsLoggedin } from './store/slices/auth';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -36,6 +37,10 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
   const language = useSelector(selectLanguage)
+  const login = useSelector(checkIsLoggedin)
+  console.log(login);
+  console.log(language);
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
