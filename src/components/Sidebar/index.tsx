@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import Logo from '../../images/logo/logo.svg';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -10,7 +11,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(true);
-
+  const { t } = useTranslation();
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -64,17 +65,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <>
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      // className={`sidebar ${isOpen ? 'open' : 'closed'}`}
+      className={` ${isOpen ? 'w-72.5' : 'closed'} absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
+       bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/">
+        {/* <NavLink to="/">
           <img src={Logo} alt="Logo" />
-        </NavLink>
-
-        <button
+        </NavLink> */}
+        <button className="toggle-btn" onClick={toggleSidebar}>
+        {isOpen ? '←' : '→'}
+      </button>
+        {/* <button
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
@@ -94,7 +99,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               fill=""
             />
           </svg>
-        </button>
+        </button> */}
       </div>
       {/* <!-- SIDEBAR HEADER --> */}
 
@@ -156,7 +161,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                        Dashboard
+                        {isOpen && t("dashboard")}
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -190,7 +195,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              eCommerce
+                             {isOpen && 'eCommerce'}
                             </NavLink>
                           </li>
                         </ul>
@@ -224,7 +229,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       fill=""
                     />
                   </svg>
-                  Calendar
+                  {isOpen && 'Calendar'}
+                  
                 </NavLink>
               </li>
               {/* <!-- Menu Item Calendar --> */}
@@ -254,7 +260,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       fill=""
                     />
                   </svg>
-                  Profile
+                  {isOpen && 'Profile'} 
                 </NavLink>
               </li>
               {/* <!-- Menu Item Profile --> */}
@@ -311,7 +317,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill="white"
                           />
                         </svg>
-                        Forms
+                        {isOpen && 'Forms'}  
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -331,7 +337,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         </svg>
                       </NavLink>
                       {/* <!-- Dropdown Menu Start --> */}
-                      <div
+                      {/* <div
                         className={`translate transform overflow-hidden ${
                           !open && 'hidden'
                         }`}
@@ -360,7 +366,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </NavLink>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
                   );
@@ -401,7 +407,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Tables
+                  {isOpen && 'Tables'}  
                 </NavLink>
               </li>
               {/* <!-- Menu Item Tables --> */}
@@ -444,7 +450,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Settings
+                 {isOpen && 'Settings'} 
                 </NavLink>
               </li>
               {/* <!-- Menu Item Settings --> */}
@@ -453,9 +459,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
           {/* <!-- Others Group --> */}
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+            {/* <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
               OTHERS
-            </h3>
+            </h3> */}
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Chart --> */}
@@ -495,7 +501,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Chart
+                 {isOpen && 'Chart'} 
                 </NavLink>
               </li>
               {/* <!-- Menu Item Chart --> */}
@@ -553,7 +559,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </clipPath>
                           </defs>
                         </svg>
-                        UI Elements
+                       {isOpen && 'UI Elements'} 
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -573,7 +579,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         </svg>
                       </NavLink>
                       {/* <!-- Dropdown Menu Start --> */}
-                      <div
+                      {/* <div
                         className={`translate transform overflow-hidden ${
                           !open && 'hidden'
                         }`}
@@ -602,7 +608,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </NavLink>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
                   );
@@ -661,7 +667,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </clipPath>
                           </defs>
                         </svg>
-                        Authentication
+                       {isOpen && 'Authentication'} 
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'
@@ -723,59 +729,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         {/* <!-- Sidebar Menu --> */}
       </div>
     </aside>
-    {/* <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-      <button className="toggle-btn" onClick={toggleSidebar}>
-        {isOpen ? '←' : '→'}
-      </button>
-
-      <ul className="menu">
-        <li>
-          <span className="icon">🏠</span>
-          {isOpen && <span className="text">Home</span>}
-        </li>
-        <li>
-          <span className="icon">⚙️</span>
-          {isOpen && <span className="text">Settings</span>}
-        </li>
-        <li>
-          <span className="icon">👤</span>
-          {isOpen && <span className="text">Profile</span>}
-        </li>
-        <li>
-          <span className="icon">🚪</span>
-          {isOpen && <span className="text">Logout</span>}
-        </li>
-      </ul>
-    </div> */}
     </>
   );
 };
 
 export default Sidebar;
-// import React, { useState } from 'react';
-// import './Sidebar.css'; // Assume this contains necessary styling
-
-// const Sidebar: React.FC = () => {
-//   const [isOpen, setIsOpen] = useState(true);
-
-//   const toggleSidebar = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   return (
-//     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-//       <button className="toggle-btn" onClick={toggleSidebar}>
-//         {isOpen ? '←' : '→'} {/* Arrow toggles direction based on state */}
-//       </button>
-      
-//       <ul className="menu">
-//         <li>{isOpen ? 'Home' : '🏠'}</li>
-//         <li>{isOpen ? 'Settings' : '⚙️'}</li>
-//         <li>{isOpen ? 'Profile' : '👤'}</li>
-//         <li>{isOpen ? 'Logout' : '🚪'}</li>
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
