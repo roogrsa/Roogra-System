@@ -1,3 +1,15 @@
 {
-    "dashboard":"Dashboard"
+    "sidebar": {
+        "charts": "Charts",
+        "home": "Home",
+        "users": "Users",
+        "categories": "Categories",
+        "requests": "Requests",
+        "support": "Support",
+        "reports": "Reports",
+        "ban-list": "Ban list",
+        "Admins": "admins",
+        "settings": "Settings",
+        "sign-out": "Sign out"
+    }
 }
