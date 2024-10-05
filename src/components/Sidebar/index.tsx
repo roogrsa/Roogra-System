@@ -245,7 +245,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
             </ul>
           </div>
-              <div
+              <div role='button'
                 className={
                   `bg-[#E02828] ${
                     isOpen
