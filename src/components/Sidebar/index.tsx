@@ -78,7 +78,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 const logout= async()=>{
   try {
     const res = await axiosInstance.get(`/api/admins/logout`);
-    // console.log(res);
+    console.log(res);
     navigate(`/auth/login`)
     dispatch(setLogout())
   } catch (error: any) {
