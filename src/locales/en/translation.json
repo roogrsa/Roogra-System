@@ -11,5 +11,14 @@
         "admins": "admins",
         "settings": "Settings",
         "sign-out": "Sign out"
+    },
+    "login":{
+        "login":"",
+        "name":"",
+        "password":"",
+        "go":"",
+        "name-error":"",
+        "password-error":""
+
     }
 }
