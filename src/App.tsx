@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { createBrowserRouter, Route, RouterProvider, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
@@ -23,6 +23,8 @@ import { I18nextProvider } from 'react-i18next';
 import {  useSelector } from 'react-redux';
 import { selectLanguage } from './store/slices/language';
 import { checkIsLoggedin } from './store/slices/auth';
+import LoginLayout from './layout/LoginLayout';
+import Guard from './components/guards/Guards';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -32,60 +34,47 @@ i18next.init({
     en: { translation: enTranslation },
   },
 });
-
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Guard><DefaultLayout /></Guard>,
+    children: [
+      { path: '/', element: <Guard><ECommerce /></Guard> },
+      // { path: 'calendar', element: <Guard><Calendar /> </Guard>  },
+      // { path: 'profile', element: <Guard><Profile /> </Guard> },
+      // { path: 'tables', element: <Guard> <Tables /> </Guard>},
+      // { path: 'settings', element: <Guard> <Settings /> </Guard>},
+      { path: 'chart', element: <Guard><Chart /></Guard> },
+    ],
+  },
+  {
+    path: '/',
+    element: <LoginLayout />,
+    children: [
+    { path: '/auth/login', element: <SignIn />},
+    { path: '/auth/signup', element: <SignUp />},
+    ]
+  }
+]);
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const { pathname } = useLocation();
+
   const language = useSelector(selectLanguage)
-  const login = useSelector(checkIsLoggedin)
-  console.log(login);
+ 
   console.log(language);
   
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer); // Clean up on unmount
+    return () => clearTimeout(timer);
   }, []);
-
-  const routes = [
-    { path: '/', element: <ECommerce />, title: "eCommerce Dashboard" },
-    { path: '/calendar', element: <Calendar />, title: "Calendar" },
-    { path: '/profile', element: <Profile />, title: "Profile" },
-    { path: '/forms/form-elements', element: <FormElements />, title: "Form Elements" },
-    { path: '/forms/form-layout', element: <FormLayout />, title: "Form Layout" },
-    { path: '/tables', element: <Tables />, title: "Tables" },
-    { path: '/settings', element: <Settings />, title: "Settings" },
-    { path: '/chart', element: <Chart />, title: "Basic Chart" },
-    { path: '/ui/alerts', element: <Alerts />, title: "Alerts" },
-    { path: '/ui/buttons', element: <Buttons />, title: "Buttons" },
-    { path: '/auth/signin', element: <SignIn />, title: "Signin" },
-    { path: '/auth/signup', element: <SignUp />, title: "Signup" },
-  ];
-
+  
   return loading ? (
     <Loader />
   ) : (
     <I18nextProvider i18n={i18next}>
-        <div dir={language=='ar'?'rtl':'ltr'}>
-          <DefaultLayout>
-            <Routes>
-              {routes.map(({ path, element, title }) => (
-                <Route
-                  key={path}
-                  path={path}
-                  element={
-                    <>
-                      <PageTitle title={`${title} | TailAdmin - Tailwind CSS Admin Dashboard Template`} />
-                      {element}
-                    </>
-                  }
-                />
-              ))}
-            </Routes>
-          </DefaultLayout>
+      <div dir={language=='ar'?'rtl':'ltr'}>
+        <RouterProvider router={router} />
         </div>
       </I18nextProvider>
   );

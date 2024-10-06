@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { useTranslation } from 'react-i18next';
 import { AiFillHome } from "react-icons/ai";
@@ -16,6 +16,9 @@ import {
 import { FaChevronRight } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { MdOutlineBlock } from "react-icons/md";
+import axiosInstance from '../../axiosConfig/instanc';
+import { useDispatch } from 'react-redux';
+import { setLogout } from '../../store/slices/auth';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -28,6 +31,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     setIsOpen(!isOpen);
   };
   const location = useLocation();
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
   const { pathname } = location;
 
   const trigger = useRef<any>(null);
@@ -70,7 +75,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       document.querySelector('body')?.classList.remove('sidebar-expanded');
     }
   }, [sidebarExpanded]);
-
+const logout= async()=>{
+  try {
+    const res = await axiosInstance.get(`/api/admins/logout`);
+    console.log(res);
+    navigate(`/auth/login`)
+    dispatch(setLogout())
+  } catch (error: any) {
+    console.error(error);
+  }
+}
   return (
     <>
       <aside
@@ -231,6 +245,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </ul>
             </div>
             <div role='button'
+            onClick={logout}
               className={
                 `bg-[#E02828] ${isOpen
                   ? "brightness-150 w-full flex justify-around"

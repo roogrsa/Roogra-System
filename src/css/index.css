@@ -1,0 +1,30 @@
+* {
+    font-family: Inter;
+}
+
+.bgColor {
+    background: #022E47;
+}
+
+.textColor {
+    color: #022E47;
+}
+.errorColor {
+    color: #E02828;
+}
+
+.borderColor {
+    border: 1px solid #022E47;
+}
+
+/* input{
+    background: #FAFAFF;
+    border: 3px solid #D6D4D4;
+
+} */
+
+input::placeholder{
+font-size: 20px;
+font-weight: 400;
+color: #BFBFBF;
+}

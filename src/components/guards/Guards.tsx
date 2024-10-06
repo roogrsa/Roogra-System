@@ -1,11 +1,14 @@
 import { Navigate } from "react-router-dom";
+import { checkIsLoggedin } from "../../store/slices/auth";
+import { useSelector } from "react-redux";
 
 const Guard = ({ children }: { children: JSX.Element }) => {
-    let login = localStorage.getItem('login');
+    const login = useSelector(checkIsLoggedin)
+    console.log(login);
     if (login) {
         return children;
     } else {
-        return <Navigate to="/" />;
+        return <Navigate to="/auth/login" />;
     }
 };
 
