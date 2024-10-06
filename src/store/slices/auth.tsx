@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 export interface IsLoggedinState {
-    isLoggedin: boolean
+  isLoggedin: boolean;
 }
 
 const initialState: IsLoggedinState = {
-    isLoggedin: localStorage.getItem("isLoggedin")=== 'true' || false
-}
+  isLoggedin: localStorage.getItem('isLoggedin') === 'true' || false,
+};
 
 export const isLoggedinSlice = createSlice({
     name: 'isLoggedin',
@@ -26,6 +26,7 @@ export const isLoggedinSlice = createSlice({
 
 export const { setIsLoggedin, setLogout } = isLoggedinSlice.actions
 
-export const checkIsLoggedin = (state: RootState) => state.isLoggedin.isLoggedin
+export const checkIsLoggedin = (state: RootState) =>
+  state.isLoggedin.isLoggedin;
 
-export default isLoggedinSlice.reducer
+export default isLoggedinSlice.reducer;
