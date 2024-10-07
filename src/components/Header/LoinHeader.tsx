@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import LogoIcon from '../../images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLanguage, setLanguage } from '../../store/slices/language';
