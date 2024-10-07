@@ -57,16 +57,16 @@ const Home = () => {
     ],
   }));
   // +++++++++++++++++++++++++++++++++++++++++++++
-  const seriesData = [65, 34, 12]; // Example chart data
-  const labelsData = ['نشيط', 'كسول', 'متوقف']; // Example labels
+  const seriesData = [65, 34, 12];
+  const labelsData = ['نشيط', 'كسول', 'متوقف'];
   const statesData = [
     { label: 'نشيط', count: 347, color: '#5FDD54' },
     { label: 'كسول', count: 246, color: '#019CF6' },
     { label: 'متوقف', count: 234, color: '#D0D0D0' },
   ];
 
-  const seriesData2 = [60, 20, 15]; // Example chart data
-  const labelsData2 = ['نشيط', 'كسول', 'متوقف']; // Example labels
+  const seriesData2 = [60, 20, 15];
+  const labelsData2 = ['نشيط', 'كسول', 'متوقف'];
   const statesData2 = [
     { label: 'نشيط', count: 100, color: '#5FDD54' },
     { label: 'كسول', count: 60, color: '#019CF6' },

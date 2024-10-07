@@ -31,6 +31,7 @@ import { checkIsLoggedin } from './store/slices/auth';
 import LoginLayout from './layout/LoginLayout';
 import Guard from './components/guards/Guards';
 import Home from './pages/home/home';
+import Users from './pages/users/users';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -74,6 +75,14 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <Home />
+          </Guard>
+        ),
+      },
+      {
+        path: 'users',
+        element: (
+          <Guard>
+            <Users />
           </Guard>
         ),
       },
