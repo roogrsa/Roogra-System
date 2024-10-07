@@ -30,11 +30,12 @@ const MainTable: React.FC<MainTableProps> = ({ logs }) => {
             {logs.map((log, index) => (
               <tr
                 key={log.id}
-                className={
-                  index % 2 === 0
-                    ? 'dark:bg-[#1E1E26] bg-[#FFFFFF]'
-                    : 'dark:bg-[#2E2D3D] bg-[#F7F5F9]'
-                }
+                className={` flex justify-between px-5
+                  ${
+                    index % 2 === 0
+                      ? 'dark:bg-[#1E1E26] bg-[#FFFFFF]'
+                      : 'dark:bg-[#2E2D3D] bg-[#F7F5F9]'
+                  }`}
               >
                 {/* Render each column dynamically */}
                 {log.columns.map((col) => (

@@ -56,11 +56,37 @@ const Home = () => {
       },
     ],
   }));
+  // +++++++++++++++++++++++++++++++++++++++++++++
+  const seriesData = [65, 34, 12]; // Example chart data
+  const labelsData = ['نشيط', 'كسول', 'متوقف']; // Example labels
+  const statesData = [
+    { label: 'نشيط', count: 347, color: '#5FDD54' },
+    { label: 'كسول', count: 246, color: '#019CF6' },
+    { label: 'متوقف', count: 234, color: '#D0D0D0' },
+  ];
 
+  const seriesData2 = [60, 20, 15]; // Example chart data
+  const labelsData2 = ['نشيط', 'كسول', 'متوقف']; // Example labels
+  const statesData2 = [
+    { label: 'نشيط', count: 100, color: '#5FDD54' },
+    { label: 'كسول', count: 60, color: '#019CF6' },
+    { label: 'متوقف', count: 190, color: '#D0D0D0' },
+  ];
   return (
     <>
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartThree /> <ChartThree />
+        <ChartThree
+          series={seriesData}
+          labels={labelsData}
+          statesData={statesData}
+          title="عدد الزبائن"
+        />
+        <ChartThree
+          series={seriesData2}
+          labels={labelsData2}
+          statesData={statesData2}
+          title="عدد المعلنين "
+        />
       </div>
       <div>
         <MainTable logs={dynamicColumns} />

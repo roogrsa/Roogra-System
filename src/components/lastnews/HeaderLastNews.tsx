@@ -5,7 +5,7 @@ const HeaderLastNews = () => {
   return (
     <>
       <p className="text-2xl my-5 text-black dark:text-white flex ">
-        <LuCalendarDays className="mx-3 mt-1" />
+        <LuCalendarDays className="mx-8 mt-1" />
         اخر الاحداث
       </p>
     </>
