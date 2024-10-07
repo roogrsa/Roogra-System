@@ -7,7 +7,7 @@ interface TableCellProps {
 
 const TableCell: React.FC<TableCellProps> = ({ content, className = '' }) => {
   return (
-    <td className={`p-4 font-[400] text-[20px] ${className}`}>{content}</td>
+    <td className={`p-3 font-[400] text-[20px] ${className}`}>{content}</td>
   );
 };
 
