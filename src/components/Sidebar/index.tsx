@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { useTranslation } from 'react-i18next';
-import { AiFillHome } from "react-icons/ai";
+import { AiFillHome } from 'react-icons/ai';
 import {
   PiUsersFill,
   PiUsersThreeFill,
@@ -12,10 +12,10 @@ import {
   PiGearFineFill,
   PiPowerFill,
   PiChartDonutFill,
-} from "react-icons/pi";
-import { FaChevronRight } from "react-icons/fa";
-import { BiSolidCategory } from "react-icons/bi";
-import { MdOutlineBlock } from "react-icons/md";
+} from 'react-icons/pi';
+import { FaChevronRight } from 'react-icons/fa';
+import { BiSolidCategory } from 'react-icons/bi';
+import { MdOutlineBlock } from 'react-icons/md';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useDispatch } from 'react-redux';
 import { setLogout } from '../../store/slices/auth';
@@ -31,8 +31,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     setIsOpen(!isOpen);
   };
   const location = useLocation();
-  const navigate=useNavigate()
-  const dispatch=useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = location;
 
   const trigger = useRef<any>(null);
@@ -40,7 +40,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
 
   useEffect(() => {
@@ -75,38 +75,45 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       document.querySelector('body')?.classList.remove('sidebar-expanded');
     }
   }, [sidebarExpanded]);
-const logout= async()=>{
-  try {
-    const res = await axiosInstance.get(`/api/admins/logout`);
-    console.log(res);
-    navigate(`/auth/login`)
-    dispatch(setLogout())
-  } catch (error: any) {
-    console.error(error);
-  }
-}
+  const logout = async () => {
+    try {
+      const res = await axiosInstance.get(`/api/admins/logout`);
+      console.log(res);
+      navigate(`/auth/login`);
+      dispatch(setLogout());
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <aside
         ref={sidebar}
-        className={` ${isOpen ? 'w-55' : 'closed'} absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
-       bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={` ${
+          isOpen ? 'w-55' : 'closed'
+        } absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
+       bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+       }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-4">
-          <button className={`absolute bg-[#2E2D3D] top-[1vh] rounded-[10px] p-2 ${isOpen
-              ? "ltr:left-[190px] rtl:right-[175px]"
-              : "ltr:left-[30px] rtl:right-[50px]"
+          <button
+            className={`absolute bg-[#2E2D3D] top-[1vh] rounded-[10px] p-2 ${
+              isOpen
+                ? 'ltr:left-[190px] rtl:right-[175px]'
+                : 'ltr:left-[30px] rtl:right-[50px]'
             } rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
-            onClick={toggleSidebar}>
+            onClick={toggleSidebar}
+          >
             <FaChevronRight
-              className={`${isOpen ? "rotate-180" : "rotate-0"
-                } transition-all duration-300`}
+              className={`${
+                isOpen ? 'rotate-180' : 'rotate-0'
+              } transition-all duration-300`}
             />
           </button>
         </div>
-        {/* <!-- SIDEBAR HEADER --> */}
+        {/* <!-- SIDEBAR BODY--> */}
 
         <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
           <nav className="px-4 lg:px-6">
@@ -126,10 +133,11 @@ const logout= async()=>{
                       <React.Fragment>
                         <NavLink
                           to="#"
-                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === '/' ||
+                          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                            (pathname === '/' ||
                               pathname.includes('dashboard')) &&
                             'bg-graydark dark:bg-meta-4'
-                            }`}
+                          }`}
                           onClick={(e) => {
                             e.preventDefault();
                             sidebarExpanded
@@ -138,7 +146,7 @@ const logout= async()=>{
                           }}
                         >
                           <PiChartDonutFill />
-                          {isOpen && t("sidebar.charts")}
+                          {isOpen && t('sidebar.charts')}
                         </NavLink>
                       </React.Fragment>
                     );
@@ -147,20 +155,22 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/calendar"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('calendar') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('calendar') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <AiFillHome />
                     {isOpen && t('sidebar.home')}
-
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
                     to="/profile"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
-                      }`}
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('profile') &&
+                      'bg-graydark dark:bg-meta-4'
+                    }`}
                   >
                     <PiUsersFill />
                     {isOpen && t('sidebar.users')}
@@ -169,8 +179,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/categories"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('categories') && 'bg-graydark dark:bg-meta-4'
-                      }`}
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('categories') &&
+                      'bg-graydark dark:bg-meta-4'
+                    }`}
                   >
                     <BiSolidCategory />
                     {isOpen && t('sidebar.categories')}
@@ -180,8 +192,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/tables"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
-                      }`}
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('tables') &&
+                      'bg-graydark dark:bg-meta-4'
+                    }`}
                   >
                     <PiTicketFill />
                     {isOpen && t('sidebar.requests')}
@@ -190,9 +204,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiHeadsetFill />
                     {isOpen && t('sidebar.support')}
@@ -201,9 +216,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiEnvelopeFill />
                     {isOpen && t('sidebar.reports')}
@@ -212,9 +228,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <MdOutlineBlock />
                     {isOpen && t('sidebar.ban-list')}
@@ -223,9 +240,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiUsersThreeFill />
                     {isOpen && t('sidebar.admins')}
@@ -234,9 +252,10 @@ const logout= async()=>{
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiGearFineFill />
                     {isOpen && t('sidebar.settings')}
@@ -244,19 +263,17 @@ const logout= async()=>{
                 </li>
               </ul>
             </div>
-            <div role='button'
-            onClick={logout}
-              className={
-                `bg-[#E02828] ${isOpen
-                  ? "brightness-150 w-full flex justify-around"
-                  : "hover:brightness-150"
-                } text-white p-3 rounded-xl transition-all duration-300`
-              }
+            <div
+              role="button"
+              onClick={logout}
+              className={`bg-[#E02828] ${
+                isOpen
+                  ? 'brightness-150 w-full flex justify-around'
+                  : 'hover:brightness-150'
+              } text-white p-3 rounded-xl transition-all duration-300`}
             >
               <PiPowerFill className="text-2xl" />
-              {isOpen &&
-                <div> {t('sidebar.sign-out')} </div>
-              }
+              {isOpen && <div> {t('sidebar.sign-out')} </div>}
             </div>
           </nav>
         </div>
