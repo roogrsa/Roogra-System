@@ -30,6 +30,7 @@ import { selectLanguage } from './store/slices/language';
 import { checkIsLoggedin } from './store/slices/auth';
 import LoginLayout from './layout/LoginLayout';
 import Guard from './components/guards/Guards';
+import Home from './pages/home/home';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -68,6 +69,14 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
+      {
+        path: 'home',
+        element: (
+          <Guard>
+            <Home />
+          </Guard>
+        ),
+      },
     ],
   },
   {
@@ -95,7 +104,10 @@ const App: React.FC = () => {
     <Loader />
   ) : (
     <I18nextProvider i18n={i18next}>
-      <div dir={language == 'ar' ? 'rtl' : 'ltr'}>
+      <div
+        dir={language == 'ar' ? 'rtl' : 'ltr'}
+        className="bg-[#F9FAFF] dark:bg-[#14141A]"
+      >
         <RouterProvider router={router} />
       </div>
     </I18nextProvider>
