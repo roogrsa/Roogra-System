@@ -36,10 +36,10 @@ const Home = () => {
         key: 'key',
         content:
           log.key === 'login'
-            ? 'تسجيل الدخول'
+            ? 'قام بتسجيل الدخول   '
             : log.key === 'register'
-            ? 'إنشاء حساب'
-            : 'تعديل الحساب',
+            ? '  إنشاء حساب جديد'
+            : 'تم تعديل الحساب',
         className: index % 2 === 0 ? colorEvenClass : colorOddClass,
       },
       {
