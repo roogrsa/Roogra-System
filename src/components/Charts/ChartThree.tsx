@@ -7,6 +7,7 @@ interface ChartThreeProps {
   labels: string[];
   statesData: { label: string; count: number; color: string }[];
   title: string;
+  total: number;
 }
 
 const ChartThree: React.FC<ChartThreeProps> = ({
@@ -14,6 +15,7 @@ const ChartThree: React.FC<ChartThreeProps> = ({
   labels = [],
   statesData = [],
   title = '',
+  total = 0,
 }) => {
   const options: ApexOptions = {
     chart: {
@@ -60,8 +62,9 @@ const ChartThree: React.FC<ChartThreeProps> = ({
   return (
     <div className="sm:px-7.5 col-span-12 bg-[#FFFFFF] px-5 pb-5 pt-7.5 rounded-[25px] dark:bg-[#1E1E26] xl:col-span-6">
       <div className="mb-3 justify-center ">
-        <h5 className="text-xl text-center font-semibold text-black dark:text-white">
+        <h5 className="text-[20px] text-center font-[400] text-black dark:text-white">
           {title}
+          <span className="mx-2">({total})</span>
         </h5>
       </div>
 

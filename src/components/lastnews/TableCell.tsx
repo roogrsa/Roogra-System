@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 interface TableCellProps {
   content: string | JSX.Element; // Cell content can be either a string or an element

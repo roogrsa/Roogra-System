@@ -1,7 +1,118 @@
+// import React from 'react';
+// import ChartThree from '../../components/Charts/ChartThree';
+// import useLogs from '../../hooks/getLogs';
+// import MainTable from '../../components/lastnews/MainTable';
+// import useChartData from '../../hooks/useChartData';
+
+// const Home = () => {
+//   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
+//   const colorEvenClass = 'dark:text-[#2F44FF] text-[#19930E]';
+//   const colorOddClass = 'text-[#A130BE]';
+//   const TypeClass = 'dark:text-white text-black';
+//   const timeClass = 'flex dark:text-white text-black';
+//   const iconClass = 'mx-3 mt-1';
+
+//   // Fetch data using the custom hook for logs
+//   const { logs, loading: logsLoading, error: logsError } = useLogs(0, 8);
+
+//   // Fetch chart data using the custom hook for charts
+//   const {
+//     customerChartData,
+//     advertiserChartData,
+//     loading: chartsLoading,
+//     error: chartsError,
+//   } = useChartData();
+
+//   // Handle loading and error states for both hooks
+//   if (logsLoading || chartsLoading) {
+//     return <p>Loading...</p>;
+//   }
+
+//   if (logsError) {
+//     return <p>Error loading logs: {logsError}</p>;
+//   }
+
+//   if (chartsError) {
+//     return <p>Error loading chart data: {chartsError}</p>;
+//   }
+
+//   // Fallback if chart data is not available
+//   if (!customerChartData || !advertiserChartData) {
+//     return <p>No chart data available</p>;
+//   }
+
+//   // Generate columns dynamically from the logs data
+//   const dynamicColumns = logs.map((log, index) => ({
+//     customer_activity_id: log.customer_activity_id,
+//     columns: [
+//       {
+//         key: 'name',
+//         content: JSON.parse(log.data).name,
+//         className: nameClass,
+//       },
+//       {
+//         key: 'key',
+//         content:
+//           log.key === 'login'
+//             ? 'قام بتسجيل الدخول   '
+//             : log.key === 'register'
+//             ? '  إنشاء حساب جديد'
+//             : 'تم تعديل الحساب',
+//         className: index % 2 === 0 ? colorEvenClass : colorOddClass,
+//       },
+//       {
+//         key: 'type',
+//         content: log.type,
+//         className: TypeClass,
+//       },
+//       {
+//         key: 'date_added',
+//         content: log.date_added,
+//         className: timeClass,
+//         isIcon: true,
+//         iconClass: iconClass,
+//       },
+//     ],
+//   }));
+
+//   return (
+//     <>
+//       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
+//         {/* Pass the fetched customer chart data to ChartThree */}
+//         <ChartThree
+//           series={customerChartData.series}
+//           labels={customerChartData.labels}
+//           statesData={customerChartData.statesData}
+//           title="عدد الزبائن"
+//           total={customerChartData.total}
+//         />
+
+//         {/* Pass the fetched advertiser chart data to ChartThree */}
+//         <ChartThree
+//           series={advertiserChartData.series}
+//           labels={advertiserChartData.labels}
+//           statesData={advertiserChartData.statesData}
+//           title="عدد المعلنين"
+//           total={advertiserChartData.total} // Pass total value
+//         />
+//       </div>
+
+//       {/* Render the MainTable with logs data */}
+//       <div>
+//         <MainTable logs={dynamicColumns} />
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Home;
 import React from 'react';
 import ChartThree from '../../components/Charts/ChartThree';
 import useLogs from '../../hooks/getLogs';
 import MainTable from '../../components/lastnews/MainTable';
+import useChartData from '../../hooks/useChartData';
+import HeaderLastNews from '../../components/lastnews/HeaderLastNews';
+import { MdOutlineWatchLater } from 'react-icons/md';
 
 const Home = () => {
   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
@@ -11,84 +122,100 @@ const Home = () => {
   const timeClass = 'flex dark:text-white text-black';
   const iconClass = 'mx-3 mt-1';
 
-  // Fetch data using the custom hook
-  const { logs, loading, error } = useLogs(0, 8);
+  // Fetch data using the custom hook for logs
+  const { logs, loading: logsLoading, error: logsError } = useLogs(0, 8);
 
-  // Handle loading and error states
-  if (loading) {
+  // Fetch chart data using the custom hook for charts
+  const {
+    customerChartData,
+    advertiserChartData,
+    loading: chartsLoading,
+    error: chartsError,
+  } = useChartData();
+
+  // Handle loading and error states for both hooks
+  if (logsLoading || chartsLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {error}</p>;
+  if (logsError) {
+    return <p>Error loading logs: {logsError}</p>;
+  }
+
+  if (chartsError) {
+    return <p>Error loading chart data: {chartsError}</p>;
+  }
+
+  // Fallback if chart data is not available
+  if (!customerChartData || !advertiserChartData) {
+    return <p>No chart data available</p>;
   }
 
   // Generate columns dynamically from the logs data
-  const dynamicColumns = logs.map((log, index) => ({
-    customer_activity_id: log.customer_activity_id,
-    columns: [
-      {
-        key: 'name',
-        content: JSON.parse(log.data).name,
-        className: nameClass,
-      },
-      {
-        key: 'key',
-        content:
-          log.key === 'login'
-            ? 'قام بتسجيل الدخول   '
-            : log.key === 'register'
-            ? '  إنشاء حساب جديد'
-            : 'تم تعديل الحساب',
-        className: index % 2 === 0 ? colorEvenClass : colorOddClass,
-      },
-      {
-        key: 'ip',
-        content: log.ip,
-        className: TypeClass,
-      },
-      {
-        key: 'date_added',
-        content: log.date_added,
-        className: timeClass,
-        isIcon: true,
-        iconClass: iconClass,
-      },
-    ],
-  }));
-  // +++++++++++++++++++++++++++++++++++++++++++++
-  const seriesData = [65, 34, 12];
-  const labelsData = ['نشيط', 'كسول', 'متوقف'];
-  const statesData = [
-    { label: 'نشيط', count: 347, color: '#5FDD54' },
-    { label: 'كسول', count: 246, color: '#019CF6' },
-    { label: 'متوقف', count: 234, color: '#D0D0D0' },
-  ];
+  const dynamicColumns = logs.map((log, index) => {
+    const logType = log.type === 1 ? 'customer' : 'advertiser'; // Check if type is customer (1) or advertiser (2)
 
-  const seriesData2 = [60, 20, 15];
-  const labelsData2 = ['نشيط', 'كسول', 'متوقف'];
-  const statesData2 = [
-    { label: 'نشيط', count: 100, color: '#5FDD54' },
-    { label: 'كسول', count: 60, color: '#019CF6' },
-    { label: 'متوقف', count: 190, color: '#D0D0D0' },
-  ];
+    return {
+      customer_activity_id: log.customer_activity_id,
+      columns: [
+        {
+          key: 'name',
+          content: JSON.parse(log.data).name.split(' ')[0],
+          className: nameClass,
+        },
+        {
+          key: 'key',
+          content:
+            log.key === 'login'
+              ? 'قام بتسجيل الدخول   '
+              : log.key === 'register'
+              ? '  إنشاء حساب جديد'
+              : 'تم تعديل الحساب',
+          className: index % 2 === 0 ? colorEvenClass : colorOddClass,
+        },
+        {
+          key: 'type',
+          content: logType, // Show 'customer' or 'advertiser' based on log type
+          className: TypeClass,
+        },
+        {
+          key: 'date_added',
+          content: log.date_added,
+          className: timeClass,
+          isIcon: true,
+          iconClass: iconClass,
+          IconComponent: MdOutlineWatchLater, // WatchLater icon for date
+        },
+      ],
+    };
+  });
+
   return (
     <>
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
+        {/* Pass the fetched customer chart data to ChartThree */}
         <ChartThree
-          series={seriesData}
-          labels={labelsData}
-          statesData={statesData}
+          series={customerChartData.series}
+          labels={customerChartData.labels}
+          statesData={customerChartData.statesData}
           title="عدد الزبائن"
+          total={customerChartData.total}
         />
+
+        {/* Pass the fetched advertiser chart data to ChartThree */}
         <ChartThree
-          series={seriesData2}
-          labels={labelsData2}
-          statesData={statesData2}
-          title="عدد المعلنين "
+          series={advertiserChartData.series}
+          labels={advertiserChartData.labels}
+          statesData={advertiserChartData.statesData}
+          title="عدد المعلنين"
+          total={advertiserChartData.total}
         />
       </div>
+
+      {/* Render the MainTable with logs data */}
       <div>
+        <HeaderLastNews />
+
         <MainTable logs={dynamicColumns} />
       </div>
     </>
