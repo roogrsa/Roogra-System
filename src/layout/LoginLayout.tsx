@@ -1,5 +1,4 @@
-import React from 'react'
-import LoginHeader from '../components/Header/LoinHeader'
+import LoginHeader from '../components/Header/LoginHeader'
 import { Outlet } from 'react-router-dom'
 
 export default function LoginLayout() {
