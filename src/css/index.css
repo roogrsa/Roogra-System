@@ -5,6 +5,9 @@
 .bgColor {
     background: #022E47;
 }
+.bg-darkColor {
+    background: #1E1E26 !important;
+}
 
 .textColor {
     color: #022E47;
