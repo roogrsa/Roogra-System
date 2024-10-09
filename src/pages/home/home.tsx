@@ -163,6 +163,7 @@ const Home = () => {
           content: JSON.parse(log.data).name.split(' ')[0],
           className: nameClass,
         },
+
         {
           key: 'key',
           content:

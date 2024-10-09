@@ -32,6 +32,8 @@ import LoginLayout from './layout/LoginLayout';
 import Guard from './components/guards/Guards';
 import Home from './pages/home/home';
 import Users from './pages/users/users';
+import Advertiser from './pages/users/advertiser';
+import Customer from './pages/users/Customer';
 
 i18next.init({
   interpolation: { escapeValue: false },
@@ -79,12 +81,46 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'customer',
+        element: (
+          <Guard>
+            <Customer />
+          </Guard>
+        ),
+      },
+      {
+        path: 'advertiser',
+        element: (
+          <Guard>
+            <Advertiser />
+          </Guard>
+        ),
+      },
+      {
         path: 'users',
         element: (
           <Guard>
             <Users />
           </Guard>
         ),
+        // children: [
+        //   {
+        //     path: '/advertiser',
+        //     element: (
+        //       <Guard>
+        //         <Advertiser />
+        //       </Guard>
+        //     ),
+        //   },
+        //   {
+        //     path: '/customer',
+        //     element: (
+        //       <Guard>
+        //         <Customer />
+        //       </Guard>
+        //     ),
+        //   },
+        // ],
       },
     ],
   },

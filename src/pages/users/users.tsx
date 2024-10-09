@@ -33,9 +33,14 @@ const Users: React.FC = () => {
         className: 'dark:text-[#32E26B] text-[#0E1FB2]',
       },
       {
+        key: 'alias',
+        content: user.alias.split(' '),
+        className: 'dark:text-white text-black',
+      },
+      {
         key: 'type',
         content: user.type === 'customer' ? 'Customer' : 'Advertiser',
-        className: 'dark:text-white text-black',
+        className: 'dark:text-white text-black text-right',
       },
       {
         key: 'regDate',
@@ -93,10 +98,28 @@ const Users: React.FC = () => {
       },
     ],
   }));
-
+  //
+  const headers = [
+    { key: 'id', content: 'ID', className: 'text-' },
+    { key: 'name', content: 'Name', className: 'text-' },
+    { key: 'alias', content: 'alias', className: 'text-' },
+    { key: 'type', content: 'type', className: 'text-' },
+    { key: 'regDate', content: 'regDate', className: 'text-' },
+    {
+      key: 'mobileconfirm',
+      content: 'mobileconfirm',
+      className: 'text-center',
+    },
+    {
+      key: 'emailleconfirm',
+      content: 'emailleconfirm',
+      className: 'text-center',
+    },
+    { key: 'BanStatus', content: 'BanStatus', className: 'text-center' },
+  ];
   return (
     <div>
-      <MainTable logs={logs} />
+      <MainTable logs={logs} headers={headers} />
     </div>
   );
 };
