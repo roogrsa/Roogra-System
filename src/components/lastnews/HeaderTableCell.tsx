@@ -11,7 +11,7 @@ const HeaderTableCell: React.FC<HeaderTableCellProps> = ({
 }) => {
   return (
     <th
-      className={`p-3 py-2 border-l text-[20px] border-l-[#D0D0D0] dark:border-l-[#676767] font-[400] dark:text-[#FFFFFF] text-[#000000] ${className}`}
+      className={`p-3 py-2 border-l text-[18px] border-l-TheadBorder-light dark:border-l-TheadBorder-dark font-[400] dark:text-[#FFFFFF] text-[#000000] ${className}`}
     >
       {content}
     </th>

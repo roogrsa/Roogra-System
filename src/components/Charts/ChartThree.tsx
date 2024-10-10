@@ -60,7 +60,7 @@ const ChartThree: React.FC<ChartThreeProps> = ({
   };
 
   return (
-    <div className="sm:px-7.5 col-span-12 bg-[#FFFFFF] px-5 pb-5 pt-7.5 rounded-[25px] dark:bg-[#1E1E26] xl:col-span-6">
+    <div className="sm:px-7.5 col-span-12 bg-secondaryBG-light  dark:bg-secondaryBG-dark   px-5 pb-5 pt-7.5 rounded-[25px] xl:col-span-6">
       <div className="mb-3 justify-center ">
         <h5 className="text-[20px] text-center font-[400] text-black dark:text-white">
           {title}

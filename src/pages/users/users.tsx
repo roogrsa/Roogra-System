@@ -1,6 +1,7 @@
 // import React from 'react';
 import useUsers from '../../hooks/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
+import useBanUser from '../../hooks/useBanUser';
 
 // Define your SVG paths (adjust the paths based on your project structure)
 const BannedIconSrc = './../../../public/block.svg';
@@ -12,6 +13,20 @@ const NotActivatedAccountIconSrc = './../../../public/x.png';
 
 const Users: React.FC = () => {
   const { users, loading, error } = useUsers();
+  const { banUser, loading: banLoading, error: banError } = useBanUser();
+
+  const handleBanClick = async (userId: number) => {
+    const reason = prompt('Enter the reason for banning the user:');
+    if (reason) {
+      try {
+        await banUser(userId, reason);
+        alert(`User ${userId} has been banned for: ${reason}`);
+        window.location.reload();
+      } catch (err) {
+        alert(`Failed to ban user: ${err}`);
+      }
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -92,6 +107,7 @@ const Users: React.FC = () => {
             src={user.isBanned ? BannedIconSrc : NotBannedIconSrc}
             alt={user.isBanned ? 'Banned' : 'Not Banned'}
             className="w-6 h-6 text-center" // Set appropriate size
+            onClick={() => handleBanClick(user.id)} // Apply the ban action on click
           />
         ),
         className: 'flex justify-center',

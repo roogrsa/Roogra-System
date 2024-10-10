@@ -6,6 +6,47 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
+    colors: {
+      primaryBG: {
+        DEFAULT: '#F9FAFF',
+        dark: '#14141A',
+        light: '#F9FAFF',
+      },
+      secondaryBG: {
+        DEFAULT: '#FFFFFF',
+        dark: '#1E1E26',
+        light: '#FFFFFF',
+      },
+      MainTableBG: {
+        EvenDark: '#1E1E26',
+        EvenLight: '#FFFFFF',
+
+        OddDark: '#2E2D3D',
+        OddLight: '#F7F5F9',
+      },
+      sidebarHover: '#2E2D3D',
+      TheadBorder: {
+        DEFAULT: '#D0D0D0',
+
+        light: '#D0D0D0',
+        dark: '#676767',
+      },
+      EditIconBg: '#0C94E1',
+      text: {
+        DEFAULT: '#FFFFFF',
+        light: '#000000',
+        dark: '#FFFFFF',
+      },
+      TextBlue: '#001AFF',
+      TextGreen: '#32E26B',
+      Input: {
+        green: '#E3FEED',
+        blue: '#DCECF5',
+        gray: '#D0D0D0',
+        border: '#D6D4D4',
+        borderGreen: '#19930E',
+      },
+    },
     fontFamily: {
       satoshi: ['Satoshi', 'sans-serif'],
     },

@@ -146,6 +146,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       try {
         await banUser(userId, reason);
         alert(`User ${userId} has been banned for: ${reason}`);
+        window.location.reload();
       } catch (err) {
         alert(`Failed to ban user: ${err}`);
       }

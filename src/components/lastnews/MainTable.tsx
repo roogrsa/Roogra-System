@@ -52,8 +52,8 @@ const MainTable: React.FC<MainTableProps> = ({ logs, headers }) => {
               key={log.id}
               className={` flex justify-between items-center ${
                 index % 2 === 0
-                  ? 'dark:bg-[#1E1E26] bg-[#FFFFFF]'
-                  : 'dark:bg-[#2E2D3D] bg-[#F7F5F9]'
+                  ? 'dark:bg-MainTableBG-EvenDark  bg-MainTableBG-EvenLight'
+                  : 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
               }`}
             >
               {log.columns.map((col) => (
