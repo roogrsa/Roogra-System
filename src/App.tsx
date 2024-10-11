@@ -20,6 +20,7 @@ import { selectLanguage } from './store/slices/language';
 import Ads from './pages/advertisements/advertisements';
 import Products from './pages/products/products';
 import PrdDetials from './pages/products/PrdDetials';
+import Profile from './pages/Profile';
 
 // Initialize i18next
 i18next.init({
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'profile',
+        element: (
+          <Guard>
+            <Profile />
+          </Guard>
+        ),
+      },
+      {
         path: 'customer',
         element: (
           <Guard>
@@ -80,14 +89,14 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      {
-        path: 'products',
-        element: (
-          <Guard>
-            <Products />
-          </Guard>
-        ),
-      },
+      // {
+      //   path: 'products',
+      //   element: (
+      //     <Guard>
+      //       <Products />
+      //     </Guard>
+      //   ),
+      // },
       {
         // Make the path relative, as it's nested under 'products'
         path: '/products/:id',

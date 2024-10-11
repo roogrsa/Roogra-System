@@ -2,11 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { FaTrash, FaSave } from 'react-icons/fa';
 import ReusableInput from './ReusableInput';
 import ReusableSelect from './ReusableSelectProps';
-import useProduct from '../../hooks/useGetProduct';
 import { FaMinus } from 'react-icons/fa';
 
-const AdvertisementForm: React.FC = () => {
-  const { product, loading, error } = useProduct();
+//
+
+interface Product {
+  id?: number;
+  product_name?: string;
+  price?: number;
+  category_name?: string;
+  oc_product_description_description?: string;
+  images?: string[];
+  videos?: string[];
+  isActivated?: number;
+}
+
+interface AdvertisementFormProps {
+  product: Product | null;
+}
+const AdvertisementForm: React.FC<AdvertisementFormProps> = ({ product }) => {
   const [status, setStatus] = useState<string>('Active');
   const [price, setPrice] = useState<number>(0);
   const [adName, setAdName] = useState<string>('');
@@ -40,8 +54,8 @@ const AdvertisementForm: React.FC = () => {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  if (loading) return <p>Loading product...</p>;
-  if (error) return <p>Error loading product: {error}</p>;
+  // if (loading) return <p>Loading product...</p>;
+  // if (error) return <p>Error loading product: {error}</p>;
 
   return (
     <div className="max-w-4xl mx-auto bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-lg shadow-md">

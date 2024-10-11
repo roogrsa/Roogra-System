@@ -32,6 +32,7 @@ module.exports = {
         dark: '#676767',
       },
       EditIconBg: '#0C94E1',
+      BlockIconBg: '#FA9623',
       text: {
         DEFAULT: '#FFFFFF',
         light: '#000000',
