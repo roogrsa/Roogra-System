@@ -7,6 +7,7 @@ import useBanProduct from '../../hooks/useBanProduct';
 const NotBannedIconSrc = './../../../public/unblock.svg';
 const EditIconSrc = './../../../public/Edit.svg';
 const BannedIconSrc = './../../../public/block.svg';
+const CheckboxIconSrc = './../../../public/checkbox.svg';
 
 const Products: React.FC = () => {
   const { products, loading, error } = useAllProducts();
@@ -109,6 +110,20 @@ const Products: React.FC = () => {
           ),
           className: 'flex justify-center',
         },
+        {
+          key: 'remove',
+          content: (
+            <img
+              src={CheckboxIconSrc}
+              alt="Remove"
+              className={`w-5 h-5 text-center cursor-pointer ${
+                loadingPrdBan ? 'opacity-50' : ''
+              }`}
+              // onClick={() => handleDelete(product.id)}
+            />
+          ),
+          className: 'flex justify-center',
+        },
       ],
     };
   });
@@ -123,6 +138,20 @@ const Products: React.FC = () => {
     { key: 'emailleconfirm', content: 'الصورة', className: 'text-center' },
     { key: 'emailleconfirm', content: 'تحرير', className: 'text-center' },
     { key: 'BanStatus', content: 'الحالة', className: 'text-center' },
+    {
+      key: 'removeStatus',
+      content: (
+        <img
+          src={CheckboxIconSrc}
+          alt="Remove"
+          className={`w-5 h-5 text-center cursor-pointer ${
+            loadingPrdBan ? 'opacity-50' : ''
+          }`}
+          // onClick={() => handleDelete(product.id)}
+        />
+      ),
+      className: 'text-center flex justify-center',
+    },
   ];
 
   return (

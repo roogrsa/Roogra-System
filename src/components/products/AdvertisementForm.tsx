@@ -101,7 +101,7 @@ const AdvertisementForm: React.FC = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-Input-border  dark:bg-secondaryBG-dark rounded-md"
         />
       </div>
 
@@ -204,8 +204,9 @@ const AdvertisementForm: React.FC = () => {
 
       {/* Save Button */}
       <div className="mt-6 flex justify-center ">
-        <button className="text-white text-2xl bg-TextGreen py-2 px-8 rounded-lg flex items-center space-x-2">
-          <FaSave />
+        <button className="text-white text-2xl bg-TextGreen py-2 px-6 rounded-lg flex items-center space-x-2">
+          {/* <FaSave /> */}
+          <img src="./../../../public/save.svg" />
           {/* <span>حفظ</span> */}
         </button>
       </div>
