@@ -34,16 +34,20 @@ import Home from './pages/home/home';
 import Users from './pages/users/users';
 import Advertiser from './pages/users/advertiser';
 import Customer from './pages/users/Customer';
+import AboutUs from './pages/aboutUs/AboutUs';
 
-i18next.init({
-  interpolation: { escapeValue: false },
-  lng: 'ar',
-  resources: {
-    ar: { translation: arTranslation },
-    en: { translation: enTranslation },
-  },
-});
+
+
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <LoginLayout />,
+    children: [
+      { path: '/about-us', element: <AboutUs /> },
+      { path: '/auth/login', element: <SignIn /> },
+      { path: '/auth/signup', element: <SignUp /> },
+    ],
+  },
   {
     path: '/',
     element: (
@@ -53,7 +57,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/',
+        index:true,
         element: (
           <Guard>
             <ECommerce />
@@ -124,22 +128,20 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: '/',
-    element: <LoginLayout />,
-    children: [
-      { path: '/auth/login', element: <SignIn /> },
-      { path: '/auth/signup', element: <SignUp /> },
-    ],
-  },
+
 ]);
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const language = useSelector(selectLanguage);
-
-  console.log(language);
-
+  i18next.init({
+    interpolation: { escapeValue: false },
+    lng: language,
+    resources: {
+      ar: { translation: arTranslation },
+      en: { translation: enTranslation },
+    },
+  });
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);

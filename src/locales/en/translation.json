@@ -13,10 +13,10 @@
         "sign-out": "Sign out"
     },
     "login":{
-        "login":"",
-        "name":"",
-        "password":"",
-        "go":"",
+        "login":"Login",
+        "name":"Username/Email",
+        "password":"password",
+        "go":"Login",
         "name-error":"",
         "password-error":""
 

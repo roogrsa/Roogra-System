@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectLanguage, setLanguage } from '../../store/slices/language';
 import i18n from '../../i18next';
 import useColorMode from '../../hooks/useColorMode';
+import { useEffect } from 'react';
 const en = './../../../public/logo/Group 250.svg'
 const enDark = './../../../public/logo/Group 250dark.svg'
 
@@ -9,7 +10,10 @@ export default function LanguageSwitcher() {
     const [colorMode, setColorMode] = useColorMode();
     const dispatch = useDispatch()
     const language = useSelector(selectLanguage)
-    console.log(language);
+    console.log(colorMode);
+    useEffect(() => {
+
+    }, [colorMode]);
 
     const handleChangeLanguage = () => {
         let newLanguage: string = (language == 'en') ? 'ar' : 'en'
