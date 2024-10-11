@@ -8,7 +8,7 @@ const Guard = ({ children }: { children: JSX.Element }) => {
     if (login) {
         return children;
     } else {
-        return <Navigate to="admin/auth/login" />;
+        return <Navigate to="auth/login" />;
     }
 };
 
