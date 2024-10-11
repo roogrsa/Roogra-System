@@ -3,15 +3,18 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import MainTable from '../../components/lastnews/MainTable';
 import useAllProducts from '../../hooks/useAllProducts'; // Updated hook
 import useBanProduct from '../../hooks/useBanProduct';
+import useHandleBan from '../../hooks/useHandleBan';
 
-const NotBannedIconSrc = './../../../public/unblock.svg';
-const EditIconSrc = './../../../public/Edit.svg';
-const BannedIconSrc = './../../../public/block.svg';
-const CheckboxIconSrc = './../../../public/checkbox.svg';
+const NotBannedIconSrc = '/unblock.svg';
+const EditIconSrc = '/Edit.svg';
+const BannedIconSrc = '/block.svg';
+const CheckboxIconSrc = '/checkbox.svg';
 
 const Products: React.FC = () => {
   const { products, loading, error } = useAllProducts();
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
+  const { handleBan, loading: banLoading } = useHandleBan(); // Rename 'loading' to 'banLoading'
+
   const navigate = useNavigate();
 
   // Handle loading and error states for fetching products
@@ -105,7 +108,11 @@ const Products: React.FC = () => {
               className={`w-6 h-6 text-center cursor-pointer ${
                 loadingPrdBan ? 'opacity-50' : ''
               }`}
-              onClick={() => !loadingPrdBan && handleBanClick(product.id)}
+              onClick={() =>
+                !banLoading &&
+                product.id &&
+                handleBan(product.id, product.is_banned === 1, banProduct)
+              }
             />
           ),
           className: 'flex justify-center',
@@ -119,7 +126,6 @@ const Products: React.FC = () => {
               className={`w-5 h-5 text-center cursor-pointer ${
                 loadingPrdBan ? 'opacity-50' : ''
               }`}
-              // onClick={() => handleDelete(product.id)}
             />
           ),
           className: 'flex justify-center',
@@ -147,7 +153,6 @@ const Products: React.FC = () => {
           className={`w-5 h-5 text-center cursor-pointer ${
             loadingPrdBan ? 'opacity-50' : ''
           }`}
-          // onClick={() => handleDelete(product.id)}
         />
       ),
       className: 'text-center flex justify-center',

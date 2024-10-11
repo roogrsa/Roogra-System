@@ -89,14 +89,14 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'products',
-      //   element: (
-      //     <Guard>
-      //       <Products />
-      //     </Guard>
-      //   ),
-      // },
+      {
+        path: 'products',
+        element: (
+          <Guard>
+            <Products />
+          </Guard>
+        ),
+      },
       {
         // Make the path relative, as it's nested under 'products'
         path: '/products/:id',

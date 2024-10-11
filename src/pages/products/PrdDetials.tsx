@@ -1,25 +1,43 @@
+// import React from 'react';
+// import AdvertisementForm from '../../components/products/AdvertisementForm';
+// import useProduct from '../../hooks/useGetProduct';
+// import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+
+// const PrdDetials: React.FC = () => {
+//   const { product, loading, error } = useProduct();
+
+//   return (
+//     <div>
+//       <div className="flex justify-between ">
+//         <Breadcrumb pageName="تحرير" product={product} />
+//       </div>
+//       {product && <AdvertisementForm product={product} />}
+//     </div>
+//   );
+// };
+
+// export default PrdDetials;
 import React from 'react';
 import AdvertisementForm from '../../components/products/AdvertisementForm';
 import useProduct from '../../hooks/useGetProduct';
-const BlockIcon = './../../../public/unblock.svg';
-const { product, loading, error } = useProduct();
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
-const PrdDetials = () => {
+const PrdDetials: React.FC = () => {
+  const { product, loading, error } = useProduct();
+
   if (loading) return <p>Loading product...</p>;
   if (error) return <p>Error loading product: {error}</p>;
+  const breadcrumbLinks = [{ label: 'الاعلانات/', path: '/' }];
   return (
     <div>
-      <div className="flex justify-between mb-8">
-        <h1 className="text-xl font-bold text-right ">إعلانات / تحرير</h1>
-        <div className="bg-BlockIconBg rounded-md">
-          <img
-            src={BlockIcon}
-            className="w-6 h-6 text-center p-1 m-1  cursor-pointer"
-            // onClick={() => handleEditClick(product.id)}
-          />
-        </div>
-      </div>
-      <AdvertisementForm product={product} />
+      <Breadcrumb
+        breadcrumbLinks={breadcrumbLinks}
+        pageName="تحرير"
+        product={product}
+      />
+
+      {/* Show the AdvertisementForm only if product exists */}
+      {product && <AdvertisementForm product={product} />}
     </div>
   );
 };
