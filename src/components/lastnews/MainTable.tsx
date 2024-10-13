@@ -1,6 +1,7 @@
 import React from 'react';
 import TableCell from './TableCell'; // For table body cells
 import HeaderTableCell from './HeaderTableCell'; // For table header cells
+import Header2TableCell from './Header2TableCell';
 
 interface ColumnConfig {
   key: string;
@@ -20,12 +21,30 @@ interface LogData {
 interface MainTableProps {
   logs: LogData[];
   headers?: ColumnConfig[]; // Made headers optional
+  headers2?: ColumnConfig[];
 }
 
-const MainTable: React.FC<MainTableProps> = ({ logs, headers }) => {
+const MainTable: React.FC<MainTableProps> = ({ logs, headers, headers2 }) => {
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-[20px] text-left rtl:text-right">
+        {headers2 && headers2.length > 0 && (
+          <thead className="bg-secondaryBG-light dark:bg-secondaryBG-dark">
+            <tr className="flex justify-between">
+              {headers2.map((header) => (
+                <Header2TableCell
+                  key={header.key}
+                  content={header.content}
+                  className={`flex-1 ${
+                    typeof header.className === 'function'
+                      ? header.className(0) // Assuming index 0 for header rows
+                      : header.className
+                  }`}
+                />
+              ))}
+            </tr>
+          </thead>
+        )}
         {/* Render thead only if headers are provided */}
         {headers && headers.length > 0 && (
           <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">

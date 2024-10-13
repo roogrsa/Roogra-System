@@ -7,9 +7,9 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useHandleAction from '../../hooks/useHandleAction';
 
 const NotBannedIconSrc = '/unblock.svg';
-const EditIconSrc = '/Edit.svg';
 const BannedIconSrc = '/block.svg';
 const CheckboxIconSrc = '/checkbox.svg';
+const EditIconSrc = '/Edit.svg';
 
 const Products: React.FC = () => {
   const { products, loading, error } = useAllProducts();
@@ -111,7 +111,7 @@ const Products: React.FC = () => {
           content: (
             <img
               src={product.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
-              className={`w-8 h-7 text-center p-1 cursor-pointer ${
+              className={`w-8 h-8 text-center p-1 cursor-pointer ${
                 actionLoading ? 'opacity-50' : ''
               }`}
               onClick={() =>

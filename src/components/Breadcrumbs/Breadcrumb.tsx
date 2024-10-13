@@ -59,19 +59,34 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
 
       {/* Ban/Unban Icon */}
       {product && (
-        <div className="bg-BlockIconBg rounded-md">
-          <img
-            src={product.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
-            className={`w-8 h-7 text-center p-1 cursor-pointer ${
-              loading ? 'opacity-50' : ''
-            }`}
-            onClick={() =>
-              !loading &&
-              product.id &&
-              handleBan(product.id, product.is_banned === 1)
-            }
-          />
-        </div>
+        <>
+          <div className="bg-BlockIconBg rounded-md">
+            <img
+              src={product.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
+              className={`w-8 h-7 text-center p-1 cursor-pointer ${
+                loading ? 'opacity-50' : ''
+              }`}
+              onClick={() =>
+                !loading &&
+                product.id &&
+                handleBan(product.id, product.is_banned === 1)
+              }
+            />
+          </div>
+          {/* <div className="bg-RemoveIconBg rounded-md">
+            <img
+              src={RemoveIconSrc}
+              className="w-6 h-6 text-center p-1 cursor-pointer"
+              onClick={() =>
+                !actionLoading &&
+                user?.id &&
+                handleAction(user.id, false, 'remove', removeUser, {
+                  confirmButtonClass: 'bg-RemoveIconBg ', // Remove button class
+                  cancelButtonClass: '', // Cancel button class
+                })
+              }
+            /></div> */}
+        </>
       )}
     </div>
   );
