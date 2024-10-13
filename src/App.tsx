@@ -20,7 +20,7 @@ import { selectLanguage } from './store/slices/language';
 import Ads from './pages/advertisements/advertisements';
 import Products from './pages/products/products';
 import PrdDetials from './pages/products/PrdDetials';
-import Profile from './pages/Profile';
+import Profile from './pages/users/Profile';
 
 // Initialize i18next
 i18next.init({
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'profile',
+        path: 'profile/:id',
         element: (
           <Guard>
             <Profile />
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'customer',
+        path: 'users/customer',
         element: (
           <Guard>
             <Customer />
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'advertiser',
+        path: 'users/advertiser',
         element: (
           <Guard>
             <Advertiser />

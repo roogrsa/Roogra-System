@@ -4,6 +4,7 @@ import useFetchUsers from '../../hooks/useTypeUsers';
 import useBanUser from '../../hooks/useBanUser';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import useHandleBan from '../../hooks/useHandleBan';
+import { useNavigate } from 'react-router-dom';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -20,11 +21,16 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const { users, loading, error } = useFetchUsers(userType, 0, 10);
   const { banUser, loading: banLoading, error: banError } = useBanUser();
   const { handleBan, loading: handleBanLoading } = useHandleBan(); // Use the new hook
+  const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  // Transform the data into a format that the MainTable expects
+  //
+  const handleClickName = (userId: number) => {
+    navigate(`/profile/${userId}`);
+  };
+  //
   const logs = users.map((user) => ({
     id: user.id,
     type: user.type === 'advertiser' ? 2 : 1, // 2 for advertiser, 1 for customer
@@ -36,7 +42,14 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       },
       {
         key: 'name',
-        content: user.name.split(' ').slice(0, 2).join(' ').slice(0, 12),
+        content: (
+          <span
+            className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
+            onClick={() => handleClickName(user.id)}
+          >
+            {user.name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+          </span>
+        ),
         className: 'dark:text-[#32E26B] text-[#0E1FB2]',
       },
       {

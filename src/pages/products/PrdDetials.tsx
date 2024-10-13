@@ -36,7 +36,7 @@ const PrdDetials: React.FC = () => {
         product={product}
       />
 
-      {/* Show the AdvertisementForm only if product exists */}
+      {/*  */}
       {product && <AdvertisementForm product={product} />}
     </div>
   );

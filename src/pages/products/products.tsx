@@ -4,6 +4,7 @@ import MainTable from '../../components/lastnews/MainTable';
 import useAllProducts from '../../hooks/useAllProducts'; // Updated hook
 import useBanProduct from '../../hooks/useBanProduct';
 import useHandleBan from '../../hooks/useHandleBan';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
 const NotBannedIconSrc = '/unblock.svg';
 const EditIconSrc = '/Edit.svg';
@@ -20,19 +21,6 @@ const Products: React.FC = () => {
   // Handle loading and error states for fetching products
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error fetching products: {error}</p>;
-
-  const handleBanClick = async (productId: number) => {
-    const reason = prompt('Enter the reason for banning the product:');
-    if (reason) {
-      try {
-        await banProduct(productId, reason);
-        alert(`Product ${productId} has been banned for: ${reason}`);
-        window.location.reload();
-      } catch (err) {
-        alert(`Failed to ban product: ${banPrdError}`);
-      }
-    }
-  };
 
   // Handle the click on the edit icon to navigate to the product edit page
   const handleEditClick = (productId: number) => {
@@ -133,7 +121,7 @@ const Products: React.FC = () => {
       ],
     };
   });
-
+  //
   const headers = [
     { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
     { key: 'name', content: 'أسم المعلن', className: 'text-center' },
@@ -158,9 +146,13 @@ const Products: React.FC = () => {
       className: 'text-center flex justify-center',
     },
   ];
+  //
+  const breadcrumbLinks = [{ label: 'الاعلانات/', path: '/' }];
 
   return (
     <>
+      <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="الكل" />
+
       {banPrdError && <p>Error banning product: {banPrdError}</p>}
       <MainTable logs={logs} headers={headers} />
     </>

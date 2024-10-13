@@ -9,14 +9,27 @@ interface BreadcrumbLink {
   label: string;
   path: string;
 }
+interface Product {
+  id?: number;
+  is_banned: number;
+
+  product_name?: string;
+  price?: number;
+  category_name?: string;
+  oc_product_description_description?: string;
+  images?: string[];
+  videos?: string[];
+  isActivated?: number;
+}
 
 interface BreadcrumbProps {
   breadcrumbLinks: BreadcrumbLink[];
   pageName: string;
-  product?: {
-    id: number;
-    is_banned: number;
-  };
+  product?: Product;
+  // {
+  //   id: number;
+  //   is_banned: number;
+  // };
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({

@@ -33,6 +33,9 @@ module.exports = {
       },
       EditIconBg: '#0C94E1',
       BlockIconBg: '#FA9623',
+      SaveIconBg: '#40C734',
+      RemoveIconBg: '#E02828',
+
       text: {
         DEFAULT: '#FFFFFF',
         light: '#000000',
@@ -41,11 +44,21 @@ module.exports = {
       TextBlue: '#001AFF',
       TextGreen: '#32E26B',
       Input: {
+        TextBlue: '#1B32FF',
+        TextGreen: '#009530',
+        TextRed: '#E02828',
+        red: '#F5DAD8',
         green: '#E3FEED',
         blue: '#DCECF5',
         gray: '#D0D0D0',
         border: '#D6D4D4',
         borderGreen: '#19930E',
+      },
+      Accordion: {
+        BgLight: '#EDEDED',
+        BgDark: '#494967',
+        BorderLight: '#EDEDED',
+        BorderDark: '#494967',
       },
     },
     fontFamily: {

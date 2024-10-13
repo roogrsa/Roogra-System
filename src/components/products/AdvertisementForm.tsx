@@ -162,7 +162,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({ product }) => {
       </div>
 
       <div className="mt-6 flex justify-center">
-        <button className="text-white text-2xl bg-TextGreen py-2 px-6 rounded-lg flex items-center space-x-2">
+        <button className="text-white text-2xl bg-SaveIconBg py-2 px-6 rounded-lg flex items-center space-x-2">
           <img src="/save.svg" alt="save" />
         </button>
       </div>
