@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import useHandleBan from '../../hooks/useHandleBan';
 import useBanProduct from '../../hooks/useBanProduct';
+import useHandleAction from '../../hooks/useHandleAction';
 
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
@@ -9,10 +9,10 @@ interface BreadcrumbLink {
   label: string;
   path: string;
 }
+
 interface Product {
   id?: number;
   is_banned: number;
-
   product_name?: string;
   price?: number;
   category_name?: string;
@@ -26,10 +26,6 @@ interface BreadcrumbProps {
   breadcrumbLinks: BreadcrumbLink[];
   pageName: string;
   product?: Product;
-  // {
-  //   id: number;
-  //   is_banned: number;
-  // };
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({
@@ -37,9 +33,14 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
   pageName,
   product,
 }) => {
-  const { banProduct } = useBanProduct(); // Custom API hook to ban/unban product
-  const { handleBan, loading } = useHandleBan();
-
+  const { banProduct } = useBanProduct(); // API hook to ban/unban product
+  const { handleAction, loading } = useHandleAction();
+  const handleBan = (productId: number, isBanned: boolean) => {
+    handleAction(productId, isBanned, 'ban', banProduct, {
+      confirmButtonClass: 'bg-BlockIconBg',
+      cancelButtonClass: 'bg-gray-300',
+    });
+  };
   return (
     <div className="mb-8 flex justify-between">
       {/* Breadcrumb Navigation */}
@@ -67,7 +68,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
             onClick={() =>
               !loading &&
               product.id &&
-              handleBan(product.id, product.is_banned === 1, banProduct)
+              handleBan(product.id, product.is_banned === 1)
             }
           />
         </div>

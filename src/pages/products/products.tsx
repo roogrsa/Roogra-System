@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import MainTable from '../../components/lastnews/MainTable';
 import useAllProducts from '../../hooks/useAllProducts'; // Updated hook
 import useBanProduct from '../../hooks/useBanProduct';
-import useHandleBan from '../../hooks/useHandleBan';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import useHandleAction from '../../hooks/useHandleAction';
 
 const NotBannedIconSrc = '/unblock.svg';
 const EditIconSrc = '/Edit.svg';
@@ -14,7 +14,7 @@ const CheckboxIconSrc = '/checkbox.svg';
 const Products: React.FC = () => {
   const { products, loading, error } = useAllProducts();
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
-  const { handleBan, loading: banLoading } = useHandleBan(); // Rename 'loading' to 'banLoading'
+  const { handleAction, loading: actionLoading } = useHandleAction();
 
   const navigate = useNavigate();
 
@@ -25,6 +25,18 @@ const Products: React.FC = () => {
   // Handle the click on the edit icon to navigate to the product edit page
   const handleEditClick = (productId: number) => {
     navigate(`/products/${productId}`);
+  };
+
+  const handleClickName = (authorId: number) => {
+    navigate(`/profile/${authorId}`);
+  };
+
+  // Handle ban/unban action
+  const handleBan = (productId: number, isBanned: boolean) => {
+    handleAction(productId, isBanned, 'ban', banProduct, {
+      confirmButtonClass: 'bg-BlockIconBg',
+      cancelButtonClass: 'bg-gray-300',
+    });
   };
 
   // Transform the product data to fit the format that MainTable expects
@@ -44,7 +56,14 @@ const Products: React.FC = () => {
         },
         {
           key: 'author',
-          content: product.author.split(' ').slice(0, 2).join(' ').slice(0, 12),
+          content: (
+            <span
+              className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
+              onClick={() => handleClickName(product.author_id)}
+            >
+              {product.author.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+            </span>
+          ),
           className: 'text-TextBlue dark:text-TextGreen',
         },
         { key: 'created_at_date', content: datePart, className: 'date-class' },
@@ -92,14 +111,11 @@ const Products: React.FC = () => {
           content: (
             <img
               src={product.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
-              alt={product.is_banned === 0 ? 'Not Banned' : 'Banned'}
-              className={`w-6 h-6 text-center cursor-pointer ${
-                loadingPrdBan ? 'opacity-50' : ''
+              className={`w-8 h-7 text-center p-1 cursor-pointer ${
+                actionLoading ? 'opacity-50' : ''
               }`}
               onClick={() =>
-                !banLoading &&
-                product.id &&
-                handleBan(product.id, product.is_banned === 1, banProduct)
+                !actionLoading && handleBan(product.id, product.is_banned === 1)
               }
             />
           ),
@@ -121,7 +137,7 @@ const Products: React.FC = () => {
       ],
     };
   });
-  //
+
   const headers = [
     { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
     { key: 'name', content: 'أسم المعلن', className: 'text-center' },
@@ -146,12 +162,16 @@ const Products: React.FC = () => {
       className: 'text-center flex justify-center',
     },
   ];
-  //
+
   const breadcrumbLinks = [{ label: 'الاعلانات/', path: '/' }];
 
   return (
     <>
-      <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="الكل" />
+      <Breadcrumb
+        breadcrumbLinks={breadcrumbLinks}
+        pageName="الكل"
+        // product={product}
+      />
 
       {banPrdError && <p>Error banning product: {banPrdError}</p>}
       <MainTable logs={logs} headers={headers} />

@@ -3,8 +3,8 @@ import MainTable from '../../components/lastnews/MainTable';
 import useFetchUsers from '../../hooks/useTypeUsers';
 import useBanUser from '../../hooks/useBanUser';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import useHandleBan from '../../hooks/useHandleBan';
 import { useNavigate } from 'react-router-dom';
+import useHandleAction from '../../hooks/useHandleAction';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -20,17 +20,17 @@ interface UserTypeProps {
 const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const { users, loading, error } = useFetchUsers(userType, 0, 10);
   const { banUser, loading: banLoading, error: banError } = useBanUser();
-  const { handleBan, loading: handleBanLoading } = useHandleBan(); // Use the new hook
+  const { handleAction, loading: actionLoading } = useHandleAction();
+
   const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  //
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
   };
-  //
+
   const logs = users.map((user) => ({
     id: user.id,
     type: user.type === 'advertiser' ? 2 : 1, // 2 for advertiser, 1 for customer
@@ -105,11 +105,15 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
             src={user.isBanned ? BannedIconSrc : NotBannedIconSrc}
             alt={user.isBanned ? 'Banned' : 'Not Banned'}
             className={`w-6 h-6 text-center cursor-pointer ${
-              handleBanLoading ? 'opacity-50' : ''
+              actionLoading ? 'opacity-50' : ''
             }`}
-            onClick={
-              () =>
-                !handleBanLoading && handleBan(user.id, user.isBanned, banUser) // Use handleBan from the hook
+            onClick={() =>
+              !actionLoading &&
+              user?.id &&
+              handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
+                confirmButtonClass: 'bg-BlockIconBg ',
+                cancelButtonClass: '',
+              })
             }
           />
         ),
@@ -123,20 +127,20 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
     { key: 'id', content: 'ID', className: 'text-center' },
     { key: 'name', content: 'Name', className: 'text-center' },
     { key: 'alias', content: 'Alias', className: 'text-center' },
-    { key: 'regDate', content: 'RegistrationDate', className: 'text-center' },
+    { key: 'regDate', content: 'RegDate', className: 'text-center' },
     {
       key: 'mobileconfirm',
-      content: 'MobileConfirm',
+      content: 'Mobile Confirm',
       className: 'text-center',
     },
     {
       key: 'emailleconfirm',
-      content: 'EmailConfirm',
+      content: 'Email Confirm',
       className: 'text-center',
     },
-    { key: 'BanStatus', content: 'BanStatus', className: 'text-center' },
+    { key: 'BanStatus', content: 'Ban Status', className: 'text-center' },
   ];
-  //
+
   const breadcrumbLinks = [{ label: 'المستخدمين/', path: '/' }];
 
   return (

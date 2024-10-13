@@ -2,9 +2,9 @@ import React from 'react';
 import useUsers from '../../hooks/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useHandleBan from '../../hooks/useHandleBan'; // Import the new hook
 import useBanUser from '../../hooks/useBanUser';
 import { useNavigate } from 'react-router-dom';
+import useHandleAction from '../../hooks/useHandleAction';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -15,7 +15,8 @@ const NotActivatedAccountIconSrc = '/x.png';
 
 const Users: React.FC = () => {
   const { users, loading, error } = useUsers();
-  const { handleBan, loading: banLoading } = useHandleBan();
+  const { handleAction, loading: actionLoading } = useHandleAction();
+
   const { banUser, loading: banUserLoading, error: banError } = useBanUser();
   const navigate = useNavigate();
 
@@ -105,7 +106,14 @@ const Users: React.FC = () => {
             src={user.isBanned ? BannedIconSrc : NotBannedIconSrc}
             alt={user.isBanned ? 'Banned' : 'Not Banned'}
             className="w-6 h-6 text-center cursor-pointer"
-            onClick={() => handleBan(user.id, user.isBanned, banUser)} // Use the new handleBan from the hook
+            onClick={() =>
+              !actionLoading &&
+              user?.id &&
+              handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
+                confirmButtonClass: 'bg-BlockIconBg ',
+                cancelButtonClass: '',
+              })
+            }
           />
         ),
         className: 'flex justify-center',
@@ -138,7 +146,7 @@ const Users: React.FC = () => {
     <div>
       <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="الكل" />
       <MainTable logs={logs} headers={headers} />
-      {(banLoading || banUserLoading) && <p>Processing ban action...</p>}{' '}
+      {banUserLoading && <p>Processing ban action...</p>}{' '}
     </div>
   );
 };
