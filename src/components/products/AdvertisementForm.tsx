@@ -46,7 +46,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({ product }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-lg shadow-md">
+    <div className="max-w-4xl mx-auto  bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-lg shadow-md">
       <ReusableInput
         label="رقم الإعلان"
         type="text"

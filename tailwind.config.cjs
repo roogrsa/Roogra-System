@@ -60,6 +60,14 @@ module.exports = {
         BorderLight: '#EDEDED',
         BorderDark: '#494967',
       },
+      Header2Table: {
+        BgLight: '#EDEDED',
+        BgDark: '#1E1E26',
+        BgCellLight: '#FFFFFF',
+        BgCellDark: '#3E3E46',
+        // BgFoucsight: '#EDEDED',
+        // BgFoucsDark: '#494967',
+      },
     },
     fontFamily: {
       satoshi: ['Satoshi', 'sans-serif'],

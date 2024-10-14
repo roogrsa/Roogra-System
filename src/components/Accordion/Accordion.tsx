@@ -22,7 +22,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
         <span className="text-lg font-medium">{title}</span>
         <button className="text-md">{isOpen ? '▲' : '▼'}</button>
       </div>
-      {isOpen && <div className="p-4 ">{children}</div>}
+      {isOpen && <div className=" ">{children}</div>}
     </div>
   );
 };

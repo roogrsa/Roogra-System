@@ -6,6 +6,7 @@ import useFollowers from '../../hooks/useUserFollowers';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
 import useBanUser from '../../hooks/useBanUser';
+import AccordionHeader2 from '../Accordion/AccordionHeader2';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
@@ -61,7 +62,106 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
     navigate(`/profile/${followerId}`);
   };
 
-  const logs = followers.map((follower, index) => {
+  const logsFollowers = followers.map((follower, index) => {
+    const createdAtDate = new Date(follower.regDate);
+    const datePart = createdAtDate.toLocaleDateString();
+
+    return {
+      id: follower.id,
+      type: 2,
+      columns: [
+        {
+          key: 'index',
+          content: index + 1, // Display the index number starting from 1
+          className: 'flex justify-center ',
+        },
+
+        // {
+        //   key: 'id',
+        //   content: follower.id,
+        //   className: 'flex justify-center',
+        // },
+        {
+          key: 'name',
+          content: (
+            <span
+              className="cursor-pointer "
+              onClick={() => handleEditClick(follower.id)}
+            >
+              {follower.name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+            </span>
+          ),
+          className: 'text-TextBlue dark:text-TextGreen',
+        },
+        { key: 'space', content: '', className: 'date-class' },
+
+        {
+          key: 'alias',
+          content:
+            follower.alias.split(' ').slice(0, 2).join(' ') || 'notfound',
+
+          className: '',
+        },
+        { key: 'space', content: '', className: 'date-class' },
+
+        { key: 'reg_date', content: datePart, className: 'date-class' },
+        { key: 'space', content: '', className: 'date-class' },
+
+        {
+          key: 'Edit',
+          content: (
+            <div className="bg-EditIconBg rounded-md">
+              <img
+                src={EditIconSrc}
+                className="w-6 h-6 text-center p-1 cursor-pointer"
+                onClick={() => handleEditClick(follower.id)}
+              />
+            </div>
+          ),
+          className: 'flex justify-center',
+        },
+        {
+          key: 'isBanned',
+          content: (
+            <img
+              src={follower.isBanned ? BannedIconSrc : NotBannedIconSrc}
+              alt={follower.isBanned ? 'Banned' : 'Not Banned'}
+              className="w-6 h-6 text-center cursor-pointer"
+              onClick={() =>
+                !actionLoading &&
+                follower?.id &&
+                handleAction(
+                  follower.id,
+                  follower.isBanned === 1,
+                  'ban',
+                  banUser,
+                  {
+                    confirmButtonClass: 'bg-BlockIconBg ',
+                    cancelButtonClass: '',
+                  },
+                )
+              }
+            />
+          ),
+          className: 'flex justify-center',
+        },
+        {
+          key: 'remove',
+          content: (
+            <img
+              src={CheckboxIconSrc}
+              alt="Remove"
+              className={`w-5 h-5 text-center cursor-pointer ${
+                banUserLoading ? 'opacity-50' : ''
+              }`}
+            />
+          ),
+          className: 'flex justify-center',
+        },
+      ],
+    };
+  });
+  const logsRates = followers.map((follower, index) => {
     const createdAtDate = new Date(follower.regDate);
     const datePart = createdAtDate.toLocaleDateString();
 
@@ -154,10 +254,13 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       ],
     };
   });
-
   // const headers2 = [
   //   { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
   //   { key: 'name', content: 'أسم المعلن', className: 'text-center' },
+  //   { key: 'alias', content: 'التاريخ', className: 'text-center' },
+  //   { key: 'alias', content: '', className: 'text-center' },
+  //   { key: 'alias', content: '', className: 'text-center' },
+  //   { key: 'alias', content: '', className: 'text-center' },
   //   { key: 'alias', content: 'التاريخ', className: 'text-center' },
   // ];
   return (
@@ -168,43 +271,57 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
 
-        {/* Render user form if data is available */}
+        {/*  */}
         {user && <UserForm user={user} loading={loading} error={error} />}
       </Accordion>
 
-      {/* Additional Information Accordion */}
+      {/*  */}
       <Accordion title="المعلومات">
-        <MainTable logs={logs} />
-
-        <div className="text-gray-700"></div>
+        <AccordionHeader2
+          titles={['عدد المتابعين', 'عدد التقييم', 'نبذة']}
+          children={[
+            <MainTable logs={logsFollowers} header2={true} />,
+            <MainTable logs={logsRates} header2={true} />,
+            <div>Content for Title 3</div>,
+          ]}
+          footerItems={[
+            <span key="1">(3)</span>,
+            <span key="2">
+              <img src="/users.svg" alt="Users" />
+            </span>,
+            <span key="3">
+              <img src="/redRemove.svg" alt="Remove" />
+            </span>,
+          ]}
+        />
       </Accordion>
 
-      {/* Ads Information Accordion */}
+      {/*  */}
       <Accordion title="الاعلانات">
         <div className="text-gray-700"></div>
       </Accordion>
 
-      {/* Subscription Tickets Accordion */}
+      {/*  */}
       <Accordion title="تذاكر الاشتراك">
         <div className="text-gray-700"></div>
       </Accordion>
 
-      {/* Chats Accordion */}
+      {/*  */}
       <Accordion title="المحادثات">
         <div className="text-gray-700"></div>
       </Accordion>
 
-      {/* Contact Us Accordion */}
+      {/*  */}
       <Accordion title="تواصل معنا">
         <div className="text-gray-700"></div>
       </Accordion>
 
-      {/* Reports Accordion */}
+      {/*  */}
       <Accordion title="البلاغات">
         <div className="text-gray-700"></div>
       </Accordion>
 
-      {/* Blocklist Accordion */}
+      {/* */}
       <Accordion title="قائمة الحظر">
         <div className="text-gray-700"></div>
       </Accordion>
