@@ -87,8 +87,17 @@ const AccordionHeader2: React.FC<AccordionProps> = ({
               />
             ))}
           </div>
-          {/* Use AccordionFooter component */}
-          <AccordionFooter items={footerItems} />
+          <div>
+            {footerItems.map((item, index) => (
+              <div
+                key={index}
+                className="p-4 w-full"
+                hidden={openIndex !== index}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Render children based on the open index */}

@@ -75,6 +75,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
           content: index + 1, // Display the index number starting from 1
           className: 'flex justify-center ',
         },
+        // { key: 'space', content: '', className: 'date-class' },
 
         // {
         //   key: 'id',
@@ -254,6 +255,49 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       ],
     };
   });
+  //
+  const accordioHeader2Items = [
+    {
+      title: 'Title 1',
+      children: <div>Content for Title 1</div>,
+      footerItems: [
+        <span key="1">(3)</span>,
+        <span key="2">
+          <img src="/users.svg" alt="Users" />
+        </span>,
+        <span key="3">
+          <img src="/redRemove.svg" alt="Remove" />
+        </span>,
+      ],
+    },
+    {
+      title: 'Title 2',
+      children: <div>Content for Title 2</div>,
+      footerItems: [
+        <span key="4">(5)</span>,
+        <span key="5">
+          <img src="/users.svg" alt="Users" />
+        </span>,
+        <span key="6">
+          <img src="/redRemove.svg" alt="Remove" />
+        </span>,
+      ],
+    },
+    {
+      title: 'Title 3',
+      children: <div>Content for Title 3</div>,
+      footerItems: [
+        <span key="7">(2)</span>,
+        <span key="8">
+          <img src="/users.svg" alt="Users" />
+        </span>,
+        <span key="9">
+          <img src="/redRemove.svg" alt="Remove" />
+        </span>,
+      ],
+    },
+  ];
+
   // const headers2 = [
   //   { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
   //   { key: 'name', content: 'أسم المعلن', className: 'text-center' },
@@ -285,13 +329,26 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
             <div>Content for Title 3</div>,
           ]}
           footerItems={[
-            <span key="1">(3)</span>,
-            <span key="2">
-              <img src="/users.svg" alt="Users" />
-            </span>,
-            <span key="3">
-              <img src="/redRemove.svg" alt="Remove" />
-            </span>,
+            <div className="flex gap-5">
+              <span key="1">(3)</span>
+              <span key="2">
+                <img src="/users.svg" alt="Users" />
+              </span>
+
+              <span key="3">
+                <img src="/redRemove.svg" alt="Remove" />
+              </span>
+            </div>,
+            <div className="flex gap-5">
+              <span key="1">(10)</span>
+              <span key="2" className="">
+                <img src="/Star 23.svg" alt="Users" />
+              </span>
+
+              <span key="3">
+                <img src="/redRemove.svg" alt="Remove" />
+              </span>
+            </div>,
           ]}
         />
       </Accordion>
