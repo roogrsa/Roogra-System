@@ -91,7 +91,7 @@ const AccordionHeader2: React.FC<AccordionProps> = ({
             {footerItems.map((item, index) => (
               <div
                 key={index}
-                className="p-4 w-full"
+                className="p-4 w-full mx-5"
                 hidden={openIndex !== index}
               >
                 {item}

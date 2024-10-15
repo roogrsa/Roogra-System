@@ -42,12 +42,13 @@ const useUsers = () => {
         const response = await axiosInstance.get<ApiResponse>('/api/users');
         if (response.data.success) {
           setUsers(response.data.data);
-          // console.log(response.data.data);
+          console.log(response.data.data);
         } else {
           setError('Failed to fetch users');
         }
       } catch (err) {
         setError('Error fetching data');
+        console.log(err);
       } finally {
         setLoading(false);
       }

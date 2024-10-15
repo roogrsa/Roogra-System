@@ -188,9 +188,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                 <li>
                   <NavLink
-                    to="/tables"
+                    to="/subscription"
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
-                      pathname.includes('tables') &&
+                      pathname.includes('subscription') &&
                       'bg-graydark dark:bg-meta-4'
                     }`}
                   >

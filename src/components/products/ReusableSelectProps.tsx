@@ -19,10 +19,10 @@ const ReusableSelect: React.FC<ReusableSelectProps> = ({
 }) => {
   return (
     <div className="flex w-30 flex-col">
-      <label className="font-semibold mb-2">
+      <label className="mb-2">
         {' '}
         {label}
-        {required && <span className="text-red-500"> *</span>}
+        {required && <span className="text-red-500">*</span>}
       </label>
       <select
         value={value}

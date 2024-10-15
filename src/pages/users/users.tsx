@@ -40,7 +40,7 @@ const Users: React.FC = () => {
         key: 'name',
         content: (
           <span
-            className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
+            className="cursor-pointer dark:text-TextGreen text-TextBlue"
             onClick={() => handleClickName(user.id)}
           >
             {user.name.split(' ').slice(0, 2).join(' ').slice(0, 12)}

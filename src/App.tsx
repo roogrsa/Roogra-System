@@ -21,6 +21,7 @@ import Ads from './pages/advertisements/advertisements';
 import Products from './pages/products/products';
 import PrdDetials from './pages/products/PrdDetials';
 import Profile from './pages/users/Profile';
+import CategorySubscription from './pages/category_subscription/CategorySubscription';
 
 // Initialize i18next
 i18next.init({
@@ -86,6 +87,14 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <Ads />
+          </Guard>
+        ),
+      },
+      {
+        path: 'subscription',
+        element: (
+          <Guard>
+            <CategorySubscription />
           </Guard>
         ),
       },

@@ -8,6 +8,7 @@ import useUser from '../../hooks/useGetUser';
 import useRemoveUser from '../../hooks/useRemoveUser';
 import useHandleAction from '../../hooks/useHandleAction';
 import useBanUser from '../../hooks/useBanUser';
+import StarRating from '../../components/users/StarRating';
 
 const SaveIconSrc = '/save.svg';
 const BannedIconSrc = '/block.svg';
@@ -33,17 +34,22 @@ const Profile = () => {
   return (
     <>
       <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="العملاء" />
-
       <div className="overflow-hidden">
+        {/* image cover */}
+
         <div className="relative z-20 h-35 md:h-65">
           <img
-            src={CoverOne}
-            alt="profile cover"
+            src={
+              user?.image === 'https://roogr.sa/api/image/'
+                ? CoverOne
+                : user?.image || CoverOne
+            }
             className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
+            alt="profile cover"
           />
         </div>
-        <div className="px-4 pb-2 text-center lg:pb-6 xl:pb-11.5">
-          {/* <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3"> */}
+        {/* image profile */}
+        <div className="px-4  text-center ">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur ">
             <img
               src={
@@ -57,7 +63,17 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto flex justify-end gap-x-8">
+        {/* Rating section */}
+        <div className="mx-auto text-center my-4">
+          <div className="flex justify-end gap-x-3 text-xl">
+            <span className="text-gray-500">
+              {user?.rating ? parseFloat(user?.rating).toFixed(1) : '0.0'}
+            </span>
+            <StarRating rating={user?.rating ? user.rating : 0} />{' '}
+          </div>
+        </div>
+        {/* icons section */}
+        <div className=" mx-auto flex justify-end gap-x-8">
           <div className="bg-SaveIconBg rounded-md">
             <img
               src={SaveIconSrc}

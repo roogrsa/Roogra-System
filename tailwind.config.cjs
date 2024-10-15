@@ -35,6 +35,8 @@ module.exports = {
       BlockIconBg: '#FA9623',
       SaveIconBg: '#40C734',
       RemoveIconBg: '#E02828',
+      ConfirmIconBg: '#40C734',
+      RejectIconBg: '#AF39D3',
 
       text: {
         DEFAULT: '#FFFFFF',

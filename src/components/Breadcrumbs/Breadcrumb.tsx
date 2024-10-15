@@ -42,7 +42,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
     });
   };
   return (
-    <div className="mb-8 flex justify-between">
+    <div className="mb-6 flex justify-between">
       {/* Breadcrumb Navigation */}
       <nav>
         <ol className="flex items-center gap-2">
