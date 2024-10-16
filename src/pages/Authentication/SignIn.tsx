@@ -66,7 +66,7 @@ const SignIn: React.FC = () => {
                           type="email"
                           placeholder={t('login.name')}
                           name="email"
-                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke py-3 pl-6 pr-10 text-black outline-none focus-visible:shadow-none dark:border-form-strokedark"
                         />
                       </div>
                     </div>
@@ -80,7 +80,7 @@ const SignIn: React.FC = () => {
                           type="password"
                           name="password"
                           placeholder={t('login.password')}
-                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke py-3 pl-6 pr-10 text-black outline-none focus-visible:shadow-none dark:border-form-strokedark"
                         />
 
                       </div>
