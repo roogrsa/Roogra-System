@@ -88,10 +88,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <>
       <aside
         ref={sidebar}
-        className={` ${isOpen ? 'w-55' : 'closed'
-          } absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
-        duration-300 ease-linear bg-[#1E1E26]  lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={` ${
+          isOpen ? 'w-55' : 'closed'
+        } absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
+        duration-300 ease-linear bg-[#1E1E26]  lg:static lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-4">
@@ -100,12 +102,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               isOpen
                 ? 'ltr:left-[190px] rtl:right-[175px]'
                 : 'ltr:left-[30px] rtl:right-[50px]'
-              } rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
+            } rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
             onClick={toggleSidebar}
           >
             <FaChevronRight
-              className={`${isOpen ? 'rotate-180' : 'rotate-0'
-                } transition-all duration-300`}
+              className={`${
+                isOpen ? 'rotate-180' : 'rotate-0'
+              } transition-all duration-300`}
             />
           </button>
         </div>
@@ -122,10 +125,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${(pathname === '/' ||
-                        pathname.includes('dashboard')) &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${
+                      (pathname === '/' || pathname.includes('dashboard')) &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiChartDonutFill className="text-2xl" />
                     {isOpen && t('sidebar.charts')}
@@ -133,9 +136,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </li>
                 <li>
                   <NavLink
-                    to="/home"
+                    to="/products"
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]
-                      duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('home') && 'bg-graydark dark:bg-meta-4'
+                      duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${
+                        pathname.includes('home') &&
+                        'bg-graydark dark:bg-meta-4'
                       }`}
                   >
                     <AiFillHome className="text-2xl" />
@@ -159,7 +164,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('categories') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <BiSolidCategory className="text-2xl" />
                     {isOpen && t('sidebar.categories')}
@@ -172,7 +177,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('subscription') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiTicketFill className="text-2xl" />
                     {isOpen && t('sidebar.requests')}
@@ -184,7 +189,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiHeadsetFill className="text-2xl" />
                     {isOpen && t('sidebar.support')}
@@ -196,7 +201,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiEnvelopeFill className="text-2xl" />
                     {isOpen && t('sidebar.reports')}
@@ -208,7 +213,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <MdOutlineBlock className="text-2xl" />
                     {isOpen && t('sidebar.ban-list')}
@@ -220,7 +225,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiUsersThreeFill className="text-2xl" />
                     {isOpen && t('sidebar.admins')}
@@ -232,7 +237,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
                       pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
-                      }`}
+                    }`}
                   >
                     <PiGearFineFill className="text-2xl" />
                     {isOpen && t('sidebar.settings')}
@@ -243,10 +248,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <div
               role="button"
               onClick={logout}
-              className={`bg-[#E02828] ${isOpen
+              className={`bg-[#E02828] ${
+                isOpen
                   ? 'brightness-150 w-full flex justify-around'
                   : 'hover:brightness-150'
-                } text-white text-[20px] p-3 rounded-xl transition-all duration-300`}
+              } text-white text-[20px] p-3 rounded-xl transition-all duration-300`}
             >
               <PiPowerFill className="text-2xl" />
               {isOpen && <div> {t('sidebar.sign-out')} </div>}
