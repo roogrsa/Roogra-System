@@ -41,13 +41,14 @@ const SignIn: React.FC = () => {
       setSubmitting(false);
     }
   };
+  
   return (
     <>
-      <div className="rounded-sm  bg-white dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm  bg-white dark:bg-login-boxdark">
         <div className="flex justify-center">
-          <div className="w-full xl:w-[35vw] md:w-[35vw]">
+          <div className="w-full xl:w-[35vw] sm:w-[55vw]">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h1 className="mb-[5rem] text-[] font-bold textColor dark:text-white sm:text-title-5xl text-center">
+              <h1 className="mb-[5rem] text-6xl text-login dark:text-login-dark sm:text-title-5xl text-center">
                 {t('login.login')}
               </h1>
               <Formik
@@ -65,12 +66,12 @@ const SignIn: React.FC = () => {
                           type="email"
                           placeholder={t('login.name')}
                           name="email"
-                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
                       </div>
                     </div>
 
-                    <div className="mb-6">
+                    <div className="mt-6 mb-14">
                       <label className="mb-2.5 flex font-medium text-black dark:text-white">
                         {t('login.password')} <FaAsterisk className='text-[8px] text-[#E02828]' />
                       </label>
@@ -79,7 +80,7 @@ const SignIn: React.FC = () => {
                           type="password"
                           name="password"
                           placeholder={t('login.password')}
-                          className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          className="w-full rounded-lg border border-stroke bg-transparent py-3 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
 
                       </div>
@@ -88,7 +89,7 @@ const SignIn: React.FC = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full cursor-pointer rounded-lg bgColor p-4 text-white transition hover:bg-opacity-90"
+                        className="w-full cursor-pointer rounded-lg bg-login dark:bg-login-dark px-4 py-2 text-white dark:text-black text-2xl transition hover:bg-opacity-90"
                       > {t('login.go')}</button>
                     </div>
                   </Form>
