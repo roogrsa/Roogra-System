@@ -39,7 +39,7 @@ export default function Pagination({ currentPage, totalPages, setCurrentPage }: 
                         className={`flex items-center justify-center px-4 h-10 leading-tight ${currentPage === i
                             ? 'border rounded-lg dark:text-white mx-2'
                             : `text-gray-500 hover:border  hover:text-gray-700 dark:text-gray-400
-                             hover:rounded-lg dark:hover:text-white`
+                                hover:rounded-lg dark:hover:text-white`
                             }`}
                     >
                         {i + 1}
