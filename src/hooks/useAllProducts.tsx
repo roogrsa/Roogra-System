@@ -13,7 +13,7 @@ interface Product {
   category_name: string;
 }
 
-const useAllProducts = () => {
+const useAllProducts = (page: number=0) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,7 @@ const useAllProducts = () => {
     const fetchProducts = async () => {
       try {
         const response = await axiosInstance.get(
-          '/api/products?page=0&limit=8',
+          `/api/products?page=${page}&limit=8`,
         );
         setProducts(response.data.data);
         console.log('productssss', response.data.data);
@@ -34,7 +34,7 @@ const useAllProducts = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [page]);
 
   return { products, loading, error };
 };

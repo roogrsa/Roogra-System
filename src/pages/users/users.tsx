@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useUsers from '../../hooks/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useBanUser from '../../hooks/useBanUser';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
+import axiosInstance from '../../axiosConfig/instanc';
+import Pagination from '../../components/pagination/Pagination';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -14,9 +16,22 @@ const ActivatedAccountIconSrc = '/true.png';
 const NotActivatedAccountIconSrc = '/x.png';
 
 const Users: React.FC = () => {
-  const { users, loading, error } = useUsers();
-  const { handleAction, loading: actionLoading } = useHandleAction();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [usersCount, setUsersCount] = useState(0);
 
+  const { users, loading, error } = useUsers(currentPage);
+  const { handleAction, loading: actionLoading } = useHandleAction();
+  useEffect(() => {
+    const fetchUsersCount = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/users/count`);
+        setUsersCount((response.data.data.count) / 8)
+      } catch (err) {
+      }
+    };
+    fetchUsersCount()
+  }, []);
+  const totalPages = Math.ceil(usersCount);
   const { banUser, loading: banUserLoading, error: banError } = useBanUser();
   const navigate = useNavigate();
 
@@ -147,6 +162,11 @@ const Users: React.FC = () => {
       <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="الكل" />
       <MainTable logs={logs} headers={headers} />
       {banUserLoading && <p>Processing ban action...</p>}{' '}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };
