@@ -106,7 +106,7 @@
 // };
 
 // export default Home;
-import React from 'react';
+import React, { useState } from 'react';
 import ChartThree from '../../components/Charts/ChartThree';
 import useLogs from '../../hooks/getLogs';
 import MainTable from '../../components/lastnews/MainTable';
@@ -122,9 +122,13 @@ const Home = () => {
   const TypeClass = 'dark:text-white text-black';
   const timeClass = 'flex dark:text-white text-black';
   const iconClass = 'mx-3 mt-1';
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   // Fetch data using the custom hook for logs
-  const { logs, loading: logsLoading, error: logsError } = useLogs(0, 8);
+  const { logs, loading: logsLoading, error: logsError } = useLogs(currentPage, 8);
+  const totalPages = 10;
 
   // Fetch chart data using the custom hook for charts
   const {
@@ -171,8 +175,8 @@ const Home = () => {
             log.key === 'login'
               ? 'قام بتسجيل الدخول   '
               : log.key === 'register'
-              ? '  إنشاء حساب جديد'
-              : 'تم تعديل الحساب',
+                ? '  إنشاء حساب جديد'
+                : 'تم تعديل الحساب',
           className: index % 2 === 0 ? colorEvenClass : colorOddClass,
         },
         {
@@ -220,7 +224,11 @@ const Home = () => {
 
         <MainTable logs={dynamicColumns} />
       </div>
-      <Pagination/>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 };
