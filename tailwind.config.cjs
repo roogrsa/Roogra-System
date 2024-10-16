@@ -41,13 +41,21 @@ module.exports = {
         DEFAULT: '#FFFFFF',
         light: '#000000',
         dark: '#FFFFFF',
-        mainTextColor:'#022E47'
       },
       login: {
         DEFAULT: '#022E47',
         light: '#022E47',
         dark: '#70F1EB',
         boxBgDark:'#1E1E26',
+      },
+      header: {
+        DEFAULT: '#022E47',
+        light: '#022E47',
+        dark: '#70F1EB',
+        inputDark:'#14141A',
+        inputLight:'#FAFAFF',
+        inputBorder:'#D6D4D4',
+
       },
       TextBlue: '#001AFF',
       TextGreen: '#32E26B',
@@ -116,7 +124,7 @@ module.exports = {
         graydark: '#333A48',
         whiten: '#F1F5F9',
         whiter: '#F5F7FD',
-        boxdark: '#24303F',
+        boxdark: '#1E1E26',
         'boxdark-2': '#1A222C',
         strokedark: '#2E3A47',
         'form-strokedark': '#3d4d60',
