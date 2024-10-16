@@ -10,6 +10,7 @@ import i18n from '../../i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import useColorMode from '../../hooks/useColorMode';
 import { CiSearch } from "react-icons/ci";
+import { useTranslation } from 'react-i18next';
 const logoLight = '../../../logo/logoLight.png';
 const logoDark = '../../../logo/logoDark.png';
 
@@ -17,6 +18,7 @@ const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
+  const { t } = useTranslation();
   const language = useSelector(selectLanguage)
   console.log(language);
 
@@ -69,14 +71,14 @@ const Header = (props: {
 
           <DarkModeSwitcher />
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden sm:block" dir={language === 'ar' ? 'rtl' : 'ltr'}>
           <form action="https://formbold.com/s/unique_form_id" method="POST">
             <div className="relative">
-                <CiSearch  className="absolute right-2 top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold"/>
-
+                <CiSearch  className={`absolute top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold
+                 ${language === 'ar' ? 'left-2' : 'right-2'} `}/>
               <input
                 type="text"
-                placeholder="Type to search..."
+                placeholder={t(`header.search`)}
                 className="px-4 py-1 rounded-3xl border-header-inputBorder text-black dark:bg-header-inputDark dark:text-white
                 border-2 bg-header-inputLight outline-none"
               />

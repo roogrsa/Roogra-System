@@ -19,6 +19,8 @@
         "go":"الدخول",
         "name-error":"",
         "password-error":""
-
+    },
+    "header":{
+        "search":"إضغط / للبحث ..."
     }
 }

@@ -19,6 +19,8 @@
         "go":"Login",
         "name-error":"",
         "password-error":""
-
+    },
+    "header":{
+        "search":"Type to search..."
     }
 }
