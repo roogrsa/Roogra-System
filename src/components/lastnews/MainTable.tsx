@@ -1,6 +1,6 @@
 import React from 'react';
-import TableCell from './TableCell'; // For table body cells
-import HeaderTableCell from './HeaderTableCell'; // For table header cells
+import HeaderTableCell from './HeaderTableCell';
+import TableCell from './TableCell';
 
 interface ColumnConfig {
   key: string;
@@ -20,13 +20,20 @@ interface LogData {
 interface MainTableProps {
   logs: LogData[];
   headers?: ColumnConfig[]; // Made headers optional
+  // headers2?: ColumnConfig[]; // Optional second set of headers
+  header2?: boolean; // Optional header2 flag
 }
 
-const MainTable: React.FC<MainTableProps> = ({ logs, headers }) => {
+const MainTable: React.FC<MainTableProps> = ({
+  logs,
+  headers,
+  // headers2,
+  header2,
+}) => {
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-[20px] text-left rtl:text-right">
-        {/* Render thead only if headers are provided */}
+        {/* Render thead for headers if provided */}
         {headers && headers.length > 0 && (
           <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
             <tr className="flex justify-between">
@@ -45,17 +52,48 @@ const MainTable: React.FC<MainTableProps> = ({ logs, headers }) => {
           </thead>
         )}
 
-        {/* Table body */}
+        {/* Render thead for headers2 if header2 flag is true and headers2 exist */}
+        {/* {headers2 && headers2.length > 0 && (
+          <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+            <tr className="flex justify-between">
+              {headers2.map((header) => (
+                <Header2TableCell
+                  key={header.key}
+                  content={header.content}
+                  className={`flex-1 ${
+                    typeof header.className === 'function'
+                      ? header.className(0) // Assuming index 0 for header rows
+                      : header.className
+                  }`}
+                />
+              ))}
+            </tr>
+          </thead>
+        )} */}
+
         <tbody>
+          {/* Render logs */}
           {logs.map((log, index) => (
             <tr
               key={log.id}
-              className={` flex justify-between items-center ${
-                index % 2 === 0
-                  ? 'dark:bg-[#1E1E26] bg-[#FFFFFF]'
-                  : 'dark:bg-[#2E2D3D] bg-[#F7F5F9]'
+              className={`flex justify-between items-center ${
+                header2 // Check if header2 is true
+                  ? index % 2 === 0
+                    ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight' // Reversed classes
+                    : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
+                  : index % 2 === 0
+                  ? 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
+                  : 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
               }`}
             >
+              {/* // <tr
+            //   key={log.id}
+            //   className={`flex justify-between items-center ${
+            //     index % 2 === 0
+            //       ? 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
+            //       : 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+            //   }`}
+            // > */}
               {log.columns.map((col) => (
                 <TableCell
                   key={col.key}

@@ -1,22 +1,32 @@
-// import React from 'react';
+import React from 'react';
 import useUsers from '../../hooks/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import useBanUser from '../../hooks/useBanUser';
+import { useNavigate } from 'react-router-dom';
+import useHandleAction from '../../hooks/useHandleAction';
 
-// Define your SVG paths (adjust the paths based on your project structure)
-const BannedIconSrc = './../../../public/block.svg';
-const NotBannedIconSrc = './../../../public/unblock.svg';
-const ActivatedEmailIconSrc = './../../../public/true.png';
-const NotActivatedEmailIconSrc = './../../../public/x.png';
-const ActivatedAccountIconSrc = './../../../public/true.png';
-const NotActivatedAccountIconSrc = './../../../public/x.png';
+const BannedIconSrc = '/block.svg';
+const NotBannedIconSrc = '/unblock.svg';
+const ActivatedEmailIconSrc = '/true.png';
+const NotActivatedEmailIconSrc = '/x.png';
+const ActivatedAccountIconSrc = '/true.png';
+const NotActivatedAccountIconSrc = '/x.png';
 
 const Users: React.FC = () => {
   const { users, loading, error } = useUsers();
+  const { handleAction, loading: actionLoading } = useHandleAction();
+
+  const { banUser, loading: banUserLoading, error: banError } = useBanUser();
+  const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-
-  // Map users to the LogData format
+  //
+  const handleClickName = (userId: number) => {
+    navigate(`/profile/${userId}`);
+  };
+  //
   const logs = users.map((user) => ({
     id: user.id,
     type: user.type === 'customer' ? 1 : 2,
@@ -26,10 +36,16 @@ const Users: React.FC = () => {
         content: user.id,
         className: 'dark:text-white text-black',
       },
-
       {
         key: 'name',
-        content: user.name.split(' ').slice(0, 2).join(' ').slice(0, 12),
+        content: (
+          <span
+            className="cursor-pointer dark:text-TextGreen text-TextBlue"
+            onClick={() => handleClickName(user.id)}
+          >
+            {user.name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+          </span>
+        ),
         className: 'dark:text-[#32E26B] text-[#0E1FB2]',
       },
       {
@@ -64,9 +80,8 @@ const Users: React.FC = () => {
             className="w-6 h-6 text-center"
           />
         ),
-        className: 'flex  justify-center',
+        className: 'flex justify-center',
       },
-
       {
         key: 'isActivatedEmail',
         content: (
@@ -79,19 +94,26 @@ const Users: React.FC = () => {
             alt={
               user.isActivated.email ? 'Email Activated' : 'Email Not Activated'
             }
-            className="w-6 h-6 text-center" // Set appropriate size
+            className="w-6 h-6 text-center"
           />
         ),
         className: 'flex justify-center',
       },
-
       {
         key: 'isBanned',
         content: (
           <img
             src={user.isBanned ? BannedIconSrc : NotBannedIconSrc}
             alt={user.isBanned ? 'Banned' : 'Not Banned'}
-            className="w-6 h-6 text-center" // Set appropriate size
+            className="w-6 h-6 text-center cursor-pointer"
+            onClick={() =>
+              !actionLoading &&
+              user?.id &&
+              handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
+                confirmButtonClass: 'bg-BlockIconBg ',
+                cancelButtonClass: '',
+              })
+            }
           />
         ),
         className: 'flex justify-center',
@@ -102,24 +124,29 @@ const Users: React.FC = () => {
   const headers = [
     { key: 'id', content: 'ID', className: 'text-' },
     { key: 'name', content: 'Name', className: 'text-' },
-    { key: 'alias', content: 'alias', className: 'text-' },
-    { key: 'type', content: 'type', className: 'text-' },
-    { key: 'regDate', content: 'regDate', className: 'text-' },
+    { key: 'alias', content: 'Alias', className: 'text-' },
+    { key: 'type', content: 'Type', className: 'text-' },
+    { key: 'regDate', content: 'RegDate', className: 'text-' },
     {
       key: 'mobileconfirm',
-      content: 'mobileconfirm',
+      content: 'MobileConfirm',
       className: 'text-center',
     },
     {
       key: 'emailleconfirm',
-      content: 'emailleconfirm',
+      content: 'EmailConfirm',
       className: 'text-center',
     },
     { key: 'BanStatus', content: 'BanStatus', className: 'text-center' },
   ];
+  //
+  const breadcrumbLinks = [{ label: 'المستخدمين/', path: '/' }];
+  //
   return (
     <div>
+      <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="الكل" />
       <MainTable logs={logs} headers={headers} />
+      {banUserLoading && <p>Processing ban action...</p>}{' '}
     </div>
   );
 };

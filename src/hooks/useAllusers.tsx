@@ -48,6 +48,7 @@ const useUsers = () => {
         }
       } catch (err) {
         setError('Error fetching data');
+        console.log(err);
       } finally {
         setLoading(false);
       }

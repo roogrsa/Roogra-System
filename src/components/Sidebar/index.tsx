@@ -96,7 +96,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-4">
           <button
-            className={`absolute bg-[#2E2D3D] top-[1vh] rounded-[10px] p-2 ${isOpen
+            className={`absolute bg-sidebarHover  top-[1vh] rounded-[10px] p-2 ${
+              isOpen
                 ? 'ltr:left-[190px] rtl:right-[175px]'
                 : 'ltr:left-[30px] rtl:right-[50px]'
               } rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
@@ -138,15 +139,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       }`}
                   >
                     <AiFillHome className="text-2xl" />
-                    {isOpen && t('sidebar.home')}
+                    {isOpen && t('sidebar.products')}
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to="/profile"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('profile') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
+                    to="/users"
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('users') && 'bg-sidebarHover '
+                    }`}
                   >
                     <PiUsersFill className="text-2xl" />
                     {isOpen && t('sidebar.users')}
@@ -155,7 +156,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/categories"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('categories') &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('categories') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >
@@ -166,8 +168,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                 <li>
                   <NavLink
-                    to="/tables"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('tables') &&
+                    to="/subscription"
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('subscription') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >
@@ -178,7 +181,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >
@@ -189,7 +193,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >
@@ -200,7 +205,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >
@@ -211,7 +217,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >
@@ -222,7 +229,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <NavLink
                     to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('settings') &&
+                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-[#FFFFFF]  duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${
+                      pathname.includes('settings') &&
                       'bg-graydark dark:bg-meta-4'
                       }`}
                   >

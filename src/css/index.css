@@ -8,7 +8,9 @@
 .bg-darkColor {
     background: #1E1E26 !important;
 }
-
+.bgActiveSidebar{
+    background: #2E2D3D;
+}
 .textColor {
     color: #022E47;
 }

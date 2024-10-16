@@ -6,6 +6,71 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
+    colors: {
+      primaryBG: {
+        DEFAULT: '#F9FAFF',
+        dark: '#14141A',
+        light: '#F9FAFF',
+      },
+      secondaryBG: {
+        DEFAULT: '#FFFFFF',
+        dark: '#1E1E26',
+        light: '#FFFFFF',
+      },
+      MainTableBG: {
+        EvenDark: '#1E1E26',
+        EvenLight: '#FFFFFF',
+
+        OddDark: '#2E2D3D',
+        OddLight: '#F7F5F9',
+      },
+      sidebarHover: '#2E2D3D',
+      TheadBorder: {
+        DEFAULT: '#D0D0D0',
+
+        light: '#D0D0D0',
+        dark: '#676767',
+      },
+      EditIconBg: '#0C94E1',
+      BlockIconBg: '#FA9623',
+      SaveIconBg: '#40C734',
+      RemoveIconBg: '#E02828',
+      ConfirmIconBg: '#40C734',
+      RejectIconBg: '#AF39D3',
+
+      text: {
+        DEFAULT: '#FFFFFF',
+        light: '#000000',
+        dark: '#FFFFFF',
+      },
+      TextBlue: '#001AFF',
+      TextGreen: '#32E26B',
+      Input: {
+        TextBlue: '#1B32FF',
+        TextGreen: '#009530',
+        TextRed: '#E02828',
+        red: '#F5DAD8',
+        green: '#E3FEED',
+        blue: '#DCECF5',
+        gray: '#D0D0D0',
+        border: '#D6D4D4',
+        borderGreen: '#19930E',
+      },
+      Accordion: {
+        BgLight: '#EDEDED',
+        BgDark: '#494967',
+        BorderLight: '#EDEDED',
+        BorderDark: '#494967',
+      },
+      Header2Table: {
+        BgLight: '#EDEDED',
+        BgDark: '#1E1E26',
+        BgCellLight: '#FFFFFF',
+        BgCellDark: '#3E3E46',
+        // BgFoucsight: '#EDEDED',
+        // BgFoucsDark: '#494967',
+      },
+    },
     fontFamily: {
       satoshi: ['Satoshi', 'sans-serif'],
     },
