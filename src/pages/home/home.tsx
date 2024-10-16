@@ -123,9 +123,7 @@ const Home = () => {
   const timeClass = 'flex dark:text-white text-black';
   const iconClass = 'mx-3 mt-1';
   const [currentPage, setCurrentPage] = useState(0);
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+ 
   // Fetch data using the custom hook for logs
   const { logs, loading: logsLoading, error: logsError } = useLogs(currentPage, 8);
   const totalPages = 10;
@@ -227,7 +225,7 @@ const Home = () => {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={handlePageChange}
+        setCurrentPage={setCurrentPage}
       />
     </>
   );

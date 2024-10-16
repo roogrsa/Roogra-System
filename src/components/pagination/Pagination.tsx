@@ -4,40 +4,44 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
-    onPageChange: (page: number) => void;
+    setCurrentPage: (page: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, setCurrentPage }: PaginationProps) {
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
     const handlePrevClick = () => {
-        if (currentPage > 1) {
-            onPageChange(currentPage - 1);
+        if (currentPage > 0) {
+            handlePageChange(currentPage - 1);
         }
     };
 
     const handleNextClick = () => {
-        if (currentPage < totalPages) {
-            onPageChange(currentPage + 1);
+        if (currentPage < totalPages - 1) {
+            handlePageChange(currentPage + 1);
         }
     };
 
     const renderPageNumbers = () => {
         let pageNumbers = [];
         const maxPagesToShow = 5;
-        const startPage = Math.max(currentPage - Math.floor(maxPagesToShow / 2), 1);
-        const endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+        const startPage = Math.max(currentPage - Math.floor(maxPagesToShow / 2), 0);
+        const endPage = Math.min(startPage + maxPagesToShow - 1, totalPages - 1);
 
         for (let i = startPage; i <= endPage; i++) {
             pageNumbers.push(
                 <li key={i}>
                     <Link
                         to={`#`}
-                        onClick={() => onPageChange(i)}
+                        onClick={() => handlePageChange(i)}
                         className={`flex items-center justify-center px-4 h-10 leading-tight ${currentPage === i
                                 ? 'bg-gray-300 text-gray-700'
                                 : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
                             }`}
                     >
-                        {i}
+                        {i + 1}
                     </Link>
                 </li>
             );
