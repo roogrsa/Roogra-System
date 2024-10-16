@@ -157,7 +157,12 @@ const CategorySubscription = () => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
           setStatus(statusMap[index]); // Set the correct status based on the tab clicked
         }}
-        footerItems={['Footer 1', 'Footer 2', 'Footer 3', 'Footer 4']}
+        footerItems={[
+          <div>({logs.length})</div>,
+          <div>({logs.length})</div>,
+          <div>({logs.length})</div>,
+          <div>({logs.length})</div>,
+        ]}
         children={[
           <NotFoundSection data={logs}>
             <MainTable logs={logs} headers={headers} />
