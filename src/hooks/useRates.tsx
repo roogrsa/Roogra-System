@@ -24,7 +24,8 @@ const useUserRates = (): UseUserRatesReturn => {
     const fetchUserRates = async () => {
       try {
         const response = await axiosInstance.get(`/api/users/74/rates`);
-        setData(response.data.data); // Assuming response.data.data contains the array of user rates
+        setData(response.data.data);
+        console.log(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
