@@ -18,7 +18,7 @@ interface LogsApiResponse {
 }
 
 // Custom hook to fetch logs
-const useLogs = (page: number = 0, limit: number = 8) => {
+const useLogs = (page: number = 0) => {
   const [logs, setLogs] = useState<LogData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,12 +28,12 @@ const useLogs = (page: number = 0, limit: number = 8) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get<LogsApiResponse>(
-          `/api/logs?page=${page}&limit=${limit}`,
+          `/api/logs?page=${page}&limit=8`,
         );
 
         if (response.data.success) {
           setLogs(response.data.data);
-          console.log('logs', response.data.data);
+          // console.log('logs', response.data.data);
         } else {
           setError('Failed to fetch logs');
         }
@@ -43,9 +43,8 @@ const useLogs = (page: number = 0, limit: number = 8) => {
         setLoading(false);
       }
     };
-
     fetchLogs();
-  }, [page, limit]);
+  }, [page]);
 
   return { logs, loading, error };
 };

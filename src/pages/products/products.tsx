@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import MainTable from '../../components/lastnews/MainTable';
 import useAllProducts from '../../hooks/useAllProducts'; // Updated hook
 import useBanProduct from '../../hooks/useBanProduct';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useHandleAction from '../../hooks/useHandleAction';
+import Pagination from '../../components/pagination/Pagination';
+import axiosInstance from '../../axiosConfig/instanc';
 
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
@@ -12,12 +14,27 @@ const CheckboxIconSrc = '/checkbox.svg';
 const EditIconSrc = '/Edit.svg';
 
 const Products: React.FC = () => {
-  const { products, loading, error } = useAllProducts();
+  const [currentPage, setCurrentPage] = useState(0);
+  const { products, loading, error } = useAllProducts(currentPage);
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
   const navigate = useNavigate();
+  const [productsCount, setProductsCount] = useState(0);
 
+  useEffect(() => {
+    const fetchProductsCount = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/products/count`);
+        setProductsCount((response.data.data.count) / 8)
+      } catch (err) {
+      }
+    };
+    fetchProductsCount()
+  }, []);
+  const totalPages = Math.ceil(productsCount);
+  console.log(totalPages);
+  
   // Handle loading and error states for fetching products
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error fetching products: {error}</p>;
@@ -175,6 +192,11 @@ const Products: React.FC = () => {
 
       {banPrdError && <p>Error banning product: {banPrdError}</p>}
       <MainTable logs={logs} headers={headers} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 };

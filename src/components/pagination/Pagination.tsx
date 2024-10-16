@@ -37,8 +37,9 @@ export default function Pagination({ currentPage, totalPages, setCurrentPage }: 
                         to={`#`}
                         onClick={() => handlePageChange(i)}
                         className={`flex items-center justify-center px-4 h-10 leading-tight ${currentPage === i
-                                ? 'bg-gray-300 text-gray-700'
-                                : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                            ? 'border rounded-lg text-white mx-2'
+                            : `text-gray-500 hover:border  hover:text-gray-700 dark:text-gray-400
+                             dark:hover:rounded-lg dark:hover:text-white`
                             }`}
                     >
                         {i + 1}
@@ -51,13 +52,15 @@ export default function Pagination({ currentPage, totalPages, setCurrentPage }: 
 
     return (
         <div className="flex justify-center mt-14">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="">
                 <ul className="flex items-center -space-x-px h-10 text-base">
                     <li>
                         <Link
                             to={`#`}
                             onClick={handlePrevClick}
-                            className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 rounded-s-lg
+                                hover:bg-gray-100 hover:text-gray-700  dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700
+                                dark:hover:text-white"
                         >
                             <span className="sr-only">Previous</span>
                             <MdKeyboardArrowRight className="text-2xl font-bold" />
@@ -68,7 +71,9 @@ export default function Pagination({ currentPage, totalPages, setCurrentPage }: 
                         <Link
                             to={`#`}
                             onClick={handleNextClick}
-                            className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 rounded-e-lg
+                                hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700
+                                dark:hover:text-white"
                         >
                             <span className="sr-only">Next</span>
                             <MdKeyboardArrowLeft className="text-2xl font-bold" />

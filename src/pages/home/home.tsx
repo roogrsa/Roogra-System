@@ -106,7 +106,7 @@
 // };
 
 // export default Home;
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChartThree from '../../components/Charts/ChartThree';
 import useLogs from '../../hooks/getLogs';
 import MainTable from '../../components/lastnews/MainTable';
@@ -114,6 +114,7 @@ import useChartData from '../../hooks/useChartData';
 import HeaderLastNews from '../../components/lastnews/HeaderLastNews';
 import { MdOutlineWatchLater } from 'react-icons/md';
 import Pagination from '../../components/pagination/Pagination';
+import axiosInstance from '../../axiosConfig/instanc';
 
 const Home = () => {
   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
@@ -123,10 +124,21 @@ const Home = () => {
   const timeClass = 'flex dark:text-white text-black';
   const iconClass = 'mx-3 mt-1';
   const [currentPage, setCurrentPage] = useState(0);
- 
+  const [logsCount, setLogsCount] = useState(0);
+
+  useEffect(() => {
+    const fetchLogsCount = async () => {
+      try {
+        const response = await axiosInstance.get(`/api/logs/count`);
+        setLogsCount((response.data.data.count) / 8)
+      } catch (err) {
+      }
+    };
+    fetchLogsCount()
+  }, []);
   // Fetch data using the custom hook for logs
-  const { logs, loading: logsLoading, error: logsError } = useLogs(currentPage, 8);
-  const totalPages = 10;
+  const { logs, loading: logsLoading, error: logsError } = useLogs(currentPage);
+  const totalPages = Math.ceil(logsCount);
 
   // Fetch chart data using the custom hook for charts
   const {

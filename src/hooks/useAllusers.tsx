@@ -31,7 +31,7 @@ interface ApiResponse {
   data: User[];
 }
 
-const useUsers = () => {
+const useUsers = (page: number = 0) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +39,7 @@ const useUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axiosInstance.get<ApiResponse>('/api/users');
+        const response = await axiosInstance.get<ApiResponse>(`/api/users?page=${page}&limit=8`);
         if (response.data.success) {
           setUsers(response.data.data);
           console.log(response.data.data);
@@ -55,7 +55,7 @@ const useUsers = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [page]);
 
   return { users, loading, error };
 };
