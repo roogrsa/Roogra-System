@@ -27,7 +27,6 @@ module.exports = {
       sidebarHover: '#2E2D3D',
       TheadBorder: {
         DEFAULT: '#D0D0D0',
-
         light: '#D0D0D0',
         dark: '#676767',
       },
@@ -42,6 +41,13 @@ module.exports = {
         DEFAULT: '#FFFFFF',
         light: '#000000',
         dark: '#FFFFFF',
+        mainTextColor:'#022E47'
+      },
+      login: {
+        DEFAULT: '#022E47',
+        light: '#022E47',
+        dark: '#70F1EB',
+        boxBgDark:'#1E1E26',
       },
       TextBlue: '#001AFF',
       TextGreen: '#32E26B',
