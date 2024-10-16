@@ -44,7 +44,7 @@ const SignIn: React.FC = () => {
   
   return (
     <>
-      <div className="rounded-sm  bg-white dark:bg-login-boxdark">
+      <div className="rounded-sm  bg-white dark:bg-login-boxBgDark">
         <div className="flex justify-center">
           <div className="w-full xl:w-[35vw] sm:w-[55vw]">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">

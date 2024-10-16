@@ -113,6 +113,7 @@ import MainTable from '../../components/lastnews/MainTable';
 import useChartData from '../../hooks/useChartData';
 import HeaderLastNews from '../../components/lastnews/HeaderLastNews';
 import { MdOutlineWatchLater } from 'react-icons/md';
+import Pagination from '../../components/pagination/Pagination';
 
 const Home = () => {
   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
@@ -219,6 +220,7 @@ const Home = () => {
 
         <MainTable logs={dynamicColumns} />
       </div>
+      <Pagination/>
     </>
   );
 };
