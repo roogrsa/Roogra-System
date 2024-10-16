@@ -150,32 +150,7 @@ const CategorySubscription = () => {
   return (
     <div>
       <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="قسم" />
-      {/* <AccordionHeader2
-        titles={['طلب', 'فعال', 'منتهي', 'رفض']}
-        onTitleClick={(index) => {
-          const statusMap = [
-            'processing',
-            'approved',
-            'processing',
-            'processing',
-          ];
-          setStatus(statusMap[index]); // Set the status based on the tab clicked
-        }}
-        children={[
-          <NotFoundSection data={logs}>
-            <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-          <NotFoundSection data={logs}>
-            <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-          <NotFoundSection data={logs}>
-            <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-          <NotFoundSection data={logs}>
-            <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-        ]}
-      /> */}
+
       <AccordionHeader2
         titles={['طلب', 'فعال', 'رفض', 'منتهي']}
         onTitleClick={(index) => {
