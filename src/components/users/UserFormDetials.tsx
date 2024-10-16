@@ -57,7 +57,7 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
   }
 
   return (
-    <div className="my-3 mx-auo bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 ">
+    <div className="my-3  bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 ">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10">
         {/* ID */}
         <ReusableInput

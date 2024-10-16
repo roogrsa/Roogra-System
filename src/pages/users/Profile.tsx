@@ -1,14 +1,13 @@
 import React from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import ProfileAccordion from '../../components/users/ProfileAccordion';
-import CoverOne from './../../images/cover/cover-01.png';
-import userSix from './../../../public/Defualt.png';
 import { useParams } from 'react-router-dom';
 import useUser from '../../hooks/useGetUser';
 import useRemoveUser from '../../hooks/useRemoveUser';
 import useHandleAction from '../../hooks/useHandleAction';
 import useBanUser from '../../hooks/useBanUser';
 import StarRating from '../../components/users/StarRating';
+import ProfileImages from '../../components/users/ProfileImages';
 
 const SaveIconSrc = '/save.svg';
 const BannedIconSrc = '/block.svg';
@@ -35,33 +34,8 @@ const Profile = () => {
     <>
       <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="العملاء" />
       <div className="overflow-hidden">
-        {/* image cover */}
-
-        <div className="relative z-20 h-35 md:h-65">
-          <img
-            src={
-              user?.image === 'https://roogr.sa/api/image/'
-                ? CoverOne
-                : user?.image || CoverOne
-            }
-            className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
-            alt="profile cover"
-          />
-        </div>
-        {/* image profile */}
-        <div className="px-4  text-center ">
-          <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur ">
-            <img
-              src={
-                user?.image === 'https://roogr.sa/api/image/'
-                  ? userSix
-                  : user?.image || userSix
-              }
-              className="rounded-full text-center"
-              alt="profile"
-            />
-          </div>
-        </div>
+        {/* image section */}
+        <ProfileImages user={user} />
 
         {/* Rating section */}
         <div className="mx-auto text-center my-4">
