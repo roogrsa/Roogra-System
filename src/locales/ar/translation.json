@@ -5,7 +5,7 @@
             "ads": "الأعلانات",
             "all": "الكل",
             "main": "رئيسية",
-            "subscriptions": "اشتراك"
+            "subscriptions": "الاشتراك"
         },
         "users": {
             "users":"المستخدمين",
@@ -13,11 +13,33 @@
             "advertisers":"المعلنين",
             "customers":"الزبائن"
         },
-        "categories": "الأقسام",
-        "requests": "تذاكر الاشتراك",
-        "support": "تواصل معنا",
-        "reports": "البلاغات",
-        "ban-list": "المحظورين",
+        "categories":{
+            "categories": "الأقسام",
+            "main": "رئيسية",
+            "subscriptions": "الاشتراك",
+            "map": "الخريطة"
+        },
+        "requests": {
+            "requests": "تذاكر الاشتراك",
+            "attestation": "توثيق",
+            "category": "قسم"
+        },
+        "support":{
+            "support": "تواصل معنا",
+            "inquiries": "استفسارات",
+            "issues": "شكاوي",
+            "suggestions": "اقتراحات"
+        },
+        "reports": {
+            "reports": "البلاغات",
+            "chat": "المحادثات",
+            "product": "المنتجات"
+        },
+        "ban-list": {
+            "ban-list": "المحظورين",
+            "users": "المستخدمين",
+            "products": "المنتجات"
+        },
         "admins": "الإدارة",
         "settings": "الإعدادات",
         "sign-out": "تسجيل الخروج"

@@ -13,11 +13,33 @@
             "advertisers":"Advertisers",
             "customers":"Customers"
         },
-        "categories": "Categories",
-        "requests": "Requests",
-        "support": "Support",
-        "reports": "Reports",
-        "ban-list": "Ban list",
+        "categories":{
+            "categories": "Categories",
+            "main": "Main",
+            "subscriptions": "Subscriptions",
+            "map": "Map"
+        },
+        "requests": {
+            "requests": "Requests",
+            "attestation": "Verification",
+            "category": "Category"
+        },
+        "support":{
+            "support": "Support",
+            "inquiries": "Inquiries",
+            "issues": "Issues",
+            "suggestions": "Suggestions"
+        },
+        "reports": {
+            "reports": "Reports",
+            "chat": "Chat",
+            "product": "Product"
+        },
+        "ban-list": {
+            "ban-list": "Ban list",
+            "users": "Users",
+            "products": "Products"
+        },
         "admins": "admins",
         "settings": "Settings",
         "sign-out": "Sign out"

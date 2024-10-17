@@ -15,10 +15,11 @@ import { FaChevronRight } from 'react-icons/fa';
 import { BiSolidCategory } from 'react-icons/bi';
 import { MdOutlineBlock } from 'react-icons/md';
 import axiosInstance from '../../axiosConfig/instanc';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLogout } from '../../store/slices/auth';
 import SidebarLink from './SidebarLink';
 import DropLink from './DropLink';
+import { selectLanguage } from '../../store/slices/language';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -27,6 +28,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(true);
   const { t } = useTranslation();
+  const language = useSelector(selectLanguage);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -36,9 +38,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebar = useRef<any>(null);
   const [isUsersOpen, setIsUsersOpen] = useState(false);
   const [isAdsOpen, setIsAdsOpen] = useState(false);
-  const userOpen = () => {
-    setIsUsersOpen(!isUsersOpen)
-  }
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
+  const [isSupportOpen, setISupportOpen] = useState(false);
+  const [isReportsOpen, setIsReportsOpen] = useState(false);
+  const [isBanListOpen, setIsBanListOpen] = useState(false);
+
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
@@ -119,32 +124,93 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <ul className="mb-6 flex flex-col gap-1.5">
                   <SidebarLink to={`/`} isOpen={isOpen} text={'sidebar.charts'} icon={<PiChartDonutFill className="text-2xl" />}/>
                 {/* ads dropdown */}
-                <div className='relative' onClick={()=>setIsAdsOpen(!isAdsOpen)}>
+                <div className='relative'>
+                  <div  onClick={()=>setIsAdsOpen(!isAdsOpen)}>
                 <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ads.ads'} icon={<AiFillHome className="text-2xl" />}/>
+                  </div>
                 {isAdsOpen &&
-                    <ul className='bg-sidebarHover p-2 absolute w-full -left-6 top-12 z-10 rounded-xl'>
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
                       <DropLink to={`/ads/all`} text={'sidebar.ads.all'}/>
-                      <DropLink to={`/users/advertiser`} text={'sidebar.ads.main'}/>
-                      <DropLink to={`/users/customer`} text={'sidebar.ads.subscriptions'}/>
+                      <DropLink to={`/ads/main`} text={'sidebar.ads.main'}/>
+                      <DropLink to={`/ads/subscriptions`} text={'sidebar.ads.subscriptions'}/>
                     </ul>
                 }
                 </div>
                 {/* users dropdown */}
-                <div className='relative' onClick={userOpen}>
+                <div className='relative'>
+                  <div  onClick={()=>setIsUsersOpen(!isUsersOpen)}>
                 <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.users.users'} icon={<PiUsersFill className="text-2xl" />} />
+                  </div>
                 {isUsersOpen &&
-                    <ul className='bg-sidebarHover p-2 absolute w-full -left-6 top-12 z-10 rounded-xl'>
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
                       <DropLink to={`/users`} text={'sidebar.users.all'}/>
                       <DropLink to={`/users/advertiser`} text={'sidebar.users.advertisers'}/>
                       <DropLink to={`/users/customer`} text={'sidebar.users.customers'}/>
                     </ul>
                 }
                 </div>
-                <SidebarLink to={`/categories`} isOpen={isOpen} text={'sidebar.categories'} icon={<BiSolidCategory className="text-2xl" />}/>
-                <SidebarLink to={`/subscription`} isOpen={isOpen} text={'sidebar.requests'} icon={<PiTicketFill className="text-2xl" />}/>
-                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.support'} icon={<PiHeadsetFill className="text-2xl" />}/>
-                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.reports'} icon={<PiEnvelopeFill className="text-2xl" />}/>
-                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.ban-list'} icon={<MdOutlineBlock className="text-2xl" />}/>
+                 {/* categories dropdown */}
+                <div className='relative'>
+                  <div  onClick={()=>setIsCategoriesOpen(!isCategoriesOpen)}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.categories.categories'} icon={<BiSolidCategory className="text-2xl" />}/>
+                  </div>
+                {isCategoriesOpen &&
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
+                      <DropLink to={`/categories/main`} text={'sidebar.categories.main'}/>
+                      <DropLink to={`/categories/subscriptions`} text={'sidebar.categories.subscriptions'}/>
+                      <DropLink to={`/categories/map`} text={'sidebar.categories.map'}/>
+                    </ul>
+                }
+                </div>
+                 {/* subscription dropdown */}
+                <div className='relative'>
+                  <div  onClick={()=>setIsSubscriptionOpen(!isSubscriptionOpen)}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.requests.requests'} icon={<PiTicketFill className="text-2xl" />}/>
+                  </div>
+                {isSubscriptionOpen &&
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
+                      <DropLink to={`/requests/attestation`} text={'sidebar.requests.attestation'}/>
+                      <DropLink to={`/requests/category`} text={'sidebar.requests.category'}/>
+                    </ul>
+                }
+                </div>
+                {/* support dropdown */}
+                <div className='relative'>
+                  <div  onClick={()=>setISupportOpen(!isSupportOpen)}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.support.support'} icon={<PiHeadsetFill className="text-2xl" />}/>
+                  </div>
+                {isSupportOpen &&
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
+                      <DropLink to={`/support`} text={'sidebar.support.inquiries'}/>
+                      <DropLink to={`/support/advertiser`} text={'sidebar.support.issues'}/>
+                      <DropLink to={`/support/customer`} text={'sidebar.support.suggestions'}/>
+                    </ul>
+                }
+                </div>
+                {/* reports dropdown */}
+                <div className='relative'>
+                  <div  onClick={()=>setIsReportsOpen(!isReportsOpen)}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.reports.reports'} icon={<PiEnvelopeFill className="text-2xl" />}/>
+                  </div>
+                {isReportsOpen &&
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
+                      <DropLink to={`/reports/chat`} text={'sidebar.reports.chat'}/>
+                      <DropLink to={`/reports/product`} text={'sidebar.reports.product'}/>
+                    </ul>
+                }
+                </div>
+                {/* ban list dropdown */}
+                <div className='relative'>
+                  <div  onClick={()=>setIsBanListOpen(!isBanListOpen)}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ban-list.ban-list'} icon={<MdOutlineBlock className="text-2xl" />}/>
+                  </div>
+                {isBanListOpen &&
+                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language=='ar'?'-left-6':'-right-6'} top-12 z-10 rounded-xl`}>
+                      <DropLink to={`/ban-list/users`} text={'sidebar.ban-list.users'}/>
+                      <DropLink to={`/ban-list/products`} text={'sidebar.ban-list.products'}/>
+                    </ul>
+                }
+                </div>
                 <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.admins'} icon={<PiUsersThreeFill className="text-2xl" />}/>
                 <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.settings'} icon={<PiGearFineFill className="text-2xl" />}/>
               </ul>
