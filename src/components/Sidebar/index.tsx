@@ -101,10 +101,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-4">
           <button
-            className={`absolute bg-sidebarHover  top-[1vh] rounded-[10px] p-2 ${isOpen
-              ? 'ltr:left-[190px] rtl:right-[175px]'
+            className={`absolute bg-sidebarHover  top-[1vh] rounded-[10px] p-2
+              ${isOpen
+              ? 'ltr:left-[180px] rtl:right-[175px]'
               : 'ltr:left-[30px] rtl:right-[50px]'
-              } rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
+              }
+               rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
             onClick={toggleSidebar}
           >
             <FaChevronRight
