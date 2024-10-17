@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useUser from '../../hooks/useGetUser';
 import ReusableInput from '../products/ReusableInput';
 import ReusableSelect from '../products/ReusableSelectProps';
+import { useTranslation } from 'react-i18next';
 
 //
 interface User {
@@ -55,13 +56,14 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
   if (!user) {
     return <p>No user found.</p>;
   }
-
+  //
+  const { t } = useTranslation();
   return (
     <div className="my-3  bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 ">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10">
         {/* ID */}
         <ReusableInput
-          label="ID"
+          label={t('profile.id')}
           type="text"
           value={user.id}
           onChange={(e) => handleInputChange('id', e.target.value)}

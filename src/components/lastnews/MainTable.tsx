@@ -34,7 +34,7 @@ const MainTable: React.FC<MainTableProps> = ({
     <div className="relative overflow-x-auto">
       <table className="w-full text-[20px] text-left rtl:text-right">
         {/* Render thead for headers if provided */}
-        {headers && headers.length > 0 && (
+        {headers && logs.length > 0 && headers.length > 0 && (
           <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
             <tr className="flex justify-between">
               {headers.map((header) => (

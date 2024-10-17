@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 import useHandleAction from '../../hooks/useHandleAction';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
+import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
 //
 
 const ApprovedSubscription = '/true.png'; // Image for approved transactions
@@ -87,6 +88,7 @@ const CategorySubscription = () => {
   };
 
   //
+
   const headers = [
     { key: 'id', content: 'رقم التذكرة', className: 'text-center' },
     {
@@ -160,12 +162,17 @@ const CategorySubscription = () => {
               key: 'transaction_image',
               content:
                 item.STATUS === 'processing' ? (
-                  <img
+                  <ImageWithFullscreen
                     src={item.transaction_image}
                     alt="Transaction"
                     className="w-10 h-10 object-cover"
                   />
                 ) : (
+                  // <img
+                  //   src={item.transaction_image}
+                  //   alt="Transaction"
+                  //   className="w-10 h-10 object-cover"
+                  // />
                   <img
                     src={ApprovedSubscription}
                     alt="Approved"
@@ -334,18 +341,22 @@ const CategorySubscription = () => {
           <div>({logs.length})</div>,
         ]}
         children={[
-          <NotFoundSection data={logs}>
+          <div>
             <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-          <NotFoundSection data={logs}>
+            <NotFoundSection data={logs} />
+          </div>,
+          <div>
             <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-          <NotFoundSection data={logs}>
+            <NotFoundSection data={logs} />
+          </div>,
+          <div>
             <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
-          <NotFoundSection data={logs}>
+            <NotFoundSection data={logs} />
+          </div>,
+          <div>
             <MainTable logs={logs} headers={headers} />
-          </NotFoundSection>,
+            <NotFoundSection data={logs} />
+          </div>,
         ]}
       />
     </div>
