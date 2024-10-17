@@ -52,25 +52,6 @@ const MainTable: React.FC<MainTableProps> = ({
           </thead>
         )}
 
-        {/* Render thead for headers2 if header2 flag is true and headers2 exist */}
-        {/* {headers2 && headers2.length > 0 && (
-          <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
-            <tr className="flex justify-between">
-              {headers2.map((header) => (
-                <Header2TableCell
-                  key={header.key}
-                  content={header.content}
-                  className={`flex-1 ${
-                    typeof header.className === 'function'
-                      ? header.className(0) // Assuming index 0 for header rows
-                      : header.className
-                  }`}
-                />
-              ))}
-            </tr>
-          </thead>
-        )} */}
-
         <tbody>
           {/* Render logs */}
           {logs.map((log, index) => (

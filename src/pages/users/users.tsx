@@ -49,7 +49,7 @@ const Users: React.FC = () => {
       {
         key: 'id',
         content: user.id,
-        className: 'dark:text-white text-black',
+        className: 'dark:text-white text-black text-center',
       },
       {
         key: 'name',
@@ -137,7 +137,7 @@ const Users: React.FC = () => {
   }));
   //
   const headers = [
-    { key: 'id', content: 'ID', className: 'text-' },
+    { key: 'id', content: 'ID', className: 'text-center' },
     { key: 'name', content: 'Name', className: 'text-' },
     { key: 'alias', content: 'Alias', className: 'text-' },
     { key: 'type', content: 'Type', className: 'text-' },

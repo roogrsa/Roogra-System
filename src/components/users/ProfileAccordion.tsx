@@ -16,6 +16,7 @@ import StarRating from './StarRating';
 import ReactDOMServer from 'react-dom/server';
 import useUserProducts from '../../hooks/useUserProducts';
 import useBanProduct from '../../hooks/useBanProduct';
+import NotFoundSection from '../Notfound/NotfoundSection';
 
 //
 const EditIconSrc = '/Edit.svg';
@@ -149,7 +150,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       columns: [
         {
           key: 'index',
-          content: index + 1, // Display the index number starting from 1
+          content: index + 1,
           className: 'flex justify-center ',
         },
 
@@ -187,20 +188,20 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
               src={follower.isBanned ? BannedIconSrc : NotBannedIconSrc}
               alt={follower.isBanned ? 'Banned' : 'Not Banned'}
               className="w-6 h-6 text-center cursor-pointer"
-              // onClick={() =>
-              //   !actionLoading &&
-              //   follower?.id &&
-              //   handleAction(
-              //     follower.id,
-              //     follower.isBanned === 1,
-              //     'ban',
-              //     banUser,
-              //     {
-              //       confirmButtonClass: 'bg-BlockIconBg ',
-              //       cancelButtonClass: '',
-              //     },
-              //   )
-              // }
+              onClick={() =>
+                !actionLoading &&
+                follower?.id &&
+                handleAction(
+                  follower.id,
+                  follower.isBanned === 1,
+                  'ban',
+                  banUser,
+                  {
+                    confirmButtonClass: 'bg-BlockIconBg ',
+                    cancelButtonClass: '',
+                  },
+                )
+              }
             />
           ),
           className: 'flex justify-center',
@@ -285,25 +286,25 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
           key: 'isBanned',
           content: (
             <img
-              // src={follower.isBanned ? BannedIconSrc : NotBannedIconSrc}
-              src={BannedIconSrc}
-              // alt={follower.isBanned ? 'Banned' : 'Not Banned'}
-              alt={'Banned'}
+              src={rate.isBanned ? BannedIconSrc : NotBannedIconSrc}
+              // src={BannedIconSrc}
+              alt={rate.isBanned ? 'Banned' : 'Not Banned'}
+              alt={rate.isBanned ? 'Banned' : 'Not Banned'}
               className="w-6 h-6 text-center cursor-pointer"
-              // onClick={() =>
-              //   !actionLoading &&
-              //   rate.customer_id &&
-              //   handleAction(
-              //     rate.customer_id,
-              //     follower.isBanned === 1,
-              //     'ban',
-              //     banUser,
-              //     {
-              //       confirmButtonClass: 'bg-BlockIconBg ',
-              //       cancelButtonClass: '',
-              //     },
-              //   )
-              // }
+              onClick={() =>
+                !actionLoading &&
+                rate.customer_id &&
+                handleAction(
+                  rate.customer_id,
+                  rate.isBanned === 1,
+                  'ban',
+                  banUser,
+                  {
+                    confirmButtonClass: 'bg-BlockIconBg ',
+                    cancelButtonClass: '',
+                  },
+                )
+              }
             />
           ),
           className: 'flex justify-center',
@@ -450,8 +451,12 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
         <AccordionHeader2
           titles={['عدد المتابعين', 'عدد التقييم', 'نبذة']}
           children={[
-            <MainTable logs={logsFollowers} header2={true} />,
-            <MainTable logs={logsRates || []} header2={true} />,
+            <NotFoundSection data={logsFollowers}>
+              <MainTable logs={logsFollowers} header2={true} />
+            </NotFoundSection>,
+            <NotFoundSection data={logsRates}>
+              <MainTable logs={logsRates || []} header2={true} />
+            </NotFoundSection>,
             <Bio Bio={user.bio} />,
           ]}
           footerItems={[
@@ -481,15 +486,9 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/* products section */}
       <Accordion title="الاعلانات">
-        {logsProducts ? (
-          <div className="my-3 ">
-            <MainTable logs={logsProducts || []} headers={headers} />
-          </div>
-        ) : (
-          <div>
-            <p>لا توجد أعلانات حتى ال��ن.</p>
-          </div>
-        )}
+        <NotFoundSection data={logsProducts}>
+          <MainTable logs={logsProducts || []} headers={headers || []} />
+        </NotFoundSection>
       </Accordion>
 
       {/*  */}

@@ -38,7 +38,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       {
         key: 'id',
         content: user.id,
-        className: 'dark:text-white text-black',
+        className: 'dark:text-white  text-center text-black',
       },
       {
         key: 'name',
@@ -50,17 +50,17 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
             {user.name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
           </span>
         ),
-        className: 'dark:text-[#32E26B] text-[#0E1FB2]',
+        className: 'dark:text-[#32E26B] text-center text-[#0E1FB2]',
       },
       {
         key: 'alias',
         content: user.alias.split(' ').slice(0, 2).join(' ').slice(0, 12),
-        className: 'dark:text-white text-black',
+        className: 'dark:text-white  text-center text-black',
       },
       {
         key: 'regDate',
         content: user.regDate.split(' ')[0],
-        className: 'flex dark:text-white text-black',
+        className: 'flex dark:text-white text-center text-black',
       },
       {
         key: 'isActivatedAccount',
