@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AiFillHome } from 'react-icons/ai';
 import {
@@ -18,6 +17,8 @@ import { MdOutlineBlock } from 'react-icons/md';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useDispatch } from 'react-redux';
 import { setLogout } from '../../store/slices/auth';
+import SidebarLink from './SidebarLink';
+import DropLink from './DropLink';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -29,10 +30,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { pathname } = location;
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -80,8 +78,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const logout = async () => {
     try {
       const res = await axiosInstance.get(`/api/admins/logout`);
-      console.log(res);
-      // navigate(`/auth/login`);
       dispatch(setLogout());
     } catch (error: any) {
       console.error(error);
@@ -119,154 +115,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <h2 className="mb-4 ml-4 text-xl font-[400] text-bodydark2">
                 {isOpen && 'username'}
               </h2>
-
               <ul className="mb-6 flex flex-col gap-1.5">
-                <li>
-                  <NavLink
-                    to="/"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${(pathname === '/' || pathname.includes('dashboard')) &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <PiChartDonutFill className="text-2xl" />
-                    {isOpen && t('sidebar.charts')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/products"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white                      duration-300 ease-in-out hover:bg-[#2E2D3D] rounded-[15px] ${pathname.includes('home') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <AiFillHome className="text-2xl" />
-                    {isOpen && t('sidebar.products')}
-                  </NavLink>
-                </li>
-                <li onClick={userOpen}>
-                  <NavLink
-                    to="#"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('users') && 'bg-sidebarHover '
-                      }`}
-                  >
-                    <PiUsersFill className="text-2xl" />
-                    {isOpen && t('sidebar.users.users')}
-                  </NavLink>
-                </li>
-
+                  <SidebarLink to={`/`} isOpen={isOpen} text={'sidebar.charts'} icon={<PiChartDonutFill className="text-2xl" />}/>
+                <SidebarLink to={`/products`} isOpen={isOpen} text={'sidebar.products'} icon={<AiFillHome className="text-2xl" />}/>
+                <div onClick={userOpen}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.users.users'} icon={<PiUsersFill className="text-2xl" />} />
+                </div>
                 {/* users dropdown */}
                 {isUsersOpen &&
                   <div className='relative'>
                     <ul className='bg-sidebarHover p-2 absolute w-full -left-6 top-0 z-999 rounded-xl'>
-                      <li className='text-center'>
-                        <NavLink
-                          to="/users"
-                          className={`text-white duration-300 ease-in-out ${pathname.includes('users') && 'bg-sidebarHover '
-                            }`}
-                        >
-                          {t('sidebar.users.all')}
-                        </NavLink>
-                      </li>
-                      <li className='text-center'>
-                        <NavLink
-                          to="/users/advertiser"
-                          className={`text-white duration-300 ease-in-out ${pathname.includes('users/advertiser') && 'bg-sidebarHover '
-                            }`}
-                        >
-                          {t('sidebar.users.advertisers')}
-                        </NavLink>
-                      </li>
-                      <li className='text-center'>
-                        <NavLink
-                          to="/users/customer"
-                          className={`text-white duration-300 ease-in-out ${pathname.includes('users/customer') && 'bg-sidebarHover '
-                            }`}
-                        >
-                          {t('sidebar.users.customers')}
-                        </NavLink>
-                      </li>
+                      <DropLink to={`/users`} text={'sidebar.users.all'}/>
+                      <DropLink to={`/users/advertiser`} text={'sidebar.users.advertisers'}/>
+                      <DropLink to={`/users/customer`} text={'sidebar.users.customers'}/>
                     </ul>
                   </div>
                 }
-
-                <li>
-                  <NavLink
-                    to="/categories"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('categories') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <BiSolidCategory className="text-2xl" />
-                    {isOpen && t('sidebar.categories')}
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/subscription"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('subscription') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <PiTicketFill className="text-2xl" />
-                    {isOpen && t('sidebar.requests')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('settings') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <PiHeadsetFill className="text-2xl" />
-                    {isOpen && t('sidebar.support')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('settings') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <PiEnvelopeFill className="text-2xl" />
-                    {isOpen && t('sidebar.reports')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('settings') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <MdOutlineBlock className="text-2xl" />
-                    {isOpen && t('sidebar.ban-list')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('settings') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <PiUsersThreeFill className="text-2xl" />
-                    {isOpen && t('sidebar.admins')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/settings"
-                    className={`group relative flex items-center gap-2.5  py-2 px-4 text-[20px] font-[400] text-white duration-300 ease-in-out hover:bg-sidebarHover  rounded-[15px] ${pathname.includes('settings') &&
-                      'bg-graydark dark:bg-meta-4'
-                      }`}
-                  >
-                    <PiGearFineFill className="text-2xl" />
-                    {isOpen && t('sidebar.settings')}
-                  </NavLink>
-                </li>
+                <SidebarLink to={`/categories`} isOpen={isOpen} text={'sidebar.categories'} icon={<BiSolidCategory className="text-2xl" />}/>
+                <SidebarLink to={`/subscription`} isOpen={isOpen} text={'sidebar.requests'} icon={<PiTicketFill className="text-2xl" />}/>
+                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.support'} icon={<PiHeadsetFill className="text-2xl" />}/>
+                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.reports'} icon={<PiEnvelopeFill className="text-2xl" />}/>
+                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.ban-list'} icon={<MdOutlineBlock className="text-2xl" />}/>
+                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.admins'} icon={<PiUsersThreeFill className="text-2xl" />}/>
+                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.settings'} icon={<PiGearFineFill className="text-2xl" />}/>
               </ul>
             </div>
             <div
