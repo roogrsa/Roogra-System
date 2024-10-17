@@ -2,7 +2,12 @@
     "sidebar": {
         "charts": "Charts",
         "products": "Advertisements",
-        "users": "Users",
+        "users": {
+            "users":"Users",
+            "all":"All",
+            "advertisers":"Advertisers",
+            "customers":"Customers"
+        },
         "categories": "Categories",
         "requests": "Requests",
         "support": "Support",

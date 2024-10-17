@@ -2,7 +2,12 @@
     "sidebar": {
         "charts": "الرسوم البيانية",
         "products": "الأعلانات",
-        "users": "المستخدمين",
+        "users": {
+            "users":"المستخدمين",
+            "all":"الكل",
+            "advertisers":"المعلنين",
+            "customers":"الزبائن"
+        },
         "categories": "الأقسام",
         "requests": "تذاكر الاشتراك",
         "support": "تواصل معنا",
