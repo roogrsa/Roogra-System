@@ -35,6 +35,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
   const [isUsersOpen, setIsUsersOpen] = useState(false);
+  const [isAdsOpen, setIsAdsOpen] = useState(false);
   const userOpen = () => {
     setIsUsersOpen(!isUsersOpen)
   }
@@ -117,20 +118,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </h2>
               <ul className="mb-6 flex flex-col gap-1.5">
                   <SidebarLink to={`/`} isOpen={isOpen} text={'sidebar.charts'} icon={<PiChartDonutFill className="text-2xl" />}/>
-                <SidebarLink to={`/products`} isOpen={isOpen} text={'sidebar.products'} icon={<AiFillHome className="text-2xl" />}/>
-                <div onClick={userOpen}>
-                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.users.users'} icon={<PiUsersFill className="text-2xl" />} />
+                {/* ads dropdown */}
+                <div className='relative' onClick={()=>setIsAdsOpen(!isAdsOpen)}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ads.ads'} icon={<AiFillHome className="text-2xl" />}/>
+                {isAdsOpen &&
+                    <ul className='bg-sidebarHover p-2 absolute w-full -left-6 top-12 z-10 rounded-xl'>
+                      <DropLink to={`/ads/all`} text={'sidebar.ads.all'}/>
+                      <DropLink to={`/users/advertiser`} text={'sidebar.ads.main'}/>
+                      <DropLink to={`/users/customer`} text={'sidebar.ads.subscriptions'}/>
+                    </ul>
+                }
                 </div>
                 {/* users dropdown */}
+                <div className='relative' onClick={userOpen}>
+                <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.users.users'} icon={<PiUsersFill className="text-2xl" />} />
                 {isUsersOpen &&
-                  <div className='relative'>
-                    <ul className='bg-sidebarHover p-2 absolute w-full -left-6 top-0 z-999 rounded-xl'>
+                    <ul className='bg-sidebarHover p-2 absolute w-full -left-6 top-12 z-10 rounded-xl'>
                       <DropLink to={`/users`} text={'sidebar.users.all'}/>
                       <DropLink to={`/users/advertiser`} text={'sidebar.users.advertisers'}/>
                       <DropLink to={`/users/customer`} text={'sidebar.users.customers'}/>
                     </ul>
-                  </div>
                 }
+                </div>
                 <SidebarLink to={`/categories`} isOpen={isOpen} text={'sidebar.categories'} icon={<BiSolidCategory className="text-2xl" />}/>
                 <SidebarLink to={`/subscription`} isOpen={isOpen} text={'sidebar.requests'} icon={<PiTicketFill className="text-2xl" />}/>
                 <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.support'} icon={<PiHeadsetFill className="text-2xl" />}/>

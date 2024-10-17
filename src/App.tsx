@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'products',
+        path: 'ads/all',
         element: (
           <Guard>
             <Products />

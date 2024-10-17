@@ -1,7 +1,12 @@
 {
     "sidebar": {
         "charts": "Charts",
-        "products": "Advertisements",
+        "ads":{
+            "ads": "Advertisements",
+            "all": "All",
+            "main": "Main",
+            "subscriptions": "Subscriptions"
+        },
         "users": {
             "users":"Users",
             "all":"All",
