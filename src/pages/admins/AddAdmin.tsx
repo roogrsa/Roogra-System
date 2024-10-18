@@ -13,10 +13,18 @@ import {
 import axiosInstance from "../../axiosConfig/instanc";
 import toast from "react-hot-toast";
 import InputText from "../../components/form/InputText";
+import Checkbox from "../../components/form/Checkbox";
+import SelectLevel from "../../components/form/SelectLevel";
+import SelectTime from "../../components/form/SelectTime";
+import { MdUploadFile } from "react-icons/md";
+
 interface AddAdminValues {
-    name: string,
+    email:string,
+        phone:string,
+        username: string,
+        name: string,
     password: string,
-    type: "observer",
+    type: string,
     workingHours: {
         start: string,
         end: string,
@@ -24,6 +32,8 @@ interface AddAdminValues {
     permissions: {
         super: boolean,
         charts: boolean,
+        admins: boolean,
+        settings: boolean,
         ads: { all: boolean, primary: boolean, subscription: boolean },
         users: { all: boolean, advertisers: boolean, customers: boolean },
         categories: { primary: boolean, subscription: boolean, region: boolean },
@@ -31,8 +41,6 @@ interface AddAdminValues {
         contact: { inquiries: boolean, issues: boolean, suggestions: boolean },
         reports: { chats: boolean, products: boolean },
         banlist: { chats: boolean, products: boolean },
-        admins: boolean,
-        settings: boolean,
     },
 }
 export default function AddAdmin() {
@@ -85,7 +93,10 @@ export default function AddAdmin() {
     });
 
     const initialValues: AddAdminValues = {
-        name: "",
+        email:"",
+        phone:"",
+        username: "",
+        name: "adminuser",
         password: "",
         type: "observer",
         workingHours: {
@@ -95,6 +106,8 @@ export default function AddAdmin() {
         permissions: {
             super: false,
             charts: false,
+            admins: false,
+            settings: false,
             ads: { all: false, primary: false, subscription: false },
             users: { all: false, advertisers: false, customers: false },
             categories: { primary: false, subscription: false, region: false },
@@ -102,8 +115,6 @@ export default function AddAdmin() {
             contact: { inquiries: false, issues: false, suggestions: false },
             reports: { chats: false, products: false },
             banlist: { chats: false, products: false },
-            admins: false,
-            settings: false,
         },
     };
 
@@ -115,10 +126,9 @@ export default function AddAdmin() {
         { setSubmitting }: FormikHelpers<AddAdminValues>) => {
         try {
             setSubmitting(true);
-            const res = await axiosInstance.post(`/api/admins/login`, values);
-            console.log(res.data.data);
-            localStorage.setItem("token", res.data.data.token);
-            navigate(`/`)
+            const res = await axiosInstance.post(`/api/admins`, values);
+            console.log(res);
+            toast.success(`admin successfully submitted`);
         } catch (error: any) {
             console.error(error);
             toast.error(error?.response?.data?.message);
@@ -139,18 +149,95 @@ export default function AddAdmin() {
             >
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
                     <Form>
+                        <div className="flex justify-between md:mb-6">
+                        <InputText type={`text`} name={`username`} label={t('admins.form.name')} />
                         <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
-                        {/* <label className="custom-radio">
-                            <input type="radio" name="radio-group" />
-                            <span className="radiomark"></span>
-                            Radio Label
-                        </label>
-                        <label className="custom-checkbox">
-                            <input type="checkbox" />
-                            <span className="checkmark"></span>
-                            Checkbox Label
-                        </label> */}
-
+                        <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
+                        <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
+                        </div>
+                        <div className="flex justify-between md:mb-16">
+                        <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
+                        <SelectLevel name={`type`}/>
+                            <SelectTime name={`workingHours.start`} label={t('admins.form.from')}/>
+                            <SelectTime name={`workingHours.end`} label={t('admins.form.to')}/>
+                            {/* <div>
+                            <div className="mb-4 font-bold text-lg">{t('admins.form.shift')}</div>
+                            <div>
+                            </div>
+                            </div> */}
+                        </div>
+                        <div className="flex justify-between md:mb-16">
+                            <div>
+                                <div className="mb-4 font-bold text-lg">{t('admins.form.permissions')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.super`} label={t('admins.form.super')} />
+                        <Checkbox value={`true`} name={`permissions.admins`} label={t('admins.form.admins')} />
+                        <Checkbox value={`true`} name={`permissions.settings`} label={t('admins.form.settings')} />
+                        <Checkbox value={`true`} name={`permissions.Charts`} label={t('admins.form.Charts')} />
+                            </div>
+                            </div>
+                            <div>
+                                <div className="mb-4 font-bold text-lg" >{t('admins.form.advertisments')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.ads.all`} label={t('admins.form.all')} />
+                        <Checkbox value={`true`} name={`permissions.ads.primary`} label={t('admins.form.primary')} />
+                        <Checkbox value={`true`} name={`permissions.ads.subscription`} label={t('admins.form.subscription')} />
+                            </div>
+                            </div>
+                        </div>
+                        <div className="flex justify-between md:mb-16">
+                            <div>
+                                <div className="mb-4 font-bold text-lg">{t('admins.form.users')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.users.all`} label={t('admins.form.all')} />
+                        <Checkbox value={`true`} name={`permissions.users.advertisers`} label={t('admins.form.advertisers')} />
+                        <Checkbox value={`true`} name={`permissions.users.customers`} label={t('admins.form.customers')} />
+                            </div>
+                            </div>
+                            <div>
+                                <div className="mb-4 font-bold text-lg" >{t('admins.form.categories')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.categories.primary`} label={t('admins.form.primary')} />
+                        <Checkbox value={`true`} name={`permissions.categories.subscription`} label={t('admins.form.subscription')} />
+                        <Checkbox value={`true`} name={`permissions.categories.region`} label={t('admins.form.region')} />
+                            </div>
+                            </div>
+                            <div>
+                                <div className="mb-4 font-bold text-lg" >{t('admins.form.support')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.contact.inquiries`} label={t('admins.form.inquiries')} />
+                        <Checkbox value={`true`} name={`permissions.contact.issues`} label={t('admins.form.issues')} />
+                        <Checkbox value={`true`} name={`permissions.contact.suggestions`} label={t('admins.form.suggestions')} />
+                            </div>
+                            </div>
+                        </div>
+                        <div className="flex justify-between md:mb-16">
+                            <div>
+                                <div className="mb-4 font-bold text-lg">{t('admins.form.requests')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.requests.attestation`} label={t('admins.form.attestation')} />
+                        <Checkbox value={`true`} name={`permissions.requests.category`} label={t('admins.form.category')} />
+                            </div>
+                            </div>
+                            <div>
+                                <div className="mb-4 font-bold text-lg" >{t('admins.form.reports')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.reports.chats`} label={t('admins.form.chats')} />
+                        <Checkbox value={`true`} name={`permissions.reports.products`} label={t('admins.form.products')} />
+                            </div>
+                            </div>
+                            <div className="w-[25%]">
+                                <div className="mb-4 font-bold text-lg" >{t('admins.form.banlist')}</div>
+                            <div>
+                        <Checkbox value={`true`} name={`permissions.banlist.chats`} label={t('admins.form.users')} />
+                        <Checkbox value={`true`} name={`permissions.banlist.products`} label={t('admins.form.products')} />
+                            </div>
+                            </div>
+                        </div>
+                        <div className="flex justify-center">
+                        <button type="submit" disabled={isSubmitting}
+                        className="text-3xl bg-SaveIconBg text-white rounded-md p-2"><MdUploadFile/></button>
+                        </div>
                     </Form>
                 )}
             </Formik>

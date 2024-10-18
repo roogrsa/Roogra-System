@@ -74,7 +74,7 @@
             "email":"Email",
             "Password":"Password",
             "phone":"Phone No.",
-            "shift ":"Shift Hours",
+            "shift":"Shift Hours",
             "from":"Form",
             "to":"To",
             "select-time":"Select Time",

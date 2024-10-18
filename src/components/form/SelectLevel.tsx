@@ -1,0 +1,21 @@
+import { Field } from "formik";
+import { useTranslation } from "react-i18next";
+interface SelectLevelProps {
+    name: string;
+}
+export default function SelectLevel({name}: SelectLevelProps) {
+    const { t } = useTranslation();
+    return (
+        <div>
+        <div className="mb-4 font-bold text-lg">{t('admins.form.level')}</div>
+            <Field as={`select`} name={name} id={name}
+            className="shadow-sm border border-gray-300 text-gray-900 
+            text-sm rounded-md w-50 p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">
+                <option value="" hidden>{t('admins.form.select-type')}</option>
+                <option value="delegate">{t('admins.form.delegate')}</option>
+                <option value="observer">{t('admins.form.observer')}</option>
+                <option value="supervisor">{t('admins.form.supervisor')}</option>
+            </Field>
+        </div>
+    )
+}

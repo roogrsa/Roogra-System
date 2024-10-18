@@ -26,16 +26,6 @@ import CategorySubscription from './pages/category_subscription/CategorySubscrip
 import Admins from './pages/admins/Admins';
 import AddAdmin from './pages/admins/AddAdmin';
 
-// Initialize i18next
-i18next.init({
-  interpolation: { escapeValue: false },
-  lng: 'ar', // Default language
-  resources: {
-    ar: { translation: arTranslation },
-    en: { translation: enTranslation },
-  },
-});
-
 const router = createBrowserRouter([
   {
     path: '/',
