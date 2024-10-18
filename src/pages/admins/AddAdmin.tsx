@@ -83,7 +83,7 @@ export default function AddAdmin() {
             settings: yup.boolean(),
         }),
     });
-    
+
     const initialValues: AddAdminValues = {
         name: "",
         password: "",
@@ -139,17 +139,17 @@ export default function AddAdmin() {
             >
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
                     <Form>
-                        <InputText type={`text`} name={`name`} label={t('admins.form.name')}/>
-                        <label className="custom-radio">
-  <input type="radio" name="radio-group"/>
-  <span className="radiomark"></span>
-  Radio Label
-</label>
-<label className="custom-checkbox">
-  <input type="checkbox"/>
-  <span className="checkmark"></span>
-  Checkbox Label
-</label>
+                        <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
+                        {/* <label className="custom-radio">
+                            <input type="radio" name="radio-group" />
+                            <span className="radiomark"></span>
+                            Radio Label
+                        </label>
+                        <label className="custom-checkbox">
+                            <input type="checkbox" />
+                            <span className="checkmark"></span>
+                            Checkbox Label
+                        </label> */}
 
                     </Form>
                 )}
