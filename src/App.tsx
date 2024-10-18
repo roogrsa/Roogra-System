@@ -24,6 +24,7 @@ import PrdDetials from './pages/products/PrdDetials';
 import Profile from './pages/users/Profile';
 import CategorySubscription from './pages/category_subscription/CategorySubscription';
 import Admins from './pages/admins/Admins';
+import AddAdmin from './pages/admins/AddAdmin';
 
 // Initialize i18next
 i18next.init({
@@ -131,6 +132,14 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <Admins />
+          </Guard>
+        ),
+      },
+      {
+        path: 'admins/add-admin',
+        element: (
+          <Guard>
+            <AddAdmin />
           </Guard>
         ),
       },

@@ -60,6 +60,7 @@
     },
     "admins":{
         "title":"Administrators",
+        "title-add":"Edit page",
         "label":"Administrators/ ",
         "add":"Add New Admin",
         "form":{
