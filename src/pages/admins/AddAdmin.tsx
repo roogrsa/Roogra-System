@@ -2,6 +2,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import {
     Formik,
     FormikHelpers,
@@ -11,6 +12,7 @@ import {
 } from 'formik';
 import axiosInstance from "../../axiosConfig/instanc";
 import toast from "react-hot-toast";
+import InputText from "./components/InputText";
 interface AddAdminValues {
     name: string,
     password: string,
@@ -34,6 +36,54 @@ interface AddAdminValues {
     },
 }
 export default function AddAdmin() {
+    const { t } = useTranslation();
+    const validationSchema = yup.object().shape({
+        name: yup.string().required(t('validation.required')).min(3, t('validation.min', { min: 3 })),
+        password: yup.string().required(t('validation.required')).min(8, t('validation.min', { min: 8 })),
+        workingHours: yup.object().shape({
+            start: yup.string().required(t('validation.required')),
+            end: yup.string().required(t('validation.required')),
+        }),
+        permissions: yup.object().shape({
+            super: yup.boolean(),
+            charts: yup.boolean(),
+            ads: yup.object().shape({
+                all: yup.boolean(),
+                primary: yup.boolean(),
+                subscription: yup.boolean(),
+            }),
+            users: yup.object().shape({
+                all: yup.boolean(),
+                advertisers: yup.boolean(),
+                customers: yup.boolean(),
+            }),
+            categories: yup.object().shape({
+                primary: yup.boolean(),
+                subscription: yup.boolean(),
+                region: yup.boolean(),
+            }),
+            requests: yup.object().shape({
+                attestation: yup.boolean(),
+                category: yup.boolean(),
+            }),
+            contact: yup.object().shape({
+                inquiries: yup.boolean(),
+                issues: yup.boolean(),
+                suggestions: yup.boolean(),
+            }),
+            reports: yup.object().shape({
+                chats: yup.boolean(),
+                products: yup.boolean(),
+            }),
+            banlist: yup.object().shape({
+                chats: yup.boolean(),
+                products: yup.boolean(),
+            }),
+            admins: yup.boolean(),
+            settings: yup.boolean(),
+        }),
+    });
+    
     const initialValues: AddAdminValues = {
         name: "",
         password: "",
@@ -56,7 +106,7 @@ export default function AddAdmin() {
             settings: false,
         },
     };
-    const { t } = useTranslation();
+
     const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }]
     const navigate = useNavigate();
     const back = () => navigate(-1)
@@ -84,11 +134,23 @@ export default function AddAdmin() {
             </div>
             <Formik
                 initialValues={initialValues}
+                validationSchema={validationSchema}
                 onSubmit={handleAddAdminSubmit}
             >
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
                     <Form>
-                        
+                        <InputText type={`text`} name={`name`} label={t('admins.form.name')}/>
+                        <label className="custom-radio">
+  <input type="radio" name="radio-group"/>
+  <span className="radiomark"></span>
+  Radio Label
+</label>
+<label className="custom-checkbox">
+  <input type="checkbox"/>
+  <span className="checkmark"></span>
+  Checkbox Label
+</label>
+
                     </Form>
                 )}
             </Formik>

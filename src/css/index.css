@@ -46,3 +46,76 @@ font-size: 20px;
 font-weight: 400;
 color: #BFBFBF;
 }
+/* Container for custom radio */
+.custom-radio {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* Hide the default radio button */
+  .custom-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Create a custom radio button */
+  .custom-radio .radiomark {
+    width: 21px;
+    height: 20px;
+    background-color: #fff;
+    border: solid 1px #dfdfdf;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+  }
+  
+  /* Create the green circle inside when selected */
+  .custom-radio input:checked + .radiomark::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+  }
+/* Container for custom checkbox */
+.custom-checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* Hide the default checkbox */
+  .custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Create a custom checkbox */
+  .custom-checkbox .checkmark {
+    width: 21px;
+    height: 20px;
+    background-color: #fff;
+    border: solid 1px #dfdfdf;
+    border-radius: 10%;
+    display: inline-block;
+    position: relative;
+  }
+  
+  /* Create the green circle inside when checked */
+  .custom-checkbox input:checked + .checkmark::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+  }
+    
