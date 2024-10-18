@@ -150,7 +150,7 @@ export default function AddAdmin() {
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
                     <Form>
                         <div className="flex justify-between md:mb-6">
-                        <InputText type={`text`} name={`username`} label={t('admins.form.name')} />
+                        <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
                         <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
                         <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
                         <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
@@ -160,11 +160,6 @@ export default function AddAdmin() {
                         <SelectLevel name={`type`}/>
                             <SelectTime name={`workingHours.start`} label={t('admins.form.from')}/>
                             <SelectTime name={`workingHours.end`} label={t('admins.form.to')}/>
-                            {/* <div>
-                            <div className="mb-4 font-bold text-lg">{t('admins.form.shift')}</div>
-                            <div>
-                            </div>
-                            </div> */}
                         </div>
                         <div className="flex justify-between md:mb-16">
                             <div>

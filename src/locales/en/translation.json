@@ -71,6 +71,7 @@
             "observer":"Observer",
             "supervisor":"Supervisor",
             "name":"Name",
+            "userName":"Username",
             "email":"Email",
             "Password":"Password",
             "phone":"Phone No.",
