@@ -132,7 +132,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </div>
                   {isAdsOpen &&
                     <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/ads/all`} text={'sidebar.ads.all'} />
+                      <DropLink to={`/products`} text={'sidebar.ads.all'} />
                       <DropLink to={`/ads/main`} text={'sidebar.ads.main'} />
                       <DropLink to={`/ads/subscriptions`} text={'sidebar.ads.subscriptions'} />
                     </ul>
@@ -171,7 +171,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </div>
                   {isSubscriptionOpen &&
                     <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/requests/attestation`} text={'sidebar.requests.attestation'} />
+                      {/* <DropLink to={`/requests/attestation`} text={'sidebar.requests.attestation'} /> */}
+                      <DropLink to={`/subscription`} text={'sidebar.requests.attestation'} />
                       <DropLink to={`/requests/category`} text={'sidebar.requests.category'} />
                     </ul>
                   }
@@ -213,7 +214,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </ul>
                   }
                 </div>
-                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.admins'} icon={<PiUsersThreeFill className="text-2xl" />} />
+                <SidebarLink to={`/admins`} isOpen={isOpen} text={'sidebar.admins'} icon={<PiUsersThreeFill className="text-2xl" />} />
                 <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.settings'} icon={<PiGearFineFill className="text-2xl" />} />
               </ul>
             </div>

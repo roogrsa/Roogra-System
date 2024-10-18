@@ -23,6 +23,7 @@ import Products from './pages/products/products';
 import PrdDetials from './pages/products/PrdDetials';
 import Profile from './pages/users/Profile';
 import CategorySubscription from './pages/category_subscription/CategorySubscription';
+import Admins from './pages/admins/Admins';
 
 // Initialize i18next
 i18next.init({
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        index:true,
+        index: true,
         element: (
           <Guard>
             <Home />
@@ -109,7 +110,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'ads/all',
+        path: 'products',
         element: (
           <Guard>
             <Products />
@@ -122,6 +123,14 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <PrdDetials />
+          </Guard>
+        ),
+      },
+      {
+        path: 'admins',
+        element: (
+          <Guard>
+            <Admins />
           </Guard>
         ),
       },
