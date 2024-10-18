@@ -12,7 +12,7 @@ import {
 } from 'formik';
 import axiosInstance from "../../axiosConfig/instanc";
 import toast from "react-hot-toast";
-import InputText from "./components/InputText";
+import InputText from "../../components/form/InputText";
 interface AddAdminValues {
     name: string,
     password: string,
