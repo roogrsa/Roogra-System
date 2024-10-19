@@ -227,7 +227,9 @@ export default function AddAdmin() {
                         </div>
                         <div className="flex justify-center">
                             <button type="submit" disabled={isSubmitting}
-                                className="text-3xl bg-SaveIconBg text-white rounded-md p-2"><MdUploadFile /></button>
+                                className="text-3xl bg-SaveIconBg text-white rounded-md p-2">
+                                    <img src="./../../../save.svg" alt="" />
+                                </button>
                         </div>
                     </Form>
                 )}
