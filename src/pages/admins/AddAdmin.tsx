@@ -198,7 +198,7 @@ export default function AddAdmin() {
                 onSubmit={handleAddAdminSubmit}
             >
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
-                    <Form className="bg-white p-6 rounded-sm">
+                    <Form className="bg-white dark:bg-primaryBG-dark p-6 rounded-sm">
                         <div className="flex justify-between md:mb-6">
                             <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
                             <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
