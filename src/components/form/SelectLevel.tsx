@@ -12,9 +12,9 @@ export default function SelectLevel({name}: SelectLevelProps) {
             className="shadow-sm border border-gray-300 text-gray-900 
             text-sm rounded-md w-50 p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">
                 <option value="" hidden>{t('admins.form.select-type')}</option>
-                <option value="delegate">{t('admins.form.delegate')}</option>
-                <option value="observer">{t('admins.form.observer')}</option>
-                <option value="supervisor">{t('admins.form.supervisor')}</option>
+                <option value="1">{t('admins.form.delegate')}</option>
+                <option value="2">{t('admins.form.observer')}</option>
+                <option value="3">{t('admins.form.supervisor')}</option>
             </Field>
         </div>
     )

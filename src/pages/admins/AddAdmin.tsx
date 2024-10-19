@@ -13,7 +13,6 @@ import {
 import axiosInstance from "../../axiosConfig/instanc";
 import toast from "react-hot-toast";
 import InputText from "../../components/form/InputText";
-import Checkbox from "../../components/form/Checkbox";
 import SelectLevel from "../../components/form/SelectLevel";
 import SelectTime from "../../components/form/SelectTime";
 import { MdUploadFile } from "react-icons/md";
@@ -33,22 +32,24 @@ interface AddAdminValues {
     name: string,
     password: string,
     type: string,
-    workingHours: {
-        start: string,
-        end: string,
-    },
+    // workingHours: {
+    //     start: string,
+    //     end: string,
+    // },
+    start_working_hour: string,
+         finish_working_hour: string,
     permissions: {
-        super: boolean,
-        charts: boolean,
-        admins: boolean,
-        settings: boolean,
-        ads: { all: boolean, primary: boolean, subscription: boolean },
-        users: { all: boolean, advertisers: boolean, customers: boolean },
-        categories: { primary: boolean, subscription: boolean, region: boolean },
-        requests: { attestation: boolean, category: boolean },
-        contact: { inquiries: boolean, issues: boolean, suggestions: boolean },
-        reports: { chats: boolean, products: boolean },
-        banlist: { chats: boolean, products: boolean },
+        super: number,
+        charts: number,
+        admins: number,
+        settings: number,
+        ads: { all: number, primary: number, subscription: number },
+        users: { all: number, advertisers: number, customers: number },
+        categories: { primary: number, subscription: number, region: number },
+        requests: { attestation: number, category: number },
+        contact: { inquiries: number, issues: number, suggestions: number },
+        reports: { chats: number, products: number },
+        banlist: { chats: number, products: number },
     },
 }
 export default function AddAdmin() {
@@ -110,23 +111,25 @@ export default function AddAdmin() {
         username: "",
         name: "",
         password: "",
-        type: "observer",
-        workingHours: {
-            start: "",
-            end: "",
-        },
+        type: "2",
+        start_working_hour: '',
+         finish_working_hour:"",
+        // workingHours: {
+        //     start: "",
+        //     end: "",
+        // },
         permissions: {
-            super: false,
-            charts: false,
-            admins: false,
-            settings: false,
-            ads: { all: false, primary: false, subscription: false },
-            users: { all: false, advertisers: false, customers: false },
-            categories: { primary: false, subscription: false, region: false },
-            requests: { attestation: false, category: false },
-            contact: { inquiries: false, issues: false, suggestions: false },
-            reports: { chats: false, products: false },
-            banlist: { chats: false, products: false },
+            super: 0,
+            charts: 0,
+            admins: 0,
+            settings: 0,
+            ads: { all: 0, primary: 0, subscription: 0 },
+            users: { all: 0, advertisers: 0, customers: 0 },
+            categories: { primary: 0, subscription: 0, region: 0 },
+            requests: { attestation: 0, category: 0 },
+            contact: { inquiries: 0, issues: 0, suggestions: 0 },
+            reports: { chats: 0, products: 0 },
+            banlist: { chats: 0, products: 0 },
         },
     };
 
@@ -149,42 +152,42 @@ export default function AddAdmin() {
         }
     };
     const [checkAdvertisments, setCheckAdvertisments] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.all'), value: 'true', name: `permissions.ads.all` },
-        { isChecked: false, label: t('admins.form.primary'), value: 'true', name: `permissions.ads.primary` },
-        { isChecked: false, label: t('admins.form.subscription'), value: 'true', name: `permissions.ads.subscription` },
+        { isChecked: false, label: t('admins.form.all'), value: '1', name: `permissions.ads.all` },
+        { isChecked: false, label: t('admins.form.primary'), value: '1', name: `permissions.ads.primary` },
+        { isChecked: false, label: t('admins.form.subscription'), value: '1', name: `permissions.ads.subscription` },
     ]);
     const [checkPermissions, setCheckPermissions] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.super'), value: 'true', name: `permissions.super` },
-        { isChecked: false, label: t('admins.form.admins'), value: 'true', name: `permissions.admins` },
-        { isChecked: false, label: t('admins.form.settings'), value: 'true', name: `permissions.settings` },
-        { isChecked: false, label: t('admins.form.charts'), value: 'true', name: `permissions.charts` },
+        { isChecked: false, label: t('admins.form.super'), value: '1', name: `permissions.super` },
+        { isChecked: false, label: t('admins.form.admins'), value: '1', name: `permissions.admins` },
+        { isChecked: false, label: t('admins.form.settings'), value: '1', name: `permissions.settings` },
+        { isChecked: false, label: t('admins.form.charts'), value: '1', name: `permissions.charts` },
     ]);
     const [checkUsers, setCheckUsers] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.all'), value: 'true', name: `permissions.users.all` },
-        { isChecked: false, label: t('admins.form.advertisers'), value: 'true', name: `permissions.users.advertisers` },
-        { isChecked: false, label: t('admins.form.customers'), value: 'true', name: `permissions.users.customers` },
+        { isChecked: false, label: t('admins.form.all'), value: '1', name: `permissions.users.all` },
+        { isChecked: false, label: t('admins.form.advertisers'), value: '1', name: `permissions.users.advertisers` },
+        { isChecked: false, label: t('admins.form.customers'), value: '1', name: `permissions.users.customers` },
     ]);
     const [checkCategories, setCheckCategories] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.primary'), value: 'true', name: `permissions.categories.primary` },
-        { isChecked: false, label: t('admins.form.subscription'), value: 'true', name: `permissions.categories.subscription` },
-        { isChecked: false, label: t('admins.form.region'), value: 'true', name: `permissions.categories.regi` },
+        { isChecked: false, label: t('admins.form.primary'), value: '1', name: `permissions.categories.primary` },
+        { isChecked: false, label: t('admins.form.subscription'), value: '1', name: `permissions.categories.subscription` },
+        { isChecked: false, label: t('admins.form.region'), value: '1', name: `permissions.categories.regi` },
     ]);
     const [checkSupport, setCheckSupport] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.inquiries'), value: 'true', name: `permissions.contact.inquiries` },
-        { isChecked: false, label: t('admins.form.issues'), value: 'true', name: `permissions.contact.issues` },
-        { isChecked: false, label: t('admins.form.suggestions'), value: 'true', name: `permissions.contact.suggestions` },
+        { isChecked: false, label: t('admins.form.inquiries'), value: '1', name: `permissions.contact.inquiries` },
+        { isChecked: false, label: t('admins.form.issues'), value: '1', name: `permissions.contact.issues` },
+        { isChecked: false, label: t('admins.form.suggestions'), value: '1', name: `permissions.contact.suggestions` },
     ]);
     const [checkRequests, setCheckRequests] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.attestation'), value: 'true', name: `permissions.requests.attestation` },
-        { isChecked: false, label: t('admins.form.category'), value: 'true', name: `permissions.requests.category` },
+        { isChecked: false, label: t('admins.form.attestation'), value: '1', name: `permissions.requests.attestation` },
+        { isChecked: false, label: t('admins.form.category'), value: '1', name: `permissions.requests.category` },
     ]);
     const [checkReports, setCheckReports] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.chats'), value: 'true', name: `permissions.reports.chats` },
-        { isChecked: false, label: t('admins.form.products'), value: 'true', name: `permissions.reports.products` },
+        { isChecked: false, label: t('admins.form.chats'), value: '1', name: `permissions.reports.chats` },
+        { isChecked: false, label: t('admins.form.products'), value: '1', name: `permissions.reports.products` },
     ]);
     const [checkBanlist, setCheckBanlist] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.users'), value: 'true', name: `permissions.banlist.chats` },
-        { isChecked: false, label: t('admins.form.products'), value: 'true', name: `permissions.banlist.products` },
+        { isChecked: false, label: t('admins.form.users'), value: '1', name: `permissions.banlist.chats` },
+        { isChecked: false, label: t('admins.form.products'), value: '1', name: `permissions.banlist.products` },
     ]);
     return (
         <>
