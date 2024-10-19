@@ -211,8 +211,8 @@ export default function AddAdmin() {
                         <div className="flex justify-between md:mb-16">
                             <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
                             <SelectLevel name={`type`} />
-                            <SelectTime name={`workingHours.start`} label={t('admins.form.from')} />
-                            <SelectTime name={`workingHours.end`} label={t('admins.form.to')} />
+                            <SelectTime name={`start_working_hour`} label={t('admins.form.from')} />
+                            <SelectTime name={`finish_working_hour`} label={t('admins.form.to')} />
                         </div>
                         <div className="flex justify-between md:mb-16">
                             <CheckboxGroup checks={checkPermissions} setChecks={setCheckPermissions} label={t('admins.form.permissions')} />
