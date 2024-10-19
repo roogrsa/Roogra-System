@@ -19,10 +19,10 @@ import SelectTime from "../../components/form/SelectTime";
 import { MdUploadFile } from "react-icons/md";
 
 interface AddAdminValues {
-    email:string,
-        phone:string,
-        username: string,
-        name: string,
+    email: string,
+    phone: string,
+    username: string,
+    name: string,
     password: string,
     type: string,
     workingHours: {
@@ -46,12 +46,16 @@ interface AddAdminValues {
 export default function AddAdmin() {
     const { t } = useTranslation();
     const validationSchema = yup.object().shape({
-        name: yup.string().required(t('validation.required')).min(3, t('validation.min', { min: 3 })),
-        password: yup.string().required(t('validation.required')).min(8, t('validation.min', { min: 8 })),
-        workingHours: yup.object().shape({
-            start: yup.string().required(t('validation.required')),
-            end: yup.string().required(t('validation.required')),
-        }),
+        name: yup.string().required(t('admins.form.nameError')),
+        password: yup.string().required(t('admins.form.PasswordError')),
+        email: yup.string().required(t('admins.form.emailError')),
+        phone: yup.string().required(t('admins.form.phoneError')),
+        username: yup.string().required(t('admins.form.userNameError')),
+        type: yup.string().required(t('admins.form.levelError')),
+        // workingHours: yup.object().shape({
+        //     start: yup.string().required(t('validation.required')),
+        //     end: yup.string().required(t('validation.required')),
+        // }),
         permissions: yup.object().shape({
             super: yup.boolean(),
             charts: yup.boolean(),
@@ -93,10 +97,10 @@ export default function AddAdmin() {
     });
 
     const initialValues: AddAdminValues = {
-        email:"",
-        phone:"",
+        email: "",
+        phone: "",
         username: "",
-        name: "adminuser",
+        name: "",
         password: "",
         type: "observer",
         workingHours: {
@@ -138,7 +142,7 @@ export default function AddAdmin() {
     };
     return (
         <>
-            <div className="flex justify-between">
+            <div className="flex justify-between md:mb-20">
                 <Breadcrumb pageName={t('admins.title-add')} breadcrumbLinks={breadcrumbLinks} />
                 <RiDeleteBin6Line className="text-3xl text-Input-TextRed" role="button" onClick={back} />
             </div>
@@ -150,88 +154,88 @@ export default function AddAdmin() {
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
                     <Form>
                         <div className="flex justify-between md:mb-6">
-                        <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
-                        <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
-                        <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
-                        <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
+                            <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
+                            <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
+                            <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
+                            <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
                         </div>
                         <div className="flex justify-between md:mb-16">
-                        <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
-                        <SelectLevel name={`type`}/>
-                            <SelectTime name={`workingHours.start`} label={t('admins.form.from')}/>
-                            <SelectTime name={`workingHours.end`} label={t('admins.form.to')}/>
+                            <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
+                            <SelectLevel name={`type`} />
+                            <SelectTime name={`workingHours.start`} label={t('admins.form.from')} />
+                            <SelectTime name={`workingHours.end`} label={t('admins.form.to')} />
                         </div>
                         <div className="flex justify-between md:mb-16">
                             <div>
                                 <div className="mb-4 font-bold text-lg">{t('admins.form.permissions')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.super`} label={t('admins.form.super')} />
-                        <Checkbox value={`true`} name={`permissions.admins`} label={t('admins.form.admins')} />
-                        <Checkbox value={`true`} name={`permissions.settings`} label={t('admins.form.settings')} />
-                        <Checkbox value={`true`} name={`permissions.Charts`} label={t('admins.form.Charts')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.super`} label={t('admins.form.super')} />
+                                    <Checkbox value={`true`} name={`permissions.admins`} label={t('admins.form.admins')} />
+                                    <Checkbox value={`true`} name={`permissions.settings`} label={t('admins.form.settings')} />
+                                    <Checkbox value={`true`} name={`permissions.Charts`} label={t('admins.form.Charts')} />
+                                </div>
                             </div>
                             <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.advertisments')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.ads.all`} label={t('admins.form.all')} />
-                        <Checkbox value={`true`} name={`permissions.ads.primary`} label={t('admins.form.primary')} />
-                        <Checkbox value={`true`} name={`permissions.ads.subscription`} label={t('admins.form.subscription')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.ads.all`} label={t('admins.form.all')} />
+                                    <Checkbox value={`true`} name={`permissions.ads.primary`} label={t('admins.form.primary')} />
+                                    <Checkbox value={`true`} name={`permissions.ads.subscription`} label={t('admins.form.subscription')} />
+                                </div>
                             </div>
                         </div>
                         <div className="flex justify-between md:mb-16">
                             <div>
                                 <div className="mb-4 font-bold text-lg">{t('admins.form.users')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.users.all`} label={t('admins.form.all')} />
-                        <Checkbox value={`true`} name={`permissions.users.advertisers`} label={t('admins.form.advertisers')} />
-                        <Checkbox value={`true`} name={`permissions.users.customers`} label={t('admins.form.customers')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.users.all`} label={t('admins.form.all')} />
+                                    <Checkbox value={`true`} name={`permissions.users.advertisers`} label={t('admins.form.advertisers')} />
+                                    <Checkbox value={`true`} name={`permissions.users.customers`} label={t('admins.form.customers')} />
+                                </div>
                             </div>
                             <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.categories')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.categories.primary`} label={t('admins.form.primary')} />
-                        <Checkbox value={`true`} name={`permissions.categories.subscription`} label={t('admins.form.subscription')} />
-                        <Checkbox value={`true`} name={`permissions.categories.region`} label={t('admins.form.region')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.categories.primary`} label={t('admins.form.primary')} />
+                                    <Checkbox value={`true`} name={`permissions.categories.subscription`} label={t('admins.form.subscription')} />
+                                    <Checkbox value={`true`} name={`permissions.categories.region`} label={t('admins.form.region')} />
+                                </div>
                             </div>
                             <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.support')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.contact.inquiries`} label={t('admins.form.inquiries')} />
-                        <Checkbox value={`true`} name={`permissions.contact.issues`} label={t('admins.form.issues')} />
-                        <Checkbox value={`true`} name={`permissions.contact.suggestions`} label={t('admins.form.suggestions')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.contact.inquiries`} label={t('admins.form.inquiries')} />
+                                    <Checkbox value={`true`} name={`permissions.contact.issues`} label={t('admins.form.issues')} />
+                                    <Checkbox value={`true`} name={`permissions.contact.suggestions`} label={t('admins.form.suggestions')} />
+                                </div>
                             </div>
                         </div>
                         <div className="flex justify-between md:mb-16">
                             <div>
                                 <div className="mb-4 font-bold text-lg">{t('admins.form.requests')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.requests.attestation`} label={t('admins.form.attestation')} />
-                        <Checkbox value={`true`} name={`permissions.requests.category`} label={t('admins.form.category')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.requests.attestation`} label={t('admins.form.attestation')} />
+                                    <Checkbox value={`true`} name={`permissions.requests.category`} label={t('admins.form.category')} />
+                                </div>
                             </div>
                             <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.reports')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.reports.chats`} label={t('admins.form.chats')} />
-                        <Checkbox value={`true`} name={`permissions.reports.products`} label={t('admins.form.products')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.reports.chats`} label={t('admins.form.chats')} />
+                                    <Checkbox value={`true`} name={`permissions.reports.products`} label={t('admins.form.products')} />
+                                </div>
                             </div>
                             <div className="w-[25%]">
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.banlist')}</div>
-                            <div>
-                        <Checkbox value={`true`} name={`permissions.banlist.chats`} label={t('admins.form.users')} />
-                        <Checkbox value={`true`} name={`permissions.banlist.products`} label={t('admins.form.products')} />
-                            </div>
+                                <div>
+                                    <Checkbox value={`true`} name={`permissions.banlist.chats`} label={t('admins.form.users')} />
+                                    <Checkbox value={`true`} name={`permissions.banlist.products`} label={t('admins.form.products')} />
+                                </div>
                             </div>
                         </div>
                         <div className="flex justify-center">
-                        <button type="submit" disabled={isSubmitting}
-                        className="text-3xl bg-SaveIconBg text-white rounded-md p-2"><MdUploadFile/></button>
+                            <button type="submit" disabled={isSubmitting}
+                                className="text-3xl bg-SaveIconBg text-white rounded-md p-2"><MdUploadFile /></button>
                         </div>
                     </Form>
                 )}
