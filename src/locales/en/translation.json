@@ -64,7 +64,7 @@
         "label":"Administrators/ ",
         "add":"Add New Admin",
         "form":{
-            "placeholder":"",
+            "placeholder":"please write",
             "level":"Admin Level",
             "select-type":"Select a type",
             "delegate":"Delegate",
