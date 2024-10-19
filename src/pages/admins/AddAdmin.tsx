@@ -17,7 +17,15 @@ import Checkbox from "../../components/form/Checkbox";
 import SelectLevel from "../../components/form/SelectLevel";
 import SelectTime from "../../components/form/SelectTime";
 import { MdUploadFile } from "react-icons/md";
+import CheckboxGroup from "./CheckboxGroup";
+import { useState } from "react";
 
+export interface CheckboxItem {
+    isChecked: boolean;
+    label: string;
+    value: string;
+    name: string;
+}
 interface AddAdminValues {
     email: string,
     phone: string,
@@ -140,9 +148,47 @@ export default function AddAdmin() {
             setSubmitting(false);
         }
     };
+    const [checkAdvertisments, setCheckAdvertisments] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.all'), value: 'true', name: `permissions.ads.all` },
+        { isChecked: false, label: t('admins.form.primary'), value: 'true', name: `permissions.ads.primary` },
+        { isChecked: false, label: t('admins.form.subscription'), value: 'true', name: `permissions.ads.subscription` },
+    ]);
+    const [checkPermissions, setCheckPermissions] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.super'), value: 'true', name: `permissions.super` },
+        { isChecked: false, label: t('admins.form.admins'), value: 'true', name: `permissions.admins` },
+        { isChecked: false, label: t('admins.form.settings'), value: 'true', name: `permissions.settings` },
+        { isChecked: false, label: t('admins.form.charts'), value: 'true', name: `permissions.charts` },
+    ]);
+    const [checkUsers, setCheckUsers] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.all'), value: 'true', name: `permissions.users.all` },
+        { isChecked: false, label: t('admins.form.advertisers'), value: 'true', name: `permissions.users.advertisers` },
+        { isChecked: false, label: t('admins.form.customers'), value: 'true', name: `permissions.users.customers` },
+    ]);
+    const [checkCategories, setCheckCategories] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.primary'), value: 'true', name: `permissions.categories.primary` },
+        { isChecked: false, label: t('admins.form.subscription'), value: 'true', name: `permissions.categories.subscription` },
+        { isChecked: false, label: t('admins.form.region'), value: 'true', name: `permissions.categories.regi` },
+    ]);
+    const [checkSupport, setCheckSupport] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.inquiries'), value: 'true', name: `permissions.contact.inquiries` },
+        { isChecked: false, label: t('admins.form.issues'), value: 'true', name: `permissions.contact.issues` },
+        { isChecked: false, label: t('admins.form.suggestions'), value: 'true', name: `permissions.contact.suggestions` },
+    ]);
+    const [checkRequests, setCheckRequests] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.attestation'), value: 'true', name: `permissions.requests.attestation` },
+        { isChecked: false, label: t('admins.form.category'), value: 'true', name: `permissions.requests.category` },
+    ]);
+    const [checkReports, setCheckReports] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.chats'), value: 'true', name: `permissions.reports.chats` },
+        { isChecked: false, label: t('admins.form.products'), value: 'true', name: `permissions.reports.products` },
+    ]);
+    const [checkBanlist, setCheckBanlist] = useState<CheckboxItem[]>([
+        { isChecked: false, label: t('admins.form.users'), value: 'true', name: `permissions.banlist.chats` },
+        { isChecked: false, label: t('admins.form.products'), value: 'true', name: `permissions.banlist.products` },
+    ]);
     return (
         <>
-            <div className="flex justify-between md:mb-20">
+            <div className="flex justify-between md:mb-2">
                 <Breadcrumb pageName={t('admins.title-add')} breadcrumbLinks={breadcrumbLinks} />
                 <RiDeleteBin6Line className="text-3xl text-Input-TextRed" role="button" onClick={back} />
             </div>
@@ -152,7 +198,7 @@ export default function AddAdmin() {
                 onSubmit={handleAddAdminSubmit}
             >
                 {({ isSubmitting }: FormikProps<AddAdminValues>) => (
-                    <Form>
+                    <Form className="bg-white p-6 rounded-sm">
                         <div className="flex justify-between md:mb-6">
                             <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
                             <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
@@ -165,8 +211,12 @@ export default function AddAdmin() {
                             <SelectTime name={`workingHours.start`} label={t('admins.form.from')} />
                             <SelectTime name={`workingHours.end`} label={t('admins.form.to')} />
                         </div>
+
+
                         <div className="flex justify-between md:mb-16">
-                            <div>
+                            <CheckboxGroup checks={checkPermissions} setChecks={setCheckPermissions} label={t('admins.form.permissions')} />
+                            <CheckboxGroup checks={checkAdvertisments} setChecks={setCheckAdvertisments} label={t('admins.form.advertisments')} />
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg">{t('admins.form.permissions')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.super`} label={t('admins.form.super')} />
@@ -174,64 +224,70 @@ export default function AddAdmin() {
                                     <Checkbox value={`true`} name={`permissions.settings`} label={t('admins.form.settings')} />
                                     <Checkbox value={`true`} name={`permissions.Charts`} label={t('admins.form.Charts')} />
                                 </div>
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.advertisments')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.ads.all`} label={t('admins.form.all')} />
                                     <Checkbox value={`true`} name={`permissions.ads.primary`} label={t('admins.form.primary')} />
                                     <Checkbox value={`true`} name={`permissions.ads.subscription`} label={t('admins.form.subscription')} />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex justify-between md:mb-16">
-                            <div>
+                        <CheckboxGroup checks={checkUsers} setChecks={setCheckUsers} label={t('admins.form.users')} />
+                        <CheckboxGroup checks={checkCategories} setChecks={setCheckCategories} label={t('admins.form.categories')} />
+                        <CheckboxGroup checks={checkSupport} setChecks={setCheckSupport} label={t('admins.form.support')} />
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg">{t('admins.form.users')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.users.all`} label={t('admins.form.all')} />
                                     <Checkbox value={`true`} name={`permissions.users.advertisers`} label={t('admins.form.advertisers')} />
                                     <Checkbox value={`true`} name={`permissions.users.customers`} label={t('admins.form.customers')} />
                                 </div>
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.categories')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.categories.primary`} label={t('admins.form.primary')} />
                                     <Checkbox value={`true`} name={`permissions.categories.subscription`} label={t('admins.form.subscription')} />
                                     <Checkbox value={`true`} name={`permissions.categories.region`} label={t('admins.form.region')} />
                                 </div>
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.support')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.contact.inquiries`} label={t('admins.form.inquiries')} />
                                     <Checkbox value={`true`} name={`permissions.contact.issues`} label={t('admins.form.issues')} />
                                     <Checkbox value={`true`} name={`permissions.contact.suggestions`} label={t('admins.form.suggestions')} />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex justify-between md:mb-16">
-                            <div>
+                        <CheckboxGroup checks={checkRequests} setChecks={setCheckRequests} label={t('admins.form.requests')} />
+                        <CheckboxGroup checks={checkReports} setChecks={setCheckReports} label={t('admins.form.reports')} />
+                        <CheckboxGroup checks={checkBanlist} setChecks={setCheckBanlist} label={t('admins.form.banlist')} />
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg">{t('admins.form.requests')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.requests.attestation`} label={t('admins.form.attestation')} />
                                     <Checkbox value={`true`} name={`permissions.requests.category`} label={t('admins.form.category')} />
                                 </div>
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div>
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.reports')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.reports.chats`} label={t('admins.form.chats')} />
                                     <Checkbox value={`true`} name={`permissions.reports.products`} label={t('admins.form.products')} />
                                 </div>
-                            </div>
-                            <div className="w-[25%]">
+                            </div> */}
+                            {/* <div className="w-[25%]">
                                 <div className="mb-4 font-bold text-lg" >{t('admins.form.banlist')}</div>
                                 <div>
                                     <Checkbox value={`true`} name={`permissions.banlist.chats`} label={t('admins.form.users')} />
                                     <Checkbox value={`true`} name={`permissions.banlist.products`} label={t('admins.form.products')} />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex justify-center">
                             <button type="submit" disabled={isSubmitting}
