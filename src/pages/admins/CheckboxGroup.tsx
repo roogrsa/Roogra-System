@@ -33,7 +33,7 @@ const CheckboxGroup = ({checks,setChecks, label}:CheckboxItemProps) => {
                     <input type="checkbox" name={item.name} value={item.value} onChange={() => handleCheckboxChange(index)}
                     checked={item.isChecked}/>
                     <span className="checkmark"></span>
-                    <span className={`${language=='ar'?'ms-2':'me-2'} ${language=='ar'?'me-5':'ms-5'}`}>{label}</span>
+                    <span className={`${language=='ar'?'ms-2':'me-2'} ${language=='ar'?'me-5':'ms-5'}`}>{item.label}</span>
                 </label>
                 ))}
             </div>
