@@ -1,6 +1,8 @@
 import React from 'react';
 import Checkbox from '../../components/form/Checkbox';
 import { CheckboxItem } from './AddAdmin';
+import { useSelector } from 'react-redux';
+import { selectLanguage } from '../../store/slices/language';
 
 interface CheckboxItemProps {
     checks: CheckboxItem[];
@@ -18,7 +20,7 @@ const CheckboxGroup = ({checks,setChecks, label}:CheckboxItemProps) => {
         setChecks(newChecks);
     };
     const allChecked = checks.every(item => item.isChecked);
-
+    const language = useSelector(selectLanguage);
     return (
         <div>
             <div className="mb-1 font-bold text-lg" >
@@ -27,8 +29,12 @@ const CheckboxGroup = ({checks,setChecks, label}:CheckboxItemProps) => {
             </div>
             <div>
                 {checks.map((item, index) => (
-                    <Checkbox value={item.value} name={item.name} label={item.label} checked={item.isChecked}
-                        change={() => handleCheckboxChange(index)} />
+                    <label className={`custom-checkbox `}>
+                    <input type="checkbox" name={item.name} value={item.value} onChange={() => handleCheckboxChange(index)}
+                    checked={item.isChecked}/>
+                    <span className="checkmark"></span>
+                    <span className={`${language=='ar'?'ms-2':'me-2'} ${language=='ar'?'me-5':'ms-5'}`}>{label}</span>
+                </label>
                 ))}
             </div>
         </div>

@@ -18,4 +18,3 @@ export default function Checkbox({ value, name, label, change, checked }: Checkb
         </label>
     )
 }
-l
