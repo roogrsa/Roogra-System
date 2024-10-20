@@ -45,9 +45,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [isBanListOpen, setIsBanListOpen] = useState(false);
   const fName = localStorage.getItem('first_name')
   const lName = localStorage.getItem('last_name')
-  const permissions = localStorage.getItem('permissions')
-  console.log(permissions);
-  // 11111111111111111111111
+  const permissions: any = localStorage.getItem('permissions')
+  console.log(permissions); // 11111111111111111111111
+
   const [permission, setpermission] = useState({
     super: 0,
     charts: 0,
@@ -60,7 +60,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     contact: { inquiries: 0, issues: 0, suggestions: 0 },
     reports: { chats: 0, products: 0 },
     banlist: { chats: 0, products: 0 },
-})
+  })
+  useEffect(() => {
+    // if (permissions.length === 22) {
+    setpermission({
+      super: permissions[0],
+      charts: permissions[1],
+      admins: permissions[2],
+      settings: permissions[3],
+      ads: { all: permissions[4], primary: permissions[5], subscription: permissions[6] },
+      users: { all: permissions[7], advertisers: permissions[8], customers: permissions[9] },
+      categories: { primary: permissions[10], subscription: permissions[11], region: permissions[12] },
+      requests: { attestation: permissions[13], category: permissions[14] },
+      contact: { inquiries: permissions[15], issues: permissions[16], suggestions: permissions[17] },
+      reports: { chats: permissions[18], products: permissions[19] },
+      banlist: { chats: permissions[20], products: permissions[21] },
+    })
+    // }
+  }, []);
+  console.log(permission);
+
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
@@ -107,6 +126,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       console.error(error);
     }
   };
+  console.log(permission.ads.all == 1 || permission.ads.primary || permission.ads.subscription == 1);
+
   return (
     <>
       <aside
@@ -142,100 +163,117 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <h2 className="mb-4 ml-4 text-xl font-[400] text-bodydark2">
                   {fName} {lName}
                 </h2>
-              }
+              }4
               <ul className="mb-6 flex flex-col gap-1.5">
-                <SidebarLink to={`/`} isOpen={isOpen} text={'sidebar.charts'} icon={<PiChartDonutFill className="text-2xl" />} />
+                {permission.charts == 1 &&
+                  <SidebarLink to={`/`} isOpen={isOpen} text={'sidebar.charts'} icon={<PiChartDonutFill className="text-2xl" />} />
+                }
                 {/* ads dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setIsAdsOpen(!isAdsOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ads.ads'} icon={<AiFillHome className="text-2xl" />} />
+                {(permission.ads.all == 1 || permission.ads.primary == 1 || permission.ads.subscription == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setIsAdsOpen(!isAdsOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ads.ads'} icon={<AiFillHome className="text-2xl" />} />
+                    </div>
+                    {isAdsOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.ads.all == 1 && <DropLink to={`/products`} text={'sidebar.ads.all'} />}
+                        {permission.ads.primary == 1 && <DropLink to={`/ads/main`} text={'sidebar.ads.main'} />}
+                        {permission.ads.subscription == 1 && <DropLink to={`/ads/subscriptions`} text={'sidebar.ads.subscriptions'} />}
+                      </ul>
+                    }
                   </div>
-                  {isAdsOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/products`} text={'sidebar.ads.all'} />
-                      <DropLink to={`/ads/main`} text={'sidebar.ads.main'} />
-                      <DropLink to={`/ads/subscriptions`} text={'sidebar.ads.subscriptions'} />
-                    </ul>
-                  }
-                </div>
+                }
                 {/* users dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setIsUsersOpen(!isUsersOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.users.users'} icon={<PiUsersFill className="text-2xl" />} />
+                {(permission.users.all == 1 || permission.users.advertisers == 1 || permission.users.customers == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setIsUsersOpen(!isUsersOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.users.users'} icon={<PiUsersFill className="text-2xl" />} />
+                    </div>
+                    {isUsersOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.users.all == 1 && <DropLink to={`/users`} text={'sidebar.users.all'} />}
+                        {permission.users.advertisers == 1 && <DropLink to={`/users/advertiser`} text={'sidebar.users.advertisers'} />}
+                        {permission.users.customers == 1 && <DropLink to={`/users/customer`} text={'sidebar.users.customers'} />}
+                      </ul>
+                    }
                   </div>
-                  {isUsersOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/users`} text={'sidebar.users.all'} />
-                      <DropLink to={`/users/advertiser`} text={'sidebar.users.advertisers'} />
-                      <DropLink to={`/users/customer`} text={'sidebar.users.customers'} />
-                    </ul>
-                  }
-                </div>
+                }
                 {/* categories dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.categories.categories'} icon={<BiSolidCategory className="text-2xl" />} />
+                {(permission.categories.primary == 1 || permission.categories.subscription == 1 || permission.categories.region == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.categories.categories'} icon={<BiSolidCategory className="text-2xl" />} />
+                    </div>
+                    {isCategoriesOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.categories.primary == 1 && <DropLink to={`/categories/main`} text={'sidebar.categories.main'} />}
+                        {permission.categories.subscription == 1 &&
+                          <DropLink to={`/categories/subscriptions`} text={'sidebar.categories.subscriptions'} />}
+                        {permission.categories.region == 1 && <DropLink to={`/categories/map`} text={'sidebar.categories.map'} />}
+                      </ul>
+                    }
                   </div>
-                  {isCategoriesOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/categories/main`} text={'sidebar.categories.main'} />
-                      <DropLink to={`/categories/subscriptions`} text={'sidebar.categories.subscriptions'} />
-                      <DropLink to={`/categories/map`} text={'sidebar.categories.map'} />
-                    </ul>
-                  }
-                </div>
+                }
                 {/* subscription dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setIsSubscriptionOpen(!isSubscriptionOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.requests.requests'} icon={<PiTicketFill className="text-2xl" />} />
+                {(permission.requests.attestation == 1 || permission.requests.category == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setIsSubscriptionOpen(!isSubscriptionOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.requests.requests'} icon={<PiTicketFill className="text-2xl" />} />
+                    </div>
+                    {isSubscriptionOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.requests.attestation == 1 && <DropLink to={`/subscription`} text={'sidebar.requests.attestation'} />}
+                        {permission.requests.category == 1 && <DropLink to={`/requests/category`} text={'sidebar.requests.category'} />}
+                      </ul>
+                    }
                   </div>
-                  {isSubscriptionOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      {/* <DropLink to={`/requests/attestation`} text={'sidebar.requests.attestation'} /> */}
-                      <DropLink to={`/subscription`} text={'sidebar.requests.attestation'} />
-                      <DropLink to={`/requests/category`} text={'sidebar.requests.category'} />
-                    </ul>
-                  }
-                </div>
+                }
                 {/* support dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setISupportOpen(!isSupportOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.support.support'} icon={<PiHeadsetFill className="text-2xl" />} />
-                  </div>
-                  {isSupportOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/support`} text={'sidebar.support.inquiries'} />
-                      <DropLink to={`/support/advertiser`} text={'sidebar.support.issues'} />
-                      <DropLink to={`/support/customer`} text={'sidebar.support.suggestions'} />
-                    </ul>
-                  }
-                </div>
+                {(permission.contact.inquiries == 1 || permission.contact.issues == 1 || permission.contact.suggestions == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setISupportOpen(!isSupportOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.support.support'} icon={<PiHeadsetFill className="text-2xl" />} />
+                    </div>
+                    {isSupportOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.contact.inquiries == 1 && <DropLink to={`/support`} text={'sidebar.support.inquiries'} />}
+                        {permission.contact.issues == 1 && <DropLink to={`/support/advertiser`} text={'sidebar.support.issues'} />}
+                        {permission.contact.suggestions == 1 && <DropLink to={`/support/customer`} text={'sidebar.support.suggestions'} />}
+                      </ul>
+                    }
+                  </div>}
                 {/* reports dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setIsReportsOpen(!isReportsOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.reports.reports'} icon={<PiEnvelopeFill className="text-2xl" />} />
-                  </div>
-                  {isReportsOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/reports/chat`} text={'sidebar.reports.chat'} />
-                      <DropLink to={`/reports/product`} text={'sidebar.reports.product'} />
-                    </ul>
-                  }
-                </div>
+                {(permission.reports.chats == 1 || permission.reports.products == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setIsReportsOpen(!isReportsOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.reports.reports'} icon={<PiEnvelopeFill className="text-2xl" />} />
+                    </div>
+                    {isReportsOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.reports.chats == 1 && <DropLink to={`/reports/chat`} text={'sidebar.reports.chat'} />}
+                        {permission.reports.products == 1 && <DropLink to={`/reports/product`} text={'sidebar.reports.product'} />}
+                      </ul>
+                    }
+                  </div>}
                 {/* ban list dropdown */}
-                <div className='relative'>
-                  <div onClick={() => setIsBanListOpen(!isBanListOpen)}>
-                    <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ban-list.ban-list'} icon={<MdOutlineBlock className="text-2xl" />} />
-                  </div>
-                  {isBanListOpen &&
-                    <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
-                      <DropLink to={`/ban-list/users`} text={'sidebar.ban-list.users'} />
-                      <DropLink to={`/ban-list/products`} text={'sidebar.ban-list.products'} />
-                    </ul>
-                  }
-                </div>
-                <SidebarLink to={`/admins`} isOpen={isOpen} text={'sidebar.admins'} icon={<PiUsersThreeFill className="text-2xl" />} />
-                <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.settings'} icon={<PiGearFineFill className="text-2xl" />} />
+                {(permission.banlist.chats == 1 || permission.banlist.products == 1) &&
+                  <div className='relative'>
+                    <div onClick={() => setIsBanListOpen(!isBanListOpen)}>
+                      <SidebarLink to={`#`} isOpen={isOpen} text={'sidebar.ban-list.ban-list'} icon={<MdOutlineBlock className="text-2xl" />} />
+                    </div>
+                    {isBanListOpen &&
+                      <ul className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'} top-12 z-10 rounded-xl`}>
+                        {permission.banlist.chats == 1 && <DropLink to={`/ban-list/users`} text={'sidebar.ban-list.users'} />}
+                        {permission.banlist.products == 1 && <DropLink to={`/ban-list/products`} text={'sidebar.ban-list.products'} />}
+                      </ul>
+                    }
+                  </div>}
+                {permission.admins == 1 &&
+                  <SidebarLink to={`/admins`} isOpen={isOpen} text={'sidebar.admins'} icon={<PiUsersThreeFill className="text-2xl" />} />
+                }
+                {permission.settings == 1 &&
+                  <SidebarLink to={`/settings`} isOpen={isOpen} text={'sidebar.settings'} icon={<PiGearFineFill className="text-2xl" />} />
+                }
               </ul>
             </div>
             <div
