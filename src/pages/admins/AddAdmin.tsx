@@ -230,18 +230,18 @@ export default function AddAdmin() {
                                 <SelectTime name={`finish_working_hour`} label={t('admins.form.to')} />
                             </div>
                             <div className="flex justify-between md:mb-16">
-                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkPermissions} setChecks={setCheckPermissions} label={t('admins.form.permissions')} />
                                 <CheckboxGroup setFieldValue={setFieldValue} checks={checkAdvertisments} setChecks={setCheckAdvertisments} label={t('admins.form.advertisments')} />
-                            </div>
-                            <div className="flex justify-between md:mb-16">
                                 <CheckboxGroup setFieldValue={setFieldValue} checks={checkUsers} setChecks={setCheckUsers} label={t('admins.form.users')} />
-                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkCategories} setChecks={setCheckCategories} label={t('admins.form.categories')} />
-                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkSupport} setChecks={setCheckSupport} label={t('admins.form.support')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkRequests} setChecks={setCheckRequests} label={t('admins.form.requests')} />
                             </div>
                             <div className="flex justify-between md:mb-16">
-                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkRequests} setChecks={setCheckRequests} label={t('admins.form.requests')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkSupport} setChecks={setCheckSupport} label={t('admins.form.support')} />
                                 <CheckboxGroup setFieldValue={setFieldValue} checks={checkReports} setChecks={setCheckReports} label={t('admins.form.reports')} />
                                 <CheckboxGroup setFieldValue={setFieldValue} checks={checkBanlist} setChecks={setCheckBanlist} label={t('admins.form.banlist')} />
+                            </div>
+                            <div className="flex justify-between md:mb-16">
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkPermissions} setChecks={setCheckPermissions} label={t('admins.form.permissions')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkCategories} setChecks={setCheckCategories} label={t('admins.form.categories')} />
                             </div>
                             <div className="flex justify-center">
                                 <button type="submit" disabled={isSubmitting}
