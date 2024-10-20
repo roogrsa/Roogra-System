@@ -25,6 +25,11 @@ import Profile from './pages/users/Profile';
 import CategorySubscription from './pages/category_subscription/CategorySubscription';
 import Admins from './pages/admins/Admins';
 import AddAdmin from './pages/admins/AddAdmin';
+import Unauthorized from './pages/unauthorized/Unauthorized';
+import ProtectedRoute from './components/guards/UnauthorizedGuard';
+const storedPermissions: any = localStorage.getItem('permissions');
+// const permissions: number[] = storedPermissions ? JSON.parse(storedPermissions) : [];
+console.log(storedPermissions);
 
 const router = createBrowserRouter([
   {
@@ -130,6 +135,28 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <AddAdmin />
+          </Guard>
+        ),
+      },
+
+      {
+        path: "admins/add-admin",
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={AddAdmin}
+              hasPermission={storedPermissions[2] == 1}
+            />
+          </Guard>
+        )
+
+      },
+
+      {
+        path: 'unauthorized',
+        element: (
+          <Guard>
+            <Unauthorized />
           </Guard>
         ),
       },

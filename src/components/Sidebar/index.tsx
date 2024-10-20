@@ -20,6 +20,7 @@ import { setLogout } from '../../store/slices/auth';
 import SidebarLink from './SidebarLink';
 import DropLink from './DropLink';
 import { selectLanguage } from '../../store/slices/language';
+import { PermissionState } from '../../interfaces/PermissionState';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -48,7 +49,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const permissions: any = localStorage.getItem('permissions')
   console.log(permissions); // 11111111111111111111111
 
-  const [permission, setpermission] = useState({
+  const [permission, setpermission] = useState<PermissionState>({
     super: 0,
     charts: 0,
     admins: 0,
