@@ -5,6 +5,7 @@ import useBanUser from '../../hooks/useBanUser';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
+import { useTranslation } from 'react-i18next';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -30,6 +31,8 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
   };
+  //
+  const { t } = useTranslation();
 
   const logs = users.map((user) => ({
     id: user.id,
@@ -121,6 +124,21 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       },
     ],
   }));
+  // { key: 'id', content: `${t(users.id)}`, className: 'text-center' },
+  // { key: 'name', content: {t(users.userName)}, className: 'text-center' },
+  // { key: 'alias', content: {t(users.alias)}, className: 'text-center' },
+  // { key: 'regDate', content: {t(users.regDate)}, className: 'text-center' },
+  // {
+  //   key: 'mobileconfirm',
+  //   content: {t(users.mobileconfirm)},
+  //   className: 'text-center',
+  // },
+  // {
+  //   key: 'emailleconfirm',
+  //   content: {t(users.emailleconfirm)},
+  //   className: 'text-center',
+  // },
+  // { key: 'BanStatus', content: {t(users.BanStatus)}, className: 'text-center' },
 
   // Header
   const headers = [

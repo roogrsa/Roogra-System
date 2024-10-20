@@ -112,5 +112,16 @@
             "products":"Products",
             "banlist":"Banlist"
         }
+    },
+     "users": {
+        "id":"ID",
+        "userName":"Name",
+        "alias":"Alias",
+        "type":"Type",
+        "regDate":"Reg-Date",
+        "mobileconfirm":"Mobile Confirm",
+        "emailleconfirm":"Email Confirm",
+        "BanStatus":"Ban Status"
+
     }
 }
