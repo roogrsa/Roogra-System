@@ -10,12 +10,14 @@ import {
     Form
 } from 'formik';
 import axiosInstance from "../../axiosConfig/instanc";
+// import toast from "react-hot-toast";
 import InputText from "../../components/form/InputText";
 import SelectLevel from "../../components/form/SelectLevel";
 import SelectTime from "../../components/form/SelectTime";
 import CheckboxGroup from "./CheckboxGroup";
 import { useState } from "react";
 import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface CheckboxItem {
     isChecked: boolean;
