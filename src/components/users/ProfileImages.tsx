@@ -1,11 +1,12 @@
 // ProfileImages.tsx
 import React from 'react';
 import CoverOne from './../../images/cover/cover-01.png';
-import userSix from './../../../public/Defualt.png';
+import userSix from '/Defualt.png';
 
 interface ProfileImagesProps {
   user: {
     image?: string;
+    cover?: string;
   };
 }
 
@@ -16,9 +17,9 @@ const ProfileImages: React.FC<ProfileImagesProps> = ({ user }) => {
       <div className="relative z-20 h-35 md:h-65">
         <img
           src={
-            user?.image === 'https://roogr.sa/api/image/'
+            user?.cover === 'https://roogr.sa/api/image/'
               ? CoverOne
-              : user?.image || CoverOne
+              : user?.cover || CoverOne
           }
           className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
           alt="profile cover"

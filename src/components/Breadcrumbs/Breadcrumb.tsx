@@ -60,7 +60,11 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
       {/* Ban/Unban Icon */}
       {product && (
         <>
-          <div className="bg-BlockIconBg rounded-md">
+          <div
+            className={`${
+              product.is_banned === 0 ? 'bg-UnBlockIconBg' : 'bg-BlockIconBg'
+            }  rounded-md`}
+          >
             <img
               src={product.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
               className={`w-8 h-7 text-center p-1 cursor-pointer ${

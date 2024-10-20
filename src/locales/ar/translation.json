@@ -112,5 +112,16 @@
             "products":"المنتجات",
             "banlist":"قائمة الحظر"
         }
+    },
+    "users": {
+        "id":"ID",
+        "userName":"أسم المستخدم",
+        "alias":"اسم المستعار",
+        "type":"الفئه",
+        "regDate":"تاريخ التسجيل",
+        "mobileconfirm":"رقم الجوال",
+        "emailleconfirm":"البريد الالكتروني",
+        "BanStatus":"الحالة"
+
     }
 }

@@ -25,11 +25,10 @@ const Users: React.FC = () => {
     const fetchUsersCount = async () => {
       try {
         const response = await axiosInstance.get(`/api/users/count`);
-        setUsersCount((response.data.data.count) / 8)
-      } catch (err) {
-      }
+        setUsersCount(response.data.data.count / 8);
+      } catch (err) {}
     };
-    fetchUsersCount()
+    fetchUsersCount();
   }, []);
   const totalPages = Math.ceil(usersCount);
   const { banUser, loading: banUserLoading, error: banError } = useBanUser();
