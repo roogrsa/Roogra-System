@@ -63,7 +63,6 @@ export default function AddAdmin() {
         reports: { chats: 0, products: 0 },
         banlist: { chats: 0, products: 0 },
     })
-    console.log(permissions);
 
     const validationSchema = yup.object().shape({
         name: yup.string().required(t('admins.form.nameError')),
@@ -212,7 +211,6 @@ export default function AddAdmin() {
             >
                 {({ isSubmitting, values, setFieldValue }: FormikProps<AddAdminValues>) => {
                     setpermissions(values.permissions)
-                    { console.log('useEffect', permissions) }
                     const result = logValues(permissions);
                     setLoggedValues(result);
                     return (

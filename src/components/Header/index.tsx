@@ -1,12 +1,8 @@
 import { Link } from 'react-router-dom';
-import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
-import DropdownUser from './DropdownUser';
-import LogoIcon from '../../images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectLanguage, setLanguage } from '../../store/slices/language';
-import i18n from '../../i18next';
+import { useSelector } from 'react-redux';
+import { selectLanguage } from '../../store/slices/language';
 import LanguageSwitcher from './LanguageSwitcher';
 import useColorMode from '../../hooks/useColorMode';
 import { CiSearch } from "react-icons/ci";
@@ -20,7 +16,6 @@ const Header = (props: {
 }) => {
   const { t } = useTranslation();
   const language = useSelector(selectLanguage)
-  console.log(language);
 
   const [colorMode] = useColorMode();
   return (
@@ -74,8 +69,8 @@ const Header = (props: {
         <div className="hidden sm:block" dir={language === 'ar' ? 'rtl' : 'ltr'}>
           <form action="https://formbold.com/s/unique_form_id" method="POST">
             <div className="relative">
-                <CiSearch  className={`absolute top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold
-                 ${language === 'ar' ? 'left-2' : 'right-2'} `}/>
+              <CiSearch className={`absolute top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold
+                  ${language === 'ar' ? 'left-2' : 'right-2'} `} />
               <input
                 type="text"
                 placeholder={t(`header.search`)}

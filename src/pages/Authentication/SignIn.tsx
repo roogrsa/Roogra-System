@@ -22,7 +22,7 @@ const SignIn: React.FC = () => {
   const initialValues: LoginValues = { email: '', password: '' };
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
+  // console.log(cookies.get('token'));
   const handleRegisterSubmit = async (
     values: LoginValues,
     { setSubmitting }: FormikHelpers<LoginValues>) => {
@@ -31,6 +31,10 @@ const SignIn: React.FC = () => {
       const res = await axiosInstance.post(`/api/admins/login`, values);
       console.log(res.data.data);
       localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem('email', res.data.data.email);
+      localStorage.setItem('first_name', res.data.data.first_name );
+      localStorage.setItem('last_name', res.data.data.last_name );
+      localStorage.setItem('permissions',  res.data.data.permissions);
       navigate(`/`)
       dispatch(setIsLoggedin())
     } catch (error: any) {
@@ -40,7 +44,7 @@ const SignIn: React.FC = () => {
       setSubmitting(false);
     }
   };
-  
+
   return (
     <>
       <div className="rounded-sm  bg-white dark:bg-login-boxBgDark">

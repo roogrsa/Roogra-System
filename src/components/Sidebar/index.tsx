@@ -43,7 +43,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [isSupportOpen, setISupportOpen] = useState(false);
   const [isReportsOpen, setIsReportsOpen] = useState(false);
   const [isBanListOpen, setIsBanListOpen] = useState(false);
-
+  const fName = localStorage.getItem('first_name')
+  const lName = localStorage.getItem('last_name')
+  const permissions = localStorage.getItem('permissions')
+  console.log(permissions);
+  // 11111111111111111111111
+  const [permission, setpermission] = useState({
+    super: 0,
+    charts: 0,
+    admins: 0,
+    settings: 0,
+    ads: { all: 0, primary: 0, subscription: 0 },
+    users: { all: 0, advertisers: 0, customers: 0 },
+    categories: { primary: 0, subscription: 0, region: 0 },
+    requests: { attestation: 0, category: 0 },
+    contact: { inquiries: 0, issues: 0, suggestions: 0 },
+    reports: { chats: 0, products: 0 },
+    banlist: { chats: 0, products: 0 },
+})
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
@@ -83,8 +100,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   }, [sidebarExpanded]);
   const logout = async () => {
     try {
-      const res = await axiosInstance.get(`/api/admins/logout`);
+      await axiosInstance.get(`/api/admins/logout`);
       dispatch(setLogout());
+
     } catch (error: any) {
       console.error(error);
     }
@@ -117,12 +135,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </div>
         {/* <!-- SIDEBAR BODY--> */}
 
-        <div className="no-scrollbar bg-boxdark flex flex-col overflow-y-auto duration-300 ease-linear">
+        <div className="no-scrollbar bg-boxdark flex flex-col overflow-y-auto duration-300 ease-linear mt-5">
           <nav className="px-4 lg:px-6">
             <div>
-              <h2 className="mb-4 ml-4 text-xl font-[400] text-bodydark2">
-                {isOpen && 'username'}
-              </h2>
+              {isOpen &&
+                <h2 className="mb-4 ml-4 text-xl font-[400] text-bodydark2">
+                  {fName} {lName}
+                </h2>
+              }
               <ul className="mb-6 flex flex-col gap-1.5">
                 <SidebarLink to={`/`} isOpen={isOpen} text={'sidebar.charts'} icon={<PiChartDonutFill className="text-2xl" />} />
                 {/* ads dropdown */}
