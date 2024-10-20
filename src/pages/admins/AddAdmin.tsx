@@ -10,12 +10,12 @@ import {
     Form
 } from 'formik';
 import axiosInstance from "../../axiosConfig/instanc";
-import toast from "react-hot-toast";
 import InputText from "../../components/form/InputText";
 import SelectLevel from "../../components/form/SelectLevel";
 import SelectTime from "../../components/form/SelectTime";
 import CheckboxGroup from "./CheckboxGroup";
 import { useState } from "react";
+import { ToastContainer,toast } from "react-toastify";
 
 export interface CheckboxItem {
     isChecked: boolean;
@@ -153,8 +153,10 @@ export default function AddAdmin() {
             const res = await axiosInstance.post(`/api/admins`, { ...values, permissions: loggedValues });
             console.log(res);
             toast.success(`admin successfully submitted`);
+            navigate(`/admins`)
         } catch (error: any) {
             console.error(error);
+            console.log(error?.response?.data?.message);
             toast.error(error?.response?.data?.message);
         } finally {
             setSubmitting(false);
@@ -199,7 +201,7 @@ export default function AddAdmin() {
         { isChecked: false, label: 'admins.form.products', value: '1', name: `permissions.banlist.products` },
     ]);
     return (
-        <>
+        <div>
             <div className="flex justify-between md:mb-2">
                 <Breadcrumb pageName={t('admins.title-add')} breadcrumbLinks={breadcrumbLinks} />
                 <RiDeleteBin6Line className="text-3xl text-Input-TextRed" role="button" onClick={back} />
@@ -251,6 +253,7 @@ export default function AddAdmin() {
                     )
                 }}
             </Formik>
-        </>
+                <ToastContainer position="top-right" autoClose={5000} />
+        </div>
     )
 }
