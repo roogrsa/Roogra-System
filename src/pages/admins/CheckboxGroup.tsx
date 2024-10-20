@@ -1,40 +1,56 @@
-import React from 'react';
-import Checkbox from '../../components/form/Checkbox';
-import { CheckboxItem } from './AddAdmin';
-import { useSelector } from 'react-redux';
-import { selectLanguage } from '../../store/slices/language';
+import { useSelector } from "react-redux";
+import Checkbox from "../../components/form/Checkbox";
+import { useTranslation } from "react-i18next";
+import { selectLanguage } from "../../store/slices/language";
+import { CheckboxItem } from "./AddAdmin";
 
 interface CheckboxItemProps {
     checks: CheckboxItem[];
-    setChecks: (checks: CheckboxItem[]) => void; 
+    setChecks: (checks: CheckboxItem[]) => void;
+    setFieldValue: (field: string, value: any) => void;
     label: string;
 }
-const CheckboxGroup = ({checks,setChecks, label}:CheckboxItemProps) => {
+
+const CheckboxGroup = ({ checks, setChecks, setFieldValue, label }: CheckboxItemProps) => {
+    const language = useSelector(selectLanguage);
+    const { t } = useTranslation();
+
     const handleMainCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
-        setChecks(checks.map(item => ({ ...item, isChecked: checked })));
+        const updatedChecks = checks.map(item => ({ ...item, isChecked: checked }));
+        setChecks(updatedChecks);
+        updatedChecks.forEach(item => setFieldValue(item.name, item.isChecked));
     };
+
     const handleCheckboxChange = (index: number) => {
         const newChecks = [...checks];
         newChecks[index].isChecked = !newChecks[index].isChecked;
         setChecks(newChecks);
+        setFieldValue(newChecks[index].name, newChecks[index].isChecked);
     };
     const allChecked = checks.every(item => item.isChecked);
-    const language = useSelector(selectLanguage);
+
     return (
         <div>
-            <div className="mb-1 font-bold text-lg" >
+            <div className="mb-1 font-bold text-lg">
                 <Checkbox value={``} name={``} label={label} checked={allChecked}
                     change={handleMainCheckboxChange} />
             </div>
             <div>
                 {checks.map((item, index) => (
-                    <label className={`custom-checkbox `}>
-                    <input type="checkbox" name={item.name} value={item.value} onChange={() => handleCheckboxChange(index)}
-                    checked={item.isChecked}/>
-                    <span className="checkmark"></span>
-                    <span className={`${language=='ar'?'ms-2':'me-2'} ${language=='ar'?'me-5':'ms-5'}`}>{item.label}</span>
-                </label>
+                    <label className={`custom-checkbox `} key={index}>
+                        <input
+                            type="checkbox"
+                            name={item.name}
+                            value={item.value}
+                            onChange={() => handleCheckboxChange(index)}
+                            checked={item.isChecked}
+                        />
+                        <span className="checkmark"></span>
+                        <span className={`${language === 'ar' ? 'ms-2' : 'me-2'} ${language === 'ar' ? 'me-5' : 'ms-5'}`}>
+                            {t(item.label)}
+                        </span>
+                    </label>
                 ))}
             </div>
         </div>
