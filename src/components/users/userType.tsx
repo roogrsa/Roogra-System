@@ -5,7 +5,7 @@ import useBanUser from '../../hooks/useBanUser';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -32,7 +32,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
     navigate(`/profile/${userId}`);
   };
   //
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const logs = users.map((user) => ({
     id: user.id,

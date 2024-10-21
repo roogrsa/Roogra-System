@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useDispatch } from 'react-redux';
 import { setIsLoggedin } from '../../store/slices/auth';
@@ -13,6 +12,8 @@ import {
   Form,
   Field
 } from 'formik';
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface LoginValues {
   email: string;
   password: string;
@@ -102,6 +103,7 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} />
     </>
   );
 };
