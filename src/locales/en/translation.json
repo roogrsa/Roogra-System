@@ -132,6 +132,14 @@
     "unauthorized":{
         "title": "sorry, You are not authorized",
         "discribution":"You do not have permission to access this page."
+    },
+    "settings":{
+        "terms":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":""
     }
 
 }

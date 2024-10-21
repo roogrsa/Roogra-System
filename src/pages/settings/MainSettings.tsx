@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TabButton from '../../components/setting/TabButton';
 
 const MainSettings: React.FC = () => {
     const [activeTab, setActiveTab] = useState('Profile');
@@ -10,17 +11,12 @@ const MainSettings: React.FC = () => {
     return (
         <div className="md:flex">
             <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
-                <li>
-                    <button
-                        onClick={() => handleTabChange('Profile')}
-                        className={`inline-flex items-center px-4 py-3 rounded-lg w-full ${activeTab === 'Profile'
-                                ? 'bg-sidebarHover dark:bg-blue-600'
-                                : 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
-                            }`}
-                    >
-                        Profile
-                    </button>
-                </li>
+                <TabButton btnTab={`Profile`}/>
+                <TabButton btnTab={`Profile`}/>
+                <TabButton btnTab={`Profile`}/>
+                <TabButton btnTab={`Profile`}/>
+                <TabButton btnTab={`Profile`}/>
+                <TabButton btnTab={`Profile`}/>
                 <li>
                     <button
                         onClick={() => handleTabChange('Dashboard')}
@@ -52,14 +48,6 @@ const MainSettings: React.FC = () => {
                             }`}
                     >
                         Contact
-                    </button>
-                </li>
-                <li>
-                    <button
-                        disabled
-                        className="inline-flex items-center px-4 py-3 text-gray-400 rounded-lg cursor-not-allowed bg-gray-50 w-full dark:bg-gray-800 dark:text-gray-500"
-                    >
-                        Disabled
                     </button>
                 </li>
             </ul>
