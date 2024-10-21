@@ -8,7 +8,7 @@ const MainSettings: React.FC = () => {
 
     return (
         <div className="md:flex">
-            <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+            <ul className="flex-column space-y space-y-4 text-lg w-52 font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                 <TabButton btnTab={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 <TabButton btnTab={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 <TabButton btnTab={t('settings.banks')} activeTab={activeTab} setActiveTab={setActiveTab}/>
@@ -23,19 +23,31 @@ const MainSettings: React.FC = () => {
                         <p className="mb-2">This is the content for the Profile tab.</p>
                     </div>
                 )}
-                {activeTab === 'Dashboard' && (
+                {activeTab === t('settings.comission') && (
                     <div>
                         <h3 className="text-lg font-bold text-gray-bg-sidebarHover mb-2">Dashboard Tab</h3>
                         <p className="mb-2">This is the content for the Dashboard tab.</p>
                     </div>
                 )}
-                {activeTab === 'Settings' && (
+                {activeTab === t('settings.banks') && (
                     <div>
                         <h3 className="text-lg font-bold text-gray-bg-sidebarHover mb-2">Settings Tab</h3>
                         <p className="mb-2">This is the content for the Settings tab.</p>
                     </div>
                 )}
-                {activeTab === 'Contact' && (
+                {activeTab === t('settings.sms') && (
+                    <div>
+                        <h3 className="text-lg font-bold text-gray-bg-sidebarHover mb-2">Contact Tab</h3>
+                        <p className="mb-2">This is the content for the Contact tab.</p>
+                    </div>
+                )}
+                {activeTab === t('settings.verification') && (
+                    <div>
+                        <h3 className="text-lg font-bold text-gray-bg-sidebarHover mb-2">Contact Tab</h3>
+                        <p className="mb-2">This is the content for the Contact tab.</p>
+                    </div>
+                )}
+                {activeTab === t('settings.banners') && (
                     <div>
                         <h3 className="text-lg font-bold text-gray-bg-sidebarHover mb-2">Contact Tab</h3>
                         <p className="mb-2">This is the content for the Contact tab.</p>
