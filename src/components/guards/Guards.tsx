@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 const Guard = ({ children }: { children: JSX.Element }) => {
     const login = useSelector(checkIsLoggedin)
-    console.log(login);
     if (login) {
         return children;
     } else {

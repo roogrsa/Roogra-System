@@ -7,17 +7,16 @@ import {
     Formik,
     FormikHelpers,
     FormikProps,
-    Form,
-    Field
+    Form
 } from 'formik';
 import axiosInstance from "../../axiosConfig/instanc";
-import toast from "react-hot-toast";
 import InputText from "../../components/form/InputText";
 import SelectLevel from "../../components/form/SelectLevel";
 import SelectTime from "../../components/form/SelectTime";
-import { MdUploadFile } from "react-icons/md";
 import CheckboxGroup from "./CheckboxGroup";
 import { useState } from "react";
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface CheckboxItem {
     isChecked: boolean;
@@ -32,12 +31,8 @@ interface AddAdminValues {
     name: string,
     password: string,
     type: string,
-    // workingHours: {
-    //     start: string,
-    //     end: string,
-    // },
     start_working_hour: string,
-         finish_working_hour: string,
+    finish_working_hour: string,
     permissions: {
         super: number,
         charts: number,
@@ -52,8 +47,24 @@ interface AddAdminValues {
         banlist: { chats: number, products: number },
     },
 }
+
 export default function AddAdmin() {
     const { t } = useTranslation();
+    const [loggedValues, setLoggedValues] = useState<string>('');
+    const [permissions, setpermissions] = useState({
+        super: 0,
+        charts: 0,
+        admins: 0,
+        settings: 0,
+        ads: { all: 0, primary: 0, subscription: 0 },
+        users: { all: 0, advertisers: 0, customers: 0 },
+        categories: { primary: 0, subscription: 0, region: 0 },
+        requests: { attestation: 0, category: 0 },
+        contact: { inquiries: 0, issues: 0, suggestions: 0 },
+        reports: { chats: 0, products: 0 },
+        banlist: { chats: 0, products: 0 },
+    })
+
     const validationSchema = yup.object().shape({
         name: yup.string().required(t('admins.form.nameError')),
         password: yup.string().required(t('admins.form.PasswordError')),
@@ -113,24 +124,23 @@ export default function AddAdmin() {
         password: "",
         type: "2",
         start_working_hour: '',
-         finish_working_hour:"",
-        // workingHours: {
-        //     start: "",
-        //     end: "",
-        // },
-        permissions: {
-            super: 0,
-            charts: 0,
-            admins: 0,
-            settings: 0,
-            ads: { all: 0, primary: 0, subscription: 0 },
-            users: { all: 0, advertisers: 0, customers: 0 },
-            categories: { primary: 0, subscription: 0, region: 0 },
-            requests: { attestation: 0, category: 0 },
-            contact: { inquiries: 0, issues: 0, suggestions: 0 },
-            reports: { chats: 0, products: 0 },
-            banlist: { chats: 0, products: 0 },
-        },
+        finish_working_hour: "",
+        permissions: permissions
+    }
+    const logValues = (obj: any): string => {
+        let result = '';
+        for (const key in obj) {
+            if (typeof obj[key] === 'object' && obj[key] !== null) {
+                result += logValues(obj[key]);
+            } else {
+                if (typeof obj[key] === 'boolean') {
+                    result += obj[key] ? '1' : '0';
+                } else {
+                    result += `${obj[key]}`;
+                }
+            }
+        }
+        return result;
     };
 
     const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }]
@@ -141,56 +151,58 @@ export default function AddAdmin() {
         { setSubmitting }: FormikHelpers<AddAdminValues>) => {
         try {
             setSubmitting(true);
-            const res = await axiosInstance.post(`/api/admins`, values);
+            const res = await axiosInstance.post(`/api/admins`, { ...values, permissions: loggedValues });
             console.log(res);
             toast.success(`admin successfully submitted`);
+            navigate(`/admins`)
         } catch (error: any) {
             console.error(error);
+            console.log(error?.response?.data?.message);
             toast.error(error?.response?.data?.message);
         } finally {
             setSubmitting(false);
         }
     };
     const [checkAdvertisments, setCheckAdvertisments] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.all'), value: '1', name: `permissions.ads.all` },
-        { isChecked: false, label: t('admins.form.primary'), value: '1', name: `permissions.ads.primary` },
-        { isChecked: false, label: t('admins.form.subscription'), value: '1', name: `permissions.ads.subscription` },
+        { isChecked: false, label: 'admins.form.all', value: '1', name: `permissions.ads.all` },
+        { isChecked: false, label: 'admins.form.primary', value: '1', name: `permissions.ads.primary` },
+        { isChecked: false, label: 'admins.form.subscription', value: '1', name: `permissions.ads.subscription` },
     ]);
     const [checkPermissions, setCheckPermissions] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.super'), value: '1', name: `permissions.super` },
-        { isChecked: false, label: t('admins.form.admins'), value: '1', name: `permissions.admins` },
-        { isChecked: false, label: t('admins.form.settings'), value: '1', name: `permissions.settings` },
-        { isChecked: false, label: t('admins.form.charts'), value: '1', name: `permissions.charts` },
+        { isChecked: false, label: 'admins.form.super', value: '1', name: `permissions.super` },
+        { isChecked: false, label: 'admins.form.admins', value: '1', name: `permissions.admins` },
+        { isChecked: false, label: 'admins.form.settings', value: '1', name: `permissions.settings` },
+        { isChecked: false, label: 'admins.form.charts', value: '1', name: `permissions.charts` },
     ]);
     const [checkUsers, setCheckUsers] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.all'), value: '1', name: `permissions.users.all` },
-        { isChecked: false, label: t('admins.form.advertisers'), value: '1', name: `permissions.users.advertisers` },
-        { isChecked: false, label: t('admins.form.customers'), value: '1', name: `permissions.users.customers` },
+        { isChecked: false, label: 'admins.form.all', value: '1', name: `permissions.users.all` },
+        { isChecked: false, label: 'admins.form.advertisers', value: '1', name: `permissions.users.advertisers` },
+        { isChecked: false, label: 'admins.form.customers', value: '1', name: `permissions.users.customers` },
     ]);
     const [checkCategories, setCheckCategories] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.primary'), value: '1', name: `permissions.categories.primary` },
-        { isChecked: false, label: t('admins.form.subscription'), value: '1', name: `permissions.categories.subscription` },
-        { isChecked: false, label: t('admins.form.region'), value: '1', name: `permissions.categories.regi` },
+        { isChecked: false, label: 'admins.form.primary', value: '1', name: `permissions.categories.primary` },
+        { isChecked: false, label: 'admins.form.subscription', value: '1', name: `permissions.categories.subscription` },
+        { isChecked: false, label: 'admins.form.region', value: '1', name: `permissions.categories.region` },
     ]);
     const [checkSupport, setCheckSupport] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.inquiries'), value: '1', name: `permissions.contact.inquiries` },
-        { isChecked: false, label: t('admins.form.issues'), value: '1', name: `permissions.contact.issues` },
-        { isChecked: false, label: t('admins.form.suggestions'), value: '1', name: `permissions.contact.suggestions` },
+        { isChecked: false, label: 'admins.form.inquiries', value: '1', name: `permissions.contact.inquiries` },
+        { isChecked: false, label: 'admins.form.issues', value: '1', name: `permissions.contact.issues` },
+        { isChecked: false, label: 'admins.form.suggestions', value: '1', name: `permissions.contact.suggestions` },
     ]);
     const [checkRequests, setCheckRequests] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.attestation'), value: '1', name: `permissions.requests.attestation` },
-        { isChecked: false, label: t('admins.form.category'), value: '1', name: `permissions.requests.category` },
+        { isChecked: false, label: 'admins.form.attestation', value: '1', name: `permissions.requests.attestation` },
+        { isChecked: false, label: 'admins.form.category', value: '1', name: `permissions.requests.category` },
     ]);
     const [checkReports, setCheckReports] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.chats'), value: '1', name: `permissions.reports.chats` },
-        { isChecked: false, label: t('admins.form.products'), value: '1', name: `permissions.reports.products` },
+        { isChecked: false, label: 'admins.form.chats', value: '1', name: `permissions.reports.chats` },
+        { isChecked: false, label: 'admins.form.products', value: '1', name: `permissions.reports.products` },
     ]);
     const [checkBanlist, setCheckBanlist] = useState<CheckboxItem[]>([
-        { isChecked: false, label: t('admins.form.users'), value: '1', name: `permissions.banlist.chats` },
-        { isChecked: false, label: t('admins.form.products'), value: '1', name: `permissions.banlist.products` },
+        { isChecked: false, label: 'admins.form.users', value: '1', name: `permissions.banlist.chats` },
+        { isChecked: false, label: 'admins.form.products', value: '1', name: `permissions.banlist.products` },
     ]);
     return (
-        <>
+        <div>
             <div className="flex justify-between md:mb-2">
                 <Breadcrumb pageName={t('admins.title-add')} breadcrumbLinks={breadcrumbLinks} />
                 <RiDeleteBin6Line className="text-3xl text-Input-TextRed" role="button" onClick={back} />
@@ -200,43 +212,49 @@ export default function AddAdmin() {
                 validationSchema={validationSchema}
                 onSubmit={handleAddAdminSubmit}
             >
-                {({ isSubmitting }: FormikProps<AddAdminValues>) => (
-                    <Form className="bg-white dark:bg-secondaryBG-dark p-6 rounded-sm">
-                        <div className="flex justify-between md:mb-6">
-                            <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
-                            <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
-                            <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
-                            <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
-                        </div>
-                        <div className="flex justify-between md:mb-16">
-                            <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
-                            <SelectLevel name={`type`} />
-                            <SelectTime name={`workingHours.start`} label={t('admins.form.from')} />
-                            <SelectTime name={`workingHours.end`} label={t('admins.form.to')} />
-                        </div>
-                        <div className="flex justify-between md:mb-16">
-                            <CheckboxGroup checks={checkPermissions} setChecks={setCheckPermissions} label={t('admins.form.permissions')} />
-                            <CheckboxGroup checks={checkAdvertisments} setChecks={setCheckAdvertisments} label={t('admins.form.advertisments')} />
-                        </div>
-                        <div className="flex justify-between md:mb-16">
-                            <CheckboxGroup checks={checkUsers} setChecks={setCheckUsers} label={t('admins.form.users')} />
-                            <CheckboxGroup checks={checkCategories} setChecks={setCheckCategories} label={t('admins.form.categories')} />
-                            <CheckboxGroup checks={checkSupport} setChecks={setCheckSupport} label={t('admins.form.support')} />
-                        </div>
-                        <div className="flex justify-between md:mb-16">
-                            <CheckboxGroup checks={checkRequests} setChecks={setCheckRequests} label={t('admins.form.requests')} />
-                            <CheckboxGroup checks={checkReports} setChecks={setCheckReports} label={t('admins.form.reports')} />
-                            <CheckboxGroup checks={checkBanlist} setChecks={setCheckBanlist} label={t('admins.form.banlist')} />
-                        </div>
-                        <div className="flex justify-center">
-                            <button type="submit" disabled={isSubmitting}
-                                className="text-3xl bg-SaveIconBg text-white rounded-md p-2">
+                {({ isSubmitting, values, setFieldValue }: FormikProps<AddAdminValues>) => {
+                    setpermissions(values.permissions)
+                    const result = logValues(permissions);
+                    setLoggedValues(result);
+                    return (
+                        <Form className="bg-white dark:bg-secondaryBG-dark p-6 rounded-sm">
+                            <div className="flex justify-between md:mb-6">
+                                <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
+                                <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
+                                <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
+                                <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
+                            </div>
+                            <div className="flex justify-between md:mb-16">
+                                <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
+                                <SelectLevel name={`type`} />
+                                <SelectTime name={`start_working_hour`} label={t('admins.form.from')} />
+                                <SelectTime name={`finish_working_hour`} label={t('admins.form.to')} />
+                            </div>
+                            <div className="flex justify-between md:mb-16">
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkAdvertisments} setChecks={setCheckAdvertisments} label={t('admins.form.advertisments')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkUsers} setChecks={setCheckUsers} label={t('admins.form.users')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkRequests} setChecks={setCheckRequests} label={t('admins.form.requests')} />
+                            </div>
+                            <div className="flex justify-between md:mb-16">
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkSupport} setChecks={setCheckSupport} label={t('admins.form.support')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkReports} setChecks={setCheckReports} label={t('admins.form.reports')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkBanlist} setChecks={setCheckBanlist} label={t('admins.form.banlist')} />
+                            </div>
+                            <div className="flex justify-between md:mb-16">
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkPermissions} setChecks={setCheckPermissions} label={t('admins.form.permissions')} />
+                                <CheckboxGroup setFieldValue={setFieldValue} checks={checkCategories} setChecks={setCheckCategories} label={t('admins.form.categories')} />
+                            </div>
+                            <div className="flex justify-center">
+                                <button type="submit" disabled={isSubmitting}
+                                    className="text-3xl bg-SaveIconBg text-white rounded-md p-2">
                                     <img src="./../../../save.svg" alt="" />
                                 </button>
-                        </div>
-                    </Form>
-                )}
+                            </div>
+                        </Form>
+                    )
+                }}
             </Formik>
-        </>
+                <ToastContainer position="top-right" autoClose={5000} />
+        </div>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useDispatch } from 'react-redux';
 import { setIsLoggedin } from '../../store/slices/auth';
@@ -13,6 +12,8 @@ import {
   Form,
   Field
 } from 'formik';
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface LoginValues {
   email: string;
   password: string;
@@ -22,7 +23,7 @@ const SignIn: React.FC = () => {
   const initialValues: LoginValues = { email: '', password: '' };
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
+  // console.log(cookies.get('token'));
   const handleRegisterSubmit = async (
     values: LoginValues,
     { setSubmitting }: FormikHelpers<LoginValues>) => {
@@ -31,6 +32,10 @@ const SignIn: React.FC = () => {
       const res = await axiosInstance.post(`/api/admins/login`, values);
       console.log(res.data.data);
       localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem('email', res.data.data.email);
+      localStorage.setItem('first_name', res.data.data.first_name );
+      localStorage.setItem('last_name', res.data.data.last_name );
+      localStorage.setItem('permissions',  res.data.data.permissions);
       navigate(`/`)
       dispatch(setIsLoggedin())
     } catch (error: any) {
@@ -40,7 +45,7 @@ const SignIn: React.FC = () => {
       setSubmitting(false);
     }
   };
-  
+
   return (
     <>
       <div className="rounded-sm  bg-white dark:bg-login-boxBgDark">
@@ -98,6 +103,7 @@ const SignIn: React.FC = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} />
     </>
   );
 };

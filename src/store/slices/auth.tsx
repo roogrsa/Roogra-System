@@ -3,7 +3,6 @@ import { RootState } from '../store';
 export interface IsLoggedinState {
   isLoggedin: boolean;
 }
-
 const initialState: IsLoggedinState = {
   isLoggedin: localStorage.getItem('isLoggedin') === 'true' || false,
 };
@@ -19,7 +18,11 @@ export const isLoggedinSlice = createSlice({
         setLogout: (state) => {
             state.isLoggedin = false
             localStorage.removeItem("isLoggedin");
-            localStorage.removeItem("token");
+            localStorage.removeItem('token')
+            localStorage.removeItem('email')
+            localStorage.removeItem('first_name')
+            localStorage.removeItem('permissions')
+            localStorage.removeItem('last_name')
         }
     }
 })

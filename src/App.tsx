@@ -25,7 +25,21 @@ import Profile from './pages/users/Profile';
 import CategorySubscription from './pages/category_subscription/CategorySubscription';
 import Admins from './pages/admins/Admins';
 import AddAdmin from './pages/admins/AddAdmin';
-
+import Unauthorized from './pages/unauthorized/Unauthorized';
+import ProtectedRoute from './components/guards/ProtectedRoute';
+const storedPermissions: any = localStorage.getItem('permissions');
+console.log(storedPermissions);
+// super: permissions[0],
+// charts: permissions[1],
+// admins: permissions[2],
+// settings: permissions[3],
+// ads: { all: permissions[4], primary: permissions[5], subscription: permissions[6] },
+// users: { all: permissions[7], advertisers: permissions[8], customers: permissions[9] },
+// categories: { primary: permissions[10], subscription: permissions[11], region: permissions[12] },
+// requests: { attestation: permissions[13], category: permissions[14] },
+// contact: { inquiries: permissions[15], issues: permissions[16], suggestions: permissions[17] },
+// reports: { chats: permissions[18], products: permissions[19] },
+// banlist: { chats: permissions[20], products: permissions[21] },
 const router = createBrowserRouter([
   {
     path: '/',
@@ -48,18 +62,40 @@ const router = createBrowserRouter([
         index: true,
         element: (
           <Guard>
-            <Home />
+            <ProtectedRoute
+              component={Home}
+              hasPermission={storedPermissions[1] == 1}
+            />
           </Guard>
-        ),
+        )
       },
+      // {
+      //   index: true,
+      //   element: (
+      //     <Guard>
+      //       <Home />
+      //     </Guard>
+      //   ),
+      // },
       {
-        path: 'users',
+        path: "users",
         element: (
           <Guard>
-            <Users />
+            <ProtectedRoute
+              component={Users}
+              hasPermission={storedPermissions[7] == 1}
+            />
           </Guard>
-        ),
+        )
       },
+      // {
+      //   path: 'users',
+      //   element: (
+      //     <Guard>
+      //       <Users />
+      //     </Guard>
+      //   ),
+      // },
       {
         path: 'profile/:id',
         element: (
@@ -69,45 +105,100 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'users/customer',
+        path: "users/customer",
         element: (
           <Guard>
-            <Customer />
+            <ProtectedRoute
+              component={Customer}
+              hasPermission={storedPermissions[9] == 1}
+            />
           </Guard>
-        ),
+        )
       },
+      // {
+      //   path: 'users/customer',
+      //   element: (
+      //     <Guard>
+      //       <Customer />
+      //     </Guard>
+      //   ),
+      // },
       {
-        path: 'users/advertiser',
+        path: "users/advertiser",
         element: (
           <Guard>
-            <Advertiser />
+            <ProtectedRoute
+              component={Advertiser}
+              hasPermission={storedPermissions[8] == 1}
+            />
           </Guard>
-        ),
+        )
       },
+      // {
+      //   path: 'users/advertiser',
+      //   element: (
+      //     <Guard>
+      //       <Advertiser />
+      //     </Guard>
+      //   ),
+      // },
       {
-        path: 'ads',
+        path: "ads",
         element: (
           <Guard>
-            <Ads />
+            <ProtectedRoute
+              component={Ads}
+              hasPermission={storedPermissions[4] == 1}
+            />
           </Guard>
-        ),
+        )
       },
+      // {
+      //   path: 'ads',
+      //   element: (
+      //     <Guard>
+      //       <Ads />
+      //     </Guard>
+      //   ),
+      // },
       {
-        path: 'subscription',
+        path: "subscription",
         element: (
           <Guard>
-            <CategorySubscription />
+            <ProtectedRoute
+              component={CategorySubscription}
+              hasPermission={storedPermissions[13] == 1}
+            />
           </Guard>
-        ),
+        )
       },
-      {
-        path: 'products',
+      // {
+      //   path: 'subscription',
+      //   element: (
+      //     <Guard>
+      //       <CategorySubscription />
+      //     </Guard>
+      //   ),
+      // },
+      { // check it
+        path: "products",
         element: (
           <Guard>
-            <Products />
+            <ProtectedRoute
+              component={Products}
+              hasPermission={storedPermissions[5] == 1}
+            />
           </Guard>
-        ),
+        )
       },
+      // {
+      //   path: 'products',
+      //   element: (
+      //     <Guard>
+      //       <Products />
+      //     </Guard>
+      //   ),
+      // },
       {
         // Make the path relative, as it's nested under 'products'
         path: '/products/:id',
@@ -117,19 +208,51 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
+      // {
+      //   path: 'admins',
+      //   element: (
+      //     <Guard>
+      //       <Admins />
+      //     </Guard>
+      //   ),
+      // },
+      // {
+      //   path: 'admins/add-admin',
+      //   element: (
+      //     <Guard>
+      //       <AddAdmin />
+      //     </Guard>
+      //   ),
+      // },
+
       {
-        path: 'admins',
+        path: "admins",
         element: (
           <Guard>
-            <Admins />
+            <ProtectedRoute
+              component={Admins}
+              hasPermission={storedPermissions[2] == 1}
+            />
           </Guard>
-        ),
+        )
       },
       {
-        path: 'admins/add-admin',
+        path: "admins/add-admin",
         element: (
           <Guard>
-            <AddAdmin />
+            <ProtectedRoute
+              component={AddAdmin}
+              hasPermission={storedPermissions[2] == 1}
+            />
+          </Guard>
+        )
+      },
+
+      {
+        path: 'unauthorized',
+        element: (
+          <Guard>
+            <Unauthorized />
           </Guard>
         ),
       },
