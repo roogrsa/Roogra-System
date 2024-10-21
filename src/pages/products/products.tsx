@@ -201,31 +201,6 @@ const Products: React.FC = () => {
     },
   ];
 
-  // const headers = [
-  //   { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
-  //   { key: 'name', content: 'أسم المعلن', className: 'text-center' },
-  //   { key: 'alias', content: 'التاريخ', className: 'text-center' },
-  //   { key: 'type', content: 'الوقت', className: 'text-center' },
-  //   { key: 'regDate', content: 'القسم', className: 'text-center' },
-  //   { key: 'mobileconfirm', content: 'أسم الاعلان', className: 'text-center' },
-  //   { key: 'emailleconfirm', content: 'الصورة', className: 'text-center' },
-  //   { key: 'emailleconfirm', content: 'تحرير', className: 'text-center' },
-  //   { key: 'BanStatus', content: 'الحالة', className: 'text-center' },
-  //   {
-  //     key: 'removeStatus',
-  //     content: (
-  //       <img
-  //         src={CheckboxIconSrc}
-  //         alt="Remove"
-  //         className={`w-5 h-5 text-center cursor-pointer ${
-  //           loadingPrdBan ? 'opacity-50' : ''
-  //         }`}
-  //       />
-  //     ),
-  //     className: 'text-center flex justify-center',
-  //   },
-  // ];
-
   const breadcrumbLinks = [{ label: t('products.label.label'), path: '/' }];
 
   return (
