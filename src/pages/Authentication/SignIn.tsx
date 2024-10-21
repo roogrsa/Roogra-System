@@ -14,7 +14,7 @@ import {
 } from 'formik';
 import { ToastContainer,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { checkPermissions, setPermissions } from '../../store/slices/permissions';
+import { setPermissions } from '../../store/slices/permissions';
 interface LoginValues {
   email: string;
   password: string;
