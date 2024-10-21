@@ -28,7 +28,6 @@ import AddAdmin from './pages/admins/AddAdmin';
 import Unauthorized from './pages/unauthorized/Unauthorized';
 import ProtectedRoute from './components/guards/ProtectedRoute';
 import MainSettings from './pages/settings/MainSettings';
-import { checkPermissions } from './store/slices/permissions';
 import { store } from './store/store';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
