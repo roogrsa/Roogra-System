@@ -27,8 +27,12 @@ import Admins from './pages/admins/Admins';
 import AddAdmin from './pages/admins/AddAdmin';
 import Unauthorized from './pages/unauthorized/Unauthorized';
 import ProtectedRoute from './components/guards/ProtectedRoute';
-const storedPermissions: any = localStorage.getItem('permissions');
-console.log(storedPermissions);
+import ProductsMain from './pages/products/ProductsMain';
+import ProductsSubscription from './pages/products/ProductsSubscription';
+const storedPermissions: any =
+  localStorage.getItem('permissions') || '0000000000000000000000';
+
+// console.log(storedPermissions);
 // super: permissions[0],
 // charts: permissions[1],
 // admins: permissions[2],
@@ -192,14 +196,38 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'products',
-      //   element: (
-      //     <Guard>
-      //       <Products />
-      //     </Guard>
-      //   ),
-      // },
+      {
+        // check it
+        path: 'products/main',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductsMain}
+              hasPermission={storedPermissions[5] == 1}
+            />
+          </Guard>
+        ),
+      },
+      {
+        // check it
+        path: 'products/subscriptions',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductsSubscription}
+              hasPermission={storedPermissions[5] == 1}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'products',
+        element: (
+          <Guard>
+            <Products />
+          </Guard>
+        ),
+      },
       {
         // Make the path relative, as it's nested under 'products'
         path: '/products/:id',

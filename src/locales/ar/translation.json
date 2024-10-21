@@ -132,5 +132,28 @@
         "emailleconfirm":"البريد الالكتروني",
         "BanStatus":"الحالة"
 
+    },
+        "products": {
+        "label":
+        {
+
+        "label":"المنتجات",
+        "pageNameUnPaid":"رئيسية",
+        "pageNamePaid":"الاشتراك",
+        "pageNameAll":"الكل"
+  
+
+        },
+
+        "id":"رقم الاعلان",
+        "name":" أسم المعلن",
+        "date":"التاريخ",
+        "time":"الوقت",
+        "category":"القسم",
+        "ProdName":"أسم الاعلان",
+        "photo":"الصورة",
+        "Edit":"تحرير",
+        "BanStatus":"الحالة"
+
     }
 }

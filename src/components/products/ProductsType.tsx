@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import MainTable from '../../components/lastnews/MainTable';
-import useAllProducts from '../../hooks/useAllProducts'; // Updated hook
-import useBanProduct from '../../hooks/useBanProduct';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../Breadcrumbs/Breadcrumb';
+import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
-import Pagination from '../../components/pagination/Pagination';
+import useBanProduct from '../../hooks/useBanProduct';
 import axiosInstance from '../../axiosConfig/instanc';
+import Pagination from '../pagination/Pagination';
+import useProductsByType from '../../hooks/products/getProductsType';
 import { useTranslation } from 'react-i18next';
-import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
+import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
 
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
 const CheckboxIconSrc = '/checkbox.svg';
 const EditIconSrc = '/Edit.svg';
 
-const Products: React.FC = () => {
+const ProductsType = ({ ProductsSType }) => {
   const { t } = useTranslation();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { products, loading, error } = useAllProducts(currentPage);
+  //
+  const { products, loading, error } = useProductsByType(
+    ProductsSType,
+    currentPage,
+  );
+  //
+  console.log(products);
+
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
@@ -29,7 +36,9 @@ const Products: React.FC = () => {
   useEffect(() => {
     const fetchProductsCount = async () => {
       try {
-        const response = await axiosInstance.get(`/api/products/count`);
+        const response = await axiosInstance.get(
+          `/api/products/type/${ProductsSType}/count`,
+        );
         setProductsCount(response.data.data.count / 8);
       } catch (err) {}
     };
@@ -59,8 +68,7 @@ const Products: React.FC = () => {
     });
   };
 
-  // Transform the product data to fit the format that MainTable expects
-  const logs = products.map((product) => {
+  const logs = products?.map((product) => {
     const createdAtDate = new Date(product.date);
     const datePart = createdAtDate.toLocaleDateString();
     const timePart = createdAtDate.toLocaleTimeString();
@@ -81,7 +89,8 @@ const Products: React.FC = () => {
               className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
               onClick={() => handleClickName(product.author_id)}
             >
-              {product.author.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+              {/* {product.author.split(' ').slice(0, 2).join(' ').slice(0, 12)} */}
+              {product.author}
             </span>
           ),
           className: 'text-TextBlue dark:text-TextGreen',
@@ -105,16 +114,18 @@ const Products: React.FC = () => {
         {
           key: 'thumbnail',
           content: (
-            <ImageWithFullscreen
-              src={product.thumbnail}
-              alt="Transaction"
-              className="w-10 h-10 object-cover"
-            />
-            // <img
-            //   src={product.thumbnail}
-            //   alt={product.product_name}
-            //   className="w-10 h-10 object-cover"
-            // />
+            <>
+              <ImageWithFullscreen
+                src={product.thumbnail}
+                alt="Transaction"
+                className="w-10 h-10 object-cover"
+              />
+              {/* <img
+                src={product.thumbnail}
+                alt={product.product_name}
+                className="w-10 h-10 object-cover"
+              /> */}
+            </>
           ),
           className: 'flex justify-center',
         },
@@ -199,42 +210,20 @@ const Products: React.FC = () => {
     },
   ];
 
-  // const headers = [
-  //   { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
-  //   { key: 'name', content: 'أسم المعلن', className: 'text-center' },
-  //   { key: 'alias', content: 'التاريخ', className: 'text-center' },
-  //   { key: 'type', content: 'الوقت', className: 'text-center' },
-  //   { key: 'regDate', content: 'القسم', className: 'text-center' },
-  //   { key: 'mobileconfirm', content: 'أسم الاعلان', className: 'text-center' },
-  //   { key: 'emailleconfirm', content: 'الصورة', className: 'text-center' },
-  //   { key: 'emailleconfirm', content: 'تحرير', className: 'text-center' },
-  //   { key: 'BanStatus', content: 'الحالة', className: 'text-center' },
-  //   {
-  //     key: 'removeStatus',
-  //     content: (
-  //       <img
-  //         src={CheckboxIconSrc}
-  //         alt="Remove"
-  //         className={`w-5 h-5 text-center cursor-pointer ${
-  //           loadingPrdBan ? 'opacity-50' : ''
-  //         }`}
-  //       />
-  //     ),
-  //     className: 'text-center flex justify-center',
-  //   },
-  // ];
-
   const breadcrumbLinks = [{ label: t('products.label.label'), path: '/' }];
 
   return (
     <>
       <Breadcrumb
         breadcrumbLinks={breadcrumbLinks}
-        pageName={t('products.label.pageNameAll')}
-        // product={product}
+        pageName={
+          ProductsSType == 'paid'
+            ? t('products.label.pageNamePaid')
+            : t('products.label.pageNameAll')
+        }
       />
-
       {banPrdError && <p>Error banning product: {banPrdError}</p>}
+
       <MainTable logs={logs} headers={headers} />
       <Pagination
         currentPage={currentPage}
@@ -245,4 +234,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default ProductsType;

@@ -53,7 +53,10 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
               </Link>
             </li>
           ))}
-          <li className="font-medium text-[20px] text-primary">{pageName}</li>
+          <li className="font-medium text-[20px] text-primary">
+            {' '}
+            / {pageName}
+          </li>
         </ol>
       </nav>
 

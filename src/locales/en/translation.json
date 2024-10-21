@@ -133,5 +133,28 @@
         "emailleconfirm":"Email",
         "BanStatus":"Ban Status"
 
+    },
+      "products": {
+        "label":
+        {
+
+        "label":"Products",
+        "pageNameUnPaid":"UnPaid",
+        "pageNamePaid":"Paid",
+        "pageNameAll":"All"
+  
+
+        },
+
+        "id":"ID",
+      "name":"Name",
+        "date":"Date",
+        "time":"Time",
+        "category":"Category",
+        "ProdName":"AdsName",
+        "photo":"Photo",
+        "Edit":"Detials",
+        "BanStatus":"BanStatus"
+
     }
 }
