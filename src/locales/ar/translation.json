@@ -132,5 +132,13 @@
     "unauthorized": {
         "title": "غير مصرح لك",
         "discribution": "ليس لديك إذن للوصول إلى هذه الصفحة."
+    },
+    "settings":{
+        "terms":"الشروط والاحكام",
+        "comission":"العمولة",
+        "banks":"البنوك",
+        "sms":"الرسائل",
+        "verification":"التوثيق",
+        "banners":"الاعلانات التجارية"
     }
 }

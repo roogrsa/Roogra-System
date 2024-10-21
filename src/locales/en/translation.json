@@ -134,12 +134,12 @@
         "discribution":"You do not have permission to access this page."
     },
     "settings":{
-        "terms":"",
-        "":"",
-        "":"",
-        "":"",
-        "":"",
-        "":""
+        "terms":"Terms & Conditions",
+        "comission":"Comission",
+        "banks":"Banks",
+        "sms":"SMS",
+        "verification":"Verification",
+        "banners":"Commercial Banners"
     }
 
 }

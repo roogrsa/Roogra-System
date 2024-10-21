@@ -1,58 +1,23 @@
 import React, { useState } from 'react';
 import TabButton from '../../components/setting/TabButton';
+import { useTranslation } from 'react-i18next';
 
 const MainSettings: React.FC = () => {
-    const [activeTab, setActiveTab] = useState('Profile');
-
-    const handleTabChange = (tab: string) => {
-        setActiveTab(tab);
-    };
+    const {t}=useTranslation()
+    const [activeTab, setActiveTab] = useState(t('settings.terms'));
 
     return (
         <div className="md:flex">
             <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
-                <TabButton btnTab={`Profile`}/>
-                <TabButton btnTab={`Profile`}/>
-                <TabButton btnTab={`Profile`}/>
-                <TabButton btnTab={`Profile`}/>
-                <TabButton btnTab={`Profile`}/>
-                <TabButton btnTab={`Profile`}/>
-                <li>
-                    <button
-                        onClick={() => handleTabChange('Dashboard')}
-                        className={`inline-flex items-center px-4 py-3 rounded-lg w-full ${activeTab === 'Dashboard'
-                                ? 'bg-sidebarHover dark:bg-blue-600'
-                                : 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
-                            }`}
-                    >
-                        Dashboard
-                    </button>
-                </li>
-                <li>
-                    <button
-                        onClick={() => handleTabChange('Settings')}
-                        className={`inline-flex items-center px-4 py-3 rounded-lg w-full ${activeTab === 'Settings'
-                                ? 'bg-sidebarHover dark:bg-blue-600'
-                                : 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
-                            }`}
-                    >
-                        Settings
-                    </button>
-                </li>
-                <li>
-                    <button
-                        onClick={() => handleTabChange('Contact')}
-                        className={`inline-flex items-center px-4 py-3 rounded-lg w-full ${activeTab === 'Contact'
-                                ? 'bg-sidebarHover dark:bg-blue-600'
-                                : 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
-                            }`}
-                    >
-                        Contact
-                    </button>
-                </li>
+                <TabButton btnTab={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                <TabButton btnTab={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                <TabButton btnTab={t('settings.banks')} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                <TabButton btnTab={t('settings.sms')} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                <TabButton btnTab={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                <TabButton btnTab={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab}/>
             </ul>
             <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
-                {activeTab === 'Profile' && (
+                {activeTab ===t('settings.terms') && (
                     <div>
                         <h3 className="text-lg font-bold text-gray-bg-sidebarHover mb-2">Profile Tab</h3>
                         <p className="mb-2">This is the content for the Profile tab.</p>
