@@ -451,12 +451,14 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
         <AccordionHeader2
           titles={['عدد المتابعين', 'عدد التقييم', 'نبذة']}
           children={[
-            <NotFoundSection data={logsFollowers}>
+            <>
+              <NotFoundSection data={logsFollowers} />
               <MainTable logs={logsFollowers} header2={true} />
-            </NotFoundSection>,
-            <NotFoundSection data={logsRates}>
+            </>,
+            <>
+              <NotFoundSection data={logsRates} />
               <MainTable logs={logsRates || []} header2={true} />
-            </NotFoundSection>,
+            </>,
             <Bio Bio={user.bio} />,
           ]}
           footerItems={[
@@ -486,9 +488,8 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/* products section */}
       <Accordion title="الاعلانات">
-        <NotFoundSection data={logsProducts}>
-          <MainTable logs={logsProducts || []} headers={headers || []} />
-        </NotFoundSection>
+        <NotFoundSection data={logsProducts} />
+        <MainTable logs={logsProducts || []} headers={headers || []} />
       </Accordion>
 
       {/*  */}

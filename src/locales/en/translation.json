@@ -114,13 +114,23 @@
         }
     },
      "users": {
+        "label":
+        {
+
+        "label":"Users",
+        "allusers":"All Users",
+        "coutomer":"Customers",
+        "advertiser":"Advertisers"
+
+        },
+
         "id":"ID",
-        "userName":"Name",
+        "name":"Name",
         "alias":"Alias",
         "type":"Type",
         "regDate":"Reg-Date",
-        "mobileconfirm":"Mobile Confirm",
-        "emailleconfirm":"Email Confirm",
+        "mobileconfirm":"Mobile",
+        "emailleconfirm":"Email",
         "BanStatus":"Ban Status"
 
     }

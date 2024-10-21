@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
 import axiosInstance from '../../axiosConfig/instanc';
 import Pagination from '../../components/pagination/Pagination';
+import { useTranslation } from 'react-i18next';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -16,6 +17,8 @@ const ActivatedAccountIconSrc = '/true.png';
 const NotActivatedAccountIconSrc = '/x.png';
 
 const Users: React.FC = () => {
+  const { t } = useTranslation();
+
   const [currentPage, setCurrentPage] = useState(0);
   const [usersCount, setUsersCount] = useState(0);
 
@@ -135,24 +138,48 @@ const Users: React.FC = () => {
     ],
   }));
   //
+  // const headers = [
+  //   { key: 'id', content: 'ID', className: 'text-center' },
+  //   { key: 'name', content: 'Name', className: 'text-' },
+  //   { key: 'alias', content: 'Alias', className: 'text-' },
+  //   { key: 'type', content: 'Type', className: 'text-' },
+  //   { key: 'regDate', content: 'RegDate', className: 'text-' },
+  //   {
+  //     key: 'mobileconfirm',
+  //     content: 'MobileConfirm',
+  //     className: 'text-center',
+  //   },
+  //   {
+  //     key: 'emailleconfirm',
+  //     content: 'EmailConfirm',
+  //     className: 'text-center',
+  //   },
+  //   { key: 'BanStatus', content: 'BanStatus', className: 'text-center' },
+  // ];
   const headers = [
-    { key: 'id', content: 'ID', className: 'text-center' },
-    { key: 'name', content: 'Name', className: 'text-' },
-    { key: 'alias', content: 'Alias', className: 'text-' },
-    { key: 'type', content: 'Type', className: 'text-' },
-    { key: 'regDate', content: 'RegDate', className: 'text-' },
+    { key: 'id', content: t('users.id'), className: 'text-center' },
+    { key: 'name', content: t('users.name'), className: 'text-center' },
+    { key: 'alias', content: t('users.alias'), className: 'text-center' },
+    { key: 'type', content: t('users.type'), className: 'text-' },
+
+    { key: 'regDate', content: t('users.regDate'), className: 'text-center' },
     {
       key: 'mobileconfirm',
-      content: 'MobileConfirm',
+      content: t('users.mobileconfirm'),
       className: 'text-center',
     },
     {
       key: 'emailleconfirm',
-      content: 'EmailConfirm',
+      content: t('users.emailleconfirm'),
       className: 'text-center',
     },
-    { key: 'BanStatus', content: 'BanStatus', className: 'text-center' },
+    {
+      key: 'BanStatus',
+      content: t('users.BanStatus'),
+      className: 'text-center',
+    },
   ];
+
   //
   const breadcrumbLinks = [{ label: 'المستخدمين/', path: '/' }];
   //
