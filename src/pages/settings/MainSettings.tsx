@@ -13,7 +13,7 @@ const MainSettings: React.FC = () => {
     const [activeTab, setActiveTab] = useState(t('settings.terms'));
 
     return (
-        <div className="md:flex">
+        <div className="md:flex bg-white dark:bg-secondaryBG-dark p-10">
             <ul className="flex-column space-y space-y-4 w-52 text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                 <TabButton btnTab={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <TabButton btnTab={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab} />
