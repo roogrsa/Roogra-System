@@ -32,7 +32,7 @@ const CheckboxGroup = ({ checks, setChecks, setFieldValue, label }: CheckboxItem
 
     return (
         <div>
-            <div className="mb-1 font-bold text-lg">
+            <div className="mb-1 font-semibold text-lg">
                 <Checkbox value={``} name={``} label={label} checked={allChecked}
                     change={handleMainCheckboxChange} />
             </div>
