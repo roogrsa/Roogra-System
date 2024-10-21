@@ -1,9 +1,10 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import Loader from '../../common/Loader';
 
 interface ProtectedRouteProps {
     component: React.ComponentType<any>;
-    hasPermission: boolean;
+    hasPermission: number;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
@@ -11,7 +12,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     hasPermission,
     ...rest
 }) => {
-    return hasPermission ? <Component {...rest} /> : <Navigate to="/unauthorized" />;
+    if (hasPermission=1) {
+        console.log('hasPermission if',hasPermission);
+        return <Component {...rest}/>;
+    } else {
+        console.log('hasPermission else',hasPermission);
+        return <Navigate to="/unauthorized" />;
+    }
+    // return hasPermission ? <Component {...rest} /> : <Navigate to="/unauthorized" />;
 };
 
 export default ProtectedRoute;

@@ -27,7 +27,12 @@ import Admins from './pages/admins/Admins';
 import AddAdmin from './pages/admins/AddAdmin';
 import Unauthorized from './pages/unauthorized/Unauthorized';
 import ProtectedRoute from './components/guards/ProtectedRoute';
-const storedPermissions: any = localStorage.getItem('permissions');
+import MainSettings from './pages/settings/MainSettings';
+import { checkPermissions } from './store/slices/permissions';
+import { store } from './store/store';
+
+console.log('stoer app', store.getState().permissions.permissions);
+const storedPermissions: any = store.getState().permissions.permissions;
 console.log(storedPermissions);
 // super: permissions[0],
 // charts: permissions[1],
@@ -64,7 +69,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Home}
-              hasPermission={storedPermissions[1] == 1}
+              hasPermission={storedPermissions[1]}
             />
           </Guard>
         ),
@@ -83,7 +88,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Users}
-              hasPermission={storedPermissions[7] == 1}
+              hasPermission={storedPermissions[7]}
             />
           </Guard>
         ),
@@ -110,7 +115,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Customer}
-              hasPermission={storedPermissions[9] == 1}
+              hasPermission={storedPermissions[9]}
             />
           </Guard>
         ),
@@ -129,7 +134,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Advertiser}
-              hasPermission={storedPermissions[8] == 1}
+              hasPermission={storedPermissions[8]}
             />
           </Guard>
         ),
@@ -148,7 +153,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Ads}
-              hasPermission={storedPermissions[4] == 1}
+              hasPermission={storedPermissions[4]}
             />
           </Guard>
         ),
@@ -167,7 +172,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={CategorySubscription}
-              hasPermission={storedPermissions[13] == 1}
+              hasPermission={storedPermissions[13]}
             />
           </Guard>
         ),
@@ -187,7 +192,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Products}
-              hasPermission={storedPermissions[5] == 1}
+              hasPermission={storedPermissions[5]}
             />
           </Guard>
         ),
@@ -232,7 +237,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Admins}
-              hasPermission={storedPermissions[2] == 1}
+              hasPermission={storedPermissions[2]}
             />
           </Guard>
         ),
@@ -243,7 +248,18 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={AddAdmin}
-              hasPermission={storedPermissions[2] == 1}
+              hasPermission={storedPermissions[2]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={MainSettings}
+              hasPermission={storedPermissions[3]}
             />
           </Guard>
         ),
@@ -272,6 +288,7 @@ const App: React.FC = () => {
       en: { translation: enTranslation },
     },
   });
+  const permissions = useSelector(checkPermissions)
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
