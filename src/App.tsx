@@ -27,12 +27,11 @@ import Admins from './pages/admins/Admins';
 import AddAdmin from './pages/admins/AddAdmin';
 import Unauthorized from './pages/unauthorized/Unauthorized';
 import ProtectedRoute from './components/guards/ProtectedRoute';
+import MainSettings from './pages/settings/MainSettings';
+import { store } from './store/store';
 import ProductsMain from './pages/products/ProductsMain';
 import ProductsSubscription from './pages/products/ProductsSubscription';
-const storedPermissions: any =
-  localStorage.getItem('permissions') || '0000000000000000000000';
-
-// console.log(storedPermissions);
+const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
 // admins: permissions[2],
@@ -68,7 +67,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Home}
-              hasPermission={storedPermissions[1] == 1}
+              hasPermission={storedPermissions[1]}
             />
           </Guard>
         ),
@@ -87,7 +86,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Users}
-              hasPermission={storedPermissions[7] == 1}
+              hasPermission={storedPermissions[7]}
             />
           </Guard>
         ),
@@ -114,7 +113,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Customer}
-              hasPermission={storedPermissions[9] == 1}
+              hasPermission={storedPermissions[9]}
             />
           </Guard>
         ),
@@ -133,7 +132,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Advertiser}
-              hasPermission={storedPermissions[8] == 1}
+              hasPermission={storedPermissions[8]}
             />
           </Guard>
         ),
@@ -152,7 +151,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Ads}
-              hasPermission={storedPermissions[4] == 1}
+              hasPermission={storedPermissions[4]}
             />
           </Guard>
         ),
@@ -171,7 +170,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={CategorySubscription}
-              hasPermission={storedPermissions[13] == 1}
+              hasPermission={storedPermissions[13]}
             />
           </Guard>
         ),
@@ -191,7 +190,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Products}
-              hasPermission={storedPermissions[5] == 1}
+              hasPermission={storedPermissions[5]}
             />
           </Guard>
         ),
@@ -203,7 +202,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={ProductsMain}
-              hasPermission={storedPermissions[5] == 1}
+              hasPermission={storedPermissions[5]}
             />
           </Guard>
         ),
@@ -215,7 +214,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={ProductsSubscription}
-              hasPermission={storedPermissions[5] == 1}
+              hasPermission={storedPermissions[5]}
             />
           </Guard>
         ),
@@ -260,7 +259,7 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={Admins}
-              hasPermission={storedPermissions[2] == 1}
+              hasPermission={storedPermissions[2]}
             />
           </Guard>
         ),
@@ -271,7 +270,18 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={AddAdmin}
-              hasPermission={storedPermissions[2] == 1}
+              hasPermission={storedPermissions[2]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={MainSettings}
+              hasPermission={storedPermissions[3]}
             />
           </Guard>
         ),

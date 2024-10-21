@@ -36,7 +36,9 @@ const Products: React.FC = () => {
     fetchProductsCount();
   }, []);
   const totalPages = Math.ceil(productsCount);
-  console.log(totalPages);
+  // console.log(totalPages);
+
+  // console.log(totalPages);
 
   // Handle loading and error states for fetching products
   if (loading) return <p>Loading products...</p>;

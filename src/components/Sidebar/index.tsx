@@ -46,20 +46,35 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const fName = localStorage.getItem('first_name');
   const lName = localStorage.getItem('last_name');
   const permissions: any = localStorage.getItem('permissions');
-  console.log(permissions); // 11111111111111111111111
 
   const [permission, setpermission] = useState({
-    super: 0,
-    charts: 0,
-    admins: 0,
-    settings: 0,
-    ads: { all: 0, primary: 0, subscription: 0 },
-    users: { all: 0, advertisers: 0, customers: 0 },
-    categories: { primary: 0, subscription: 0, region: 0 },
-    requests: { attestation: 0, category: 0 },
-    contact: { inquiries: 0, issues: 0, suggestions: 0 },
-    reports: { chats: 0, products: 0 },
-    banlist: { chats: 0, products: 0 },
+    super: permissions[0],
+    charts: permissions[1],
+    admins: permissions[2],
+    settings: permissions[3],
+    ads: {
+      all: permissions[4],
+      primary: permissions[5],
+      subscription: permissions[6],
+    },
+    users: {
+      all: permissions[7],
+      advertisers: permissions[8],
+      customers: permissions[9],
+    },
+    categories: {
+      primary: permissions[10],
+      subscription: permissions[11],
+      region: permissions[12],
+    },
+    requests: { attestation: permissions[13], category: permissions[14] },
+    contact: {
+      inquiries: permissions[15],
+      issues: permissions[16],
+      suggestions: permissions[17],
+    },
+    reports: { chats: permissions[18], products: permissions[19] },
+    banlist: { chats: permissions[20], products: permissions[21] },
   });
   useEffect(() => {
     // if (permissions.length === 22) {
@@ -94,7 +109,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     });
     // }
   }, []);
-  console.log(permission);
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
@@ -141,11 +155,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       console.error(error);
     }
   };
-  console.log(
-    permission.ads.all == 1 ||
-      permission.ads.primary ||
-      permission.ads.subscription == 1,
-  );
 
   return (
     <>

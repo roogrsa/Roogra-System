@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 interface ProtectedRouteProps {
     component: React.ComponentType<any>;
-    hasPermission: boolean;
+    hasPermission: number;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
@@ -11,7 +11,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     hasPermission,
     ...rest
 }) => {
-    return hasPermission ? <Component {...rest} /> : <Navigate to="/unauthorized" />;
+    if (hasPermission=1) {
+        return <Component {...rest}/>;
+    } else {
+        return <Navigate to="/unauthorized" />;
+    }
 };
 
 export default ProtectedRoute;

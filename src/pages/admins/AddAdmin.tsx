@@ -219,14 +219,14 @@ export default function AddAdmin() {
                     return (
                         <Form className="bg-white dark:bg-secondaryBG-dark p-6 rounded-sm">
                             <div className="flex justify-between md:mb-6">
-                                <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
+                                <SelectLevel name={`type`} />
                                 <InputText type={`text`} name={`name`} label={t('admins.form.name')} />
-                                <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
-                                <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
+                                <InputText type={`text`} name={`username`} label={t('admins.form.userName')} />
+                                <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
                             </div>
                             <div className="flex justify-between md:mb-16">
-                                <InputText type={`text`} name={`phone`} label={t('admins.form.phone')} />
-                                <SelectLevel name={`type`} />
+                                <InputText type={`email`} name={`email`} label={t('admins.form.email')} />
+                                <InputText type={`password`} name={`password`} label={t('admins.form.Password')} />
                                 <SelectTime name={`start_working_hour`} label={t('admins.form.from')} />
                                 <SelectTime name={`finish_working_hour`} label={t('admins.form.to')} />
                             </div>

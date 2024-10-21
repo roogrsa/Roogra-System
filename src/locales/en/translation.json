@@ -1,19 +1,19 @@
 {
     "sidebar": {
         "charts": "Charts",
-        "ads":{
+        "ads": {
             "ads": "Advertisements",
             "all": "All",
             "main": "Main",
             "subscriptions": "Subscriptions"
         },
         "users": {
-            "users":"Users",
-            "all":"All",
-            "advertisers":"Advertisers",
-            "customers":"Customers"
+            "users": "Users",
+            "all": "All",
+            "advertisers": "Advertisers",
+            "customers": "Customers"
         },
-        "categories":{
+        "categories": {
             "categories": "Categories",
             "main": "Main",
             "subscriptions": "Subscriptions",
@@ -24,7 +24,7 @@
             "attestation": "Verification",
             "category": "Category"
         },
-        "support":{
+        "support": {
             "support": "Support",
             "inquiries": "Inquiries",
             "issues": "Issues",
@@ -44,84 +44,81 @@
         "settings": "Settings",
         "sign-out": "Sign out"
     },
-    "login":{
-        "login":"Login",
-        "name":"Username/Email",
-        "password":"password",
-        "go":"Login",
-        "name-error":"",
-        "password-error":""
+    "login": {
+        "login": "Login",
+        "name": "Username/Email",
+        "password": "password",
+        "go": "Login",
+        "name-error": "",
+        "password-error": ""
     },
-    "header":{
-        "search":"Type to search..."
-    }  ,
-      "profile":{
-        "id":"ID"
+    "header": {
+        "search": "Type to search..."
     },
-    "admins":{
-        "title":"Administrators",
-        "title-add":"Edit page",
-        "label":"Administrators/ ",
-        "add":"Add New Admin",
-        "form":{
-            "placeholder":"please write",
-            "level":"Admin Level",
-            "select-type":"Select a type",
-            "delegate":"Delegate",
-            "observer":"Observer",
-            "supervisor":"Supervisor",
-            "name":"Name",
-            "userName":"Username",
-            "levelError":"please choose the admin level",
-            "nameError":"please enter admin name",
-            "userNameError":"please enter admin username",
-            "emailError":"please enter admin email",
-            "permissionsError":"please choose admin permissions",
-            "PasswordError":"please enter admin password",
-            "phoneError":"please enter admin phone number",
-            "email":"Email",
-            "Password":"Password",
-            "phone":"Phone No.",
-            "shift":"Shift Hours",
-            "from":"Form",
-            "to":"To",
-            "select-time":"Select Time",
-            "permissions":"Permissions",
-            "super":"Super",
-            "admins":"Admins",
-            "settings":"Settings",
-            "charts":"charts",
-            "advertisments":"Advertisments",
-            "all":"All",
-            "primary":"Primary",
-            "subscription":"Subscription",
-            "users":"Users",
-            "advertisers":"Advertisers",
-            "customers":"Customers",
-            "categories":"Categories",
-            "region":"Region",
-            "requests":"Requests",
-            "attestation":"Attestation",
-            "category":"Category",
-            "support":"Support",
-            "inquiries":"Inquiries",
-            "issues":"Issues",
-            "suggestions":"Suggestions",
-            "reports":"Reports",
-            "chats":"Chats",
-            "products":"Products",
-            "banlist":"Banlist"
+    "profile": {
+        "id": "ID"
+    },
+    "admins": {
+        "title": "Administrators",
+        "title-add": "Edit page",
+        "label": "Administrators/ ",
+        "add": "Add New Admin",
+        "form": {
+            "placeholder": "please write",
+            "level": "Admin Level",
+            "select-type": "Select a type",
+            "delegate": "Delegate",
+            "observer": "Observer",
+            "supervisor": "Supervisor",
+            "name": "Name",
+            "userName": "Username",
+            "levelError": "please choose the admin level",
+            "nameError": "please enter admin name",
+            "userNameError": "please enter admin username",
+            "emailError": "please enter admin email",
+            "permissionsError": "please choose admin permissions",
+            "PasswordError": "please enter admin password",
+            "phoneError": "please enter admin phone number",
+            "email": "Email",
+            "Password": "Password",
+            "phone": "Phone No.",
+            "shift": "Shift Hours",
+            "from": "Form",
+            "to": "To",
+            "select-time": "Select Time",
+            "permissions": "Permissions",
+            "super": "Super",
+            "admins": "Admins",
+            "settings": "Settings",
+            "charts": "charts",
+            "advertisments": "Advertisments",
+            "all": "All",
+            "primary": "Primary",
+            "subscription": "Subscription",
+            "users": "Users",
+            "advertisers": "Advertisers",
+            "customers": "Customers",
+            "categories": "Categories",
+            "region": "Region",
+            "requests": "Requests",
+            "attestation": "Attestation",
+            "category": "Category",
+            "support": "Support",
+            "inquiries": "Inquiries",
+            "issues": "Issues",
+            "suggestions": "Suggestions",
+            "reports": "Reports",
+            "chats": "Chats",
+            "products": "Products",
+            "banlist": "Banlist"
         }
     },
-     "users": {
-        "label":
-        {
-
-        "label":"Users",
-        "allusers":"All Users",
-        "coutomer":"Customers",
-        "advertiser":"Advertisers"
-
+    "users": {
+        "label": {
+            "label": "Users",
+            "allusers": "All Users",
+            "coutomer": "Customers",
+            "advertiser": "Advertisers"
         },
 
         "id":"ID",
@@ -144,17 +141,19 @@
         "pageNameAll":"All"
   
 
-        },
-
-        "id":"ID",
-      "name":"Name",
-        "date":"Date",
-        "time":"Time",
-        "category":"Category",
-        "ProdName":"AdsName",
-        "photo":"Photo",
-        "Edit":"Detials",
-        "BanStatus":"BanStatus"
-
+        }
+    },
+    "unauthorized":{
+        "title": "sorry, You are not authorized",
+        "discribution":"You do not have permission to access this page."
+    },
+    "settings":{
+        "terms":"Terms & Conditions",
+        "comission":"Comission",
+        "banks":"Banks",
+        "sms":"SMS",
+        "verification":"Verification",
+        "banners":"Commercial Banners"
     }
+
 }

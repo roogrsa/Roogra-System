@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 export interface IsLoggedinState {
   isLoggedin: boolean;
@@ -16,13 +16,13 @@ export const isLoggedinSlice = createSlice({
             localStorage.setItem("isLoggedin", String(state.isLoggedin));
         },
         setLogout: (state) => {
-            state.isLoggedin = false
-            localStorage.removeItem("isLoggedin");
-            localStorage.removeItem('token')
-            localStorage.removeItem('email')
-            localStorage.removeItem('first_name')
-            localStorage.removeItem('permissions')
-            localStorage.removeItem('last_name')
+          localStorage.removeItem("isLoggedin");
+          localStorage.removeItem('token')
+          localStorage.removeItem('email')
+          localStorage.removeItem('first_name')
+          localStorage.removeItem('permissions')
+          localStorage.removeItem('last_name')
+          state.isLoggedin = false
         }
     }
 })

@@ -1,19 +1,19 @@
 {
     "sidebar": {
         "charts": "الرسوم البيانية",
-        "ads":{
+        "ads": {
             "ads": "الأعلانات",
             "all": "الكل",
             "main": "رئيسية",
             "subscriptions": "الاشتراك"
         },
         "users": {
-            "users":"المستخدمين",
-            "all":"الكل",
-            "advertisers":"المعلنين",
-            "customers":"الزبائن"
+            "users": "المستخدمين",
+            "all": "الكل",
+            "advertisers": "المعلنين",
+            "customers": "الزبائن"
         },
-        "categories":{
+        "categories": {
             "categories": "الأقسام",
             "main": "رئيسية",
             "subscriptions": "الاشتراك",
@@ -24,7 +24,7 @@
             "attestation": "توثيق",
             "category": "قسم"
         },
-        "support":{
+        "support": {
             "support": "تواصل معنا",
             "inquiries": "استفسارات",
             "issues": "شكاوي",
@@ -44,84 +44,81 @@
         "settings": "الإعدادات",
         "sign-out": "تسجيل الخروج"
     },
-    "login":{
-        "login":"تسجيل الدخول",
-        "name":"أسم المستخدم/البريد الالكتروني",
-        "password":"كلمة المرور",
-        "go":"الدخول",
-        "name-error":"",
-        "password-error":""
+    "login": {
+        "login": "تسجيل الدخول",
+        "name": "أسم المستخدم/البريد الالكتروني",
+        "password": "كلمة المرور",
+        "go": "الدخول",
+        "name-error": "",
+        "password-error": ""
     },
-    "header":{
-        "search":"إضغط / للبحث ..."
+    "header": {
+        "search": "إضغط / للبحث ..."
     },
-    "profile":{
-        "id":"رقم الهويه"
+    "profile": {
+        "id": "رقم الهويه"
     },
-    "admins":{
-        "title":"صفحة الإدأريين",
-        "title-add":"تحرير الصفحة",
-        "label":"الإدأرة/ ",
-        "add":"إضافة جديدة",
-        "form":{
-            "placeholder":"الرجاء الكتابة",
-            "level":"نوع الإدارة",
-            "select-type":"حدد نوع الادارة",
-            "delegate":"ناائب",
-            "observer":"مراقب",
-            "supervisor":"مشرف",
-            "name":"الأسم الأول",
-            "userName":"اسم المستخدم",
-            "levelError":"الرجاء اختيار مستوى المشرف",
-            "nameError":"الرجاء إدخال اسم المشرف",
-            "userNameError":"الرجاء إدخال اسم المستخدم المسؤول",
-            "emailError":"الرجاء إدخال البريد الإلكتروني المشرف",
-            "permissionsError":"الرجاء اختيار أذونات المسؤول",
-            "PasswordError":"الرجاء إدخال كلمة مرور المسؤول",
-            "phoneError":"الرجاء إدخال رقم هاتف المسؤول",
-            "email":"البريد الالكتروني",
-            "Password":"كلمة المرور",
-            "phone":"رقم الجوال",
-            "shift":"توقيت العمل",
-            "from":"من",
-            "to":"الي",
-            "select-time":"حدد الوقت",
-            "permissions":"الصلاحيات",
-            "super":"سوبر",
-            "admins":"الاداريين",
-            "settings":"الاعدادات",
-            "charts":"الرسم البياني",
-            "advertisments":"الإعلانات",
-            "all":"الكل",
-            "primary":"الرئيسية",
-            "subscription":"إشتراك",
-            "users":"المستخدمين",
-            "advertisers":"المعلنين",
-            "customers":"الزبائن",
-            "categories":"الاقسام",
-            "region":"المنطقة",
-            "requests":"تذاكر الاشتراك",
-            "attestation":"توثيق",
-            "category":"قسم",
-            "support":"الدعم",
-            "inquiries":"الاستفسارات",
-            "issues":"المشاكل",
-            "suggestions":"المقترحات",
-            "reports":"البلاغات",
-            "chats":"المحادثات",
-            "products":"المنتجات",
-            "banlist":"قائمة الحظر"
+    "admins": {
+        "title": "صفحة الإدأريين",
+        "title-add": "تحرير الصفحة",
+        "label": "الإدأرة/ ",
+        "add": "إضافة جديدة",
+        "form": {
+            "placeholder": "الرجاء الكتابة",
+            "level": "نوع الإدارة",
+            "select-type": "حدد نوع الادارة",
+            "delegate": "ناائب",
+            "observer": "مراقب",
+            "supervisor": "مشرف",
+            "name": "الأسم الأول",
+            "userName": "اسم المستخدم",
+            "levelError": "الرجاء اختيار مستوى المشرف",
+            "nameError": "الرجاء إدخال اسم المشرف",
+            "userNameError": "الرجاء إدخال اسم المستخدم المسؤول",
+            "emailError": "الرجاء إدخال البريد الإلكتروني المشرف",
+            "permissionsError": "الرجاء اختيار أذونات المسؤول",
+            "PasswordError": "الرجاء إدخال كلمة مرور المسؤول",
+            "phoneError": "الرجاء إدخال رقم هاتف المسؤول",
+            "email": "البريد الالكتروني",
+            "Password": "كلمة المرور",
+            "phone": "رقم الجوال",
+            "shift": "توقيت العمل",
+            "from": "من",
+            "to": "الي",
+            "select-time": "حدد الوقت",
+            "permissions": "الصلاحيات",
+            "super": "سوبر",
+            "admins": "الاداريين",
+            "settings": "الاعدادات",
+            "charts": "الرسم البياني",
+            "advertisments": "الإعلانات",
+            "all": "الكل",
+            "primary": "الرئيسية",
+            "subscription": "إشتراك",
+            "users": "المستخدمين",
+            "advertisers": "المعلنين",
+            "customers": "الزبائن",
+            "categories": "الاقسام",
+            "region": "المنطقة",
+            "requests": "تذاكر الاشتراك",
+            "attestation": "توثيق",
+            "category": "قسم",
+            "support": "الدعم",
+            "inquiries": "الاستفسارات",
+            "issues": "المشاكل",
+            "suggestions": "المقترحات",
+            "reports": "البلاغات",
+            "chats": "المحادثات",
+            "products": "المنتجات",
+            "banlist": "قائمة الحظر"
         }
     },
     "users": {
-          "label":
-        {
-"label":"المستخدمين",
-
-        "allusers":"الكل",
-        "coutomer":"الزبائن",
-        "advertiser":"المعلنين"
-
+        "label": {
+            "label": "المستخدمين",
+            "allusers": "الكل",
+            "coutomer": "الزبائن",
+            "advertiser": "المعلنين"
         },
         "id":"ID",
         "name":"أسم المستخدم",
@@ -143,17 +140,17 @@
         "pageNameAll":"الكل"
   
 
-        },
-
-        "id":"رقم الاعلان",
-        "name":" أسم المعلن",
-        "date":"التاريخ",
-        "time":"الوقت",
-        "category":"القسم",
-        "ProdName":"أسم الاعلان",
-        "photo":"الصورة",
-        "Edit":"تحرير",
-        "BanStatus":"الحالة"
-
+        }    },
+    "unauthorized": {
+        "title": "غير مصرح لك",
+        "discribution": "ليس لديك إذن للوصول إلى هذه الصفحة."
+    },
+    "settings":{
+        "terms":"الشروط والاحكام",
+        "comission":"العمولة",
+        "banks":"البنوك",
+        "sms":"الرسائل",
+        "verification":"التوثيق",
+        "banners":"الاعلانات التجارية"
     }
 }
