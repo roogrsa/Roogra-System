@@ -8,7 +8,7 @@ export default function SelectLevel({name}: SelectLevelProps) {
     const { t } = useTranslation();
     return (
         <div>
-        <div className="mb-4 font-bold text-lg flex">{t('admins.form.level')} <FaAsterisk className='text-[8px] text-[#E02828]' /></div>
+        <div className="mb-4 font-semibold text-lg flex">{t('admins.form.level')} <FaAsterisk className='text-[8px] text-[#E02828]' /></div>
             <Field as={`select`} name={name} id={name}
             className="shadow-sm border border-gray-300 text-gray-900 
             text-sm rounded-md w-50 p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">

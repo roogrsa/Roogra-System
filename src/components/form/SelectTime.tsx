@@ -58,8 +58,7 @@ export default function SelectTime({name, label}:SelectTimeProps) {
     ];
     return (
         <div >
-        {/* <label htmlFor={name}>{label}</label> */}
-        <div className="mb-4 font-bold text-lg">{t('admins.form.shift')} {label}</div>
+        <div className="mb-4 font-semibold text-lg">{t('admins.form.shift')} {label}</div>
         <Field as={`select`} name={name} id={name}
         className="shadow-sm border border-gray-300 text-gray-900 
         text-sm rounded-md w-50 p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">

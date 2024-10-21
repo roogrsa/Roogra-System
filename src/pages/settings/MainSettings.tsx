@@ -13,7 +13,7 @@ const MainSettings: React.FC = () => {
     const [activeTab, setActiveTab] = useState(t('settings.terms'));
 
     return (
-        <div className="md:flex bg-secondaryBG-light dark:bg-secondaryBG-dark p-10">
+        <div className="md:flex bg-secondaryBG-light dark:bg-secondaryBG-dark p-10 rounded">
             <ul className="flex-column space-y space-y-4 w-52 text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
                 <TabButton btnTab={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <TabButton btnTab={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -22,7 +22,7 @@ const MainSettings: React.FC = () => {
                 <TabButton btnTab={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <TabButton btnTab={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
             </ul>
-            <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
+            <div className="p-6 text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
                 {activeTab === t('settings.terms') && (
                     <TermsSetting />
                 )}
