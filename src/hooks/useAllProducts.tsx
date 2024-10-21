@@ -13,7 +13,7 @@ interface Product {
   category_name: string;
 }
 
-const useAllProducts = (page: number=0) => {
+const useAllProducts = (page: number = 1) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

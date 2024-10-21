@@ -120,14 +120,28 @@
             "coutomer": "Customers",
             "advertiser": "Advertisers"
         },
-        "id": "ID",
-        "name": "Name",
-        "alias": "Alias",
-        "type": "Type",
-        "regDate": "Reg-Date",
-        "mobileconfirm": "Mobile",
-        "emailleconfirm": "Email",
-        "BanStatus": "Ban Status"
+
+        "id":"ID",
+        "name":"Name",
+        "alias":"Alias",
+        "type":"Type",
+        "regDate":"Reg-Date",
+        "mobileconfirm":"Mobile",
+        "emailleconfirm":"Email",
+        "BanStatus":"Ban Status"
+
+    },
+      "products": {
+        "label":
+        {
+
+        "label":"Products",
+        "pageNameUnPaid":"UnPaid",
+        "pageNamePaid":"Paid",
+        "pageNameAll":"All"
+  
+
+        }
     },
     "unauthorized":{
         "title": "sorry, You are not authorized",

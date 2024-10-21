@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useCategorySubscriptionsByStatus from '../../hooks/category_subscription/CatSubscriptionByStatus';
-import cofirmIcon from '../../../public/true2.svg';
-import rejectIcon from '../../../public/false2.svg';
+import cofirmIcon from '/true2.svg';
+import rejectIcon from '/false2.svg';
 import ReusableInput from '../../components/products/ReusableInput';
 import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
-import useHandleAction from '../../hooks/useHandleAction';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
 //

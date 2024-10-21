@@ -29,6 +29,8 @@ import Unauthorized from './pages/unauthorized/Unauthorized';
 import ProtectedRoute from './components/guards/ProtectedRoute';
 import MainSettings from './pages/settings/MainSettings';
 import { store } from './store/store';
+import ProductsMain from './pages/products/ProductsMain';
+import ProductsSubscription from './pages/products/ProductsSubscription';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -193,14 +195,38 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'products',
-      //   element: (
-      //     <Guard>
-      //       <Products />
-      //     </Guard>
-      //   ),
-      // },
+      {
+        // check it
+        path: 'products/main',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductsMain}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        // check it
+        path: 'products/subscriptions',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductsSubscription}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'products',
+        element: (
+          <Guard>
+            <Products />
+          </Guard>
+        ),
+      },
       {
         // Make the path relative, as it's nested under 'products'
         path: '/products/:id',

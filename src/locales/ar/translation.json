@@ -120,15 +120,27 @@
             "coutomer": "الزبائن",
             "advertiser": "المعلنين"
         },
-        "id": "ID",
-        "name": "أسم المستخدم",
-        "alias": "اسم المستعار",
-        "type": "الفئه",
-        "regDate": "تاريخ التسجيل",
-        "mobileconfirm": "رقم الجوال",
-        "emailleconfirm": "البريد الالكتروني",
-        "BanStatus": "الحالة"
+        "id":"ID",
+        "name":"أسم المستخدم",
+        "alias":"اسم المستعار",
+        "type":"الفئه",
+        "regDate":"تاريخ التسجيل",
+        "mobileconfirm":"رقم الجوال",
+        "emailleconfirm":"البريد الالكتروني",
+        "BanStatus":"الحالة"
+
     },
+        "products": {
+        "label":
+        {
+
+        "label":"المنتجات",
+        "pageNameUnPaid":"رئيسية",
+        "pageNamePaid":"الاشتراك",
+        "pageNameAll":"الكل"
+  
+
+        }    },
     "unauthorized": {
         "title": "غير مصرح لك",
         "discribution": "ليس لديك إذن للوصول إلى هذه الصفحة."
