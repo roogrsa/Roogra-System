@@ -22,7 +22,7 @@ const MainSettings: React.FC = () => {
                 <TabButton btnTab={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 <TabButton btnTab={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
             </ul>
-            <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
+            <div className="p-6 text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
                 {activeTab === t('settings.terms') && (
                     <TermsSetting />
                 )}
