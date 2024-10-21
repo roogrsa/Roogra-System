@@ -12,9 +12,9 @@ export default function TabButton({ btnTab, activeTab, setActiveTab }: TabButton
         <li>
             <button
                 onClick={() => handleTabChange(btnTab)}
-                className={`inline-flex items-center px-4 py-3 rounded-lg w-full ${activeTab === btnTab
-                    ? 'bg-sidebarHover dark:bg-blue-600'
-                    : 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+                className={` px-4 py-3 rounded-lg w-full font-semibold text-lg ${activeTab === btnTab
+                    ? 'bg-graydark text-white dark:bg-blue-600'
+                    : 'bg-gray-50 text-secondaryBG-dark dark:bg-gray-800 dark:text-gray-400'
                     }`}
             >
                 {btnTab}
