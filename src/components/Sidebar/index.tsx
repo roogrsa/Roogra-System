@@ -46,7 +46,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const fName = localStorage.getItem('first_name')
   const lName = localStorage.getItem('last_name')
   const permissions: any = localStorage.getItem('permissions')
-  console.log(permissions); // 11111111111111111111111
 
   const [permission, setpermission] = useState({
     super: permissions[0],
@@ -78,7 +77,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     })
     // }
   }, []);
-  console.log(permission);
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
@@ -126,7 +124,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       console.error(error);
     }
   };
-  console.log(permission.ads.all == 1 || permission.ads.primary || permission.ads.subscription == 1);
 
   return (
     <>

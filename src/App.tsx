@@ -30,10 +30,7 @@ import ProtectedRoute from './components/guards/ProtectedRoute';
 import MainSettings from './pages/settings/MainSettings';
 import { checkPermissions } from './store/slices/permissions';
 import { store } from './store/store';
-
-console.log('stoer app', store.getState().permissions.permissions);
 const storedPermissions: any = store.getState().permissions.permissions;
-console.log(storedPermissions);
 // super: permissions[0],
 // charts: permissions[1],
 // admins: permissions[2],
@@ -288,7 +285,6 @@ const App: React.FC = () => {
       en: { translation: enTranslation },
     },
   });
-  const permissions = useSelector(checkPermissions)
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
