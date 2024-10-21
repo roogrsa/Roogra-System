@@ -67,7 +67,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[1] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   index: true,
@@ -78,7 +78,7 @@ const router = createBrowserRouter([
       //   ),
       // },
       {
-        path: "users",
+        path: 'users',
         element: (
           <Guard>
             <ProtectedRoute
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[7] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   path: 'users',
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "users/customer",
+        path: 'users/customer',
         element: (
           <Guard>
             <ProtectedRoute
@@ -113,7 +113,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[9] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   path: 'users/customer',
@@ -124,7 +124,7 @@ const router = createBrowserRouter([
       //   ),
       // },
       {
-        path: "users/advertiser",
+        path: 'users/advertiser',
         element: (
           <Guard>
             <ProtectedRoute
@@ -132,7 +132,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[8] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   path: 'users/advertiser',
@@ -143,7 +143,7 @@ const router = createBrowserRouter([
       //   ),
       // },
       {
-        path: "ads",
+        path: 'ads',
         element: (
           <Guard>
             <ProtectedRoute
@@ -151,7 +151,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[4] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   path: 'ads',
@@ -162,7 +162,7 @@ const router = createBrowserRouter([
       //   ),
       // },
       {
-        path: "subscription",
+        path: 'subscription',
         element: (
           <Guard>
             <ProtectedRoute
@@ -170,7 +170,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[13] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   path: 'subscription',
@@ -180,8 +180,9 @@ const router = createBrowserRouter([
       //     </Guard>
       //   ),
       // },
-      { // check it
-        path: "products",
+      {
+        // check it
+        path: 'products',
         element: (
           <Guard>
             <ProtectedRoute
@@ -189,7 +190,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[5] == 1}
             />
           </Guard>
-        )
+        ),
       },
       // {
       //   path: 'products',
@@ -226,7 +227,7 @@ const router = createBrowserRouter([
       // },
 
       {
-        path: "admins",
+        path: 'admins',
         element: (
           <Guard>
             <ProtectedRoute
@@ -234,10 +235,10 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[2] == 1}
             />
           </Guard>
-        )
+        ),
       },
       {
-        path: "admins/add-admin",
+        path: 'admins/add-admin',
         element: (
           <Guard>
             <ProtectedRoute
@@ -245,7 +246,7 @@ const router = createBrowserRouter([
               hasPermission={storedPermissions[2] == 1}
             />
           </Guard>
-        )
+        ),
       },
 
       {
