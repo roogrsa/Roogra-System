@@ -9,6 +9,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axiosInstance from "../../axiosConfig/instanc";
 import { FiEdit3 } from "react-icons/fi";
 import Pagination from "../../components/pagination/Pagination";
+import DeletePopup from "../../components/popups/DeletePopup";
+import EditAddPopup from "../../components/popups/EditAddPopup";
 
 interface CategoryMap {
     map_category_id: number;
@@ -20,6 +22,22 @@ const CategoriesMap: React.FC = () => {
     const [categoriesMap, setCategoriesMap] = useState<CategoryMap[]>([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [categoriesCount, setcategoriesCount] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<CategoryMap | null>(null);
+
+    const openModal = (category: CategoryMap) => {
+        setSelectedCategory(category);
+        setIsModalOpen(true);
+    };
+    const openEditModal = (category: CategoryMap) => {
+        setSelectedCategory(category);
+        setIsAddModalOpen(true);
+    };
+    const openAddModal = () => {
+        setSelectedCategory(null)
+        setIsAddModalOpen(true);
+    };
     useEffect(() => {
         const fetchCategoriesCount = async () => {
             try {
@@ -30,17 +48,17 @@ const CategoriesMap: React.FC = () => {
         fetchCategoriesCount();
     }, []);
     const totalPages = Math.ceil(categoriesCount);
+    const displayCategoriesMap = async () => {
+        try {
+            const res = await axiosInstance.get(`/api/map-categories?limit=8&page=${currentPage}`);
+            console.log(res.data.data);
+            setCategoriesMap(res.data.data)
+        } catch (error: any) {
+            console.error(error);
+            console.log(error?.response?.data?.message);
+        }
+    };
     useEffect(() => {
-        const displayCategoriesMap = async () => {
-            try {
-                const res = await axiosInstance.get(`/api/map-categories?limit=8&page=${currentPage}`);
-                console.log(res.data.data);
-                setCategoriesMap(res.data.data)
-            } catch (error: any) {
-                console.error(error);
-                console.log(error?.response?.data?.message);
-            }
-        };
         displayCategoriesMap()
     }, [currentPage]);
 
@@ -59,7 +77,7 @@ const CategoriesMap: React.FC = () => {
             <div className="flex justify-between">
                 <Breadcrumb pageName={t('categoriesPage.catMap.label')} breadcrumbLinks={breadcrumbLinks} />
                 <Link to={``}>
-                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
+                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" onClick={() => openAddModal()} />
                 </Link>
             </div>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -85,23 +103,49 @@ const CategoriesMap: React.FC = () => {
                                     {categoriesMap.map((cat, index) => (
                                         <Draggable key={`cat-${index}`} draggableId={`cat-${cat.map_category_id}-${index}`} index={index}>
                                             {(provided, snapshot) => (
-                                                <tr
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                    className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
+                                                <>
+                                                    <tr
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                        className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
                                                     ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                                                     `}>
-                                                    <td className="px-2 py-4">#{index + 1}</td>
-                                                    <th
-                                                        scope="row"
-                                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                                    >
-                                                        {cat.name}
-                                                    </th>
-                                                    <td className="py-4"><FiEdit3 className="text-xl text-Input-TextGreen" role="button" /></td>
-                                                    <td className="py-4"><RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" /></td>
-                                                </tr>
+                                                        <td className="px-2 py-4">#{index + 1}</td>
+                                                        <th
+                                                            scope="row"
+                                                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                        >
+                                                            {cat.name}
+                                                        </th>
+                                                        <td className="py-4">
+                                                            <FiEdit3 className="text-xl text-Input-TextGreen" role="button"
+                                                                onClick={() => openEditModal(cat)} />
+                                                        </td>
+                                                        <td className="py-4" onClick={() => openModal(cat)}>
+                                                            <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" /></td>
+                                                    </tr>
+                                                    {selectedCategory && (
+                                                        <DeletePopup
+                                                            deleteName={selectedCategory.name}
+                                                            deleteId={selectedCategory.map_category_id}
+                                                            url={`map-categories`}
+                                                            isModalOpen={isModalOpen}
+                                                            display={displayCategoriesMap}
+                                                            setIsModalOpen={setIsModalOpen}
+                                                        />
+                                                    )}
+                                                    {selectedCategory && (
+                                                        <EditAddPopup
+                                                            name={selectedCategory.name}
+                                                            id={selectedCategory.map_category_id}
+                                                            url={`map-categories`}
+                                                            isModalOpen={isAddModalOpen}
+                                                            setIsModalOpen={setIsAddModalOpen}
+                                                            display={displayCategoriesMap}
+                                                        />
+                                                    )}
+                                                </>
                                             )}
                                         </Draggable>
                                     ))}
@@ -112,6 +156,14 @@ const CategoriesMap: React.FC = () => {
                     )}
                 </Droppable>
             </DragDropContext>
+            {!selectedCategory && (
+                <EditAddPopup
+                    url={`map-categories`}
+                    isModalOpen={isAddModalOpen}
+                    setIsModalOpen={setIsAddModalOpen}
+                    display={displayCategoriesMap}
+                />
+            )}
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}

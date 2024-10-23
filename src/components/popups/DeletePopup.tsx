@@ -9,8 +9,9 @@ interface DeletePopupProps {
     url: string;
     isModalOpen:boolean;
     setIsModalOpen:(isModalOpen: boolean) => void;
+    display:() => Promise<void>
 }
-const DeletePopup = ({ deleteName, deleteId, url, isModalOpen, setIsModalOpen}: DeletePopupProps) => {
+const DeletePopup = ({ deleteName, deleteId, url, isModalOpen, setIsModalOpen,display}: DeletePopupProps) => {
     const { t } = useTranslation();
     const closeModal = () => setIsModalOpen(false);
     
@@ -20,6 +21,7 @@ const DeletePopup = ({ deleteName, deleteId, url, isModalOpen, setIsModalOpen}: 
             console.log(res);
             closeModal()
             toast.success(`${deleteName} ${t('delete_toast.toast')}`);
+            display()
         } catch (error: any) {
             console.error(error);
             closeModal()
@@ -31,7 +33,7 @@ const DeletePopup = ({ deleteName, deleteId, url, isModalOpen, setIsModalOpen}: 
             {isModalOpen && (
                 <div
                 id={`popup-modal_${deleteId}`}
-                className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-TheadBorder-light bg-opacity-20"
+                className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-TheadBorder-light bg-opacity-25"
                 >
                     <div className="relative p-4 w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
