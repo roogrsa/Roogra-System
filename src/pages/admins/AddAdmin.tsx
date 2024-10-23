@@ -16,7 +16,6 @@ import SelectTime from "../../components/form/SelectTime";
 import CheckboxGroup from "./CheckboxGroup";
 import { useState } from "react";
 import { ToastContainer,toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export interface CheckboxItem {
     isChecked: boolean;
@@ -217,7 +216,7 @@ export default function AddAdmin() {
                     const result = logValues(permissions);
                     setLoggedValues(result);
                     return (
-                        <Form className="bg-white dark:bg-secondaryBG-dark p-6 rounded-sm">
+                        <Form className="bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-sm">
                             <div className="flex justify-between md:mb-6">
                                 <SelectLevel name={`type`} />
                                 <InputText type={`text`} name={`name`} label={t('admins.form.name')} />

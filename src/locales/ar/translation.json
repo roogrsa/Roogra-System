@@ -152,5 +152,33 @@
         "sms":"الرسائل",
         "verification":"التوثيق",
         "banners":"الاعلانات التجارية"
-    }
+    },
+    "categoriesPage":{
+        "title":"الأقسام",
+            "save": "حفظ",
+            "cancle": "الغاء",
+            "newCat":"قسم جديد",
+            "editCat":"تحرير القسم",
+            "order":"الترتيب",
+            "edit":"تحرير",
+            "catMain": {
+                "label": "رئيسية",
+                "catName":"اسم القسم",
+                "img":"الصورة"
+            },
+            "catSubscriptions": {
+                "label": "اشتراك",
+                "noSub":"لا يوجد اشتراك في هذا القسم"
+            },
+            "catMap": {
+                "label": "المناطق",
+                "regionName": "اسم المنطقة"
+            }
+        },
+        "popup":{
+    "delete_title":"هل أنت متأكد أنك تريد حذف",
+    "delete":"حذف",
+    "cancle":"الغاء",
+    "toast":"تم الحذف بنجاح"
+}
 }

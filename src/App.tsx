@@ -31,6 +31,9 @@ import MainSettings from './pages/settings/MainSettings';
 import { store } from './store/store';
 import ProductsMain from './pages/products/ProductsMain';
 import ProductsSubscription from './pages/products/ProductsSubscription';
+import MainCategories from './pages/categories/MainCategories';
+import SubscriptionsCat from './pages/categories/SubscriptionsCat';
+import CategoriesMap from './pages/categories/CategoriesMap';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -72,14 +75,6 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   index: true,
-      //   element: (
-      //     <Guard>
-      //       <Home />
-      //     </Guard>
-      //   ),
-      // },
       {
         path: 'users',
         element: (
@@ -91,14 +86,6 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'users',
-      //   element: (
-      //     <Guard>
-      //       <Users />
-      //     </Guard>
-      //   ),
-      // },
       {
         path: 'profile/:id',
         element: (
@@ -118,14 +105,6 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'users/customer',
-      //   element: (
-      //     <Guard>
-      //       <Customer />
-      //     </Guard>
-      //   ),
-      // },
       {
         path: 'users/advertiser',
         element: (
@@ -137,14 +116,6 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'users/advertiser',
-      //   element: (
-      //     <Guard>
-      //       <Advertiser />
-      //     </Guard>
-      //   ),
-      // },
       {
         path: 'ads',
         element: (
@@ -156,14 +127,6 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'ads',
-      //   element: (
-      //     <Guard>
-      //       <Ads />
-      //     </Guard>
-      //   ),
-      // },
       {
         path: 'subscription',
         element: (
@@ -175,16 +138,7 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'subscription',
-      //   element: (
-      //     <Guard>
-      //       <CategorySubscription />
-      //     </Guard>
-      //   ),
-      // },
       {
-        // check it
         path: 'products',
         element: (
           <Guard>
@@ -196,7 +150,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        // check it
         path: 'products/main',
         element: (
           <Guard>
@@ -208,7 +161,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        // check it
         path: 'products/subscriptions',
         element: (
           <Guard>
@@ -236,23 +188,6 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      // {
-      //   path: 'admins',
-      //   element: (
-      //     <Guard>
-      //       <Admins />
-      //     </Guard>
-      //   ),
-      // },
-      // {
-      //   path: 'admins/add-admin',
-      //   element: (
-      //     <Guard>
-      //       <AddAdmin />
-      //     </Guard>
-      //   ),
-      // },
-
       {
         path: 'admins',
         element: (
@@ -282,6 +217,39 @@ const router = createBrowserRouter([
             <ProtectedRoute
               component={MainSettings}
               hasPermission={storedPermissions[3]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'categories/main',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={MainCategories}
+              hasPermission={storedPermissions[10]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'categories/subscriptions',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={SubscriptionsCat}
+              hasPermission={storedPermissions[11]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'categories/map',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={CategoriesMap}
+              hasPermission={storedPermissions[12]}
             />
           </Guard>
         ),
