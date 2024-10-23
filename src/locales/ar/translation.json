@@ -120,65 +120,68 @@
             "coutomer": "الزبائن",
             "advertiser": "المعلنين"
         },
-        "id":"ID",
-        "name":"أسم المستخدم",
-        "alias":"اسم المستعار",
-        "type":"الفئه",
-        "regDate":"تاريخ التسجيل",
-        "mobileconfirm":"رقم الجوال",
-        "emailleconfirm":"البريد الالكتروني",
-        "BanStatus":"الحالة"
-
+        "id": "ID",
+        "name": "أسم المستخدم",
+        "alias": "اسم المستعار",
+        "type": "الفئه",
+        "regDate": "تاريخ التسجيل",
+        "mobileconfirm": "رقم الجوال",
+        "emailleconfirm": "البريد الالكتروني",
+        "BanStatus": "الحالة"
     },
-        "products": {
-        "label":
-        {
-
-        "label":"المنتجات",
-        "pageNameUnPaid":"رئيسية",
-        "pageNamePaid":"الاشتراك",
-        "pageNameAll":"الكل"
-  
-
-        }    },
+    "products": {
+        "label": {
+            "label": "المنتجات",
+            "pageNameUnPaid": "رئيسية",
+            "pageNamePaid": "الاشتراك",
+            "pageNameAll": "الكل"
+        }
+    },
     "unauthorized": {
         "title": "غير مصرح لك",
         "discribution": "ليس لديك إذن للوصول إلى هذه الصفحة."
     },
-    "settings":{
-        "terms":"الشروط والاحكام",
-        "comission":"العمولة",
-        "banks":"البنوك",
-        "sms":"الرسائل",
-        "verification":"التوثيق",
-        "banners":"الاعلانات التجارية"
+    "settings": {
+        "terms": "الشروط والاحكام",
+        "comission": "العمولة",
+        "banks": "البنوك",
+        "sms": "الرسائل",
+        "verification": "التوثيق",
+        "banners": "الاعلانات التجارية"
     },
-    "categoriesPage":{
-        "title":"الأقسام",
-            "save": "حفظ",
-            "cancle": "الغاء",
-            "newCat":"قسم جديد",
-            "editCat":"تحرير القسم",
-            "order":"الترتيب",
-            "edit":"تحرير",
-            "catMain": {
-                "label": "رئيسية",
-                "catName":"اسم القسم",
-                "img":"الصورة"
-            },
-            "catSubscriptions": {
-                "label": "اشتراك",
-                "noSub":"لا يوجد اشتراك في هذا القسم"
-            },
-            "catMap": {
-                "label": "المناطق",
-                "regionName": "اسم المنطقة"
-            }
+    "categoriesPage": {
+        "title": "الأقسام",
+        "save": "حفظ",
+        "cancle": "الغاء",
+        "newCat": "قسم جديد",
+        "editCat": "تحرير القسم",
+        "order": "الترتيب",
+        "edit": "تحرير",
+        "catMain": {
+            "label": "رئيسية",
+            "catName": "اسم القسم",
+            "img": "الصورة"
         },
-        "popup":{
-    "delete_title":"هل أنت متأكد أنك تريد حذف",
-    "delete":"حذف",
-    "cancle":"الغاء",
-    "toast":"تم الحذف بنجاح"
-}
+        "catSubscriptions": {
+            "label": "اشتراك",
+            "noSub": "لا يوجد اشتراك في هذا القسم"
+        },
+        "catMap": {
+            "label": "المناطق",
+            "regionName": "اسم المنطقة"
+        }
+    },
+    "popup": {
+        "delete_title": "هل أنت متأكد أنك تريد حذف",
+        "delete": "حذف",
+        "cancle": "الغاء",
+        "delete_toast": "تم الحذف بنجاح",
+        "add_toast": "تمت الإضافة بنجاح",
+        "edit_toast": "تم التعديل بنجاح",
+        "add_title": "قسم جديد",
+        "edit_title": "تحرير القسم",
+        "save": "حفظ",
+        "img": "الصورة",
+        "category_name": "اسم القسم"
+    }
 }

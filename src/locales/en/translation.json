@@ -149,32 +149,39 @@
         "verification": "Verification",
         "banners": "Commercial Banners"
     },
-    "categoriesPage":{
-        "title":"categories",
+    "categoriesPage": {
+        "title": "categories",
         "save": "Save",
-            "cancle": "Cancle",
-            "newCat":"NEW CATEGORY",
-            "editCat":"EDIT CATEGORY",
-            "order":"Order",
-            "edit":"Edit",
-            "catMain": {
-                "label": "Primary",
-                "catName":"Category name",
-                "img":"Image"
-            },
-            "catSubscriptions": {
-                "label": "Subscribable",
-                "noSub":"There is no subscription in this section"
-            },
-            "catMap": {
-                "label": "Regions",
-                "regionName": "Region name"
-            }
+        "cancle": "Cancle",
+        "newCat": "NEW CATEGORY",
+        "editCat": "EDIT CATEGORY",
+        "order": "Order",
+        "edit": "Edit",
+        "catMain": {
+            "label": "Primary",
+            "catName": "Category name",
+            "img": "Image"
+        },
+        "catSubscriptions": {
+            "label": "Subscribable",
+            "noSub": "There is no subscription in this section"
+        },
+        "catMap": {
+            "label": "Regions",
+            "regionName": "Region name"
+        }
     },
-    "popUP":{
-        "delete_title":"Are you sure you want to delete",
-        "delete":"delete",
-        "cancle":"Cancle",
-    "toast":"deleted successfully"
+    "popUP": {
+        "delete_title": "Are you sure you want to delete",
+        "delete": "delete",
+        "cancle": "Cancle",
+        "delete_toast": "deleted successfully",
+        "add_toast": "added successfully",
+        "edit_toast": "edited successfully",
+        "add_title": "new category",
+        "edit_title": "edit category",
+        "save": "save",
+        "img": "image",
+        "category_name": "category name"
     }
 }

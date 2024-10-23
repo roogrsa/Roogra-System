@@ -9,6 +9,7 @@ import axiosInstance from "../../axiosConfig/instanc";
 import { FiEdit3 } from "react-icons/fi";
 import Pagination from "../../components/pagination/Pagination";
 import DeletePopup from "../../components/popups/DeletePopup";
+import EditPopup from "../../components/popups/EditPopup";
 
 interface Category {
   parent_id: number;
@@ -56,11 +57,16 @@ const MainCategories: React.FC = () => {
   displayCategories()
   }, [currentPage]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   const openModal = (category: Category) => {
     setSelectedCategory(category);
     setIsModalOpen(true);
+  };
+  const openAddModal = (category: Category) => {
+    setSelectedCategory(category);
+    setIsAddModalOpen(true);
   };
 
   const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }]
@@ -113,7 +119,7 @@ const MainCategories: React.FC = () => {
                           {cat.category_name}
                         </th>
                         <td className="px-6 py-4"><img src={cat.parent_image} alt="" width={40}/></td>
-                        <td className="py-4"><FiEdit3 className="text-xl text-Input-TextGreen" role="button"/></td>
+                        <td className="py-4" onClick={()=>openAddModal(cat)}><FiEdit3 className="text-xl text-Input-TextGreen" role="button"/></td>
                         <td className="py-4" onClick={() => openModal(cat)}>
                           <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button"/>
                         </td>
@@ -125,6 +131,15 @@ const MainCategories: React.FC = () => {
                               url={`categories`}
                               isModalOpen={isModalOpen}
                               setIsModalOpen={setIsModalOpen}
+                            />
+                          )}
+                          {selectedCategory && (
+                            <EditPopup
+                              name={selectedCategory.category_name}
+                              id={selectedCategory.parent_id}
+                              url={`categories`}
+                              isModalOpen={isAddModalOpen}
+                              setIsModalOpen={setIsAddModalOpen}
                             />
                           )}
                       </>

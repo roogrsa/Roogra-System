@@ -19,7 +19,7 @@ const DeletePopup = ({ deleteName, deleteId, url, isModalOpen, setIsModalOpen}: 
             const res = await axiosInstance.delete(`api/${url}/${deleteId}`);
             console.log(res);
             closeModal()
-            toast.success(`${deleteName} ${t('popup.toast')}`);
+            toast.success(`${deleteName} ${t('delete_toast.toast')}`);
         } catch (error: any) {
             console.error(error);
             closeModal()
