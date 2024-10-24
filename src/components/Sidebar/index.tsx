@@ -345,13 +345,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         {permission.requests.attestation == 1 && (
                           <DropLink
-                            to={`/subscription`}
+                            to={`/confirm/subscription`}
                             text={'sidebar.requests.attestation'}
                           />
                         )}
                         {permission.requests.category == 1 && (
                           <DropLink
-                            to={`/requests/category`}
+                            to={`/part/subscription`}
                             text={'sidebar.requests.category'}
                           />
                         )}

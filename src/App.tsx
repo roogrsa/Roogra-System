@@ -128,7 +128,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'subscription',
+        path: '/part/subscription',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={CategorySubscription}
+              hasPermission={storedPermissions[13]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: '/confirm/subscription',
         element: (
           <Guard>
             <ProtectedRoute
