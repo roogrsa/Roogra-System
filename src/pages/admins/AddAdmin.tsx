@@ -312,15 +312,6 @@ export default function AddAdmin() {
   return (
     <div>
       <div className="flex justify-between md:mb-2">
-        {/* <Breadcrumb
-          pageName={t('admins.title-add')}
-          breadcrumbLinks={breadcrumbLinks}
-        />
-        <RiDeleteBin6Line
-          className="text-3xl text-Input-TextRed"
-          role="button"
-          onClick={back}
-        /> */}
       </div>
       <Formik
         initialValues={initialValues}
@@ -337,7 +328,7 @@ export default function AddAdmin() {
           setLoggedValues(result);
           return (
             <Form className="bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-sm">
-              <div className="flex justify-between md:mb-6">
+              <div className="md:flex justify-between md:mb-6">
                 <SelectLevel name={`type`} />
                 <InputText
                   type={`text`}
@@ -355,7 +346,7 @@ export default function AddAdmin() {
                   label={t('admins.form.phone')}
                 />
               </div>
-              <div className="flex justify-between md:mb-16">
+              <div className="md:flex justify-between md:mb-16">
                 <InputText
                   type={`email`}
                   name={`email`}
@@ -375,7 +366,7 @@ export default function AddAdmin() {
                   label={t('admins.form.to')}
                 />
               </div>
-              <div className="flex justify-between md:mb-16">
+              <div className="md:flex justify-between md:mb-16">
                 <CheckboxGroup
                   setFieldValue={setFieldValue}
                   checks={checkAdvertisments}
@@ -395,7 +386,7 @@ export default function AddAdmin() {
                   label={t('admins.form.requests')}
                 />
               </div>
-              <div className="flex justify-between md:mb-16">
+              <div className="md:flex justify-between md:mb-16">
                 <CheckboxGroup
                   setFieldValue={setFieldValue}
                   checks={checkSupport}
@@ -415,7 +406,7 @@ export default function AddAdmin() {
                   label={t('admins.form.banlist')}
                 />
               </div>
-              <div className="flex justify-between md:mb-16">
+              <div className="md:flex justify-between md:mb-16">
                 <CheckboxGroup
                   setFieldValue={setFieldValue}
                   checks={checkPermissions}
@@ -429,7 +420,7 @@ export default function AddAdmin() {
                   label={t('admins.form.categories')}
                 />
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center mt-4">
                 <button
                   type="submit"
                   disabled={isSubmitting}

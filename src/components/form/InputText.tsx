@@ -11,11 +11,11 @@ export default function InputText({ type, name, label }: InputTextProps) {
     const { t } = useTranslation();
     return (
         <div>
-            <div className="mb-4">
+            <div className="md:mb-4 md:mt-1 mt-4">
                 <label htmlFor={name} className="flex mb-2 text-lg font-semibold text-gray-900 dark:text-white">{label} 
                 <FaAsterisk className='text-[8px] text-[#E02828]' />
                 </label>
-                <Field type={type} name={name} id={name} className="shadow-sm border border-gray-300 text-gray-900 
+                <Field type={type} name={name} id={name} className="md:w-50 w-full shadow-sm border border-gray-300 text-gray-900 
                 text-sm rounded-md block  p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light"
                 placeholder={t('admins.form.placeholder')} />
             </div>
