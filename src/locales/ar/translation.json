@@ -61,7 +61,7 @@
     "admins": {
         "title": "صفحة الإدأريين",
         "title-add": "تحرير الصفحة",
-        "label": "الإدأرة/ ",
+        "label": "الإدأرة",
         "add": "إضافة جديدة",
         "form": {
             "placeholder": "الرجاء الكتابة",
@@ -111,7 +111,11 @@
             "chats": "المحادثات",
             "products": "المنتجات",
             "banlist": "قائمة الحظر"
-        }
+        },
+        "supervisor":"مشرف",
+        "delegate":"نائب",
+        "observer":"مراقب"
+    
     },
     "users": {
         "label": {

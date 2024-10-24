@@ -61,7 +61,7 @@
     "admins": {
         "title": "Administrators",
         "title-add": "Edit page",
-        "label": "Administrators/ ",
+        "label": "Administrators",
         "add": "Add New Admin",
         "form": {
             "placeholder": "please write",
@@ -111,7 +111,10 @@
             "chats": "Chats",
             "products": "Products",
             "banlist": "Banlist"
-        }
+        },
+                "supervisor":"supervisor",
+        "delegate":"delegate",
+        "observer":"observer"
     },
     "users": {
         "label": {
