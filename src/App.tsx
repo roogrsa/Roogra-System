@@ -4,7 +4,6 @@ import Loader from './common/Loader';
 import DefaultLayout from './layout/DefaultLayout';
 import Guard from './components/guards/Guards';
 import ECommerce from './pages/Dashboard/ECommerce';
-import Home from './pages/home/home';
 import Users from './pages/users/users';
 import Advertiser from './pages/users/advertiser';
 import Customer from './pages/users/Customer';
@@ -34,6 +33,8 @@ import ProductsSubscription from './pages/products/ProductsSubscription';
 import MainCategories from './pages/categories/MainCategories';
 import SubscriptionsCat from './pages/categories/SubscriptionsCat';
 import CategoriesMap from './pages/categories/CategoriesMap';
+import Charts from './pages/home/home';
+import Home from './pages/home';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <ProtectedRoute
-              component={Users}
+              component={Charts}
               hasPermission={storedPermissions[7]}
             />
           </Guard>

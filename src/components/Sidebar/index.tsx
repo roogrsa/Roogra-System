@@ -20,6 +20,7 @@ import { setLogout } from '../../store/slices/auth';
 import SidebarLink from './SidebarLink';
 import DropLink from './DropLink';
 import { selectLanguage } from '../../store/slices/language';
+import { Link } from 'react-router-dom';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -193,14 +194,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <div>
               {isOpen && (
                 <h2 className="mb-4 text-center flex text-xl font-[400] text-[#70F1EB]">
-                  {fName}
+                  <Link to={`/`}>{fName}</Link>
                 </h2>
               )}
 
               <ul className="mb-6 flex flex-col gap-1.5">
                 {permission.charts == 1 && (
                   <SidebarLink
-                    to={`/home`}
+                    to={`/charts`}
                     isOpen={isOpen}
                     text={'sidebar.charts'}
                     icon={<PiChartDonutFill className="text-2xl" />}
