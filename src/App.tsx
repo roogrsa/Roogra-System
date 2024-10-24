@@ -76,6 +76,17 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'charts',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Users}
+              hasPermission={storedPermissions[7]}
+            />
+          </Guard>
+        ),
+      },
+      {
         path: 'users',
         element: (
           <Guard>

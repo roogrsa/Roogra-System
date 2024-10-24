@@ -121,7 +121,7 @@
         "label": {
             "label": "المستخدمين",
             "allusers": "الكل",
-            "coutomer": "الزبائن",
+            "customer": "الزبائن",
             "advertiser": "المعلنين"
         },
         "id": "ID",
@@ -133,8 +133,7 @@
         "emailleconfirm": "البريد الالكتروني",
         "BanStatus": "الحالة"
     },
-
-        "products": {
+    "products": {
         "label":
         {
 
@@ -204,5 +203,29 @@
         "save": "حفظ",
         "img": "الصورة",
         "category_name": "اسم القسم"
+    },
+    "subscriptions": {
+        "titles":{
+            "processing":"طلب",
+            "approved":"فعال",
+
+            "rejected":"رفض",
+            "expired":"منتهي"
+
+
+        },
+        "headers":{
+            "id":"رقم التذكرة",
+            "category_name":" القسم الرئيسي ",
+            "sub_name":" القسم الفرعي ",
+            "transaction_image":"صورة التحويل",
+            "created_at":" تاريخ الطلب ",
+            "verification_period":"المده",
+            "verified_by_accept":"قبول",
+            "edit":"تحرير",
+            "verified_by_reject":"رفض"
+        }
+    
+
     }
 }

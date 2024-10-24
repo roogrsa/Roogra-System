@@ -120,7 +120,7 @@
         "label": {
             "label": "Users",
             "allusers": "All Users",
-            "coutomer": "Customers",
+            "customer": "Customers",
             "advertiser": "Advertisers"
         },
         "id": "ID",
@@ -186,5 +186,31 @@
         "save": "save",
         "img": "image",
         "category_name": "category name"
+    },
+     "subscriptions": {
+        "titles":{
+            "processing":"processing",
+            "approved":"approved",
+
+            "rejected":"rejected",
+            "expired":"expired"
+
+
+        },
+           "headers":{
+            "id":"ID",
+            "category_name":"Main-Cat",
+            "sub_name":"Sub-Cat",
+            "transaction_image":"Image",
+            "created_at":"Date",
+                        "verification_period":"Period",
+
+            "verified_by_accept":"Accept",
+            "edit":"Show",
+            "verified_by_reject":"Reject"
+        }
+    
+    
+
     }
 }

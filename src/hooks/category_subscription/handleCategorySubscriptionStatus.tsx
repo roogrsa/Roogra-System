@@ -1,41 +1,48 @@
+// categorySubscriptionHelpers.ts
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 
-export const getCategorySubscriptionPopup = async (
+const handleCategorySubscriptionStatus = async (
   categoryId: number | string,
   newStatus: 'approved' | 'rejected',
   adminName: string,
-  DateNow: string,
+  editCategorySubscriptionStatus: Function,
 ) => {
+  const DateNow = new Date().toLocaleString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
   let title = newStatus === 'approved' ? 'تأكيد الموافقة' : 'تفاصيل الطلب';
   let confirmButtonText =
     newStatus === 'approved' ? 'تأكيد الموافقة' : 'تأكيد الرفض';
   let reasonTextarea =
     newStatus === 'rejected'
       ? `<div class="w-90">
-           <textarea id="reason" class="swal2-textarea w-full text-right" placeholder="اكتب سبب الرفض هنا" rows="4"></textarea>
-         </div>`
+         <textarea id="reason" class="swal2-textarea w-full text-right" placeholder="اكتب سبب الرفض هنا" rows="4"></textarea>
+       </div>`
       : '';
 
-  return Swal.fire({
+  const { value: reason } = await Swal.fire({
     html: `
       <div class="text-center bg-secondaryBG-light dark:bg-secondaryBG-dark">
         <h3 class="text-xl font-semibold text-text-light dark:text-text-dark mb-2">${title}</h3>
         <div class="grid grid-cols-3 gap-2">
           <div class="text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-1 rounded-md">
             <span class="block font-bold text-lg">رقم القسم</span>
-            <span class="">RS-${categoryId}</span>
+            <span>RS-${categoryId}</span>
           </div>
           <div class="text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-1 rounded-md">
             <span class="block font-bold text-lg">تاريخ اليوم</span>
-            <span class="">${DateNow}</span>
+            <span>${DateNow}</span>
           </div>
           <div class="text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-1 rounded-md">
             <span class="block font-bold text-lg">بواسطة</span>
-            <span class="">${adminName}</span>
+            <span>${adminName}</span>
           </div>
         </div>
-        ${reasonTextarea} <!-- Only visible if rejected -->
+        ${reasonTextarea} 
       </div>
     `,
     focusConfirm: false,
@@ -59,8 +66,28 @@ export const getCategorySubscriptionPopup = async (
           Swal.showValidationMessage('الرجاء كتابة سبب الرفض');
         }
         return reason;
+      } else {
+        return '';
       }
-      return ''; // No reason required for approval
     },
   });
+
+  if (newStatus === 'approved' || reason) {
+    try {
+      await editCategorySubscriptionStatus(
+        categoryId,
+        newStatus,
+        reason,
+        DateNow,
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(
+        `Error updating category subscription (${newStatus}):`,
+        error,
+      );
+    }
+  }
 };
+
+export default handleCategorySubscriptionStatus;

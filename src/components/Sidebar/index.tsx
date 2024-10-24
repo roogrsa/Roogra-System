@@ -192,15 +192,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <nav className="px-4 lg:px-6">
             <div>
               {isOpen && (
-                <h2 className="mb-4  flex text-xl font-[400] text-[#70F1EB]">
-                  {fName} {lName}
+                <h2 className="mb-4 text-center flex text-xl font-[400] text-[#70F1EB]">
+                  {fName}
                 </h2>
               )}
 
               <ul className="mb-6 flex flex-col gap-1.5">
                 {permission.charts == 1 && (
                   <SidebarLink
-                    to={`/`}
+                    to={`/home`}
                     isOpen={isOpen}
                     text={'sidebar.charts'}
                     icon={<PiChartDonutFill className="text-2xl" />}

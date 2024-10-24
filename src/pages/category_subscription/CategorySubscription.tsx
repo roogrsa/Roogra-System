@@ -11,119 +11,22 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
+import handleCategorySubscriptionStatus from '../../hooks/category_subscription/handleCategorySubscriptionStatus';
+import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
+import { useTranslation } from 'react-i18next';
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 
 const CategorySubscription = () => {
+  const { t } = useTranslation();
+  //
   const {
     editCategorySubscriptionStatus,
     loading: editLoading,
     error: editError,
     success: editSuccess,
   } = useEditCategorySubscriptionStatus();
-  //
-
-  const handleCategorySubscriptionStatus = async (
-    categoryId: number | string,
-    newStatus: 'approved' | 'rejected',
-    adminName: string,
-  ) => {
-    // Get the current date and time
-    const DateNow = new Date().toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-
-    // Determine the title, button text, and textarea for reason based on newStatus
-    let title = newStatus === 'approved' ? 'تأكيد الموافقة' : 'تفاصيل الطلب';
-    let confirmButtonText =
-      newStatus === 'approved' ? 'تأكيد الموافقة' : 'تأكيد الرفض';
-    let reasonTextarea =
-      newStatus === 'rejected'
-        ? `<div class="w-90">
-         <textarea id="reason" class="swal2-textarea w-full text-right" placeholder="اكتب سبب الرفض هنا" rows="4"></textarea>
-       </div>`
-        : ''; // empty string if approved, no textarea needed
-
-    // Display a Swal popup
-    const { value: reason } = await Swal.fire({
-      html: `
-      <div class="text-center bg-secondaryBG-light dark:bg-secondaryBG-dark">
-        <h3 class="text-xl font-semibold text-text-light dark:text-text-dark mb-2">${title}</h3>
-        <div class="grid grid-cols-3 gap-2">
-          <div class=" text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-1 rounded-md">
-            <span class="block font-bold text-lg ">رقم القسم</span>
-            <span class="">RS-${categoryId}</span>
-          </div>
-          <div class=" text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-1 rounded-md">
-            <span class="block font-bold text-lg ">تاريخ اليوم</span>
-            <span class="">${DateNow}</span>
-          </div>
-          <div class=" text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-1 rounded-md">
-            <span class="block font-bold text-lg ">بواسطة</span>
-            <span class="">${adminName}</span>
-          </div>
-        </div>
-        ${reasonTextarea} <!-- Shows only if rejected -->
-      </div>
-    `,
-      focusConfirm: false,
-      showCancelButton: true,
-      customClass: {
-        popup:
-          'custom-popup bg-secondaryBG-light dark:bg-secondaryBG-dark rounded-md',
-        confirmButton:
-          newStatus === 'approved'
-            ? 'custom-confirm-btn bg-ConfirmIconBg text-white font-bold py-2 px-4 rounded'
-            : 'custom-confirm-btn bg-RejectIconBg text-white font-bold py-2 px-4 rounded',
-        cancelButton:
-          'custom-cancel-btn bg-red-500 text-white font-bold py-2 px-4 rounded',
-      },
-      confirmButtonText: confirmButtonText,
-      cancelButtonText: 'إلغاء',
-      preConfirm: () => {
-        if (newStatus === 'rejected') {
-          const reason = document.getElementById('reason')?.value;
-          if (!reason) {
-            Swal.showValidationMessage('الرجاء كتابة سبب الرفض');
-          }
-          return reason;
-        } else {
-          return ''; // No reason required for approval
-        }
-      },
-    });
-
-    // Handle the response based on whether it's approved or rejected
-    if (newStatus === 'approved' || reason) {
-      try {
-        // Call the API to update the status and send DateNow to backend
-        await editCategorySubscriptionStatus(
-          categoryId,
-          newStatus,
-          reason, // empty if approved
-          DateNow,
-        );
-
-        // Reload the page to show updated data
-        window.location.reload();
-
-        console.log(
-          `${newStatus} at ${DateNow} ${
-            reason ? 'with reason: ' + reason : ''
-          }`,
-        );
-      } catch (error) {
-        console.log(
-          `Error updating category subscription (${newStatus}):`,
-          error,
-        );
-      }
-    }
-  };
-
   //
   const breadcrumbLinks = [{ label: 'تذاكر الاشتراك', path: '/' }];
 
@@ -136,75 +39,52 @@ const CategorySubscription = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   //
-  const handleEditClick = (
-    ID: number | string,
-    Date: string,
-    Name: string,
-    Image: string,
-  ) => {
-    Swal.fire({
-      html: `
-    <div class="text-center ">
-      <h3 class="text-xl font-semibold  text-text-light dark:text-text-dark mb-2">تحرير تذكرة القسم</h3>
-      <div class="grid grid-cols-3 gap-4">
-   
-       
-        <div class="bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border p-2 rounded-lg">
-          <span class="block text-lg text-text-light dark:text-text-dark ">بواسطة</span>
-          <span class="text-lg font-">${Name}</span>
-        </div>
-       
-         <div class=" text-text-light dark:text-text-dark  bg-primaryBG-light dark:bg-primaryBG-dark  p-2 border border-Input-border rounded-lg">
-          <span class="block text-lg ">تاريخ التفعيل</span>
-          <span class="text-lg font-">${Date}</span>
-        </div>
-              <div class="bg-primaryBG-light dark:bg-primaryBG-dark border border-Input-border  p-2 rounded-lg">
-          <span class="block text-lg text-text-light dark:text-text-dark ">رقم التذكرة</span>
-          <span class="text-lg font-">RS-${ID}</span>
-        </div>
-      </div>
-      <div class="mt-4   flex justify-center    p-2">
-       <div class="w-40 bg-primaryBG-light dark:bg-primaryBG-dark rounded-lg  border border-Input-border">
-        <span class="block text-lg text-text-light dark:text-text-dark  mb-2">صورة التحويل</span>
-        <img src=${Image} alt="Transaction" class="w-32 h-30 object-cover mx-auto my-2 rounded-md" />
-      </div>
-      </div>
-     
-    </div>
-  `,
-      showConfirmButton: false,
-      customClass: {
-        popup:
-          'custom-popup bg-secondaryBG-light dark:bg-secondaryBG-dark border rounded-lg  p-2',
-      },
-    });
-  };
-
-  //
   const headers = [
-    { key: 'id', content: 'رقم التذكرة', className: 'text-center' },
+    {
+      key: 'id',
+      content: t('subscriptions.headers.id'),
+      className: 'text-center',
+    },
     {
       key: 'category_name',
-      content: 'القسم الرئيسي',
+      content: t('subscriptions.headers.category_name'),
       className: 'text-center',
     },
-    { key: 'sub_name', content: 'القسم الفرعي', className: 'text-center' },
+    {
+      key: 'sub_name',
+      content: t('subscriptions.headers.sub_name'),
+      className: 'text-center',
+    },
     {
       key: 'transaction_image',
-      content: 'صورةالتحويل',
+      content: t('subscriptions.headers.transaction_image'),
       className: 'text-center',
     },
-    { key: 'created_at', content: 'تاريخ الطلب', className: 'text-center' },
-    { key: 'verification_period', content: 'المدة', className: 'text-center' },
+    {
+      key: 'created_at',
+      content: t('subscriptions.headers.created_at'),
+      className: 'text-center',
+    },
+    {
+      key: 'verification_period',
+      content: t('subscriptions.headers.verification_period'),
+      className: 'text-center',
+    },
 
     {
       key: 'verified_by_accept',
-      content: status === 'processing' ? 'قبول' : 'تحرير',
+      content:
+        status === 'processing'
+          ? t('subscriptions.headers.verified_by_accept')
+          : t('subscriptions.headers.edit'),
       className: 'text-center',
     },
     {
       key: 'verified_by_reject',
-      content: status === 'rejected' ? 'قبول' : 'رفض',
+      content:
+        status === 'rejected'
+          ? t('subscriptions.headers.verified_by_accept')
+          : t('subscriptions.headers.verified_by_reject'),
       className: 'text-center',
     },
   ];
@@ -260,11 +140,6 @@ const CategorySubscription = () => {
                     className="w-10 h-10 object-cover"
                   />
                 ) : (
-                  // <img
-                  //   src={item.transaction_image}
-                  //   alt="Transaction"
-                  //   className="w-10 h-10 object-cover"
-                  // />
                   <img
                     src={ApprovedSubscription}
                     alt="Approved"
@@ -314,7 +189,8 @@ const CategorySubscription = () => {
                       handleCategorySubscriptionStatus(
                         item.category_subscription_id,
                         'approved',
-                        ' name ',
+                        'adminName',
+                        editCategorySubscriptionStatus,
                       )
                     }
                   />
@@ -324,7 +200,7 @@ const CategorySubscription = () => {
                       src={EditIconSrc}
                       className="w-6 h-6 text-center p-1 cursor-pointer"
                       onClick={() =>
-                        handleEditClick(
+                        handleEditSubscribtionClick(
                           item.category_subscription_id,
                           datePart,
                           item.name || item.category_name,
@@ -349,6 +225,7 @@ const CategorySubscription = () => {
                         item.category_subscription_id,
                         'approved',
                         'adminName',
+                        editCategorySubscriptionStatus,
                       )
                     }
                   />
@@ -363,6 +240,7 @@ const CategorySubscription = () => {
                           item.category_subscription_id,
                           'rejected',
                           'adminName',
+                          editCategorySubscriptionStatus,
                         )
                       }
                     />
@@ -380,7 +258,12 @@ const CategorySubscription = () => {
       <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="قسم" />
 
       <AccordionHeader2
-        titles={['طلب', 'فعال', 'رفض', 'منتهي']}
+        titles={[
+          t('subscriptions.titles.processing'),
+          t('subscriptions.titles.approved'),
+          t('subscriptions.titles.rejected'),
+          t('subscriptions.titles.expired'),
+        ]}
         onTitleClick={(index) => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
           setStatus(statusMap[index]); // Set the correct status based on the tab clicked
