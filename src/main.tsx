@@ -7,7 +7,7 @@ import 'jsvectormap/dist/css/jsvectormap.css';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-
+import "react-toastify/dist/ReactToastify.css";
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
       <App />
