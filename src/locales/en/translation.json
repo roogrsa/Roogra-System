@@ -177,7 +177,7 @@
     "popUP": {
         "delete_title": "Are you sure you want to delete",
         "delete": "delete",
-        "cancle": "Cancle",
+        "cancel": "Cancel",
         "delete_toast": "deleted successfully",
         "add_toast": "added successfully",
         "edit_toast": "edited successfully",

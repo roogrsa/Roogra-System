@@ -195,7 +195,7 @@
     "popup": {
         "delete_title": "هل أنت متأكد أنك تريد حذف",
         "delete": "حذف",
-        "cancle": "الغاء",
+        "cancel": "الغاء",
         "delete_toast": "تم الحذف بنجاح",
         "add_toast": "تمت الإضافة بنجاح",
         "edit_toast": "تم التعديل بنجاح",

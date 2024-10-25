@@ -107,7 +107,7 @@ const EditAddPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display }: E
                                         focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-secondaryBG-dark dark:text-secondaryBG-light
                                         dark:border-gray-600"
                                                     >
-                                                        {t('popup.cancle')}
+                                                        {t('popup.cancel')}
                                                     </button>
                                                 </div>
                                             </div>

@@ -134,8 +134,8 @@ const MainCategories: React.FC = () => {
                               deleteId={selectedCategory.parent_id}
                               url={`categories`}
                               isModalOpen={isModalOpen}
-                              display={displayCategories}
                               setIsModalOpen={setIsModalOpen}
+                              display={displayCategories}
                             />
                           )}
                           {selectedCategory && (
@@ -146,6 +146,7 @@ const MainCategories: React.FC = () => {
                               isModalOpen={isAddModalOpen}
                               setIsModalOpen={setIsAddModalOpen}
                               display={displayCategories}
+                              imageUrl={selectedCategory.parent_image}
                             />
                           )}
                         </>
