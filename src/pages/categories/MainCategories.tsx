@@ -89,14 +89,14 @@ const MainCategories: React.FC = () => {
               <table
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                className="w-full text-left rtl:text-right text-[20px]"
               >
-                <thead className="text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="bg-gray-100 dark:bg-gray-700">
                   <tr>
-                    <th scope="col" className="px-2 py-3 rounded-s-lg">{t('categoriesPage.order')}</th>
-                    <th scope="col" className="px-6 py-3">{t('categoriesPage.catMain.catName')}</th>
-                    <th scope="col" className="px-6 py-3">{t('categoriesPage.catMain.img')}</th>
-                    <th scope="col" className="py-3">{t('categoriesPage.edit')}</th>
+                    <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
+                    <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMain.catName')}</th>
+                    <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMain.img')}</th>
+                    <th scope="col" className="py-3 text-[18px] font-[400]">{t('categoriesPage.edit')}</th>
                     <th scope="col" className=" py-3 rounded-e-lg">
                       <RiDeleteBin6Line className="text-xl text-Input-TextRed" />
                     </th>
@@ -115,13 +115,13 @@ const MainCategories: React.FC = () => {
                           ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                           `}
                           >
-                            <td className="px-2 py-4">#{index + 1}</td>
-                            <th
+                            <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
+                            <td
                               scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white"
                             >
                               {cat.category_name}
-                            </th>
+                            </td>
                             <td className="px-6 py-4"><img src={cat.parent_image} alt="" width={40} /></td>
                             <td className="py-4" onClick={() => openEditModal(cat)}><FiEdit3 className="text-xl text-Input-TextGreen" role="button" /></td>
                             <td className="py-4" onClick={() => openModal(cat)}>

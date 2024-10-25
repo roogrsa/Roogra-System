@@ -82,15 +82,15 @@ const SubscriptionsCat: React.FC = () => {
                                     key={cat.parent_id}
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
-                                    className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-7"
+                                    className="w-full text-[20px] text-left rtl:text-right mb-7"
                                 >
-                                    <thead className="text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                                    <thead className="bg-gray-100 dark:bg-gray-700">
                                         <tr>
-                                            <th scope="col" className="px-2 py-3 rounded-s-lg">{t('categoriesPage.order')}</th>
+                                            <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
                                             <th scope="col" className="px-6 py-3">
                                                 <img src={cat.parent_image} width={100} alt="" />
                                             </th>
-                                            <th scope="col" className="px-6 py-3">{cat.category_name}</th>
+                                            <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{cat.category_name}</th>
                                             <th scope="col" className="py-3">
                                                 <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
                                             </th>
@@ -128,9 +128,9 @@ const SubscriptionsCat: React.FC = () => {
                                                                         className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                                     >
-                                                                        <td className="px-2 py-4">#{index + 1}</td>
+                                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
                                                                         <td className="px-2 py-4"></td>
-                                                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                                        <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
                                                                             {sub.category_name}
                                                                         </td>
                                                                         <td className="px-2 py-4"></td>

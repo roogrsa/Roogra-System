@@ -87,14 +87,14 @@ const CategoriesMap: React.FC = () => {
                             <table
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}
-                                className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                className="w-full text-[20px] text-left rtl:text-right"
                             >
-                                <thead className="text-gray-700 bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                                <thead className="bg-gray-100 dark:bg-gray-700">
                                     <tr>
-                                        <th scope="col" className="px-2 py-3 rounded-s-lg">{t('categoriesPage.order')}</th>
-                                        <th scope="col" className="px-6 py-3">{t('categoriesPage.catMap.regionName')}</th>
-                                        <th scope="col" className="py-3">{t('categoriesPage.edit')}</th>
-                                        <th scope="col" className=" py-3 rounded-e-lg">
+                                        <th scope="col" className="px-2 py-3 rounded-s-lg text-[18px] font-[400]">{t('categoriesPage.order')}</th>
+                                        <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMap.regionName')}</th>
+                                        <th scope="col" className="py-3 text-[18px] font-[400]">{t('categoriesPage.edit')}</th>
+                                        <th scope="col" className=" py-3 text-[18px] font-[400] rounded-e-lg">
                                             <RiDeleteBin6Line className="text-xl text-Input-TextRed" />
                                         </th>
                                     </tr>
@@ -108,21 +108,23 @@ const CategoriesMap: React.FC = () => {
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
-                                                        className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
+                                                        className={`bg-white dark:bg-gray-800 border-b 
+                                                            dark:border-secondaryBG-light
                                                     ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                                                     `}>
-                                                        <td className="px-2 py-4">#{index + 1}</td>
-                                                        <th
+                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
+                                                        <td
                                                             scope="row"
-                                                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                                            className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap
+                                                                dark:text-white"
                                                         >
                                                             {cat.name}
-                                                        </th>
-                                                        <td className="py-4">
+                                                        </td>
+                                                        <td className="py-4 font-[400] text-[17px]">
                                                             <FiEdit3 className="text-xl text-Input-TextGreen" role="button"
                                                                 onClick={() => openEditModal(cat)} />
                                                         </td>
-                                                        <td className="py-4" onClick={() => openModal(cat)}>
+                                                        <td className="py-4 font-[400] text-[17px]" onClick={() => openModal(cat)}>
                                                             <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" /></td>
                                                     </tr>
                                                     {selectedCategory && (
