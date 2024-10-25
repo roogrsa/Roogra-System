@@ -4,7 +4,6 @@ import Loader from './common/Loader';
 import DefaultLayout from './layout/DefaultLayout';
 import Guard from './components/guards/Guards';
 import ECommerce from './pages/Dashboard/ECommerce';
-import Home from './pages/home/home';
 import Users from './pages/users/users';
 import Advertiser from './pages/users/advertiser';
 import Customer from './pages/users/Customer';
@@ -34,6 +33,8 @@ import ProductsSubscription from './pages/products/ProductsSubscription';
 import MainCategories from './pages/categories/MainCategories';
 import SubscriptionsCat from './pages/categories/SubscriptionsCat';
 import CategoriesMap from './pages/categories/CategoriesMap';
+import Charts from './pages/home/home';
+import Home from './pages/home';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -71,6 +72,17 @@ const router = createBrowserRouter([
             <ProtectedRoute
               component={Home}
               hasPermission={storedPermissions[1]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'charts',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Charts}
+              hasPermission={storedPermissions[7]}
             />
           </Guard>
         ),
@@ -128,7 +140,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'subscription',
+        path: '/part/subscription',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={CategorySubscription}
+              hasPermission={storedPermissions[13]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: '/confirm/subscription',
         element: (
           <Guard>
             <ProtectedRoute

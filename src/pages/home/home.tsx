@@ -116,7 +116,7 @@ import { MdOutlineWatchLater } from 'react-icons/md';
 import Pagination from '../../components/pagination/Pagination';
 import axiosInstance from '../../axiosConfig/instanc';
 
-const Home = () => {
+const Charts = () => {
   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
   const colorEvenClass = 'dark:text-[#2F44FF] text-[#19930E]';
   const colorOddClass = 'text-[#A130BE]';
@@ -130,11 +130,10 @@ const Home = () => {
     const fetchLogsCount = async () => {
       try {
         const response = await axiosInstance.get(`/api/logs/count`);
-        setLogsCount((response.data.data.count) / 8)
-      } catch (err) {
-      }
+        setLogsCount(response.data.data.count / 8);
+      } catch (err) {}
     };
-    fetchLogsCount()
+    fetchLogsCount();
   }, []);
   // Fetch data using the custom hook for logs
   const { logs, loading: logsLoading, error: logsError } = useLogs(currentPage);
@@ -185,8 +184,8 @@ const Home = () => {
             log.key === 'login'
               ? 'قام بتسجيل الدخول   '
               : log.key === 'register'
-                ? '  إنشاء حساب جديد'
-                : 'تم تعديل الحساب',
+              ? '  إنشاء حساب جديد'
+              : 'تم تعديل الحساب',
           className: index % 2 === 0 ? colorEvenClass : colorOddClass,
         },
         {
@@ -243,4 +242,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Charts;
