@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 interface DeletePopupProps {
     deleteName: string;
     deleteId: number;
-    url: string;
+    url: any;
     isModalOpen:boolean;
     setIsModalOpen:(isModalOpen: boolean) => void;
     display:() => Promise<void>

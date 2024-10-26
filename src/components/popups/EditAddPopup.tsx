@@ -22,6 +22,8 @@ interface CategoryValues {
     name: string;
 }
 const EditAddPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display }: EditPopupProps) => {
+    console.log(id);
+    
     const { t } = useTranslation();
     const closeModal = () => setIsModalOpen(false);
     const initialValues: CategoryValues = { name:name|| ''};
