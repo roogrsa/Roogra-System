@@ -2,11 +2,14 @@
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 
-const handleCategorySubscriptionStatus = async (
-  categoryId: number | string,
-  newStatus: 'approved' | 'rejected',
+const handleStatus = async (
+  categoryId?: number | string,
+  VerifiedId?: number | string,
   adminName: string,
-  editCategorySubscriptionStatus: Function,
+
+  newStatus: 'approved' | 'rejected',
+  editCategorySubscriptionStatus?: Function,
+  EditVerificationRequest?: Function,
 ) => {
   const DateNow = new Date().toLocaleString('en-GB', {
     day: '2-digit',
@@ -42,7 +45,7 @@ const handleCategorySubscriptionStatus = async (
             <span>${adminName}</span>
           </div>
         </div>
-        ${reasonTextarea} 
+        ${reasonTextarea}
       </div>
     `,
     focusConfirm: false,
@@ -74,13 +77,18 @@ const handleCategorySubscriptionStatus = async (
 
   if (newStatus === 'approved' || reason) {
     try {
-      await editCategorySubscriptionStatus(
-        categoryId,
-        newStatus,
-        reason,
-        DateNow,
-      );
-      window.location.reload();
+      if (categoryId && editCategorySubscriptionStatus) {
+        await editCategorySubscriptionStatus(
+          categoryId,
+          newStatus,
+          reason,
+          DateNow,
+        );
+      } else if (VerifiedId && EditVerificationRequest) {
+        await EditVerificationRequest(VerifiedId, newStatus, reason, DateNow);
+      }
+
+      // window.location.reload();
     } catch (error) {
       console.error(
         `Error updating category subscription (${newStatus}):`,
@@ -90,4 +98,4 @@ const handleCategorySubscriptionStatus = async (
   }
 };
 
-export default handleCategorySubscriptionStatus;
+export default handleStatus;

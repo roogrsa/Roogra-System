@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useCategorySubscriptionsByStatus from '../../hooks/category_subscription/CatSubscriptionByStatus';
@@ -7,19 +7,23 @@ import rejectIcon from '/false2.svg';
 import ReusableInput from '../../components/products/ReusableInput';
 import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
-import Swal from 'sweetalert2';
-import 'sweetalert2/src/sweetalert2.scss';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
-import handleCategorySubscriptionStatus from '../../hooks/category_subscription/handleCategorySubscriptionStatus';
+// import handleStatus from '../../hooks/category_subscription/handleStatus';
 import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
 import { useTranslation } from 'react-i18next';
+import PeriodInput from './PeriodInput';
+import Pagination from '../../components/pagination/Pagination';
+// import CategorySubscription from './CategorySubscription';
+import axiosInstance from '../../axiosConfig/instanc';
+import handleStatus from '../../hooks/category_subscription/handleStatus';
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 
 const CategorySubscription = () => {
   const { t } = useTranslation();
+
   //
   const {
     editCategorySubscriptionStatus,
@@ -32,9 +36,32 @@ const CategorySubscription = () => {
 
   // State to handle dynamic status
   const [status, setStatus] = useState('processing');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
+  const [Count, setCount] = useState(0);
 
-  const { data, loading, error } = useCategorySubscriptionsByStatus(status);
-  console.log(data);
+  //
+  useEffect(() => {
+    const fetchUsersCount = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/api/category_subscription/status/${status}/count`,
+        );
+        setCategorySubscriptionCount(response.data.data.count / 8);
+        setCount(response.data.data.count);
+        console.log(status, response.data.data.count);
+      } catch (err) {}
+    };
+    fetchUsersCount();
+  }, [Count, status]);
+  const totalPages = Math.ceil(categorySubscriptionCount);
+
+  //
+  const { data, loading, error } = useCategorySubscriptionsByStatus(
+    status,
+    currentPage,
+  );
+  // console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -165,13 +192,7 @@ const CategorySubscription = () => {
                     extraClass="bg-Input-red text-Input-TextRed  w-40"
                   />
                 ) : (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value={`${item.verification_period} ي`}
-                    widthClass="w-20"
-                    extraClass="bg-Input-blue text-center"
-                  />
+                  <PeriodInput item={item} />
                 ),
 
               className: 'flex justify-center',
@@ -185,12 +206,22 @@ const CategorySubscription = () => {
                     src={cofirmIcon}
                     alt="Accept"
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
+                    // onClick={() =>
+                    //   handleStatus(
+                    //     item.category_subscription_id,
+                    //     'approved',
+                    //     'adminName',
+                    //     editCategorySubscriptionStatus,
+                    //   )
+                    // }
                     onClick={() =>
-                      handleCategorySubscriptionStatus(
-                        item.category_subscription_id,
-                        'approved',
-                        'adminName',
-                        editCategorySubscriptionStatus,
+                      handleStatus(
+                        item.category_subscription_id, // Pass category subscription ID if needed
+                        undefined, // Pass the verification request ID
+                        'adminName', // Pass the admin name
+                        'approved', // Set the new status
+                        editCategorySubscriptionStatus, // Function for updating category subscription status
+                        undefined, // Pass undefined if EditVerificationRequest is not used
                       )
                     }
                   />
@@ -221,11 +252,13 @@ const CategorySubscription = () => {
                     alt="Accept"
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
-                      handleCategorySubscriptionStatus(
-                        item.category_subscription_id,
-                        'approved',
-                        'adminName',
-                        editCategorySubscriptionStatus,
+                      handleStatus(
+                        item.category_subscription_id, // Pass category subscription ID if needed
+                        undefined, // Pass the verification request ID
+                        'adminName', // Pass the admin name
+                        'approved', // Set the new status
+                        editCategorySubscriptionStatus, // Function for updating category subscription status
+                        undefined, // Pass undefined if EditVerificationRequest is not used
                       )
                     }
                   />
@@ -235,12 +268,22 @@ const CategorySubscription = () => {
                       src={rejectIcon}
                       alt="Reject"
                       className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer"
+                      // onClick={() =>
+                      //   handleStatus(
+                      //     item.category_subscription_id,
+                      //     'rejected',
+                      //     'adminName',
+                      //     editCategorySubscriptionStatus,
+                      //   )
+                      // }
                       onClick={() =>
-                        handleCategorySubscriptionStatus(
-                          item.category_subscription_id,
-                          'rejected',
-                          'adminName',
-                          editCategorySubscriptionStatus,
+                        handleStatus(
+                          item.category_subscription_id, // Pass category subscription ID if needed
+                          undefined, // Pass the verification request ID
+                          'adminName', // Pass the admin name
+                          'rejected', // Set the new status
+                          editCategorySubscriptionStatus, // Function for updating category subscription status
+                          undefined, // Pass undefined if EditVerificationRequest is not used
                         )
                       }
                     />
@@ -266,13 +309,13 @@ const CategorySubscription = () => {
         ]}
         onTitleClick={(index) => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
-          setStatus(statusMap[index]); // Set the correct status based on the tab clicked
+          setStatus(statusMap[index]);
         }}
         footerItems={[
-          <div>({logs.length})</div>,
-          <div>({logs.length})</div>,
-          <div>({logs.length})</div>,
-          <div>({logs.length})</div>,
+          <div>({Count})</div>,
+          <div>({Count})</div>,
+          <div>({Count})</div>,
+          <div>({Count})</div>,
         ]}
         children={[
           <div>
@@ -292,6 +335,11 @@ const CategorySubscription = () => {
             <NotFoundSection data={logs} />
           </div>,
         ]}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
       />
     </div>
   );

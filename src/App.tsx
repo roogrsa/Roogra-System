@@ -35,6 +35,7 @@ import SubscriptionsCat from './pages/categories/SubscriptionsCat';
 import CategoriesMap from './pages/categories/CategoriesMap';
 import Charts from './pages/home/home';
 import Home from './pages/home';
+import verifaction_requestByStatus from './pages/verifaction_request/verifaction_requestByStatus';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -155,7 +156,7 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <ProtectedRoute
-              component={CategorySubscription}
+              component={verifaction_requestByStatus}
               hasPermission={storedPermissions[13]}
             />
           </Guard>

@@ -227,5 +227,34 @@
         }
     
 
+    },
+     "verification_request": {
+        "titles":{
+            "processing":"طلب",
+            "approved":"فعال",
+
+            "rejected":"رفض",
+            "expired":"منتهي"
+
+
+        },
+        "headers":{
+            "id":"رقم التذكرة",
+            "verification_type":"الجهة",
+            "verification_type_number":"رقم الجهة",
+            "verification_type_image":"صورة الجهة ",
+            "verification_required":"مضمون",
+            "transaction_image":" التحويل",
+            "created_at":" تاريخ الطلب ",
+            "verified_at":"التفعيل",
+            "By-admin":"بواسطة",
+            "verification_period":"المده",
+            "verified_by_accept":"قبول",
+            "verified_by_reject":"رفض"
+          
+
+        }
+    
+
     }
 }

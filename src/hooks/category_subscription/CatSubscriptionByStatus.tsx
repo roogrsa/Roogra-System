@@ -25,6 +25,7 @@ interface UseCategorySubscriptionsByStatusReturn {
 
 const useCategorySubscriptionsByStatus = (
   status: string,
+  currentPage: number,
 ): UseCategorySubscriptionsByStatusReturn => {
   const [data, setData] = useState<CategorySubscription[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,9 +35,9 @@ const useCategorySubscriptionsByStatus = (
     const fetchCategorySubscriptionsByStatus = async () => {
       try {
         const response = await axiosInstance.get(
-          `/api/category_subscription/status/${status}?page=0&limit=8`,
+          `/api/category_subscription/status/${status}?page=${currentPage}&limit=8`,
         );
-        setData(response.data.data); // Assuming response.data.data contains the array of category subscriptions
+        setData(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -45,7 +46,7 @@ const useCategorySubscriptionsByStatus = (
     };
 
     fetchCategorySubscriptionsByStatus();
-  }, [status]); // Re-fetch data when `status` changes
+  }, [status, currentPage]); // Re-fetch data when `status` changes
 
   return { data, loading, error };
 };
