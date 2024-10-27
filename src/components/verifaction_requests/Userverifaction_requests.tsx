@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import MainTable from '../../components/lastnews/MainTable';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useCategorySubscriptionsByStatus from '../../hooks/category_subscription/CatSubscriptionByStatus';
+
 import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
-import ReusableInput from '../../components/products/ReusableInput';
-import NotFoundSection from '../../components/Notfound/NotfoundSection';
-import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
-import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
+
 import { useTranslation } from 'react-i18next';
-
-import Pagination from '../../components/pagination/Pagination';
-
-import axiosInstance from '../../axiosConfig/instanc';
-// import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
-import PeriodInput from '../category_subscription/PeriodInput';
 import useEditVerificationRequest from '../../hooks/category_subscription/useEditVerficationReq';
+import axiosInstance from '../../axiosConfig/instanc';
+import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
+// import VerificationRequestsByUserid from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
+import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
+import ReusableInput from '../products/ReusableInput';
+import PeriodInput from '../../pages/category_subscription/PeriodInput';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import handleEditVerificationRequest from '../../hooks/verifaction_requests/handleEditVerificationReq';
-import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByStatus';
+import Breadcrumb from '../Breadcrumbs/Breadcrumb';
+import AccordionHeader2 from '../Accordion/AccordionHeader2';
+import MainTable from '../lastnews/MainTable';
+import NotFoundSection from '../Notfound/NotfoundSection';
+import VerificationRequestsByUserid from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
+
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 const RemoveIconSrc = '/remove.svg';
+const Notfound = '/not.png';
 
-const verifaction_requestByStatus = () => {
+const VerifactionRequestByUserid = () => {
   const { t } = useTranslation();
 
   //
@@ -35,37 +36,35 @@ const verifaction_requestByStatus = () => {
     success: editSuccess,
   } = useEditVerificationRequest();
   //
-  const breadcrumbLinks = [
-    { label: t('verification_request.label.label'), path: '/' },
-  ];
+  const breadcrumbLinks = [{ label: '', path: '/' }];
 
   // State to handle dynamic status
   const [status, setStatus] = useState('processing');
-  const [currentPage, setCurrentPage] = useState(0);
-  const [verificationRequestCount, setverificationRequestCount] = useState(0);
-  const [Count, setCount] = useState(0);
+  //   const [currentPage, setCurrentPage] = useState(0);
+  //   const [verificationRequestCount, setverificationRequestCount] = useState(0);
+  //   const [Count, setCount] = useState(0);
 
   //
-  useEffect(() => {
-    const fetchUsersCount = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/api/verification_request/status/${status}/count`,
-        );
-        setverificationRequestCount(response.data.data.count / 8);
-        setCount(response.data.data.count);
-        console.log(status, response.data.data.count);
-      } catch (err) {}
-    };
-    fetchUsersCount();
-  }, [Count, status]);
-  const totalPages = Math.ceil(verificationRequestCount);
+  //   useEffect(() => {
+  //     const fetchUsersCount = async () => {
+  //       try {
+  //         const response = await axiosInstance.get(
+  //           `/api/verification_request/status/${status}/count`,
+  //         );
+  //         setverificationRequestCount(response.data.data.count / 8);
+  //         setCount(response.data.data.count);
+  //         console.log(status, response.data.data.count);
+  //       } catch (err) {}
+  //     };
+  //     fetchUsersCount();
+  //   }, [Count, status]);
+  //   const totalPages = Math.ceil(verificationRequestCount);
 
   //
 
-  const { data, loading, error } = useVerificationRequestsByStatus(
+  const { data, loading, error } = VerificationRequestsByUserid(
     status,
-    currentPage,
+    // currentPage,
   );
 
   // console.log(data);
@@ -202,9 +201,15 @@ const verifaction_requestByStatus = () => {
                     alt="Transaction"
                     className="w-10 h-10 object-cover"
                   />
-                ) : (
+                ) : ApprovedSubscription ? (
                   <img
                     src={ApprovedSubscription}
+                    alt="Approved"
+                    className="w-6 h-6 text-center"
+                  />
+                ) : (
+                  <img
+                    src={Notfound}
                     alt="Approved"
                     className="w-6 h-6 text-center"
                   />
@@ -426,12 +431,14 @@ const verifaction_requestByStatus = () => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
           setStatus(statusMap[index]);
         }}
-        footerItems={[
-          <div>({Count})</div>,
-          <div>({Count})</div>,
-          <div>({Count})</div>,
-          <div>({Count})</div>,
-        ]}
+        footerItems={
+          [
+            //   <div>({Count})</div>,
+            //   <div>({Count})</div>,
+            //   <div>({Count})</div>,
+            //   <div>({Count})</div>,
+          ]
+        }
         children={[
           <div>
             <MainTable logs={logs} headers={headers} />
@@ -451,13 +458,13 @@ const verifaction_requestByStatus = () => {
           </div>,
         ]}
       />
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
-      />
+      /> */}
     </div>
   );
 };
 
-export default verifaction_requestByStatus;
+export default VerifactionRequestByUserid;

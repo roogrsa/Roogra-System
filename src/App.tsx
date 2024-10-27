@@ -36,6 +36,8 @@ import CategoriesMap from './pages/categories/CategoriesMap';
 import Charts from './pages/home/home';
 import Home from './pages/home';
 import verifaction_requestByStatus from './pages/verifaction_request/verifaction_requestByStatus';
+import ChatReport from './pages/Reports/ChatReport';
+import ProductReport from './pages/Reports/ProductReport';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -274,6 +276,39 @@ const router = createBrowserRouter([
             <ProtectedRoute
               component={CategoriesMap}
               hasPermission={storedPermissions[12]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'reports',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Products}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'reports/product',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductReport}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'reports/chat',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ChatReport}
+              hasPermission={storedPermissions[5]}
             />
           </Guard>
         ),

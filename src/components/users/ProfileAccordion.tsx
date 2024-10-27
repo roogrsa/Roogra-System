@@ -17,6 +17,9 @@ import ReactDOMServer from 'react-dom/server';
 import useUserProducts from '../../hooks/useUserProducts';
 import useBanProduct from '../../hooks/useBanProduct';
 import NotFoundSection from '../Notfound/NotfoundSection';
+import CategorySubscriptionUserid from '../Category-subscription/UserCategorySubscription';
+import verifactionRequestByUserid from './../verifaction_requests/Userverifaction_requests';
+import VerifactionRequestByUserid from './../verifaction_requests/Userverifaction_requests';
 
 //
 const EditIconSrc = '/Edit.svg';
@@ -494,7 +497,9 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title="تذاكر الاشتراك">
-        <div className="text-gray-700"></div>
+        {/* <div className="text-gray-700"></div> */}
+        <CategorySubscriptionUserid />
+        <VerifactionRequestByUserid />
       </Accordion>
 
       {/*  */}

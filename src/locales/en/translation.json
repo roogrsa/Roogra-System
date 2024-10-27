@@ -214,6 +214,11 @@
 
     },
       "verification_request": {
+    "label": {
+            "label": "Subscription tickets",
+                 "Part":"Category",
+            "confirm":"Confirm"
+        },
         "titles":{
             "processing":"processing",
             "approved":"approved",
@@ -236,9 +241,33 @@
 
             "verification_period":"Period",
             "verified_by_accept":"Accept",
-            "verified_by_reject":"Reject"
+            "verified_by_reject":"Reject",
+          "remove":"remove"
+
         }
     
+    
+
+    },
+      "Reports": {
+            "label": {
+            "label": "Reports",
+            "product":"Products",
+            "chat":"chats"
+        },
+        "titles":{
+            "reports":"Report",
+            "revision":"Revision"
+
+
+        },
+        "headers":{
+            "id":"Rep-Id",
+            "name":"Customer",
+            "product":"Product",
+            "created_at":"Req-Date",
+            "actions":"Show"
+        }
     
 
     }
