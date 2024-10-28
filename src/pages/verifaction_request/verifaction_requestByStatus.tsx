@@ -70,8 +70,8 @@ const verifaction_requestByStatus = () => {
 
   // console.log(data);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   //
 
   const headers = [

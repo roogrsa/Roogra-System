@@ -5,19 +5,23 @@ import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import MainTable from '../../components/lastnews/MainTable';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import { useNavigate } from 'react-router-dom';
 
 const EditIconSrc = '/Edit.svg';
 
 const ProductReport = () => {
   const { t } = useTranslation();
   const [status, setStatus] = useState(0);
+  const navigate = useNavigate();
 
   const breadcrumbLinks = [{ label: t('Reports.label.label'), path: '/' }];
   const { data, loading, error } = useProductReports('product', status);
 
   //   if (loading) return <p>Loading...</p>;
   //   if (error) return <p>{error}</p>;
-
+  const handleEditClick = (productId: number) => {
+    navigate(`/products/${productId}`);
+  };
   const headers = [
     {
       key: 'id',
@@ -82,10 +86,7 @@ const ProductReport = () => {
                   <img
                     src={EditIconSrc}
                     className="w-6 h-6 text-center p-1 cursor-pointer"
-                    onClick={() => {
-                      // Add functionality here for edit action
-                      console.log('Edit icon clicked');
-                    }}
+                    onClick={() => handleEditClick(item.product_id)}
                   />
                 </div>
               ),
