@@ -1,12 +1,37 @@
-// categorySubscriptionHelpers.ts
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
 
-const handleCategorySubscriptionStatus = async (
+// Define the types for the callback functions
+type EditCategorySubscriptionStatus = (
   categoryId: number | string,
-  newStatus: 'approved' | 'rejected',
+  status: 'approved' | 'rejected',
+  reason?: string,
+  dateNow?: string,
+) => Promise<void>;
+
+// type EditVerificationRequest = (
+//   verificationId: number | string,
+//   status: 'approved' | 'rejected',
+//   reason?: string,
+//   dateNow?: string,
+// ) => Promise<void>;
+// Ensure EditVerificationRequest accepts `number | string` for `verificationId`
+type EditVerificationRequest = (
+  verificationId: number | string, // Accept both number and string
+  status: 'approved' | 'rejected',
+  reason?: string,
+  dateNow?: string,
+) => Promise<void>;
+
+const handleStatus = async (
   adminName: string,
-  editCategorySubscriptionStatus: Function,
+  newStatus: 'approved' | 'rejected',
+
+  categoryId?: number | string,
+  VerifiedId?: number | string,
+
+  editCategorySubscriptionStatus?: EditCategorySubscriptionStatus,
+  EditVerificationRequest?: EditVerificationRequest,
 ) => {
   const DateNow = new Date().toLocaleString('en-GB', {
     day: '2-digit',
@@ -14,10 +39,10 @@ const handleCategorySubscriptionStatus = async (
     year: 'numeric',
   });
 
-  let title = newStatus === 'approved' ? 'تأكيد الموافقة' : 'تفاصيل الطلب';
-  let confirmButtonText =
+  const title = newStatus === 'approved' ? 'تأكيد الموافقة' : 'تفاصيل الطلب';
+  const confirmButtonText =
     newStatus === 'approved' ? 'تأكيد الموافقة' : 'تأكيد الرفض';
-  let reasonTextarea =
+  const reasonTextarea =
     newStatus === 'rejected'
       ? `<div class="w-90">
          <textarea id="reason" class="swal2-textarea w-full text-right" placeholder="اكتب سبب الرفض هنا" rows="4"></textarea>
@@ -42,7 +67,7 @@ const handleCategorySubscriptionStatus = async (
             <span>${adminName}</span>
           </div>
         </div>
-        ${reasonTextarea} 
+        ${reasonTextarea}
       </div>
     `,
     focusConfirm: false,
@@ -74,13 +99,18 @@ const handleCategorySubscriptionStatus = async (
 
   if (newStatus === 'approved' || reason) {
     try {
-      await editCategorySubscriptionStatus(
-        categoryId,
-        newStatus,
-        reason,
-        DateNow,
-      );
-      window.location.reload();
+      if (categoryId && editCategorySubscriptionStatus) {
+        await editCategorySubscriptionStatus(
+          categoryId,
+          newStatus,
+          reason,
+          DateNow,
+        );
+      } else if (VerifiedId && EditVerificationRequest) {
+        await EditVerificationRequest(VerifiedId, newStatus, reason, DateNow);
+      }
+      // Optional: Reload the page or update the UI here
+      // window.location.reload();
     } catch (error) {
       console.error(
         `Error updating category subscription (${newStatus}):`,
@@ -90,4 +120,4 @@ const handleCategorySubscriptionStatus = async (
   }
 };
 
-export default handleCategorySubscriptionStatus;
+export default handleStatus;

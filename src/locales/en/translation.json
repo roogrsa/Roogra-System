@@ -212,5 +212,64 @@
     
     
 
+    },
+      "verification_request": {
+    "label": {
+            "label": "Subscription tickets",
+                 "Part":"Category",
+            "confirm":"Confirm"
+        },
+        "titles":{
+            "processing":"processing",
+            "approved":"approved",
+
+            "rejected":"rejected",
+            "expired":"expired"
+
+
+        },
+           "headers":{
+            "id":"ID",
+            "verification_type":"ver_type",
+            "verification_type_number":"ver_type_Num",
+            "verification_type_image":"Src_Image",
+            "verification_required":"verified",
+            "transaction_image":"Trans_Image",
+            "created_at":"created_at",
+            "verified_at":"verified_at",
+            "By-admin":"Admin",
+
+            "verification_period":"Period",
+            "verified_by_accept":"Accept",
+            "verified_by_reject":"Reject",
+          "remove":"remove"
+
+        }
+    
+    
+
+    },
+      "Reports": {
+            "label": {
+            "label": "Reports",
+            "product":"Products",
+            "chat":"chats"
+        },
+        "titles":{
+            "reports":"Report",
+            "revision":"Revision"
+
+
+        },
+        "headers":{
+            "id":"Rep-Id",
+            "name":"Customer",
+            "product":"Product",
+            "created_at":"Req-Date",
+            "actions":"Show"
+        }
+    
+
     }
+    
 }

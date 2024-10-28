@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import MainTable from '../../components/lastnews/MainTable';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useCategorySubscriptionsByStatus from '../../hooks/category_subscription/CatSubscriptionByStatus';
 import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
-import ReusableInput from '../../components/products/ReusableInput';
-import NotFoundSection from '../../components/Notfound/NotfoundSection';
-import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
-import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
-import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
-// import handleStatus from '../../hooks/category_subscription/handleStatus';
-import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
+
 import { useTranslation } from 'react-i18next';
-import PeriodInput from './PeriodInput';
-import Pagination from '../../components/pagination/Pagination';
-// import CategorySubscription from './CategorySubscription';
-import axiosInstance from '../../axiosConfig/instanc';
+import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
+import CategorySubscriptionsByUserid from '../../hooks/category_subscription/getCategorySubscriptionByUserId';
+// import axiosInstance from '../../axiosConfig/instanc';
+import ReusableInput from '../products/ReusableInput';
+import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
+import PeriodInput from '../../pages/category_subscription/PeriodInput';
+import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
+import MainTable from '../lastnews/MainTable';
+import NotFoundSection from '../Notfound/NotfoundSection';
+// import Pagination from '../pagination/Pagination';
+import Breadcrumb from '../Breadcrumbs/Breadcrumb';
+import AccordionHeader2 from '../Accordion/AccordionHeader2';
+
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 
-const CategorySubscription = () => {
+const CategorySubscriptionUserid = () => {
   const { t } = useTranslation();
 
   //
@@ -32,36 +32,34 @@ const CategorySubscription = () => {
     success: editSuccess,
   } = useEditCategorySubscriptionStatus();
   //
-  const breadcrumbLinks = [
-    { label: t('verification_request.label.label'), path: '/' },
-  ];
+  const breadcrumbLinks = [{ label: '', path: '/' }];
 
   // State to handle dynamic status
   const [status, setStatus] = useState('processing');
-  const [currentPage, setCurrentPage] = useState(0);
-  const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
-  const [Count, setCount] = useState(0);
+  // const [currentPage, setCurrentPage] = useState(0);
+  // const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
+  // const [Count, setCount] = useState(0);
 
   //
-  useEffect(() => {
-    const fetchUsersCount = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/api/category_subscription/status/${status}/count`,
-        );
-        setCategorySubscriptionCount(response.data.data.count / 8);
-        setCount(response.data.data.count);
-        console.log(status, response.data.data.count);
-      } catch (err) {}
-    };
-    fetchUsersCount();
-  }, [Count, status]);
-  const totalPages = Math.ceil(categorySubscriptionCount);
+  // useEffect(() => {
+  //   const fetchUsersCount = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(
+  //         `/api/category_subscription/status/${status}/count`,
+  //       );
+  //       setCategorySubscriptionCount(response.data.data.count / 8);
+  //       setCount(response.data.data.count);
+  //       console.log(status, response.data.data.count);
+  //     } catch (err) {}
+  //   };
+  //   fetchUsersCount();
+  // }, [Count, status]);
+  // const totalPages = Math.ceil(categorySubscriptionCount);
 
   //
-  const { data, loading, error } = useCategorySubscriptionsByStatus(
+  const { data, loading, error } = CategorySubscriptionsByUserid(
     status,
-    currentPage,
+    // currentPage,
   );
   // console.log(data);
 
@@ -306,12 +304,14 @@ const CategorySubscription = () => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
           setStatus(statusMap[index]);
         }}
-        footerItems={[
-          <div>({Count})</div>,
-          <div>({Count})</div>,
-          <div>({Count})</div>,
-          <div>({Count})</div>,
-        ]}
+        footerItems={
+          [
+            //   <div>({Count})</div>,
+            //   <div>({Count})</div>,
+            //   <div>({Count})</div>,
+            //   <div>({Count})</div>,
+          ]
+        }
         children={[
           <div>
             <MainTable logs={logs} headers={headers} />
@@ -331,13 +331,13 @@ const CategorySubscription = () => {
           </div>,
         ]}
       />
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
-      />
+      /> */}
     </div>
   );
 };
 
-export default CategorySubscription;
+export default CategorySubscriptionUserid;

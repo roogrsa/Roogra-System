@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
+import { useParams } from 'react-router-dom';
 
 interface CategorySubscription {
   category_subscription_id: number;
@@ -23,10 +24,12 @@ interface UseCategorySubscriptionsByStatusReturn {
   error: string | null;
 }
 
-const useCategorySubscriptionsByStatus = (
+const CategorySubscriptionsByUserid = (
   status: string,
-  currentPage: number,
+  //   currentPage: number,
 ): UseCategorySubscriptionsByStatusReturn => {
+  const { id } = useParams<{ id: string }>();
+
   const [data, setData] = useState<CategorySubscription[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,9 +38,10 @@ const useCategorySubscriptionsByStatus = (
     const fetchCategorySubscriptionsByStatus = async () => {
       try {
         const response = await axiosInstance.get(
-          `/api/category_subscription/status/${status}?page=${currentPage}&limit=8`,
+          `/api/category_subscription/users/${id}`,
         );
         setData(response.data.data);
+        // console.log(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -46,9 +50,9 @@ const useCategorySubscriptionsByStatus = (
     };
 
     fetchCategorySubscriptionsByStatus();
-  }, [status, currentPage]); // Re-fetch data when `status` changes
+  }, [status]); // Re-fetch data when `status` changes
 
   return { data, loading, error };
 };
 
-export default useCategorySubscriptionsByStatus;
+export default CategorySubscriptionsByUserid;
