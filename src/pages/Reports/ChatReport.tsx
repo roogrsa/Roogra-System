@@ -1,7 +1,12 @@
 import React from 'react';
+import ReportType from '../../components/reports/ReportType';
 
 const ChatReport = () => {
-  return <div>ChatReport</div>;
+  return (
+    <div>
+      <ReportType reportType="chat" />
+    </div>
+  );
 };
 
 export default ChatReport;

@@ -86,7 +86,7 @@ const Profile = () => {
             />
           </div>
         </div>
-
+        {/* accordion section */}
         <ProfileAccordion user={user} loading={loading} error={error} />
       </div>
     </>

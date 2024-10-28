@@ -20,6 +20,8 @@ import NotFoundSection from '../Notfound/NotfoundSection';
 import CategorySubscriptionUserid from '../Category-subscription/UserCategorySubscription';
 import verifactionRequestByUserid from './../verifaction_requests/Userverifaction_requests';
 import VerifactionRequestByUserid from './../verifaction_requests/Userverifaction_requests';
+import ProductUserReportType from '../reports/productUserReportType';
+import UserReportType from '../reports/UserReportType';
 
 //
 const EditIconSrc = '/Edit.svg';
@@ -76,7 +78,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
     data: rates,
     loading: ratesLoading,
     error: ratesError,
-  } = useUserRates();
+  } = useUserRates(user.id);
   //
   const {
     products: logsUserProducts,
@@ -514,7 +516,11 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title="البلاغات">
-        <div className="text-gray-700"></div>
+        {/* <div className="text-gray-700"></div> */}
+        <UserReportType reportType="Userchat" />
+        <UserReportType reportType="Userproduct" />
+
+        {/* <ProductUserReportType/> */}
       </Accordion>
 
       {/* */}

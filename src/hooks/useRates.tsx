@@ -15,7 +15,7 @@ interface UseUserRatesReturn {
   error: string | null;
 }
 
-const useUserRates = (): UseUserRatesReturn => {
+const useUserRates = (id: number): UseUserRatesReturn => {
   const [data, setData] = useState<UserRate[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +23,7 @@ const useUserRates = (): UseUserRatesReturn => {
   useEffect(() => {
     const fetchUserRates = async () => {
       try {
-        const response = await axiosInstance.get(`/api/users/74/rates`);
+        const response = await axiosInstance.get(`/api/users/${id}/rates`);
         setData(response.data.data);
         console.log(response.data.data);
       } catch (err) {
