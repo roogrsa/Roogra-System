@@ -167,7 +167,8 @@
         "banks": "البنوك",
         "sms": "الرسائل",
         "verification": "التوثيق",
-        "banners": "الاعلانات التجارية"
+        "banners": "الاعلانات التجارية",
+        "settings":"الإعدادات"
     },
     "categoriesPage": {
         "title": "الأقسام",

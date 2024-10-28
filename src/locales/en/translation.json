@@ -150,7 +150,8 @@
         "banks": "Banks",
         "sms": "SMS",
         "verification": "Verification",
-        "banners": "Commercial Banners"
+        "banners": "Commercial Banners",
+         "settings":"settings"
     },
     "categoriesPage": {
         "title": "categories",
