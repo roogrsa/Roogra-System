@@ -112,9 +112,9 @@
             "products": "Products",
             "banlist": "Banlist"
         },
-                "supervisor":"supervisor",
-        "delegate":"delegate",
-        "observer":"observer"
+        "supervisor": "supervisor",
+        "delegate": "delegate",
+        "observer": "observer"
     },
     "users": {
         "label": {
@@ -151,7 +151,16 @@
         "sms": "SMS",
         "verification": "Verification",
         "banners": "Commercial Banners",
-         "settings":"settings"
+        "settings": "settings",
+        "comissionError": "comission is",
+        "commercial": "Commercial Regestry Fees",
+        "maroof": "'Maroof' Certificate Fees",
+        "self-employment": "Self-Employment Certificate Fees",
+        "subscription": "Subscription Category Fees",
+        "verification-check-fees": "Verification Check Fees",
+        "usernameSms":"Username",
+        "senderNameSms":"Sender Name",
+        "tokenSms":"Token"
     },
     "categoriesPage": {
         "title": "categories",
@@ -188,89 +197,69 @@
         "img": "image",
         "category_name": "category name"
     },
-     "subscriptions": {
-        "titles":{
-            "processing":"processing",
-            "approved":"approved",
-
-            "rejected":"rejected",
-            "expired":"expired"
-
-
+    "subscriptions": {
+        "titles": {
+            "processing": "processing",
+            "approved": "approved",
+            "rejected": "rejected",
+            "expired": "expired"
         },
-           "headers":{
-            "id":"ID",
-            "category_name":"Main-Cat",
-            "sub_name":"Sub-Cat",
-            "transaction_image":"Image",
-            "created_at":"Date",
-                        "verification_period":"Period",
-
-            "verified_by_accept":"Accept",
-            "edit":"Show",
-            "verified_by_reject":"Reject"
+        "headers": {
+            "id": "ID",
+            "category_name": "Main-Cat",
+            "sub_name": "Sub-Cat",
+            "transaction_image": "Image",
+            "created_at": "Date",
+            "verification_period": "Period",
+            "verified_by_accept": "Accept",
+            "edit": "Show",
+            "verified_by_reject": "Reject"
         }
-    
-    
-
     },
-      "verification_request": {
-    "label": {
+    "verification_request": {
+        "label": {
             "label": "Subscription tickets",
-                 "Part":"Category",
-            "confirm":"Confirm"
+            "Part": "Category",
+            "confirm": "Confirm"
         },
-        "titles":{
-            "processing":"processing",
-            "approved":"approved",
-
-            "rejected":"rejected",
-            "expired":"expired"
-
-
+        "titles": {
+            "processing": "processing",
+            "approved": "approved",
+            "rejected": "rejected",
+            "expired": "expired"
         },
-           "headers":{
-            "id":"ID",
-            "verification_type":"ver_type",
-            "verification_type_number":"ver_type_Num",
-            "verification_type_image":"Src_Image",
-            "verification_required":"verified",
-            "transaction_image":"Trans_Image",
-            "created_at":"created_at",
-            "verified_at":"verified_at",
-            "By-admin":"Admin",
-
-            "verification_period":"Period",
-            "verified_by_accept":"Accept",
-            "verified_by_reject":"Reject",
-          "remove":"remove"
-
+        "headers": {
+            "id": "ID",
+            "verification_type": "ver_type",
+            "verification_type_number": "ver_type_Num",
+            "verification_type_image": "Src_Image",
+            "verification_required": "verified",
+            "transaction_image": "Trans_Image",
+            "created_at": "created_at",
+            "verified_at": "verified_at",
+            "By-admin": "Admin",
+            "verification_period": "Period",
+            "verified_by_accept": "Accept",
+            "verified_by_reject": "Reject",
+            "remove": "remove"
         }
-    
-    
-
     },
-      "Reports": {
-            "label": {
+    "Reports": {
+        "label": {
             "label": "Reports",
-            "product":"Products",
-            "chat":"chats"
+            "product": "Products",
+            "chat": "chats"
         },
-        "titles":{
-            "reports":"Report",
-            "revision":"Revision"
-
-
+        "titles": {
+            "reports": "Report",
+            "revision": "Revision"
         },
-        "headers":{
-            "id":"Rep-Id",
-            "name":"Customer",
-            "product":"Product",
-            "created_at":"Req-Date",
-            "actions":"Show"
+        "headers": {
+            "id": "Rep-Id",
+            "name": "Customer",
+            "product": "Product",
+            "created_at": "Req-Date",
+            "actions": "Show"
         }
-    
-
     }
-    
 }

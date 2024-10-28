@@ -7,7 +7,9 @@ interface TabButtonProps {
 export default function TabButton({ btnTab, activeTab, setActiveTab }: TabButtonProps) {
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
+        sessionStorage.setItem('activeTab',tab)
     };
+    const myTab=sessionStorage.getItem('activeTab');
     return (
         <li>
             <button

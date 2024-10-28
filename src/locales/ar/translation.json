@@ -168,7 +168,16 @@
         "sms": "الرسائل",
         "verification": "التوثيق",
         "banners": "الاعلانات التجارية",
-        "settings":"الإعدادات"
+        "settings":"الإعدادات",
+        "comissionError":"",
+        "commercial": "رسوم السجل التجاري",
+        "maroof": "رسوم وثيقة 'معروف'",
+        "self-employment": "رسوم وثيقة العمل الحر",
+        "subscription": "رسوم اقسام الاشتراك",
+        "verification-check-fees": "رسوم علامة مضمون",
+        "usernameSms":"اسم المستخدم",
+        "senderNameSms":"اسم المرسل",
+        "tokenSms":"الرمز(Token)"
     },
     "categoriesPage": {
         "title": "الأقسام",
