@@ -56,7 +56,7 @@ export default function SmsSetting() {
             initialValues={initialValues}
             onSubmit={upateSms}
         >
-            {({ isSubmitting,values }: FormikProps<SmsValues>) => (
+            {({ isSubmitting }: FormikProps<SmsValues>) => (
 
                 <Form>
                     <div className="">
