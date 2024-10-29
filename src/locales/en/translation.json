@@ -162,6 +162,7 @@
         "senderNameSms":"Sender Name",
         "tokenSms":"Token",
         "accountHolder":"Account Holder",
+        "bankName":"Bank name",
         "accountNumber":"Account Number",
         "bankIBAN":"IBAN",
         "bankLogo":"Bank Logo",

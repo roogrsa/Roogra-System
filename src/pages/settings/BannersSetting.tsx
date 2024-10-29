@@ -5,11 +5,12 @@ import axiosInstance from "../../axiosConfig/instanc";
 import { FiEdit3 } from "react-icons/fi";
 import TableHeader from "../../components/Tables/TableHeader";
 import DeletePopup from "../../components/popups/DeletePopup";
+import BannerPopup from "../../components/popups/BannerPopup";
 
 export interface BannerType {
     ad_id: number;
     name: string;
-    period: string;
+    period: number;
     url: string;
     image: string;
     length: number;
@@ -19,6 +20,7 @@ export default function BannersSetting() {
     const [selectedBanner, setSelectedBanner] = useState<BannerType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { t } = useTranslation()
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const header: any[] = [
         `#`,
         t(`settings.bannerName`),
@@ -28,6 +30,15 @@ export default function BannersSetting() {
         t(`settings.edit`),
         <RiDeleteBin6Line className="text-xl text-Input-TextRed" />
     ];
+    const openAddBanner = (banner: BannerType | null) => {
+        if (banner ) {
+            setSelectedBanner(banner);
+        } else {
+            setSelectedBanner(null);
+        }
+        setIsAddModalOpen(true);
+    };
+
     const openModal = (banner: BannerType) => {
         setSelectedBanner(banner);
         setIsModalOpen(true);
@@ -71,11 +82,11 @@ export default function BannersSetting() {
                             <td className="px-2 py-2 font-[400] text-[17px]">
                                 <img src={banner.image} width={80} alt={banner.image} className="m-auto" />
                             </td>
-                            <td className="px-2 py-2 font-[400] text-[17px]">
+                            <td className="px-2 py-2 font-[400] text-[17px]" onClick={() => openAddBanner(banner)} >
                                 <FiEdit3 className="text-xl  m-auto text-Input-TextGreen" role="button" />
                             </td>
-                            <td className="px-2 py-2 font-[400] text-[17px]">
-                                <RiDeleteBin6Line className="text-xl text-Input-TextRed" role='button' onClick={()=>openModal(banner)}/>
+                            <td className="px-2 py-2 font-[400] text-[17px]"  onClick={() => openModal(banner)}>
+                                <RiDeleteBin6Line className="text-xl text-Input-TextRed" role='button' />
                             </td>
                         </tr>
                     ))}
@@ -89,6 +100,25 @@ export default function BannersSetting() {
                     isModalOpen={isModalOpen}
                     display={displayBanners}
                     setIsModalOpen={setIsModalOpen}
+                />
+            )}
+            {selectedBanner && (
+                <BannerPopup
+                    name={selectedBanner.name}
+                    id={selectedBanner.ad_id}
+                    bannerUrl={selectedBanner.url}
+                    duration={selectedBanner.period}
+                    image={selectedBanner.image}
+                    isModalOpen={isAddModalOpen}
+                    display={displayBanners}
+                    setIsModalOpen={setIsAddModalOpen}
+                />
+            )}
+            {!selectedBanner && (
+                <BannerPopup
+                    isModalOpen={isAddModalOpen}
+                    display={displayBanners}
+                    setIsModalOpen={setIsAddModalOpen}
                 />
             )}
         </div>

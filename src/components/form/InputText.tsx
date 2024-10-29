@@ -9,12 +9,13 @@ interface InputTextProps {
     min?: number;
     max?: number;
     isReq?: boolean;
+    flex?: string;
 }
-export default function InputText({ type, name, label, min,isReq}: InputTextProps) {
+export default function InputText({ type, name, label, min,isReq, flex}: InputTextProps) {
     const { t } = useTranslation();
     return (
         <div>
-            <div className="md:mb-4 md:mt-1 mt-4">
+            <div className={`md:mb-4 md:mt-1 mt-4 ${flex}`}>
                 <label htmlFor={name} className="flex mb-2 text-lg font-semibold text-gray-900 dark:text-white">{label} 
                     {isReq?"":
                 <FaAsterisk className='text-[8px] text-[#E02828]' />

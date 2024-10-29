@@ -179,6 +179,7 @@
         "senderNameSms":"اسم المرسل",
         "tokenSms":"الرمز(Token)",
         "accountHolder":"اسم صاحب الحساب",
+        "bankName":"اسم البنك",
         "accountNumber":"رقم الحساب",
         "bankIBAN":"ايبان",
         "bankLogo":"شعار البنك",

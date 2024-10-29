@@ -5,9 +5,11 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import TableHeader from "../../components/Tables/TableHeader";
 import { FiEdit3 } from "react-icons/fi";
 import DeletePopup from "../../components/popups/DeletePopup";
+import BankPopup from "../../components/popups/BankPopup";
 export interface BankType {
     bank_id: number;
     bank_account_name: string;
+    bank_name: string;
     bank_account_num: string;
     bank_ipan: string;
     bank_img: string;
@@ -19,6 +21,15 @@ export default function BanksSetting() {
     const [selectedBank, setSelectedBank] = useState<BankType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { t } = useTranslation()
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const openAddBank = (bank: BankType | null) => {
+        if (bank ) {
+            setSelectedBank(bank);
+        } else {
+            setSelectedBank(null);
+        }
+        setIsAddModalOpen(true);
+    };
     const header: any[] = [
         `#`,
         t(`settings.accountHolder`),
@@ -72,7 +83,7 @@ export default function BanksSetting() {
                             <td className="px-2 py-2 font-[400] text-[17px]">
                                 <img src={bank.bank_img} width={100} alt={bank.bank_img} className="m-auto"/>
                             </td>
-                            <td className="px-2 py-2 font-[400] text-[17px] m-auto">
+                            <td className="px-2 py-2 font-[400] text-[17px] m-auto" onClick={() => openAddBank(bank)}>
                                 <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
                             </td>
                             <td className="px-2 py-2 font-[400] text-[17px]">
@@ -86,10 +97,30 @@ export default function BanksSetting() {
                 <DeletePopup
                     deleteName={selectedBank.bank_account_num}
                     deleteId={selectedBank.bank_id}
-                    url={`ads`}
+                    url={`banks`}
                     isModalOpen={isModalOpen}
                     display={displayBanks}
                     setIsModalOpen={setIsModalOpen}
+                />
+            )}
+            {selectedBank && (
+                <BankPopup
+                id={selectedBank.bank_id}
+                bank_account_name={selectedBank.bank_account_name}
+                bank_name={selectedBank.bank_name}
+                    bank_account_num={selectedBank.bank_account_num}
+                    bank_ipan={selectedBank.bank_ipan}
+                    bank_img={selectedBank.bank_img}
+                    display={displayBanks}
+                    isModalOpen={isAddModalOpen}
+                    setIsModalOpen={setIsAddModalOpen}
+                />
+            )}
+            {!selectedBank && (
+                <BankPopup
+                    isModalOpen={isAddModalOpen}
+                    display={displayBanks}
+                    setIsModalOpen={setIsAddModalOpen}
                 />
             )}
         </div>
