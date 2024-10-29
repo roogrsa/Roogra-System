@@ -43,7 +43,7 @@ const useUser = (id: number): UseUserResponse => {
         // Use axiosInstance for the GET request
         const response = await axiosInstance.get(`/api/users/${id}`);
         const { success, data } = response.data;
-        console.log(data);
+        // console.log(data);
 
         if (success) {
           setUser(data);

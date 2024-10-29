@@ -288,7 +288,7 @@ const verifaction_requestByStatus = () => {
             ...(item.STATUS === 'rejected'
               ? [
                   {
-                    key: 'By-admin',
+                    key: 'By',
                     content: `by`,
                     className: 'flex justify-center text-sm',
                   },
@@ -382,7 +382,7 @@ const verifaction_requestByStatus = () => {
             ...(item.STATUS === 'rejected'
               ? [
                   {
-                    key: 'By-admin',
+                    key: 'remove',
                     content: (
                       <div className="bg-RemoveIconBg rounded-md">
                         <img

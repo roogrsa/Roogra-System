@@ -8,7 +8,11 @@ interface ReportData {
   customer_id: number;
   product_id: number;
   content: string;
+  reported: string;
+  reporter: string;
+
   created_at: string;
+  product_name: string;
   status: number;
   close_date: string | null;
   name: string;

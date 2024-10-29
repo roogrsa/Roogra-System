@@ -78,18 +78,18 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
             },
             {
               key: 'name',
-              content: reportType === 'product' ? item.name : 'chat name',
+              content: reportType === 'product' ? item.name : item.reported,
               className: 'flex justify-center ',
             },
             reportType === 'product'
               ? {
                   key: 'product',
-                  content: item.product_id,
+                  content: item.product_name,
                   className: 'flex justify-center ',
                 }
               : {
                   key: 'reported_customer',
-                  content: 'item.reported_customer',
+                  content: item.reporter,
                   className: 'flex justify-center ',
                 },
             {
@@ -119,7 +119,11 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
     <div>
       <Breadcrumb
         breadcrumbLinks={breadcrumbLinks}
-        pageName={t('Reports.label.product')}
+        pageName={
+          reportType === 'product'
+            ? t('Reports.label.product')
+            : t('Reports.label.chat')
+        }
       />
 
       <AccordionHeader2

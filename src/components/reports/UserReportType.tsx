@@ -17,6 +17,8 @@ interface ReportData {
   product_id: number;
   content: string;
   created_at: string;
+  product_name: string;
+
   status: number;
   close_date: string | null;
   name: string;
@@ -101,18 +103,18 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
             },
             {
               key: 'name',
-              content: reportType === 'Userproduct' ? item.name : 'chat name',
+              content: reportType === 'Userproduct' ? item.name : item.reported,
               className: 'flex justify-center ',
             },
             reportType === 'Userproduct'
               ? {
                   key: 'product',
-                  content: item.product_id,
+                  content: item.product_name,
                   className: 'flex justify-center ',
                 }
               : {
                   key: 'reported_customer',
-                  content: 'item.reported_customer',
+                  content: item.reporter,
                   className: 'flex justify-center ',
                 },
             {

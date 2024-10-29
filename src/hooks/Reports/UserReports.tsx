@@ -10,6 +10,9 @@ interface ReportData {
   product_id: number;
   content: string;
   created_at: string;
+  product_name: string;
+  reported: string;
+  reporter: string;
   status: number;
   close_date: string | null;
   name: string;

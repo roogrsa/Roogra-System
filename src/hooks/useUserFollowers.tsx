@@ -55,7 +55,7 @@ const useFollowers = (userId: number): UseFollowersResult => {
         );
         const { data } = response.data;
         setFollowers(data);
-        console.log(data);
+        // console.log(data);
       } catch (err) {
         setError('Failed to fetch followers');
       } finally {

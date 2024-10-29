@@ -22,6 +22,7 @@ import verifactionRequestByUserid from './../verifaction_requests/Userverifactio
 import VerifactionRequestByUserid from './../verifaction_requests/Userverifaction_requests';
 import ProductUserReportType from '../reports/productUserReportType';
 import UserReportType from '../reports/UserReportType';
+import UserInfo from './Info/Info';
 
 //
 const EditIconSrc = '/Edit.svg';
@@ -453,7 +454,8 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title="المعلومات">
-        <AccordionHeader2
+        <UserInfo user={user} />
+        {/* <AccordionHeader2
           titles={['عدد المتابعين', 'عدد التقييم', 'نبذة']}
           children={[
             <>
@@ -488,7 +490,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
               </span>
             </div>,
           ]}
-        />
+        /> */}
       </Accordion>
 
       {/* products section */}
@@ -499,7 +501,6 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title="تذاكر الاشتراك">
-        {/* <div className="text-gray-700"></div> */}
         <CategorySubscriptionUserid />
         <VerifactionRequestByUserid />
       </Accordion>
@@ -516,7 +517,6 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title="البلاغات">
-        {/* <div className="text-gray-700"></div> */}
         <UserReportType reportType="Userchat" />
         <UserReportType reportType="Userproduct" />
 
