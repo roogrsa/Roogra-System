@@ -1,5 +1,3 @@
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';

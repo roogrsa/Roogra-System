@@ -8,6 +8,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import "react-toastify/dist/ReactToastify.css";
+import 'react-quill/dist/quill.snow.css';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
       <App />

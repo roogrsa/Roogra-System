@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../../axiosConfig/instanc';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setIsLoggedin } from '../../store/slices/auth';
 import { FaAsterisk } from "react-icons/fa";
 import {

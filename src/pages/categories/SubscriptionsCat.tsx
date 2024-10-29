@@ -11,6 +11,7 @@ import { LiaEditSolid } from "react-icons/lia";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 import EditAddPopup from "../../components/popups/EditAddPopup";
 import DeletePopup from "../../components/popups/DeletePopup";
+import EditAddImgPopup from "../../components/popups/EditAddImgPopup";
 
 interface SubscriptionsCategory {
     parent_id: number;
@@ -112,7 +113,8 @@ const SubscriptionsCat: React.FC = () => {
             <div className="flex justify-between">
                 <Breadcrumb pageName={t('categoriesPage.catSubscriptions.label')} breadcrumbLinks={breadcrumbLinks} />
                 <Link to={``}>
-                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
+                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" 
+                    onClick={() => openGenericParentPopup(null)}/>
                 </Link>
             </div>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -248,6 +250,14 @@ const SubscriptionsCat: React.FC = () => {
                     url={`categories/${selectedCategory.parent_id}`}
                     isModalOpen={isAddModalOpen}
                     setIsModalOpen={setIsAddModalOpen}
+                    display={displaySubscriptionsCat}
+                />
+            }
+            {!selectedCategory &&
+                <EditAddImgPopup
+                    url={`categories`}
+                    setIsModalOpen={setIsAddParentModalOpen}
+                    isModalOpen={isAddParentModalOpen}
                     display={displaySubscriptionsCat}
                 />
             }

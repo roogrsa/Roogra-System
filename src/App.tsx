@@ -329,6 +329,7 @@ const router = createBrowserRouter([
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const language = useSelector(selectLanguage);
+  console.log(localStorage.getItem('token'));
   i18next.init({
     interpolation: { escapeValue: false },
     lng: language,
