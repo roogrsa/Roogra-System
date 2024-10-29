@@ -4,14 +4,16 @@ import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 import Bio from '../bio';
 import { MdOutlineStarOutline } from 'react-icons/md';
-import useFollowers from '../../../hooks/useUserFollowers';
-import useUserRates from '../../../hooks/useRates';
+import ReactDOMServer from 'react-dom/server';
+
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../../hooks/useHandleAction';
 import useBanUser from '../../../hooks/useBanUser';
 import StarRating from '../StarRating';
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
+import useFollowers from '../../../hooks/useUserFollowers';
+import useUserRates from '../../../hooks/useRates';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
@@ -43,11 +45,11 @@ interface User {
 
 interface ProfileAccordionProps {
   user: User;
-  loading: boolean;
-  error: string | null;
+  //   loading: boolean;
+  //   error: string | null;
 }
 const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
-  console.log(user);
+  //   console.log(user);
 
   const { handleAction, loading: actionLoading } = useHandleAction();
   const { banUser, loading: banUserLoading, error: banError } = useBanUser();
@@ -59,7 +61,6 @@ const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
     rating: number,
   ) => {
     Swal.fire({
-      // title: ,
       html: `
     <div class="flex justify-between gap-2">
       <span class=" dark:text-TextGreen text-TextBlue text-lg">${CustomerName}</span>
@@ -104,7 +105,7 @@ const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
     loading: ratesLoading,
     error: ratesError,
   } = useUserRates(user.id);
-  console.log(data);
+  console.log(rates);
 
   //
   const handleClickName = (CustomerId: number) => {
