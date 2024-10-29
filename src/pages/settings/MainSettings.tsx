@@ -13,47 +13,37 @@ import { useSelector } from 'react-redux';
 
 const MainSettings: React.FC = () => {
     const { t } = useTranslation();
-    const myTab=sessionStorage.getItem('activeTab');
     const language = useSelector(selectLanguage);
-    const [activeTab, setActiveTab] = useState(t('settings.terms'));
+    const initialTab = sessionStorage.getItem('activeTab') || 'terms';
+    const [activeTab, setActiveTab] = useState<string>(initialTab);
     const breadcrumbLinks = [{ label: t('settings.settings'), path: '/settings' }];
     useEffect(() => {
-        setActiveTab(t('settings.terms'))
-    }, [t]);
+        sessionStorage.setItem('activeTab', activeTab);
+    }, [activeTab]);
+    const translatedTabLabel = t(`settings.${activeTab}`);
+
     return (
         <>
             <Breadcrumb
-                pageName={activeTab}
+                pageName={translatedTabLabel}
                 breadcrumbLinks={breadcrumbLinks}
             />
             <div className="md:flex bg-secondaryBG-light dark:bg-secondaryBG-dark p-8 rounded">
-                <ul className={`flex-column space-y space-y-4 ${language=='ar'? 'w-52':'w-64'} text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0`}>
-                    <TabButton btnTab={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab={t('settings.banks')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab={t('settings.sms')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                <ul className={`flex-column space-y space-y-4 ${language === 'ar' ? 'w-52' : 'w-64'} text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0`}>
+                    <TabButton btnTab="terms" label={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="comission" label={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="banks" label={t('settings.banks')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="sms" label={t('settings.sms')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="verification" label={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="banners" label={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 </ul>
                 <div className="p-6 text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
-                    {myTab === t('settings.terms') && (
-                        <TermsSetting />
-                    )}
-                    {myTab === t('settings.comission') && (
-                        <ComissionSetting />
-                    )}
-                    {myTab === t('settings.banks') && (
-                        <BanksSetting />
-                    )}
-                    {myTab === t('settings.sms') && (
-                        <SmsSetting />
-                    )}
-                    {myTab === t('settings.verification') && (
-                        <VerificationSetting />
-                    )}
-                    {myTab === t('settings.banners') && (
-                        <BannersSetting />
-                    )}
+                    {activeTab === 'terms' && <TermsSetting />}
+                    {activeTab === 'comission' && <ComissionSetting />}
+                    {activeTab === 'banks' && <BanksSetting />}
+                    {activeTab === 'sms' && <SmsSetting />}
+                    {activeTab === 'verification' && <VerificationSetting />}
+                    {activeTab === 'banners' && <BannersSetting />}
                 </div>
             </div>
         </>

@@ -177,7 +177,16 @@
         "verification-check-fees": "رسوم علامة مضمون",
         "usernameSms":"اسم المستخدم",
         "senderNameSms":"اسم المرسل",
-        "tokenSms":"الرمز(Token)"
+        "tokenSms":"الرمز(Token)",
+        "accountHolder":"اسم صاحب الحساب",
+        "accountNumber":"رقم الحساب",
+        "bankIBAN":"ايبان",
+        "bankLogo":"شعار البنك",
+        "edit":"تحرير",
+        "bannerName":"اسم الاعلان",
+        "bannerurl":"رابط الموقع",
+        "duration":"المدة",
+        "bannerImage":"شعار الاعلان"
     },
     "categoriesPage": {
         "title": "الأقسام",

@@ -89,9 +89,11 @@ const CategoriesMap: React.FC = () => {
                                 ref={provided.innerRef}
                                 className="w-full text-[20px] text-left rtl:text-right"
                             >
-                                <thead className="bg-gray-100 dark:bg-gray-700">
+                                <thead className="bg-gray-100 dark:bg-secondaryBG-dark">
                                     <tr>
-                                        <th scope="col" className="px-2 py-3 rounded-s-lg text-[18px] font-[400]">{t('categoriesPage.order')}</th>
+                                        <th scope="col" className="px-2 py-3 rounded-s-lg text-[18px] font-[400]
+                                        dark:text-secondaryBG-light">
+                                            {t('categoriesPage.order')}</th>
                                         <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMap.regionName')}</th>
                                         <th scope="col" className="py-3 text-[18px] font-[400]">{t('categoriesPage.edit')}</th>
                                         <th scope="col" className=" py-3 text-[18px] font-[400] rounded-e-lg">

@@ -160,7 +160,16 @@
         "verification-check-fees": "Verification Check Fees",
         "usernameSms":"Username",
         "senderNameSms":"Sender Name",
-        "tokenSms":"Token"
+        "tokenSms":"Token",
+        "accountHolder":"Account Holder",
+        "accountNumber":"Account Number",
+        "bankIBAN":"IBAN",
+        "bankLogo":"Bank Logo",
+        "edit":"Edit",
+        "bannerName":"Banner Name",
+        "bannerurl":"Banner URL",
+        "duration":"Duration",
+        "bannerImage":"Bank Logo"
     },
     "categoriesPage": {
         "title": "categories",
