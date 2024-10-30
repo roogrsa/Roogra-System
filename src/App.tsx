@@ -38,7 +38,7 @@ import Home from './pages/home';
 import verifaction_requestByStatus from './pages/verifaction_request/verifaction_requestByStatus';
 import ChatReport from './pages/Reports/ChatReport';
 import ProductReport from './pages/Reports/ProductReport';
-import Inquiries from './pages/contactUs/inquiries';
+import Inquiries from './pages/contactUs/Inquiries';
 import Issues from './pages/contactUs/Issues';
 import Suggestions from './pages/contactUs/Suggestions';
 const storedPermissions: any = store.getState().permissions.permissions;

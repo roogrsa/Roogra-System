@@ -7,6 +7,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     colors: {
+      edit:'#0C94E1',
       primaryBG: {
         DEFAULT: '#F9FAFF',
         dark: '#14141A',

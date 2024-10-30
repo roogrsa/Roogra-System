@@ -307,6 +307,13 @@
         "contact-us":"التواصل",
         "inquiries": "الاستفسارات",
         "issues": "المشاكل",
-        "suggestions": "المقترحات"
+        "suggestions": "المقترحات",
+        "replied":"تم الرد",
+        "username":"اسم المستخدم",
+        "date":"التاريخ",
+        "lastReply":"اخر رد",
+        "replyDate":"تاريخ الرد",
+        "edit":"تحرير",
+        "closeTicket":"اغلاق الطلب"
     }
 }
