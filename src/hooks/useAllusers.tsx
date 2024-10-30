@@ -1,29 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  telephone: string;
-  type: string; // 'customer' or 'advertiser'
-  isActivated: {
-    account: boolean;
-    email: boolean;
-  };
-  status: number;
-  isBanned: boolean;
-  ban_reason: string;
-  regDate: string;
-  address: string;
-  country_id: number | null;
-  bio: string;
-  rating: number | string;
-  image: string;
-  alias: string;
-}
+import { User } from '../types/user';
 
 interface ApiResponse {
   success: boolean;
@@ -39,7 +16,9 @@ const useUsers = (page: number = 0) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axiosInstance.get<ApiResponse>(`/api/users?page=${page}&limit=8`);
+        const response = await axiosInstance.get<ApiResponse>(
+          `/api/users?page=${page}&limit=8`,
+        );
         if (response.data.success) {
           setUsers(response.data.data);
           console.log(response.data.data);

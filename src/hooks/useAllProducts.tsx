@@ -1,17 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface Product {
-  id: number;
-  product_name: string;
-  price: string;
-  date: string;
-  thumbnail: string;
-  is_banned: number;
-  isActivated: number;
-  author: string;
-  category_name: string;
-}
+import { Product } from '../types/product';
 
 const useAllProducts = (page: number = 1) => {
   const [products, setProducts] = useState<Product[]>([]);

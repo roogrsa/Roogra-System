@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface ChartData {
-  series: number[];
-  labels: string[];
-  statesData: { label: string; count: number; color: string }[];
-  total: number;
-}
+import { ChartData } from '../types/chart';
 
 const useChartData = () => {
   const [customerChartData, setCustomerChartData] = useState<ChartData | null>(

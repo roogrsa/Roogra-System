@@ -5,7 +5,6 @@ import rejectIcon from '/false2.svg';
 import { useTranslation } from 'react-i18next';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import CategorySubscriptionsByUserid from '../../hooks/category_subscription/getCategorySubscriptionByUserId';
-// import axiosInstance from '../../axiosConfig/instanc';
 import ReusableInput from '../products/ReusableInput';
 import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
 import PeriodInput from '../../pages/category_subscription/PeriodInput';
@@ -13,7 +12,6 @@ import handleEditSubscribtionClick from '../../hooks/category_subscription/handl
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import MainTable from '../lastnews/MainTable';
 import NotFoundSection from '../Notfound/NotfoundSection';
-// import Pagination from '../pagination/Pagination';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../Accordion/AccordionHeader2';
 
@@ -304,33 +302,27 @@ const CategorySubscriptionUserid = () => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
           setStatus(statusMap[index]);
         }}
-        footerItems={
-          [
-            //   <div>({Count})</div>,
-            //   <div>({Count})</div>,
-            //   <div>({Count})</div>,
-            //   <div>({Count})</div>,
-          ]
-        }
+        footerItems={[]}
         children={[
-          <div>
+          <div key="processing">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key="approved">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key="rejected">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key="expired">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
         ]}
       />
+
       {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

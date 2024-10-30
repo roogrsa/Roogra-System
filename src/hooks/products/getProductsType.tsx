@@ -1,27 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import axiosInstance from '../../axiosConfig/instanc';
-
-// Define the types for product and response data
-interface Product {
-  price: string;
-  id: number;
-  date: string;
-  thumbnail: string;
-  videos: string | null;
-  isActivated: number;
-  is_banned: number;
-  date_of_ban: string | null;
-  ban_reason: string | null;
-  author: string;
-  author_id: number;
-  product_name: string;
-  oc_product_description_description: string;
-  category_name: string;
-  category_id: number;
-  category_description: string;
-  images: string[];
-}
+import { Product } from '../../types/product';
 
 interface ApiResponse {
   success: boolean;

@@ -1,28 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  telephone: string;
-  type: string;
-  isActivated: {
-    account: boolean;
-    email: boolean;
-  };
-  status: number;
-  isBanned: boolean;
-  ban_reason: string;
-  regDate: string;
-  address: string;
-  countery_id: number | null;
-  bio: string;
-  rating: number;
-  image: string;
-  alias: string;
-}
+import { User } from '../types/user';
 
 interface ApiResponse {
   success: boolean;

@@ -1,28 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc'; // Import the axios config
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  telephone: string;
-  type: 'customer' | 'advertiser';
-  isActivated: {
-    account: boolean;
-    email: boolean;
-  };
-  status: number;
-  isBanned: boolean;
-  ban_reason: string;
-  regDate: string;
-  address: string;
-  countery_id: number | null;
-  bio: string;
-  rating: number;
-  image: string;
-  alias: string;
-}
+import { User } from '../types/user';
 
 interface UseUserResponse {
   user: User | null;
@@ -43,7 +21,7 @@ const useUser = (id: number): UseUserResponse => {
         // Use axiosInstance for the GET request
         const response = await axiosInstance.get(`/api/users/${id}`);
         const { success, data } = response.data;
-        console.log(data);
+        // console.log(data);
 
         if (success) {
           setUser(data);

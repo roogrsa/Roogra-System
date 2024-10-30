@@ -1,18 +1,25 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
+import { useParams } from 'react-router-dom';
 import { ReportData } from '../../types/ReportData';
-
-// Define the data structure for the response
 
 interface ApiResponse {
   success: boolean;
   message: string;
-  data: ReportData[];
+  data: {
+    chats: ReportData[];
+    products: ReportData[];
+  };
 }
 
-// Custom Hook with parameters for type and status
-export const useProductReports = (type: string, status: number = 0) => {
-  const [data, setData] = useState<ReportData[]>([]);
+// Custom Hook for fetching user reports
+export const useUserReports = () => {
+  const { id } = useParams<{ id: string }>();
+
+  const [data, setData] = useState<{
+    chats: ReportData[];
+    products: ReportData[];
+  }>({ chats: [], products: [] });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,12 +28,12 @@ export const useProductReports = (type: string, status: number = 0) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get<ApiResponse>(
-          `/api/reports/type/${type}/status/${status}`,
+          `/api/reports/users/${id}`,
         );
 
         if (response.data.success) {
           setData(response.data.data);
-          // console.log(response.data.data);
+          //   console.log('userreportttt', response.data.data);
         } else {
           setError('Failed to fetch reports');
         }
@@ -38,7 +45,7 @@ export const useProductReports = (type: string, status: number = 0) => {
     };
 
     fetchReports();
-  }, [type, status]);
+  }, [id]);
 
   return { data, loading, error };
 };

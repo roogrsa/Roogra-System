@@ -299,7 +299,8 @@
             "name":"بلاغ العميل",
             "product":"المنتج",
             "created_at":" تاريخ الطلب ",
-            "actions":"عرض"
+            "actions":"عرض",
+            "speakerTo":"المتحدث إلية"
         }
     
 

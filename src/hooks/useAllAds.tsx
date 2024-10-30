@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface Ad {
-  id: number;
-  name: string;
-  image: string;
-  url: string;
-  period: number;
-  created_at: string;
-}
+import { Ad } from '../types/Ads';
 
 const useAllAds = () => {
   const [ads, setAds] = useState<Ad[]>([]);

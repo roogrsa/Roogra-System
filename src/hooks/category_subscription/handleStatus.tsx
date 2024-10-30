@@ -9,13 +9,6 @@ type EditCategorySubscriptionStatus = (
   dateNow?: string,
 ) => Promise<void>;
 
-// type EditVerificationRequest = (
-//   verificationId: number | string,
-//   status: 'approved' | 'rejected',
-//   reason?: string,
-//   dateNow?: string,
-// ) => Promise<void>;
-// Ensure EditVerificationRequest accepts `number | string` for `verificationId`
 type EditVerificationRequest = (
   verificationId: number | string, // Accept both number and string
   status: 'approved' | 'rejected',

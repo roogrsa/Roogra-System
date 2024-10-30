@@ -264,12 +264,14 @@
             "reports": "Report",
             "revision": "Revision"
         },
-        "headers": {
-            "id": "Rep-Id",
-            "name": "Customer",
-            "product": "Product",
-            "created_at": "Req-Date",
-            "actions": "Show"
+        "headers":{
+            "id":"Rep-Id",
+            "name":"Customer",
+            "product":"Product",
+            "created_at":"Req-Date",
+            "actions":"Show",
+            "speakerTo":"speaker to"
+
         }
     }
 }

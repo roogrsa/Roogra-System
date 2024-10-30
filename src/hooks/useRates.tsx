@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface UserRate {
-  rating: number;
-  comment: string | null;
-  date_added: string;
-  name: string;
-  customer_id: number;
-}
+import { UserRate } from '../types/rate';
 
 interface UseUserRatesReturn {
   data: UserRate[] | null;
@@ -15,7 +8,7 @@ interface UseUserRatesReturn {
   error: string | null;
 }
 
-const useUserRates = (): UseUserRatesReturn => {
+const useUserRates = (id: number): UseUserRatesReturn => {
   const [data, setData] = useState<UserRate[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,9 +16,9 @@ const useUserRates = (): UseUserRatesReturn => {
   useEffect(() => {
     const fetchUserRates = async () => {
       try {
-        const response = await axiosInstance.get(`/api/users/74/rates`);
+        const response = await axiosInstance.get(`/api/users/${id}/rates`);
         setData(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
