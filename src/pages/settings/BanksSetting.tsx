@@ -56,7 +56,6 @@ export default function BanksSetting() {
     useEffect(() => {
         displayBanks()
     }, []);
-    console.log(banks);
 
     return (
         <div className="relative overflow-x-auto">
@@ -87,7 +86,7 @@ export default function BanksSetting() {
                                     ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
                                     : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'}`}
                         >
-                            <td scope="row" className="px-2 py-2 font-[400] text-[17px]">
+                            <td scope="row" className="px-2 py-2 font-[400] text-[17px] text-center">
                                 {index + 1}
                             </td>
                             <td scope="row" className="px-2 py-2 font-[400] text-[17px] text-center">

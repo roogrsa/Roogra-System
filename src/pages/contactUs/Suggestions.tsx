@@ -8,7 +8,7 @@ import RepliedTable from "./RepliedTable";
 
 export default function Suggestions() {
     const { t } = useTranslation();
-    const [status, setStatus] = useState('processing');
+    // const [status, setStatus] = useState('processing');
     const breadcrumbLinks = [{ label: t('contact-us.contact-us'), path: '' }]
     return (
         <div>
@@ -21,10 +21,10 @@ export default function Suggestions() {
                     t('contact-us.suggestions'),
                     t('contact-us.replied'),
                 ]}
-                onTitleClick={(index) => {
-                    const statusMap = ['processing', 'approved'];
-                    setStatus(statusMap[index]);
-                }}
+                // onTitleClick={(index) => {
+                //     const statusMap = ['processing', 'approved'];
+                //     setStatus(statusMap[index]);
+                // }}
                 children={[
                     <div>
                         <ContactUsTable type="الاقتراحات"/>
