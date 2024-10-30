@@ -302,33 +302,27 @@ const CategorySubscriptionUserid = () => {
           const statusMap = ['processing', 'approved', 'rejected', 'expired'];
           setStatus(statusMap[index]);
         }}
-        footerItems={
-          [
-            //   <div>({Count})</div>,
-            //   <div>({Count})</div>,
-            //   <div>({Count})</div>,
-            //   <div>({Count})</div>,
-          ]
-        }
+        footerItems={[]}
         children={[
-          <div>
+          <div key="processing">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key="approved">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key="rejected">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key="expired">
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
         ]}
       />
+
       {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

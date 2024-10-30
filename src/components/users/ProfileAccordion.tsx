@@ -82,8 +82,6 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       <Accordion title="البلاغات">
         <UserReportType reportType="Userchat" />
         <UserReportType reportType="Userproduct" />
-
-        {/* <ProductUserReportType/> */}
       </Accordion>
 
       {/* */}

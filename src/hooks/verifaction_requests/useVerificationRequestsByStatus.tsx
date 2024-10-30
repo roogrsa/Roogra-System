@@ -36,7 +36,7 @@ const useVerificationRequestsByStatus = (
         // Handle the success response
         if (response.data.success) {
           setData(response.data.data);
-          console.log(response.data.data);
+          // console.log(response.data.data);
         } else {
           setError(response.data.message);
         }

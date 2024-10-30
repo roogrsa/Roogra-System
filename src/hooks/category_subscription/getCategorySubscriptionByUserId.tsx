@@ -13,7 +13,7 @@ const CategorySubscriptionsByUserid = (
   status: string,
   //   currentPage: number,
 ): UseCategorySubscriptionsByStatusReturn => {
-  console.log(status);
+  // console.log(status);
 
   const { id } = useParams<{ id: string }>();
 
