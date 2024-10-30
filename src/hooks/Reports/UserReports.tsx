@@ -1,22 +1,7 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useParams } from 'react-router-dom';
-
-// Define the data structure for the response
-interface ReportData {
-  report_id: number;
-  chat_report_id: number;
-  customer_id: number;
-  product_id: number;
-  content: string;
-  created_at: string;
-  product_name: string;
-  reported: string;
-  reporter: string;
-  status: number;
-  close_date: string | null;
-  name: string;
-}
+import { ReportData } from '../../types/ReportData';
 
 interface ApiResponse {
   success: boolean;

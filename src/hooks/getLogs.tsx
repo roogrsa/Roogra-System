@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-// Define the type of data you expect from the API response
-interface LogData {
-  customer_activity_id: number;
-  customer_id: number;
-  key: string;
-  data: string;
-  ip: string;
-  date_added: string;
-}
-
+import { LogData } from '../types/LogData';
 interface LogsApiResponse {
   success: boolean;
   message: string;

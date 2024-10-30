@@ -1,13 +1,6 @@
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-interface UserRate {
-  rating: number;
-  comment: string | null;
-  date_added: string;
-  name: string;
-  customer_id: number;
-}
+import { UserRate } from '../types/rate';
 
 interface UseUserRatesReturn {
   data: UserRate[] | null;

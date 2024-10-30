@@ -45,7 +45,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 }) => {
   return (
     <div className="">
-      {/*  Data  */}
+      {/*  */}
       <Accordion title="البيانات">
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
@@ -57,7 +57,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
         <UserInfo user={user} />
       </Accordion>
 
-      {/* products section */}
+      {/*  */}
       <Accordion title="الاعلانات">
         <UserProducts user={user} />
       </Accordion>

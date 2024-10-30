@@ -1,28 +1,7 @@
 // hooks/useProducts.ts
 import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig/instanc';
-
-// Define the Product interface
-interface Product {
-  price: string;
-  id: number;
-  date: string;
-  thumbnail: string;
-  videos: string[];
-  isActivated: number;
-  is_banned: number;
-  date_of_ban: string | null;
-  ban_reason: string | null;
-  images: string[];
-  author: string;
-  author_id: number;
-  product_name: string;
-  oc_product_description_description: string;
-
-  category_name: string;
-  category_id: number;
-  category_description: string;
-}
+import { Product } from '../types/product';
 
 const useUserProducts = (userId: number) => {
   const [products, setProducts] = useState<Product[]>([]);

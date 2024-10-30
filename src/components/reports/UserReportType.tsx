@@ -7,21 +7,9 @@ import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import { useUserReports } from '../../hooks/Reports/UserReports';
+import { ReportData } from '../../types/ReportData';
 interface ReportType {
   reportType: 'Userproduct' | 'Userchat';
-}
-interface ReportData {
-  report_id: number;
-  chat_report_id: number;
-  customer_id: number;
-  product_id: number;
-  content: string;
-  created_at: string;
-  product_name: string;
-
-  status: number;
-  close_date: string | null;
-  name: string;
 }
 const EditIconSrc = '/Edit.svg';
 

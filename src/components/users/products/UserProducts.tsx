@@ -5,34 +5,12 @@ import MainTable from '../../lastnews/MainTable';
 import useHandleAction from '../../../hooks/useHandleAction';
 import { useNavigate } from 'react-router-dom';
 import useBanProduct from '../../../hooks/useBanProduct';
+import { User } from '../../../types/user';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
-//
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  telephone: string;
-  type: 'advertiser' | 'customer';
-  isActivated: {
-    account: boolean;
-    email: boolean;
-  };
-  status: number; // Status of the account (e.g., 1 = Active)
-  isBanned: boolean;
-  ban_reason: string;
-  regDate: string; // Registration date in "YYYY-MM-DD HH:MM:SS" format
-  address: string;
-  countery_id: number | null;
-  bio: string;
-  rating: number;
-  image: string;
-  alias: string;
-}
 //
 interface ProfileAccordionProps {
   user: User;
@@ -49,8 +27,7 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
     loading: productsLoading,
     error: productsError,
   } = useUserProducts(user.id);
-  // console.log(logsUserProducts);
-  //
+
   // Handle ban/unban action
   const handleBan = (productId: number, isBanned: boolean) => {
     handleAction(productId, isBanned, 'ban', banProduct, {
