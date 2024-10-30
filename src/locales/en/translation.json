@@ -275,6 +275,7 @@
         }
     },"notifications": {
         "popup": {
+            "add":"Add New Notification",
             "expiry_date":"expiry_date",
             "placeholderMessage":" Enter Notification message here",
             "message":"Notification Message",

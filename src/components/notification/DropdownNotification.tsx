@@ -4,8 +4,11 @@ import ClickOutside from '../ClickOutside';
 import { MdOutlineNotificationsActive } from 'react-icons/md';
 import NotificationItem from './NotificationItem';
 import AddNotification from './popupNotification';
+import { useTranslation } from 'react-i18next';
 
 const DropdownNotification = () => {
+  const { t } = useTranslation();
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifying, setNotifying] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +64,7 @@ const DropdownNotification = () => {
           <div className=" rounded-lg absolute -right-27 mt-2.5 flex h-90 w-75 flex-col  border border-header-inputBorder bg-white shadow-default dark:border-header-inputBorderdark dark:bg-boxdark sm:right-0 sm:w-80">
             <div className="px-4.5 py-3">
               <h5 className="text-lg flex justify-between font-medium dark:text-header-dark text-header-light">
-                Notification
+                {t('notifications.popup.add')}
                 <button onClick={() => setIsModalOpen(true)}>
                   <svg
                     width="20"

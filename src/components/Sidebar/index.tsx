@@ -441,7 +441,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <div className="relative">
                     <div onClick={() => setIsBanListOpen(!isBanListOpen)}>
                       <SidebarLink
-                        to={`#`}
+                        to={`/Block`}
                         isOpen={isOpen}
                         text={'sidebar.ban-list.ban-list'}
                         icon={<MdOutlineBlock className="text-2xl" />}

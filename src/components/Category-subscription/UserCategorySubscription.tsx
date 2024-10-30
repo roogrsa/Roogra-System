@@ -31,28 +31,7 @@ const CategorySubscriptionUserid = () => {
   } = useEditCategorySubscriptionStatus();
   //
   const breadcrumbLinks = [{ label: '', path: '/' }];
-
-  // State to handle dynamic status
   const [status, setStatus] = useState('processing');
-  // const [currentPage, setCurrentPage] = useState(0);
-  // const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
-  // const [Count, setCount] = useState(0);
-
-  //
-  // useEffect(() => {
-  //   const fetchUsersCount = async () => {
-  //     try {
-  //       const response = await axiosInstance.get(
-  //         `/api/category_subscription/status/${status}/count`,
-  //       );
-  //       setCategorySubscriptionCount(response.data.data.count / 8);
-  //       setCount(response.data.data.count);
-  //       console.log(status, response.data.data.count);
-  //     } catch (err) {}
-  //   };
-  //   fetchUsersCount();
-  // }, [Count, status]);
-  // const totalPages = Math.ceil(categorySubscriptionCount);
 
   //
   const { data, loading, error } = CategorySubscriptionsByUserid(
@@ -61,8 +40,8 @@ const CategorySubscriptionUserid = () => {
   );
   // console.log(data);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   //
   const headers = [
     {
@@ -322,12 +301,6 @@ const CategorySubscriptionUserid = () => {
           </div>,
         ]}
       />
-
-      {/* <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      /> */}
     </div>
   );
 };

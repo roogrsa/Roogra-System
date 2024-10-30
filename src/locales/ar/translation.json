@@ -307,6 +307,8 @@
     },"notifications": {
   
         "popup": {
+            "add":"إضافة إشعار",
+
     "expiry_date": "تاريخ الانتهاء",
     "placeholderMessage": "أدخل رسالة الإشعار هنا",
     "message": "رسالة الإشعار",
