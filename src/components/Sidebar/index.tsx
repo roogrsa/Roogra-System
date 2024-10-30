@@ -381,19 +381,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         {permission.contact.inquiries == 1 && (
                           <DropLink
-                            to={`/support`}
+                            to={`/contact-us/inquiries`}
                             text={'sidebar.support.inquiries'}
                           />
                         )}
                         {permission.contact.issues == 1 && (
                           <DropLink
-                            to={`/support/advertiser`}
+                            to={`/contact-us/issues`}
                             text={'sidebar.support.issues'}
                           />
                         )}
                         {permission.contact.suggestions == 1 && (
                           <DropLink
-                            to={`/support/customer`}
+                            to={`/contact-us/suggestions`}
                             text={'sidebar.support.suggestions'}
                           />
                         )}

@@ -271,7 +271,12 @@
             "created_at":"Req-Date",
             "actions":"Show",
             "speakerTo":"speaker to"
-
         }
+    },
+    "contact-us":{
+        "contact-us":"Contact Us",
+        "inquiries":"Inquiries",
+        "issues":"Issues",
+        "suggestions":"Suggestions"
     }
 }

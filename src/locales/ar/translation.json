@@ -302,7 +302,11 @@
             "actions":"عرض",
             "speakerTo":"المتحدث إلية"
         }
-    
-
+    },
+    "contact-us":{
+        "contact-us":"التواصل",
+        "inquiries": "الاستفسارات",
+        "issues": "المشاكل",
+        "suggestions": "المقترحات"
     }
 }
