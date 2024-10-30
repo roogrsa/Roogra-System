@@ -194,7 +194,7 @@
             "regionName": "Region name"
         }
     },
-    "popUP": {
+    "popup": {
         "delete_title": "Are you sure you want to delete",
         "delete": "delete",
         "cancel": "Cancel",
