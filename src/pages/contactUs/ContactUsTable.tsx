@@ -29,7 +29,7 @@ export default function ContactUsTable({type}:ContactUsTableProps) {
     ];
     const displayContactUs = async () => {
         try {
-            const res = await axiosInstance.get(`/api/support/type/${type}?q=`);
+            const res = await axiosInstance.get(`/api/support/type/${type}/status/open`);
             console.log(res.data.data);
             setContactUs(res.data.data)
         } catch (error: any) {

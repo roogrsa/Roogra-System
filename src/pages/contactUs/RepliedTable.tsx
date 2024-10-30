@@ -28,7 +28,7 @@ export default function RepliedTable({ type }: ContactUsTableProps) {
     ];
     const displayContactUs = async () => {
         try {
-            const res = await axiosInstance.get(`/api/support/type/${type}/status/open`);
+            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`);
             console.log(res.data.data);
             setContactUs(res.data.data)
         } catch (error: any) {
