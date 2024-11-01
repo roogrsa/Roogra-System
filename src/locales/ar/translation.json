@@ -310,10 +310,14 @@
         "suggestions": "المقترحات",
         "replied":"تم الرد",
         "username":"اسم المستخدم",
-        "date":"التاريخ",
-        "lastReply":"اخر رد",
+        "inquiryDate":"تاريخ الاستفسار",
+        "ticketNumber":"رقم التذكرة",
+        "view":"عرض",
+        "replyBy":"تم بواسطة",
         "replyDate":"تاريخ الرد",
-        "edit":"تحرير",
-        "closeTicket":"اغلاق الطلب"
+        "closeTicket":"رد واغلاق",
+        "ticketDetails":"تفاصيل التذكرة",
+        "reply":"الرد",
+        "deleteTicket":"حذف التذكرة"
     }
 }

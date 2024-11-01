@@ -280,10 +280,14 @@
         "suggestions":"Suggestions",
         "replied":"Replied",
         "username":"Username",
-        "date":"Date",
-        "lastReply":"Last Reply",
-        "replyDate":"Reply Date",
-        "edit":"Edit",
-        "closeTicket":"Close Ticket"
+        "inquiryDate":"Inquiry date",
+        "ticketNumber":"Ticke number",
+        "view":"View",
+        "replyBy":"Reply by",
+        "replyDate":"Reply date",
+        "closeTicket":"Reply and close",
+        "ticketDetails":"Ticket details",
+        "reply":"Reply",
+        "deleteTicket":"Delete ticket"
     }
 }
