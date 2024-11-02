@@ -11,6 +11,7 @@ import { FiEdit3 } from "react-icons/fi";
 import Pagination from "../../components/pagination/Pagination";
 import DeletePopup from "../../components/popups/DeletePopup";
 import EditAddPopup from "../../components/popups/EditAddPopup";
+import { toast } from "react-toastify";
 
 interface CategoryMap {
     map_category_id: number;
@@ -58,6 +59,15 @@ const CategoriesMap: React.FC = () => {
             console.log(error?.response?.data?.message);
         }
     };
+    const changeOrder = async (id:number,order:number) => {
+        try {
+            const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id:id, order:order }]});
+            console.log(res);
+            toast.success('Updated')
+        } catch (error: any) {
+            console.error(error);
+        }
+    };
     useEffect(() => {
         displayCategoriesMap()
     }, [currentPage]);
@@ -70,6 +80,11 @@ const CategoriesMap: React.FC = () => {
         const [movedCategory] = reorderedCategoriesMap.splice(source.index, 1);
         reorderedCategoriesMap.splice(destination.index, 0, movedCategory);
         setCategoriesMap(reorderedCategoriesMap);
+        console.log(destination.droppableId);
+        console.log(destination.index);
+        console.log(movedCategory);
+        changeOrder(movedCategory.map_category_id,destination.index+1)
+        
     };
     const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }]
     return (

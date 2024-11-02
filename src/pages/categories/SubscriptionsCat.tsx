@@ -12,6 +12,7 @@ import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 import EditAddPopup from "../../components/popups/EditAddPopup";
 import DeletePopup from "../../components/popups/DeletePopup";
 import EditAddImgPopup from "../../components/popups/EditAddImgPopup";
+import { toast } from "react-toastify";
 
 interface SubscriptionsCategory {
     parent_id: number;
@@ -80,6 +81,15 @@ const SubscriptionsCat: React.FC = () => {
     useEffect(() => {
         displaySubscriptionsCat();
     }, []);
+    const changeOrder = async (id:number,order:number) => {
+        try {
+            const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id, order }]});
+            console.log(res);
+            toast.success('Updated')
+        } catch (error: any) {
+            console.error(error);
+        }
+    };
     const handleOnDragEnd = (result: DropResult) => {
         const { destination, source } = result;
         if (!destination) return;
@@ -93,6 +103,8 @@ const SubscriptionsCat: React.FC = () => {
         const reorderedSubcategories = Array.from(subscriptionscategories[categoryIndex].sub);
         const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
         reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
+        changeOrder(movedSubcategory.category_id,destination.index+1)
+console.log(destination.index);
 
         const updatedCategories = [...subscriptionscategories];
         updatedCategories[categoryIndex].sub = reorderedSubcategories;

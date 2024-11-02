@@ -10,6 +10,7 @@ import { FiEdit3 } from "react-icons/fi";
 import Pagination from "../../components/pagination/Pagination";
 import DeletePopup from "../../components/popups/DeletePopup";
 import EditAddImgPopup from "../../components/popups/EditAddImgPopup";
+import { toast } from "react-toastify";
 
 interface Category {
   parent_id: number;
@@ -33,7 +34,19 @@ const MainCategories: React.FC = () => {
     fetchCategoriesCount();
   }, []);
   const totalPages = Math.ceil(categoriesCount);
-
+  const changeOrder = async (id:number,order:number) => {
+    try {
+        const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id, order }]},
+          {headers: {
+            "content-type": "Application/json",
+          }}
+        );
+        console.log(res);
+        toast.success('Updated')
+    } catch (error: any) {
+        console.error(error);
+    }
+};
   const handleOnDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     if (!destination) return;
@@ -42,6 +55,9 @@ const MainCategories: React.FC = () => {
     const [movedCategory] = reorderedCategories.splice(source.index, 1);
     reorderedCategories.splice(destination.index, 0, movedCategory);
     setCategories(reorderedCategories);
+    changeOrder(movedCategory.parent_id,destination.index+1)
+    console.log(movedCategory);
+    
   };
   const displayCategories = async () => {
     try {
