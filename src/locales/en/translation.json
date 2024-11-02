@@ -271,7 +271,6 @@
             "created_at":"Req-Date",
             "actions":"Show",
             "speakerTo":"speaker to"
-
         }
     },"notifications": {
         "popup": {
@@ -290,5 +289,18 @@
 
 
         }
+    },
+    "contact-us":{
+        "contact-us":"Contact Us",
+        "inquiries":"Inquiries",
+        "issues":"Issues",
+        "suggestions":"Suggestions",
+        "replied":"Replied",
+        "username":"Username",
+        "date":"Date",
+        "lastReply":"Last Reply",
+        "replyDate":"Reply Date",
+        "edit":"Edit",
+        "closeTicket":"Close Ticket"
     }
 }

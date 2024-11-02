@@ -39,6 +39,9 @@ import verifaction_requestByStatus from './pages/verifaction_request/verifaction
 import ChatReport from './pages/Reports/ChatReport';
 import ProductReport from './pages/Reports/ProductReport';
 import BlockList from './pages/BlockList/BlockList';
+import Inquiries from './pages/contactUs/Inquiries';
+import Issues from './pages/contactUs/Issues';
+import Suggestions from './pages/contactUs/Suggestions';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -299,6 +302,39 @@ const router = createBrowserRouter([
             <ProtectedRoute
               component={ProductReport}
               hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'contact-us/inquiries',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Inquiries}
+              hasPermission={storedPermissions[15]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'contact-us/issues',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Issues}
+              hasPermission={storedPermissions[16]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'contact-us/suggestions',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Suggestions}
+              hasPermission={storedPermissions[17]}
             />
           </Guard>
         ),
