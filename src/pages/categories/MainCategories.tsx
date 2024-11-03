@@ -107,8 +107,8 @@ const MainCategories: React.FC = () => {
                 ref={provided.innerRef}
                 className="w-full text-left rtl:text-right text-[20px]"
               >
-                <thead className="bg-gray-100 dark:bg-gray-700">
-                  <tr>
+                <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+                <tr className="px-2 py-2 text-[18px] font-[400]">
                     <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
                     <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMain.catName')}</th>
                     <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMain.img')}</th>
@@ -127,7 +127,9 @@ const MainCategories: React.FC = () => {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
+                            className={`border-b dark:border-secondaryBG-light ${index % 2 !== 0
+                              ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                              : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'}
                           ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                           `}
                           >

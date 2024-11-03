@@ -140,8 +140,8 @@ console.log(destination.index);
                                     ref={provided.innerRef}
                                     className="w-full text-[20px] text-left rtl:text-right mb-7"
                                 >
-                                    <thead className="bg-gray-100 dark:bg-gray-700">
-                                        <tr>
+                                    <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+                                    <tr className="px-2 py-2 text-[18px] font-[400]">
                                             <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
                                             <th scope="col" className="px-6 py-3">
                                                 <img src={cat.parent_image} width={100} alt="" />
@@ -201,7 +201,10 @@ console.log(destination.index);
                                                                         ref={provided.innerRef}
                                                                         {...provided.draggableProps}
                                                                         {...provided.dragHandleProps}
-                                                                        className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
+                                                                        className={`${index % 2 !== 0
+                                                                            ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                                                            : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b
+                                                                            dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                                     >
                                                                         <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
