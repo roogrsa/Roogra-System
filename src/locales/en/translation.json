@@ -180,7 +180,7 @@
         "editCat": "EDIT CATEGORY",
         "order": "Order",
         "edit": "Edit",
-        "categoriesTost":"Categories updated successfully.",
+        "categoriesToast":"Categories updated successfully.",
         "catMain": {
             "label": "Primary",
             "catName": "Category name",

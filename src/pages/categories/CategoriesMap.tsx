@@ -63,7 +63,7 @@ const CategoriesMap: React.FC = () => {
         try {
             const res = await axiosInstance.patch(`/api/categories`, { categories: [{ id: id, order: order }] });
             console.log(res);
-            toast.success(t('categoriesPage.categoriesTost'))
+            toast.success(t('categoriesPage.categoriesToast'))
         } catch (error: any) {
             console.error(error);
         }
