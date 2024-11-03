@@ -59,9 +59,9 @@ const CategoriesMap: React.FC = () => {
             console.log(error?.response?.data?.message);
         }
     };
-    const changeOrder = async (id:number,order:number) => {
+    const changeOrder = async (id: number, order: number) => {
         try {
-            const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id:id, order:order }]});
+            const res = await axiosInstance.patch(`/api/categories`, { categories: [{ id: id, order: order }] });
             console.log(res);
             toast.success('Updated')
         } catch (error: any) {
@@ -83,8 +83,8 @@ const CategoriesMap: React.FC = () => {
         console.log(destination.droppableId);
         console.log(destination.index);
         console.log(movedCategory);
-        changeOrder(movedCategory.map_category_id,destination.index+1)
-        
+        changeOrder(movedCategory.map_category_id, destination.index + 1)
+
     };
     const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }]
     return (
@@ -104,8 +104,8 @@ const CategoriesMap: React.FC = () => {
                                 ref={provided.innerRef}
                                 className="w-full text-[20px] text-left rtl:text-right"
                             >
-                                <thead className="bg-gray-100 dark:bg-secondaryBG-dark">
-                                    <tr>
+                                <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+                                    <tr className="px-2 py-2 text-[18px] font-[400]">
                                         <th scope="col" className="px-2 py-3 rounded-s-lg text-[18px] font-[400]
                                         dark:text-secondaryBG-light">
                                             {t('categoriesPage.order')}</th>
@@ -125,7 +125,9 @@ const CategoriesMap: React.FC = () => {
                                                         ref={provided.innerRef}
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
-                                                        className={`bg-white dark:bg-gray-800 border-b 
+                                                        className={`dark:border-gray-700  ${index % 2 !== 0
+                                                            ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                                            : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b 
                                                             dark:border-secondaryBG-light
                                                     ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                                                     `}>
