@@ -42,7 +42,7 @@ const MainCategories: React.FC = () => {
           }}
         );
         console.log(res);
-        toast.success('Updated')
+        toast.success(t('categoriesPage.categoriesTost'))
     } catch (error: any) {
         console.error(error);
     }

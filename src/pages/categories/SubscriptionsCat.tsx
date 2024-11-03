@@ -85,7 +85,7 @@ const SubscriptionsCat: React.FC = () => {
         try {
             const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id, order }]});
             console.log(res);
-            toast.success('Updated')
+            toast.success(t('categoriesPage.categoriesTost'))
         } catch (error: any) {
             console.error(error);
         }

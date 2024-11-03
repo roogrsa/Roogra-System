@@ -197,6 +197,7 @@
         "editCat": "تحرير القسم",
         "order": "الترتيب",
         "edit": "تحرير",
+        "categoriesTost":"تم تحديث الاقسام بنجاح.",
         "catMain": {
             "label": "رئيسية",
             "catName": "اسم القسم",
