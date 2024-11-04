@@ -12,6 +12,7 @@ import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 import EditAddPopup from "../../components/popups/EditAddPopup";
 import DeletePopup from "../../components/popups/DeletePopup";
 import EditAddImgPopup from "../../components/popups/EditAddImgPopup";
+import { toast } from "react-toastify";
 
 interface SubscriptionsCategory {
     parent_id: number;
@@ -80,6 +81,15 @@ const SubscriptionsCat: React.FC = () => {
     useEffect(() => {
         displaySubscriptionsCat();
     }, []);
+    const changeOrder = async (id:number,order:number) => {
+        try {
+            const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id, order }]});
+            console.log(res);
+            toast.success(t('categoriesPage.categoriesToast'))
+        } catch (error: any) {
+            console.error(error);
+        }
+    };
     const handleOnDragEnd = (result: DropResult) => {
         const { destination, source } = result;
         if (!destination) return;
@@ -93,6 +103,8 @@ const SubscriptionsCat: React.FC = () => {
         const reorderedSubcategories = Array.from(subscriptionscategories[categoryIndex].sub);
         const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
         reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
+        changeOrder(movedSubcategory.category_id,destination.index+1)
+console.log(destination.index);
 
         const updatedCategories = [...subscriptionscategories];
         updatedCategories[categoryIndex].sub = reorderedSubcategories;
@@ -128,8 +140,8 @@ const SubscriptionsCat: React.FC = () => {
                                     ref={provided.innerRef}
                                     className="w-full text-[20px] text-left rtl:text-right mb-7"
                                 >
-                                    <thead className="bg-gray-100 dark:bg-gray-700">
-                                        <tr>
+                                    <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+                                    <tr className="px-2 py-2 text-[18px] font-[400]">
                                             <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
                                             <th scope="col" className="px-6 py-3">
                                                 <img src={cat.parent_image} width={100} alt="" />
@@ -189,7 +201,10 @@ const SubscriptionsCat: React.FC = () => {
                                                                         ref={provided.innerRef}
                                                                         {...provided.draggableProps}
                                                                         {...provided.dragHandleProps}
-                                                                        className={`bg-white dark:bg-gray-800 border-b dark:border-secondaryBG-light
+                                                                        className={`${index % 2 !== 0
+                                                                            ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                                                            : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b
+                                                                            dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                                     >
                                                                         <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
