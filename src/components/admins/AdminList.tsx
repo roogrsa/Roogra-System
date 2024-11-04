@@ -15,21 +15,47 @@ const AdminsList: React.FC = () => {
   const [adminType, setAdminType] = useState('observer');
 
   const navigate = useNavigate();
+  // Define a mapping object for role types
+  const roleTypeMap = {
+    observer: 2,
+    supervisor: 3,
+    delegates: 1,
+  };
+
+  // Use roleTypeMap to pass the number to `useAdminsByType`
   const {
     admins: observers,
     loading: observerLoading,
     error: observerError,
-  } = useAdminsByType('observer');
+  } = useAdminsByType(roleTypeMap['observer']);
+
   const {
     admins: supervisors,
     loading: supervisorLoading,
     error: supervisorError,
-  } = useAdminsByType('supervisor');
+  } = useAdminsByType(roleTypeMap['supervisor']);
+
   const {
     admins: delegates,
     loading: delegateLoading,
     error: delegateError,
-  } = useAdminsByType('delegates');
+  } = useAdminsByType(roleTypeMap['delegates']);
+
+  // const {
+  //   admins: observers,
+  //   loading: observerLoading,
+  //   error: observerError,
+  // } = useAdminsByType('observer');
+  // const {
+  //   admins: supervisors,
+  //   loading: supervisorLoading,
+  //   error: supervisorError,
+  // } = useAdminsByType('supervisor');
+  // const {
+  //   admins: delegates,
+  //   loading: delegateLoading,
+  //   error: delegateError,
+  // } = useAdminsByType('delegates');
 
   // Fetch total count of admins for pagination based on adminType
   useEffect(() => {

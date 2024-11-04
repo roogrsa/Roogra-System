@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 interface SidebarLinkProps {
   to: string;
   isOpen: boolean;

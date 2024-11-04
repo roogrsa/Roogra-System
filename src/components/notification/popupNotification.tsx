@@ -1,9 +1,12 @@
+//
 import { useTranslation } from 'react-i18next';
 import { IoClose } from 'react-icons/io5';
 import { toast, ToastContainer } from 'react-toastify';
 import { Formik, FormikHelpers, FormikProps, Form, Field } from 'formik';
 import { FaAsterisk } from 'react-icons/fa';
 import axiosInstance from '../../axiosConfig/instanc';
+import { useSelector } from 'react-redux';
+import { selectLanguage } from '../../store/slices/language';
 
 interface EditPopupProps {
   name?: string;
@@ -19,6 +22,9 @@ interface NotificationValues {
   date: string;
   customers: boolean;
   advertisers: boolean;
+  delegates: boolean;
+  observers: boolean;
+  supervisors: boolean;
 }
 
 const AddNotification = ({
@@ -37,7 +43,11 @@ const AddNotification = ({
     date: '',
     customers: false,
     advertisers: false,
+    delegates: false,
+    observers: false,
+    supervisors: false,
   };
+
   const handleNotificationSubmit = async (
     values: NotificationValues,
     { setSubmitting }: FormikHelpers<NotificationValues>,
@@ -50,22 +60,31 @@ const AddNotification = ({
         .toLocaleDateString('en-CA')
         .replace(/-/g, '/');
 
-      const { title, message, customers, advertisers } = values;
-      const admin_group = '010'; // Ensure this is what the API expects
+      const {
+        title,
+        message,
+        customers,
+        advertisers,
+        delegates,
+        observers,
+        supervisors,
+      } = values;
+
+      // Construct admin_group as a string of '1' and '0' based on the checkbox values
+      const admin_group = `${delegates ? '1' : '0'}${observers ? '1' : '0'}${
+        supervisors ? '1' : '0'
+      }`;
 
       // Construct payload
       const payload = {
         title,
         message,
         expiry_date: formattedDate,
-
         customers,
         advertisers,
-
         admin_group,
       };
-
-      //   console.log('Payload:', payload);
+      console.log(payload);
 
       const res = await axiosInstance.post(`api/notifications`, payload);
 
@@ -82,8 +101,10 @@ const AddNotification = ({
     }
   };
 
+  const language = useSelector(selectLanguage);
+
   return (
-    <div>
+    <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {isModalOpen && (
         <div
           id={`popup-modal_add_${id}`}
@@ -91,7 +112,6 @@ const AddNotification = ({
         >
           <div className="relative p-4 w-full max-w-md max-h-full">
             <div className="relative bg-secondaryBG-light rounded-lg shadow dark:bg-secondaryBG-dark flex flex-col">
-              {/* Close Button */}
               <div className="flex justify-end p-3">
                 <button
                   onClick={closeModal}
@@ -102,7 +122,6 @@ const AddNotification = ({
                 </button>
               </div>
 
-              {/* Form Content */}
               <div className="p-4 md:p-5">
                 <Formik
                   initialValues={initialValues}
@@ -110,8 +129,7 @@ const AddNotification = ({
                 >
                   {({ isSubmitting }: FormikProps<NotificationValues>) => (
                     <Form className="flex flex-col gap-4">
-                      {/* Title Field */}
-                      <div className="flex flex-col ">
+                      <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
                           {t('notifications.popup.title')}
                           <span>
@@ -128,8 +146,7 @@ const AddNotification = ({
                         />
                       </div>
 
-                      {/* Message Field */}
-                      <div className="flex flex-col ">
+                      <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
                           {t('notifications.popup.message')}
                           <span>
@@ -146,8 +163,7 @@ const AddNotification = ({
                         />
                       </div>
 
-                      {/* Expiry Date Field */}
-                      <div className="flex flex-col ">
+                      <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
                           {t('notifications.popup.expiry_date')}
                           <span>
@@ -161,8 +177,29 @@ const AddNotification = ({
                         />
                       </div>
 
-                      {/* Checkbox Fields */}
-                      <div className="flex gap-8 ">
+                      {/* Admin Group Checkboxes */}
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center">
+                          <label className="font-medium text-black dark:text-white mr-2">
+                            Delegates
+                          </label>
+                          <Field type="checkbox" name="delegates" />
+                        </div>
+                        <div className="flex items-center">
+                          <label className="font-medium text-black dark:text-white mr-2">
+                            Observers
+                          </label>
+                          <Field type="checkbox" name="observers" />
+                        </div>
+                        <div className="flex items-center">
+                          <label className="font-medium text-black dark:text-white mr-2">
+                            Supervisors
+                          </label>
+                          <Field type="checkbox" name="supervisors" />
+                        </div>
+                      </div>
+
+                      <div className="flex gap-8">
                         <div className="flex items-center">
                           <label className="font-medium text-black dark:text-white mr-2">
                             {t('notifications.popup.customers')}
@@ -177,7 +214,6 @@ const AddNotification = ({
                         </div>
                       </div>
 
-                      {/* Submit and Cancel Buttons */}
                       <div className="flex justify-between mt-5">
                         <button
                           type="submit"
