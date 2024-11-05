@@ -60,7 +60,7 @@ const SubscriptionsCat: React.FC = () => {
         setIsAddModalOpen(true);
     };
     const openGenericParentPopup = (category: SubscriptionsCategory | null) => {
-        if (category ) {
+        if (category) {
             setSelectedCategory(category);
         } else {
             setSelectedCategory(null);
@@ -81,9 +81,9 @@ const SubscriptionsCat: React.FC = () => {
     useEffect(() => {
         displaySubscriptionsCat();
     }, []);
-    const changeOrder = async (id:number,order:number) => {
+    const changeOrder = async (id: number, order: number) => {
         try {
-            const res = await axiosInstance.patch(`/api/categories`,{categories:[{ id, order }]});
+            const res = await axiosInstance.patch(`/api/categories`, { categories: [{ id, order }] });
             console.log(res);
             toast.success(t('categoriesPage.categoriesToast'))
         } catch (error: any) {
@@ -103,8 +103,8 @@ const SubscriptionsCat: React.FC = () => {
         const reorderedSubcategories = Array.from(subscriptionscategories[categoryIndex].sub);
         const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
         reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
-        changeOrder(movedSubcategory.category_id,destination.index+1)
-console.log(destination.index);
+        changeOrder(movedSubcategory.category_id, destination.index + 1)
+        console.log(destination.index);
 
         const updatedCategories = [...subscriptionscategories];
         updatedCategories[categoryIndex].sub = reorderedSubcategories;
@@ -125,8 +125,8 @@ console.log(destination.index);
             <div className="flex justify-between">
                 <Breadcrumb pageName={t('categoriesPage.catSubscriptions.label')} breadcrumbLinks={breadcrumbLinks} />
                 <Link to={``}>
-                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" 
-                    onClick={() => openGenericParentPopup(null)}/>
+                    <CgAddR className="text-3xl text-Input-TextGreen" role="button"
+                        onClick={() => openGenericParentPopup(null)} />
                 </Link>
             </div>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -141,7 +141,7 @@ console.log(destination.index);
                                     className="w-full text-[20px] text-left rtl:text-right mb-7"
                                 >
                                     <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
-                                    <tr className="px-2 py-2 text-[18px] font-[400]">
+                                        <tr className="px-2 py-2 text-[18px] font-[400]">
                                             <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
                                             <th scope="col" className="px-6 py-3">
                                                 <img src={cat.parent_image} width={100} alt="" />
@@ -176,13 +176,15 @@ console.log(destination.index);
                                             />
                                         }
                                         {selectedCategory && (
-                                            <EditAddPopup
+                                            <EditAddImgPopup
+                                                isPaid={true}
                                                 name={selectedCategory.category_name}
                                                 id={selectedCategory.parent_id}
                                                 url={`categories`}
                                                 isModalOpen={isAddParentModalOpen}
                                                 setIsModalOpen={setIsAddParentModalOpen}
                                                 display={displaySubscriptionsCat}
+                                                imageUrl={selectedCategory.parent_image}
                                             />
                                         )}
                                     </thead>
@@ -270,6 +272,7 @@ console.log(destination.index);
             }
             {!selectedCategory &&
                 <EditAddImgPopup
+                    isPaid={true}
                     url={`categories`}
                     setIsModalOpen={setIsAddParentModalOpen}
                     isModalOpen={isAddParentModalOpen}

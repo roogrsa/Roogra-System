@@ -7,10 +7,8 @@ import {
     Formik,
     FormikHelpers,
     FormikProps,
-    Form,
-    Field
+    Form
 } from 'formik';
-import { FaAsterisk } from "react-icons/fa";
 import InputText from "../form/InputText";
 import ImageBase from "./ImageBase";
 interface SettingsPopupProps {
@@ -42,7 +40,7 @@ const BannerPopup = ({ name, id, isModalOpen, bannerUrl, duration, image, setIsM
         period: duration || 0,
         image: image || ''
     };
-    console.log(image);
+    // console.log(image);
     
     const handleCategorySubmit = async (
         values: BannerValues,
@@ -54,14 +52,14 @@ const BannerPopup = ({ name, id, isModalOpen, bannerUrl, duration, image, setIsM
                     headers: { 'Content-Type': 'application/json' },
             });
                 console.log(res);
-                console.log(`id`);
+                // console.log(`id`);
                 toast.success(` ${name} ${t('popup.edit_toast')}`);
             } else if (!id) {
                 const res = await axiosInstance.post(`api/ads`, values, {
                     headers: { 'Content-Type': 'application/json' },
             });
                 console.log(res);
-                console.log(`!id`);
+                // console.log(`!id`);
                 toast.success(`${t('popup.add_toast')}`);
             }
             display()
