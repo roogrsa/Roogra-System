@@ -273,6 +273,23 @@
             "actions":"Show",
             "speakerTo":"speaker to"
         }
+    },"notifications": {
+        "popup": {
+            "add":"Add New Notification",
+            "expiry_date":"expiry_date",
+            "placeholderMessage":" Enter Notification message here",
+            "message":"Notification Message",
+            "placeholderTitle":"Enter Notification Title here",
+            "title":"Notification Title",
+            "save":"Save",
+            "cancel":"Cancel",
+            "customers":"Customers",
+            "advertisers":"Advertisers",
+            "successfully":"Notification Added successfully",
+    "error":"Error in adding notification"
+
+
+        }
     },
     "contact-us":{
         "contact-us":"Contact Us",

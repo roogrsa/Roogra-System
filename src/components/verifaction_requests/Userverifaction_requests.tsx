@@ -40,27 +40,6 @@ const VerifactionRequestByUserid = () => {
 
   // State to handle dynamic status
   const [status, setStatus] = useState('processing');
-  //   const [currentPage, setCurrentPage] = useState(0);
-  //   const [verificationRequestCount, setverificationRequestCount] = useState(0);
-  //   const [Count, setCount] = useState(0);
-
-  //
-  //   useEffect(() => {
-  //     const fetchUsersCount = async () => {
-  //       try {
-  //         const response = await axiosInstance.get(
-  //           `/api/verification_request/status/${status}/count`,
-  //         );
-  //         setverificationRequestCount(response.data.data.count / 8);
-  //         setCount(response.data.data.count);
-  //         console.log(status, response.data.data.count);
-  //       } catch (err) {}
-  //     };
-  //     fetchUsersCount();
-  //   }, [Count, status]);
-  //   const totalPages = Math.ceil(verificationRequestCount);
-
-  //
 
   const { data, loading, error } = VerificationRequestsByUserid(
     status,
@@ -69,8 +48,8 @@ const VerifactionRequestByUserid = () => {
 
   // console.log(data);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   //
 
   const headers = [
@@ -451,12 +430,6 @@ const VerifactionRequestByUserid = () => {
           </div>,
         ]}
       />
-
-      {/* <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      /> */}
     </div>
   );
 };

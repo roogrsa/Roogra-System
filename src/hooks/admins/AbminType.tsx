@@ -24,7 +24,7 @@ interface AdminResponse {
   data: Admin[];
 }
 
-const useAdminsByType = (adminType: string) => {
+const useAdminsByType = (adminType: number) => {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

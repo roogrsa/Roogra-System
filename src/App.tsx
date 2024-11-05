@@ -38,6 +38,7 @@ import Home from './pages/home';
 import verifaction_requestByStatus from './pages/verifaction_request/verifaction_requestByStatus';
 import ChatReport from './pages/Reports/ChatReport';
 import ProductReport from './pages/Reports/ProductReport';
+import BlockList from './pages/BlockList/BlockList';
 import Inquiries from './pages/contactUs/Inquiries';
 import Issues from './pages/contactUs/Issues';
 import Suggestions from './pages/contactUs/Suggestions';
@@ -344,6 +345,17 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={ChatReport}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: '/Block',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={BlockList}
               hasPermission={storedPermissions[5]}
             />
           </Guard>

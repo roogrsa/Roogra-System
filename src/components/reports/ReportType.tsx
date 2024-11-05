@@ -97,19 +97,33 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
               content: datePart,
               className: 'flex justify-center ',
             },
-            {
-              key: 'actions',
-              content: (
-                <div className="bg-EditIconBg rounded-md ">
-                  <img
-                    src={EditIconSrc}
-                    className="w-6 h-6 text-center p-1 cursor-pointer"
-                    onClick={() => handleEditClick(item.product_id)}
-                  />
-                </div>
-              ),
-              className: 'flex justify-center ',
-            },
+            reportType === 'product'
+              ? {
+                  key: 'actions',
+                  content: (
+                    <div className="bg-EditIconBg rounded-md ">
+                      <img
+                        src={EditIconSrc}
+                        className="w-6 h-6 text-center p-1 cursor-pointer"
+                        onClick={() => handleEditClick(item.product_id)}
+                      />
+                    </div>
+                  ),
+                  className: 'flex justify-center ',
+                }
+              : {
+                  key: 'actions',
+                  content: (
+                    <div className="bg-EditIconBg rounded-md ">
+                      <img
+                        src={EditIconSrc}
+                        className="w-6 h-6 text-center p-1 cursor-pointer"
+                        // onClick={'mariem'}
+                      />
+                    </div>
+                  ),
+                  className: 'flex justify-center ',
+                },
           ],
         };
       })

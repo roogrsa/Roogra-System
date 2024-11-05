@@ -303,6 +303,26 @@
             "actions":"عرض",
             "speakerTo":"المتحدث إلية"
         }
+    
+
+    },"notifications": {
+  
+        "popup": {
+            "add":"إضافة إشعار",
+
+    "expiry_date": "تاريخ الانتهاء",
+    "placeholderMessage": "أدخل رسالة الإشعار هنا",
+    "message": "رسالة الإشعار",
+    "placeholderTitle": "أدخل عنوان الإشعار هنا",
+    "title": "عنوان الإشعار",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "customers": "الزبائن",
+    "advertisers": "المعلنين",
+    "successfully":"تم إضافة الإشعار بنجاح",
+    "error":"خطأ أثناء الاضافه"
+}
+
     },
     "contact-us":{
         "contact-us":"التواصل",
