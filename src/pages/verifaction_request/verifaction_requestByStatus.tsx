@@ -19,6 +19,7 @@ import useEditVerificationRequest from '../../hooks/category_subscription/useEdi
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import handleEditVerificationRequest from '../../hooks/verifaction_requests/handleEditVerificationReq';
 import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByStatus';
+import useToggleVerification from '../../hooks/category_subscription/useUpdateVerification';
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
@@ -54,7 +55,7 @@ const verifaction_requestByStatus = () => {
         );
         setverificationRequestCount(response.data.data.count / 8);
         setCount(response.data.data.count);
-        console.log(status, response.data.data.count);
+        // console.log(status, response.data.data.count);
       } catch (err) {}
     };
     fetchUsersCount();
@@ -68,6 +69,7 @@ const verifaction_requestByStatus = () => {
     currentPage,
   );
 
+  const { toggleVerificationRequired } = useToggleVerification();
   // console.log(data);
 
   // if (loading) return <p>Loading...</p>;
@@ -213,30 +215,28 @@ const verifaction_requestByStatus = () => {
             },
             {
               key: 'verification_required',
-              content:
-                item.verification_required === 0 ? (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value="لا"
-                    widthClass="w-10"
-                    border="border-2 border-Input-TextRed text-Input-TextRed"
-                    extraClass="bg-Input-red rounded-xl text-center text-sm"
-                  />
-                ) : (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value="نعم"
-                    widthClass="w-10"
-                    border="border-2 border-Input-TextGreen text-Input-TextGreen"
-                    extraClass="bg-Input-green rounded-xl text-center text-sm"
-                  />
-                ),
+              content: (
+                <button
+                  onClick={() =>
+                    toggleVerificationRequired(
+                      item.verification_request_id,
+                      item.verification_required,
+                    )
+                  }
+                  // disabled={updateLoading}
+                  className={`w-10 rounded-xl text-center text-sm ${
+                    item.verification_required
+                      ? 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
+                      : 'bg-Input-red text-Input-TextRed border-Input-TextRed'
+                  }`}
+                >
+                  {item.verification_required ? 'نعم' : 'لا'}
+                </button>
+              ),
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'transaction_image',
+              key: 'image',
               content:
                 item.STATUS === 'processing' ? (
                   <ImageWithFullscreen
@@ -254,7 +254,7 @@ const verifaction_requestByStatus = () => {
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'created_at',
+              key: 'date',
               content: `${datePart}`,
               className: 'flex justify-center text-sm',
             },

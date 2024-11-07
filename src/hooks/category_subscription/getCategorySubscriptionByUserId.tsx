@@ -73,7 +73,7 @@ const CategorySubscriptionsByUserid = (
           `/api/category_subscription/users/${id}/status/${status}`,
         );
         setData(response.data.data);
-        console.log(response.data.data);
+        // console.log(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
