@@ -19,6 +19,7 @@ interface SubscriptionsCategory {
     category_name: string;
     parent_image: string;
     sub: {
+        parent_sort_order: number;
         category_id: number;
         category_name: string;
     }[]
@@ -67,7 +68,6 @@ const SubscriptionsCat: React.FC = () => {
         }
         setIsAddParentModalOpen(true);
     };
-
     const displaySubscriptionsCat = async () => {
         try {
             const res = await axiosInstance.get(`/api/categories/extensive`);
@@ -80,6 +80,7 @@ const SubscriptionsCat: React.FC = () => {
     };
     useEffect(() => {
         displaySubscriptionsCat();
+        // setSubscriptionscategories(subscriptionscategories.sort((a, b) => a.parent_sort_order - b.parent_sort_order)    );
     }, []);
     const changeOrder = async (id: number, order: number) => {
         try {
@@ -189,14 +190,16 @@ const SubscriptionsCat: React.FC = () => {
                                         )}
                                     </thead>
                                     {expandedCategoryId === cat.parent_id &&
-                                        <Droppable droppableId={`droppable-${cat.parent_id}`}>
+                                        <Droppable droppableId={`droppable-${cat.sub}`}>
                                             {(provided) => (
                                                 <tbody
                                                     {...provided.droppableProps}
                                                     ref={provided.innerRef}
                                                 >
                                                     {cat.sub.length ?
-                                                        cat.sub.map((sub, index) => (
+                                                        cat.sub.
+                                                        // sort((a:any, b:any) => a.parent_sort_order - b.parent_sort_order).
+                                                        map((sub, index) => (
                                                             <Draggable key={`sub-${index}`} draggableId={`sub-${sub.category_id}-${index}`} index={index}>
                                                                 {(provided, snapshot) => (
                                                                     <tr
@@ -209,7 +212,7 @@ const SubscriptionsCat: React.FC = () => {
                                                                             dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                                     >
-                                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
+                                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {sub.parent_sort_order}</td>
                                                                         <td className="px-2 py-4"></td>
                                                                         <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
                                                                             {sub.category_name}

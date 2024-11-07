@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 interface CategoryMap {
     map_category_id: number;
     name: string;
+    sort_order:number;
 };
 
 const CategoriesMap: React.FC = () => {
@@ -53,7 +54,7 @@ const CategoriesMap: React.FC = () => {
         try {
             const res = await axiosInstance.get(`/api/map-categories?limit=8&page=${currentPage}`);
             console.log(res.data.data);
-            setCategoriesMap(res.data.data)
+            setCategoriesMap(res.data.data.sort((a:any, b:any) => a.sort_order - b.sort_order))
         } catch (error: any) {
             console.error(error);
             console.log(error?.response?.data?.message);
@@ -83,7 +84,7 @@ const CategoriesMap: React.FC = () => {
         console.log(destination.droppableId);
         console.log(destination.index);
         console.log(movedCategory);
-        changeOrder(movedCategory.map_category_id, destination.index + 1)
+        changeOrder(movedCategory.map_category_id, destination.index)
 
     };
     const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }]
@@ -131,7 +132,7 @@ const CategoriesMap: React.FC = () => {
                                                             dark:border-secondaryBG-light
                                                     ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                                                     `}>
-                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
+                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.sort_order}</td>
                                                         <td
                                                             scope="row"
                                                             className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap
