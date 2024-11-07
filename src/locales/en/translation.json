@@ -56,6 +56,15 @@
         "search": "Type to search..."
     },
     "profile": {
+        "detials":"Detials",
+        "info":"Information",
+        "products":"Products",
+        "banList":"Ban List",
+        "contactUs":"Contact Us",
+        "ticket":"Tickets",
+        "chats":"chats",
+        "reprts":"Reprts",
+
            "userDetials": {
         "id": "ID",
         "name": "User Name",
@@ -68,6 +77,11 @@
         "regDate": "Reg-Date",
         "mobileconfirm": " Mobile Confirm",
         "emailleconfirm": "Emaille Confirm"
+    },
+    "UserInfo":{
+        "follower": "Followers",
+        "rates": "Rates",
+        "bio": "Bio"
     }
     },
     "admins": {
@@ -159,7 +173,18 @@
             "pageNameUnPaid": "UnPaid",
             "pageNamePaid": "Paid",
             "pageNameAll": "All"
-        }
+        },
+
+        
+        "id":"ID",
+        "name":"Name",
+        "date":"Date",
+        "time":"Time",
+        "category":"Category",
+        "ProdName":"Product",
+        "photo":"Image",
+        "Edit":"Show",
+        "BanStatus":"Status"
     },
     "unauthorized": {
         "title": "sorry, You are not authorized",

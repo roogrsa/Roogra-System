@@ -219,7 +219,7 @@ const ProductsType = ({ ProductsSType }) => {
         pageName={
           ProductsSType == 'paid'
             ? t('products.label.pageNamePaid')
-            : t('products.label.pageNameAll')
+            : t('products.label.pageNameUnPaid')
         }
       />
       {banPrdError && <p>Error banning product: {banPrdError}</p>}

@@ -15,6 +15,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import useFollowers from '../../../hooks/useUserFollowers';
 import useUserRates from '../../../hooks/useRates';
 import { User } from '../../../types/user';
+import { useTranslation } from 'react-i18next';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
@@ -28,6 +29,7 @@ interface ProfileAccordionProps {
 }
 const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
   //   console.log(user);
+  const { t } = useTranslation();
 
   const { handleAction, loading: actionLoading } = useHandleAction();
   const { banUser, loading: banUserLoading, error: banError } = useBanUser();
@@ -277,7 +279,11 @@ const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
   return (
     <div>
       <AccordionHeader2
-        titles={['عدد المتابعين', 'عدد التقييم', 'نبذة']}
+        titles={[
+          t('profile.UserInfo.follower'),
+          t('profile.UserInfo.rates'),
+          t('profile.UserInfo.bio'),
+        ]}
         children={[
           <React.Fragment key="followers-section">
             {/* <NotFoundSection data={logsFollowers} /> */}
