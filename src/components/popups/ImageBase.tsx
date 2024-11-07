@@ -10,6 +10,7 @@ interface ImageBaseProps {
 export default function ImageBase({ imageUrl, setFieldValue, name, label }: ImageBaseProps) {
     const [imagePreview, setImagePreview] = useState<string | null>(imageUrl || null);
     console.log(imagePreview);
+    console.log(imageUrl);
 
     const convertToBase64 = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
@@ -33,6 +34,7 @@ export default function ImageBase({ imageUrl, setFieldValue, name, label }: Imag
             }
         }
     };
+    
     return (
         <div className="mx-3 flex justify-around">
                     <label htmlFor={name} className="flex mb-2 text-lg font-semibold text-gray-900 dark:text-white">{label} 
