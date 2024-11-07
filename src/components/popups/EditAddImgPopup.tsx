@@ -35,7 +35,7 @@ const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, 
   const closeModal = () => setIsModalOpen(false);
   const [imagePreview, setImagePreview] = useState<string | null>(imageUrl || null);
   console.log(imagePreview);
-  const initialValues: CategoryValues = { name: name || '', thumbnail: imageUrl || null, isPaid: isPaid ? "true" : "" };
+  const initialValues: CategoryValues = { name: name || '', thumbnail: imageUrl || null, isPaid: isPaid ? "1" : "0" };
 
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {

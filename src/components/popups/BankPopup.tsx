@@ -106,9 +106,11 @@ const BankPopup = ({
                                 >
                                     {({
                                         isSubmitting,
+                                        values,
                                         setFieldValue,
                                     }: FormikProps<BannerValues>) => (
                                         <Form>
+                                            {/* {console.log(values)} */}
                                             <InputText
                                                 type={`text`}
                                                 name={`bank_account_name`}

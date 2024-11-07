@@ -47,7 +47,7 @@ export default function BanksSetting() {
         try {
             const res = await axiosInstance.get(`/api/banks`);
             console.log(res.data);
-            // setBanks(res.data.data)
+            setBanks(res.data.data)
         } catch (error: any) {
             console.error(error);
             console.log(error?.response?.data?.message);
