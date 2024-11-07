@@ -16,6 +16,7 @@ interface Category {
   parent_id: number;
   category_name: string;
   parent_image: string;
+  parent_sort_order:number;
 };
 
 const MainCategories: React.FC = () => {
@@ -55,7 +56,7 @@ const MainCategories: React.FC = () => {
     const [movedCategory] = reorderedCategories.splice(source.index, 1);
     reorderedCategories.splice(destination.index, 0, movedCategory);
     setCategories(reorderedCategories);
-    changeOrder(movedCategory.parent_id,destination.index+1)
+    changeOrder(movedCategory.parent_id,destination.index)
     console.log(movedCategory);
     
   };
@@ -63,7 +64,8 @@ const MainCategories: React.FC = () => {
     try {
       const res = await axiosInstance.get(`/api/categories?page=${currentPage}&limit=8`);
       console.log(res.data.data);
-      setCategories(res.data.data)
+      // console.log(res.data.data.sort((a:Category, b:Category) => a.parent_sort_order - b.parent_sort_order));
+      setCategories(res.data.data.sort((a:Category, b:Category) => a.parent_sort_order - b.parent_sort_order))
     } catch (error: any) {
       console.error(error);
       console.log(error?.response?.data?.message);
@@ -133,7 +135,7 @@ const MainCategories: React.FC = () => {
                           ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
                           `}
                           >
-                            <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
+                            <td className="px-2 py-4 font-[400] text-[17px]">#{index+1 } {cat.parent_sort_order}</td>
                             <td
                               scope="row"
                               className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white"
