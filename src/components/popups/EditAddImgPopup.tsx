@@ -16,6 +16,7 @@ import { PiUploadSimpleBold } from "react-icons/pi";
 interface EditPopupProps {
   name?: string;
   id?: number;
+  isPaid?: boolean;
   url: string;
   isModalOpen: boolean;
   setIsModalOpen: (isModalOpen: boolean) => void;
@@ -26,14 +27,15 @@ interface EditPopupProps {
 interface CategoryValues {
   name: string;
   thumbnail: string | null;
+  isPaid: string
 }
 
-const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, imageUrl }: EditPopupProps) => {
+const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, imageUrl, isPaid }: EditPopupProps) => {
   const { t } = useTranslation();
   const closeModal = () => setIsModalOpen(false);
   const [imagePreview, setImagePreview] = useState<string | null>(imageUrl || null);
   console.log(imagePreview);
-  const initialValues: CategoryValues = { name: name || '', thumbnail: imageUrl || null };
+  const initialValues: CategoryValues = { name: name || '', thumbnail: imageUrl || null, isPaid: isPaid ? "true" : "" };
 
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
