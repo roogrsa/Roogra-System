@@ -1,17 +1,11 @@
-import { useTranslation } from "react-i18next";
-import { IoClose } from "react-icons/io5";
-import axiosInstance from "../../axiosConfig/instanc";
-import { toast, ToastContainer } from "react-toastify";
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  Form,
-  Field
-} from 'formik';
-import { FaAsterisk } from "react-icons/fa";
-import { useState } from "react";
-import { PiUploadSimpleBold } from "react-icons/pi";
+import { useTranslation } from 'react-i18next';
+import { IoClose } from 'react-icons/io5';
+import axiosInstance from '../../axiosConfig/instanc';
+import { toast, ToastContainer } from 'react-toastify';
+import { Formik, FormikHelpers, FormikProps, Form, Field } from 'formik';
+import { FaAsterisk } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { PiUploadSimpleBold } from 'react-icons/pi';
 
 interface EditPopupProps {
   name?: string;
@@ -27,16 +21,35 @@ interface EditPopupProps {
 interface CategoryValues {
   name: string;
   thumbnail: string | null;
-  isPaid: string
+  isPaid: string;
 }
 
-const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, imageUrl, isPaid }: EditPopupProps) => {
+const EditAddImgPopup = ({
+  name,
+  id,
+  url,
+  isModalOpen,
+  setIsModalOpen,
+  display,
+  imageUrl,
+  isPaid,
+}: EditPopupProps) => {
   const { t } = useTranslation();
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    imageUrl || null,
+  );
   const closeModal = () => setIsModalOpen(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(imageUrl || null);
   console.log(imagePreview);
-  const initialValues: CategoryValues = { name: name || '', thumbnail: imageUrl || null, isPaid: isPaid ? "true" : "" };
-
+  const initialValues: CategoryValues = {
+    name: name || '',
+    thumbnail: imagePreview,
+    isPaid: isPaid ? '1' : '0',
+  };
+  useEffect(() => {
+    if (imageUrl) {
+      setImagePreview(imageUrl);
+    }
+  }, [imageUrl]);
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -48,19 +61,24 @@ const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, 
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void
+    setFieldValue: (field: string, value: any) => void,
   ) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const base64String = await convertToBase64(file);
-      setFieldValue("thumbnail", base64String);
-      setImagePreview(base64String);
+      if (base64String) {
+        setFieldValue('thumbnail', base64String);
+        setImagePreview(base64String);
+      }
+      console.log(base64String);
     }
+    
   };
+console.log(imagePreview);
 
   const handleCategorySubmit = async (
     values: CategoryValues,
-    { setSubmitting }: FormikHelpers<CategoryValues>
+    { setSubmitting }: FormikHelpers<CategoryValues>,
   ) => {
     try {
       setSubmitting(true);
@@ -84,7 +102,7 @@ const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, 
       closeModal();
     } catch (error: any) {
       console.error(error);
-      toast.error(error?.response?.data?.message || "An error occurred");
+      toast.error(error?.response?.data?.message || 'An error occurred');
     } finally {
       setSubmitting(false);
     }
@@ -110,17 +128,27 @@ const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, 
               </button>
               <div className="p-4 md:p-5 text-center">
                 <h3 className="mb-5 text-2xl font-normal text-gray-500 dark:text-secondaryBG-light">
-                  {id ? ` ${t('popup.edit_title')} ${name} ` : t('popup.add_title')}
+                  {id
+                    ? ` ${t('popup.edit_title')} ${name} `
+                    : t('popup.add_title')}
                 </h3>
                 <Formik
                   initialValues={initialValues}
                   onSubmit={handleCategorySubmit}
                 >
-                  {({ isSubmitting, setFieldValue }: FormikProps<CategoryValues>) => (
+                  {({
+                    isSubmitting,
+                    values,
+                    setFieldValue,
+                  }: FormikProps<CategoryValues>) => (
                     <Form>
+                      {/* {console.log(values)} */}
                       <div className="mb-4">
                         <label className="mb-2.5 font-medium text-black dark:text-white flex">
-                          {t('popup.category_name')} <span><FaAsterisk className='text-[8px] text-[#E02828]' /></span>
+                          {t('popup.category_name')}{' '}
+                          <span>
+                            <FaAsterisk className="text-[8px] text-[#E02828]" />
+                          </span>
                         </label>
                         <div className="">
                           <Field
@@ -140,22 +168,27 @@ const EditAddImgPopup = ({ name, id, url, isModalOpen, setIsModalOpen, display, 
                                   htmlFor="thumbnail-upload"
                                   className="cursor-pointer rounded-md bg-white font-semibold text-indigo-600 
                                 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 
-                                hover:text-indigo-500">
+                                hover:text-indigo-500"
+                                >
                                   <input
                                     id="thumbnail-upload"
                                     name="thumbnail"
                                     type="file"
                                     className="sr-only"
-                                    onChange={(event) => handleFileChange(event, setFieldValue)}
+                                    onChange={(event) =>
+                                      handleFileChange(event, setFieldValue)
+                                    }
                                   />
-                                  <span><PiUploadSimpleBold className="text-3xl text-center m-auto" /></span>
+                                  <span>
+                                    <PiUploadSimpleBold className="text-3xl text-center m-auto" />
+                                  </span>
                                 </label>
                               </div>
                             </div>
                           </div>
                           {imagePreview && (
                             <div className="m-5 text-Input-borderGreen">
-                              <p>Image uploaded </p>
+                              <img src={imagePreview} width={80} alt="" />
                             </div>
                           )}
                         </div>

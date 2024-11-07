@@ -16,7 +16,7 @@ interface SettingsPopupProps {
     setIsModalOpen: (isModalOpen: boolean) => void;
     display: () => Promise<void>;
 }
-interface BannerValues {
+interface BankValues {
     bank_name: string;
     bank_account_num: string;
     bank_account_name: string;
@@ -39,7 +39,7 @@ const BankPopup = ({
 
     const { t } = useTranslation();
     const closeModal = () => setIsModalOpen(false);
-    const initialValues: BannerValues = {
+    const initialValues: BankValues = {
         bank_name: bank_name || '',
         bank_account_num: bank_account_num || '',
         bank_account_name: bank_account_name || '',
@@ -49,8 +49,8 @@ const BankPopup = ({
     console.log(bank_img);
 
     const handleCategorySubmit = async (
-        values: BannerValues,
-        { setSubmitting }: FormikHelpers<BannerValues>,
+        values: BankValues,
+        { setSubmitting }: FormikHelpers<BankValues>,
     ) => {
         try {
             setSubmitting(true);
@@ -106,9 +106,11 @@ const BankPopup = ({
                                 >
                                     {({
                                         isSubmitting,
+                                        values,
                                         setFieldValue,
-                                    }: FormikProps<BannerValues>) => (
+                                    }: FormikProps<BankValues>) => (
                                         <Form>
+                                            {/* {console.log(values)} */}
                                             <InputText
                                                 type={`text`}
                                                 name={`bank_account_name`}

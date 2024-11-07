@@ -47,7 +47,7 @@ export default function BanksSetting() {
         try {
             const res = await axiosInstance.get(`/api/banks`);
             console.log(res.data);
-            // setBanks(res.data.data)
+            setBanks(res.data.data)
         } catch (error: any) {
             console.error(error);
             console.log(error?.response?.data?.message);
@@ -96,7 +96,7 @@ export default function BanksSetting() {
                                 {bank.bank_account_num}</td>
                             <td className="px-2 py-2 font-[400] text-[17px] text-center">{bank.bank_ipan}</td>
                             <td className="px-2 py-2 font-[400] text-[17px]">
-                                <img src={bank.bank_img} width={100} alt={bank.bank_img} className="m-auto" />
+                                <img src={bank.bank_img} width={100} alt={bank.bank_name} className="m-auto" />
                             </td>
                             <td className="px-2 py-2 font-[400] text-[17px] m-auto" onClick={() => openAddBank(bank)}>
                                 <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
