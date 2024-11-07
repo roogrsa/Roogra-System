@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useCategorySubscriptionsByStatus from '../../hooks/category_subscription/CatSubscriptionByStatus';
 import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
 import ReusableInput from '../../components/products/ReusableInput';
@@ -9,17 +8,17 @@ import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
 import { useTranslation } from 'react-i18next';
-
 import Pagination from '../../components/pagination/Pagination';
-
 import axiosInstance from '../../axiosConfig/instanc';
-// import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
 import PeriodInput from '../category_subscription/PeriodInput';
 import useEditVerificationRequest from '../../hooks/category_subscription/useEditVerficationReq';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import handleEditVerificationRequest from '../../hooks/verifaction_requests/handleEditVerificationReq';
 import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByStatus';
-import useToggleVerification from '../../hooks/category_subscription/useUpdateVerification';
+import DeletePopup from '../../components/popups/DeletePopup';
+import useToggleVerification from '../../hooks/verifaction_requests/useUpdateVerification';
+import { ToastContainer } from 'react-toastify';
+
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
@@ -42,10 +41,18 @@ const verifaction_requestByStatus = () => {
 
   // State to handle dynamic status
   const [status, setStatus] = useState('processing');
+  const [refresh, setRefresh] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(0);
   const [verificationRequestCount, setverificationRequestCount] = useState(0);
   const [Count, setCount] = useState(0);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteName, setDeleteName] = useState<string>('');
+  //
+  const display = async () => {
+    // setRefresh(true);
+  };
   //
   useEffect(() => {
     const fetchUsersCount = async () => {
@@ -67,14 +74,16 @@ const verifaction_requestByStatus = () => {
   const { data, loading, error } = useVerificationRequestsByStatus(
     status,
     currentPage,
+    // refresh,
   );
 
+  const handleOpenDeleteModal = (id: number, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+    setIsModalOpen(true);
+  };
   const { toggleVerificationRequired } = useToggleVerification();
   // console.log(data);
-
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
-  //
 
   const headers = [
     {
@@ -163,7 +172,8 @@ const verifaction_requestByStatus = () => {
   ];
 
   //
-
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   const logs = Array.isArray(data)
     ? data.map((item) => {
         const createdAtDate = new Date(item.created_at);
@@ -217,20 +227,33 @@ const verifaction_requestByStatus = () => {
               key: 'verification_required',
               content: (
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     toggleVerificationRequired(
                       item.verification_request_id,
                       item.verification_required,
-                    )
-                  }
+                    );
+                    // setStatus('approved');
+                    // setStatus('rejected');
+                    setRefresh(!refresh);
+                  }}
                   // disabled={updateLoading}
                   className={`w-10 rounded-xl text-center text-sm ${
                     item.verification_required
-                      ? 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
-                      : 'bg-Input-red text-Input-TextRed border-Input-TextRed'
+                      ? !refresh
+                        ? 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
+                        : 'bg-Input-red text-Input-TextRed border-Input-TextRed'
+                      : !refresh
+                      ? 'bg-Input-red text-Input-TextRed border-Input-TextRed'
+                      : 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
                   }`}
                 >
-                  {item.verification_required ? 'نعم' : 'لا'}
+                  {item.verification_required
+                    ? !refresh
+                      ? 'نعم'
+                      : 'لا'
+                    : !refresh
+                    ? 'لا'
+                    : 'نعم'}
                 </button>
               ),
               className: 'flex justify-center text-sm',
@@ -388,14 +411,12 @@ const verifaction_requestByStatus = () => {
                         <img
                           src={RemoveIconSrc}
                           className="w-6 h-6 text-center p-1 cursor-pointer"
-                          // onClick={() =>
-                          //   !actionLoading &&
-                          //   user?.id &&
-                          //   handleAction(user.id, false, 'remove', removeUser, {
-                          //     confirmButtonClass: 'bg-RemoveIconBg ', // Remove button class
-                          //     cancelButtonClass: '', // Cancel button class
-                          //   })
-                          // }
+                          onClick={() =>
+                            handleOpenDeleteModal(
+                              item.verification_request_id,
+                              `RS-${item.verification_request_id}`,
+                            )
+                          }
                         />
                       </div>
                     ),
@@ -451,11 +472,23 @@ const verifaction_requestByStatus = () => {
           </div>,
         ]}
       />
+      {/* Delete Popup */}
+      {deleteId && (
+        <DeletePopup
+          deleteName={deleteName}
+          deleteId={deleteId}
+          url="verification_request" // replace with the appropriate API endpoint path if needed
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          display={display} // Function to refresh data after deletion
+        />
+      )}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 };

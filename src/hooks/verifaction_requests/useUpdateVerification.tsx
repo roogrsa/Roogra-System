@@ -40,6 +40,7 @@
 // export default useUpdateVerification;
 import { useState } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface UpdateVerificationResponse {
   success: boolean;
@@ -67,10 +68,15 @@ const useToggleVerification = () => {
           verified: newVerificationRequired,
         },
       );
+      toast.success(`updated sucessfully`);
 
       return { success: true, message: response.data.message };
     } catch (err: unknown) {
+      console.log(err);
+
       setError((err as Error).message);
+      toast.error(`Error updating`);
+
       return null;
     } finally {
       setLoading(false);
