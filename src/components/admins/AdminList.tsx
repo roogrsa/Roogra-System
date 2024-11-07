@@ -41,23 +41,6 @@ const AdminsList: React.FC = () => {
     error: delegateError,
   } = useAdminsByType(roleTypeMap['delegates']);
 
-  // const {
-  //   admins: observers,
-  //   loading: observerLoading,
-  //   error: observerError,
-  // } = useAdminsByType('observer');
-  // const {
-  //   admins: supervisors,
-  //   loading: supervisorLoading,
-  //   error: supervisorError,
-  // } = useAdminsByType('supervisor');
-  // const {
-  //   admins: delegates,
-  //   loading: delegateLoading,
-  //   error: delegateError,
-  // } = useAdminsByType('delegates');
-
-  // Fetch total count of admins for pagination based on adminType
   useEffect(() => {
     const fetchAdminsCount = async () => {
       try {
@@ -112,13 +95,15 @@ const AdminsList: React.FC = () => {
         },
         {
           key: 'date_added',
-          content: admin.date_added.split(' ')[0],
+          // content: admin.date_added.split(' ')[0],
+          content: new Date(admin.date_added).toLocaleDateString(), // Will display only the date
+
           className: 'flex dark:text-white text-black',
         },
         {
           key: 'last_login',
           content: admin.last_login
-            ? new Date(admin.last_login).toLocaleString()
+            ? new Date(admin.last_login).toLocaleDateString()
             : 'N/A',
           className: 'flex dark:text-white text-black text-center',
         },
@@ -135,21 +120,37 @@ const AdminsList: React.FC = () => {
   const logsDelegates = mapAdminLogs(delegates);
 
   const headers = [
-    { key: 'id', content: t('admin.id'), className: 'text-center' },
-    { key: 'name', content: t('admin.name'), className: 'text-center' },
-    { key: 'email', content: t('admin.email'), className: 'text-center' },
-    { key: 'status', content: t('admin.status'), className: 'text-center' },
+    { key: 'id', content: t('admins.adminList.id'), className: 'text-center' },
+    {
+      key: 'name',
+      content: t('admins.adminList.name'),
+      className: 'text-center',
+    },
+    {
+      key: 'email',
+      content: t('admins.adminList.email'),
+      className: 'text-center',
+    },
+    {
+      key: 'status',
+      content: t('admins.adminList.status'),
+      className: 'text-center',
+    },
     {
       key: 'date_added',
-      content: t('admin.dateAdded'),
+      content: t('admins.adminList.dateAdded'),
       className: 'text-center',
     },
     {
       key: 'last_login',
-      content: t('admin.lastLogin'),
+      content: t('admins.adminList.lastLogin'),
       className: 'text-center',
     },
-    { key: 'phone', content: t('admin.phone'), className: 'text-center' },
+    {
+      key: 'phone',
+      content: t('admins.adminList.phone'),
+      className: 'text-center',
+    },
   ];
 
   return (

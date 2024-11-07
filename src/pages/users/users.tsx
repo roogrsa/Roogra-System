@@ -138,24 +138,7 @@ const Users: React.FC = () => {
     ],
   }));
   //
-  // const headers = [
-  //   { key: 'id', content: 'ID', className: 'text-center' },
-  //   { key: 'name', content: 'Name', className: 'text-' },
-  //   { key: 'alias', content: 'Alias', className: 'text-' },
-  //   { key: 'type', content: 'Type', className: 'text-' },
-  //   { key: 'regDate', content: 'RegDate', className: 'text-' },
-  //   {
-  //     key: 'mobileconfirm',
-  //     content: 'MobileConfirm',
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'emailleconfirm',
-  //     content: 'EmailConfirm',
-  //     className: 'text-center',
-  //   },
-  //   { key: 'BanStatus', content: 'BanStatus', className: 'text-center' },
-  // ];
+
   const headers = [
     { key: 'id', content: t('users.id'), className: 'text-center' },
     { key: 'name', content: t('users.name'), className: 'text-center' },
@@ -181,11 +164,16 @@ const Users: React.FC = () => {
   ];
 
   //
-  const breadcrumbLinks = [{ label: 'المستخدمين/', path: '/' }];
+  const breadcrumbLinks = [{ label: t('users.label.label'), path: '/' }];
+
+  // const breadcrumbLinks = [{ label: 'المستخدمين', path: '/' }];
   //
   return (
     <div>
-      <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="الكل" />
+      <Breadcrumb
+        breadcrumbLinks={breadcrumbLinks}
+        pageName={t('users.label.allusers')}
+      />
       <MainTable logs={logs} headers={headers} />
       {banUserLoading && <p>Processing ban action...</p>}{' '}
       <Pagination

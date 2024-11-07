@@ -10,6 +10,8 @@ axiosInstance.interceptors.request.use(
     // console.log(token);
 
     req.headers.Authorization = `Bearer ${token}`;
+    // console.log(req);
+
     return req;
   },
   (err) => {

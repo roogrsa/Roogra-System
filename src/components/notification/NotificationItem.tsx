@@ -1,30 +1,31 @@
-// NotificationItem.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Notification } from '../../types/notification';
 
 interface NotificationItemProps {
-  title: string;
-  description: string;
-  date: string;
-  to?: string;
+  notification: Notification;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
-}) => (
-  <li>
-    <Link
-      className="flex flex-col gap-2.5 border-t border-header-inputBorder px-4.5 py-3 hover:bg-secondaryBG-light dark:border-header-inputBorderdark dark:hover:bg-meta-4"
-      to={'to'}
-    >
-      <div className="text-black dark:text-white">{notification.title}</div>{' '}
-      <p className="text-sm">{notification.description}</p>
-      <p className="text-xs flex justify-between text-TextBlue dark:text-TextGreen">
-        {notification.date}
-        <span className="text-xs"> name</span>
-      </p>
-    </Link>
-  </li>
-);
+}) => {
+  const formattedDate = new Date(notification.date_add).toLocaleDateString();
+
+  return (
+    <li>
+      <Link
+        className="flex flex-col gap-2.5 border-t border-header-inputBorder px-4.5 py-3 hover:bg-secondaryBG-light dark:border-header-inputBorderdark dark:hover:bg-meta-4"
+        to="#"
+      >
+        {/* <div className="text-black dark:text-white">{notification.title}</div> */}
+        <p className="text-sm">{notification.message}</p>
+        <p className="text-xs flex justify-between text-TextBlue dark:text-TextGreen">
+          {formattedDate}
+          <span className="text-xs"> {/* Add any extra details here */}</span>
+        </p>
+      </Link>
+    </li>
+  );
+};
 
 export default NotificationItem;

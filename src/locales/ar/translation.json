@@ -56,8 +56,18 @@
         "search": "إضغط / للبحث ..."
     },
     "profile": {
-        "id": "رقم الهويه"
-    },
+    "userDetials": {
+        "id": "رقم الهويه",
+        "name": "أسم المستخدم",
+        "alias": "اسم المستعار",
+        "type": "الفئه",
+        "email": "البريد الالكتروني",
+        "phone": "الهاتف",
+        "country":"البلد",
+        "regDate": "تاريخ التسجيل",
+        "mobileconfirm": "رقم الجوال",
+        "emailleconfirm": "البريد الالكتروني"
+    }    },
     "admins": {
         "title": "صفحة الإدأريين",
         "title-add": "تحرير الصفحة",
@@ -114,10 +124,20 @@
         },
         "supervisor":"مشرف",
         "delegate":"نائب",
-        "observer":"مراقب"
+        "observer":"مراقب",
+        "adminList":{
+            "id": "رقم الهويه",
+            "name": "الأسم",
+            "email": "البريد الالكتروني",
+            "phone": "الهاتف",
+            "status": "الحالة",
+"dateAdded":"تاريخ الاضافه",
+"lastLogin":"موعد التسجيل"
+        }
     
     },
     "users": {
+        
         "label": {
             "label": "المستخدمين",
             "allusers": "الكل",
@@ -283,7 +303,7 @@
     
 
     },
-         "Reports": {
+     "Reports": {
             "label": {
             "label": "البلاغات",
             "product":"المنتجات",
@@ -307,7 +327,7 @@
 
     },"notifications": {
   
-        "popup": {
+     "popup": {
             "add":"إضافة إشعار",
 
     "expiry_date": "تاريخ الانتهاء",
@@ -320,7 +340,10 @@
     "customers": "الزبائن",
     "advertisers": "المعلنين",
     "successfully":"تم إضافة الإشعار بنجاح",
-    "error":"خطأ أثناء الاضافه"
+    "error":"خطأ أثناء الاضافه",
+      "Delegates":"المندوبون",
+    "Observers":"المراقبون",
+    "Supervisors":"المشرفون"
 }
 
     },
