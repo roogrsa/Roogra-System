@@ -56,7 +56,33 @@
         "search": "Type to search..."
     },
     "profile": {
-        "id": "ID"
+        "detials":"Detials",
+        "info":"Information",
+        "products":"Products",
+        "banList":"Ban List",
+        "contactUs":"Contact Us",
+        "ticket":"Tickets",
+        "chats":"chats",
+        "reprts":"Reprts",
+
+           "userDetials": {
+        "id": "ID",
+        "name": "User Name",
+        "alias": "Alias",
+        "type": "Type",
+        "email": "Email",
+        "phone": "Phone",
+                "country":"country",
+
+        "regDate": "Reg-Date",
+        "mobileconfirm": " Mobile Confirm",
+        "emailleconfirm": "Emaille Confirm"
+    },
+    "UserInfo":{
+        "follower": "Followers",
+        "rates": "Rates",
+        "bio": "Bio"
+    }
     },
     "admins": {
         "title": "Administrators",
@@ -114,7 +140,16 @@
         },
         "supervisor": "supervisor",
         "delegate": "delegate",
-        "observer": "observer"
+        "observer": "observer",
+            "adminList":{
+            "id": "ID",
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "status": "Status",
+"dateAdded":"Date Added",
+"lastLogin":"Last Login"
+        }
     },
     "users": {
         "label": {
@@ -138,7 +173,18 @@
             "pageNameUnPaid": "UnPaid",
             "pageNamePaid": "Paid",
             "pageNameAll": "All"
-        }
+        },
+
+        
+        "id":"ID",
+        "name":"Name",
+        "date":"Date",
+        "time":"Time",
+        "category":"Category",
+        "ProdName":"Product",
+        "photo":"Image",
+        "Edit":"Show",
+        "BanStatus":"Status"
     },
     "unauthorized": {
         "title": "sorry, You are not authorized",
@@ -273,7 +319,8 @@
             "actions":"Show",
             "speakerTo":"speaker to"
         }
-    },"notifications": {
+    },
+    "notifications": {
         "popup": {
             "add":"Add New Notification",
             "expiry_date":"expiry_date",
@@ -286,7 +333,11 @@
             "customers":"Customers",
             "advertisers":"Advertisers",
             "successfully":"Notification Added successfully",
-    "error":"Error in adding notification"
+    "error":"Error in adding notification",
+    "Delegates":"Delegates",
+    "Observers":"Observers",
+    "Supervisors":"Supervisors"
+
 
 
         }

@@ -6,6 +6,7 @@ import VerifactionRequestByUserid from './../verifaction_requests/Userverifactio
 import UserReportType from '../reports/UserReportType';
 import UserProducts from './products/UserProducts';
 import UserInfo from './Info/UserInfo';
+import { useTranslation } from 'react-i18next';
 
 //
 interface User {
@@ -43,49 +44,51 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
   loading,
   error,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="">
       {/*  */}
-      <Accordion title="البيانات">
+      <Accordion title={t('profile.detials')}>
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
         {user && <UserForm user={user} loading={loading} error={error} />}
       </Accordion>
 
       {/*  */}
-      <Accordion title="المعلومات">
+      <Accordion title={t('profile.info')}>
         <UserInfo user={user} />
       </Accordion>
 
       {/*  */}
-      <Accordion title="الاعلانات">
+      <Accordion title={t('profile.products')}>
         <UserProducts user={user} />
       </Accordion>
 
       {/*  */}
-      <Accordion title="تذاكر الاشتراك">
+      <Accordion title={t('profile.ticket')}>
         <CategorySubscriptionUserid />
         <VerifactionRequestByUserid />
       </Accordion>
 
       {/*  */}
-      <Accordion title="المحادثات">
+      <Accordion title={t('profile.chats')}>
         <div className="text-gray-700"></div>
       </Accordion>
 
       {/*  */}
-      <Accordion title="تواصل معنا">
+      <Accordion title={t('profile.contactUs')}>
         <div className="text-gray-700"></div>
       </Accordion>
 
       {/*  */}
-      <Accordion title="البلاغات">
+      <Accordion title={t('profile.reprts')}>
         <UserReportType reportType="Userchat" />
         <UserReportType reportType="Userproduct" />
       </Accordion>
 
       {/* */}
-      <Accordion title="قائمة الحظر">
+      <Accordion title={t('profile.banList')}>
         <div className="text-gray-700"></div>
       </Accordion>
     </div>

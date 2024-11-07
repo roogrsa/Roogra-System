@@ -129,7 +129,7 @@ const AddNotification = ({
                 >
                   {({ isSubmitting }: FormikProps<NotificationValues>) => (
                     <Form className="flex flex-col gap-4">
-                      <div className="flex flex-col">
+                      {/* <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
                           {t('notifications.popup.title')}
                           <span>
@@ -144,7 +144,7 @@ const AddNotification = ({
                           name="title"
                           className="w-full rounded-lg border border-stroke py-3 px-4 text-black outline-none dark:border-form-strokedark"
                         />
-                      </div>
+                      </div> */}
 
                       <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
@@ -163,7 +163,7 @@ const AddNotification = ({
                         />
                       </div>
 
-                      <div className="flex flex-col">
+                      {/* <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
                           {t('notifications.popup.expiry_date')}
                           <span>
@@ -175,42 +175,43 @@ const AddNotification = ({
                           name="date"
                           className="w-full rounded-lg border border-stroke py-3 px-4 text-black outline-none dark:border-form-strokedark"
                         />
-                      </div>
+                      </div> */}
 
                       {/* Admin Group Checkboxes */}
-                      <div className="flex flex-col gap-2">
+
+                      <div className="flex flex-cl gap-8">
                         <div className="flex items-center">
-                          <label className="font-medium text-black dark:text-white mr-2">
-                            Delegates
-                          </label>
                           <Field type="checkbox" name="delegates" />
+                          <label className="font-medium text-black dark:text-white m-2">
+                            {t('notifications.popup.Delegates')}
+                          </label>
                         </div>
                         <div className="flex items-center">
-                          <label className="font-medium text-black dark:text-white mr-2">
-                            Observers
-                          </label>
                           <Field type="checkbox" name="observers" />
+                          <label className="font-medium text-black dark:text-white m-2">
+                            {t('notifications.popup.Observers')}
+                          </label>
                         </div>
                         <div className="flex items-center">
-                          <label className="font-medium text-black dark:text-white mr-2">
-                            Supervisors
-                          </label>
                           <Field type="checkbox" name="supervisors" />
+                          <label className="font-medium text-black dark:text-white m-2">
+                            {t('notifications.popup.Supervisors')}
+                          </label>
                         </div>
                       </div>
 
                       <div className="flex gap-8">
                         <div className="flex items-center">
-                          <label className="font-medium text-black dark:text-white mr-2">
+                          <Field type="checkbox" name="customers" />
+                          <label className="font-medium text-black dark:text-white m-2">
                             {t('notifications.popup.customers')}
                           </label>
-                          <Field type="checkbox" name="customers" />
                         </div>
                         <div className="flex items-center">
-                          <label className="font-medium text-black dark:text-white mr-2">
+                          <Field type="checkbox" name="advertisers" />
+                          <label className="font-medium text-black dark:text-white m-2">
                             {t('notifications.popup.advertisers')}
                           </label>
-                          <Field type="checkbox" name="advertisers" />
                         </div>
                       </div>
 

@@ -6,6 +6,7 @@ import useHandleAction from '../../../hooks/useHandleAction';
 import { useNavigate } from 'react-router-dom';
 import useBanProduct from '../../../hooks/useBanProduct';
 import { User } from '../../../types/user';
+import { useTranslation } from 'react-i18next';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
@@ -19,6 +20,8 @@ interface ProfileAccordionProps {
 }
 const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const { handleAction, loading: actionLoading } = useHandleAction();
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
 
@@ -136,18 +139,26 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
   });
   //
   const headers = [
-    { key: 'id', content: 'رقم الاعلان', className: 'text-center' },
-    { key: 'alias', content: 'التاريخ', className: 'text-center' },
-    { key: 'type', content: 'الوقت', className: 'text-center' },
-    { key: 'regDate', content: 'القسم', className: 'text-center' },
+    { key: 'id', content: t('products.id'), className: 'text-center' },
+    { key: 'date', content: t('products.date'), className: 'text-center' },
+    { key: 'time', content: t('products.time'), className: 'text-center' },
     {
-      key: 'mobileconfirm',
-      content: 'أسم الاعلان',
+      key: 'category',
+      content: t('products.category'),
       className: 'text-center',
     },
-    { key: 'image', content: 'الصورة', className: 'text-center' },
-    { key: 'show', content: 'تحرير', className: 'text-center' },
-    { key: 'BanStatus', content: 'الحالة', className: 'text-center' },
+    {
+      key: 'ProdName',
+      content: t('products.ProdName'),
+      className: 'text-center',
+    },
+    { key: 'image', content: t('products.photo'), className: 'text-center' },
+    { key: 'show', content: t('products.Edit'), className: 'text-center' },
+    {
+      key: 'BanStatus',
+      content: t('products.BanStatus'),
+      className: 'text-center',
+    },
     {
       key: 'removeStatus',
       content: (

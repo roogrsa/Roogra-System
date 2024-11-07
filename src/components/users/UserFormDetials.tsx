@@ -1,8 +1,13 @@
+// export default UserForm;
 import React, { useState } from 'react';
 import ReusableInput from '../products/ReusableInput';
 import ReusableSelect from '../products/ReusableSelectProps';
 import { useTranslation } from 'react-i18next';
 import { User } from '../../types/user';
+import useEditUser from '../../hooks/users/Edit';
+import { toast } from 'react-toastify';
+
+const SaveIconSrc = '/save.svg';
 
 interface ProfileAccordionProps {
   user: User;
@@ -15,131 +20,199 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
   loading,
   error,
 }) => {
-  const handleInputChange = (field: string, value: string | number) => {
-    // Handle input change for user fields
-    console.log(field, value);
-    // Update the state of the user data accordingly
+  const { editUser, loading: editLoading, error: editError } = useEditUser();
+  const { t } = useTranslation();
+
+  // Local state for tracking changes to the user data
+  const [editedUser, setEditedUser] = useState<User>(user);
+
+  // const handleInputChange = (
+  //   field: keyof User,
+  //   value: string | number | boolean,
+  // ) => {
+  //   setEditedUser((prev) => ({
+  //     ...prev,
+  //     [field]: value,
+  //   }));
+  // };
+  // const handleInputChange = (
+  //   field: keyof User,
+  //   value: any,
+  //   nestedField?: keyof User['isActivated'],
+  // ) => {
+  //   setEditedUser((prevUser) => ({
+  //     ...prevUser,
+  //     [field]: nestedField
+  //       ? { ...prevUser[field], [nestedField]: value }
+  //       : value,
+  //   }));
+  // };
+  const handleInputChange = (
+    field: keyof User,
+    value: any,
+    nestedField?: keyof User['isActivated'],
+  ) => {
+    setEditedUser((prevUser) => {
+      if (
+        nestedField &&
+        typeof prevUser[field] === 'object' &&
+        prevUser[field] !== null
+      ) {
+        // Safe to spread only if `field` refers to an object
+        return {
+          ...prevUser,
+          [field]: {
+            ...(prevUser[field] as Record<string, any>),
+            [nestedField]: value,
+          },
+        };
+      } else {
+        // If not nested, handle as a direct assignment
+        return {
+          ...prevUser,
+          [field]: value,
+        };
+      }
+    });
   };
 
-  if (loading) {
+  const handleEditClick = async () => {
+    try {
+      await editUser(editedUser.id, editedUser);
+      // alert('User updated successfully!');
+      toast.success(t('User updated successfully!'));
+    } catch (err) {
+      // alert('Error updating user. Please try again.');
+      toast.error(t('Error updating user. Please try again.'));
+    }
+  };
+
+  if (loading || editLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
+  if (error || editError) {
+    return <p>{error || editError}</p>;
   }
 
-  if (!user) {
-    return <p>No user found.</p>;
-  }
-  //
-  const { t } = useTranslation();
   return (
-    <div className="my-3  bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 ">
+    <div className="my-3 flex justify-center flex-col gap-10 bg-secondaryBG-light dark:bg-secondaryBG-dark p-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10">
-        {/* ID */}
         <ReusableInput
-          label={t('profile.id')}
+          label={t('profile.userDetials.id')}
           type="text"
-          value={user.id}
+          value={editedUser.id}
           onChange={(e) => handleInputChange('id', e.target.value)}
           extraClass="bg-Input-gray w-40"
         />
         <ReusableSelect
-          label="Type"
-          value={user.type}
+          label={t('profile.userDetials.type')}
+          value={editedUser.type}
           options={[
             { value: 'advertiser', label: 'advertiser' },
             { value: 'customer', label: 'customer' },
           ]}
-          onChange={(e) => handleInputChange('Type', e.target.value)}
-          extraClass="bg-Input-blue text-Input-TextBlue  w-40 "
+          onChange={(e) => handleInputChange('type', e.target.value)}
+          extraClass="bg-Input-blue text-Input-TextBlue w-40"
         />
-
-        {/* Username */}
         <ReusableInput
-          label="Username"
+          label={t('profile.userDetials.name')}
           type="text"
-          value={user.name}
+          value={editedUser.name}
           onChange={(e) => handleInputChange('name', e.target.value)}
-          extraClass="bg-Input-blue  w-40"
+          extraClass="bg-Input-blue w-40"
         />
-
-        {/* Alias */}
         <ReusableInput
-          label="Alias"
+          label={t('profile.userDetials.alias')}
           type="text"
-          value={user.alias}
+          value={editedUser.alias}
           onChange={(e) => handleInputChange('alias', e.target.value)}
-          extraClass="bg-Input-blue  w-40"
+          extraClass="bg-Input-blue w-40"
         />
-        {/* Phone */}
         <ReusableInput
-          label="Phone"
+          label={t('profile.userDetials.phone')}
           type="tel"
-          value={user.phone}
+          value={editedUser.phone}
           onChange={(e) => handleInputChange('phone', e.target.value)}
-          extraClass="bg-Input-blue  w-40"
+          extraClass="bg-Input-blue w-40"
         />
-        {/* Phone Activation */}
-        <ReusableSelect
+        {/* <ReusableSelect
           label="Phone Activation"
-          value={user.isActivated.account ? '1' : '0'}
+          value={editedUser.isActivated.account ? '1' : '0'}
           options={[
             { value: '1', label: 'Activated' },
             { value: '0', label: 'Deactivated' },
           ]}
           onChange={(e) =>
-            handleInputChange('accountActivation', e.target.value)
+            handleInputChange('isActivated.account', e.target.value === '1')
           }
-          extraClass="bg-Input-green text-Input-TextGreen  w-40 "
-        />
-        {/* Status
-        <ReusableSelect
-          label="Status"
-          value={user.status.toString()}
-          options={[
-            { value: '1', label: 'Active' },
-            { value: '0', label: 'Inactive' },
-          ]}
-          onChange={(e) => handleInputChange('status', e.target.value)}
-          extraClass="bg-Input-green text-Input-TextGreen "
+          extraClass="bg-Input-green text-Input-TextGreen w-40"
         /> */}
-        {/* Registration Date */}
-        <ReusableInput
-          label="Registration Date"
-          type="text"
-          value={user.regDate}
-          onChange={(e) => handleInputChange('regDate', e.target.value)}
-          extraClass="bg-Input-gray w-40"
-        />
-        {/* Country */}
-        <ReusableInput
-          label="Country"
-          type="text"
-          value={user.address}
-          onChange={(e) => handleInputChange('country', e.target.value)}
-          extraClass="bg-Input-gray  w-40"
-        />
-
-        {/* Email */}
-        <ReusableInput
-          label="Email"
-          type="email"
-          value={user.email}
-          onChange={(e) => handleInputChange('email', e.target.value)}
-          extraClass="bg-Input-blue  w-40"
-        />
-        {/* Email Activation */}
         <ReusableSelect
-          label="Email Activation"
-          value={user.isActivated.email ? '1' : '0'}
+          label={t('profile.userDetials.mobileconfirm')}
+          value={editedUser.isActivated.account ? '1' : '0'}
           options={[
             { value: '1', label: 'Activated' },
             { value: '0', label: 'Deactivated' },
           ]}
-          onChange={(e) => handleInputChange('emailActivation', e.target.value)}
-          extraClass="bg-Input-red text-Input-TextRed  w-40"
+          onChange={(e) =>
+            handleInputChange('isActivated', e.target.value === '1', 'account')
+          }
+          extraClass="bg-Input-green text-Input-TextGreen w-40"
+        />
+
+        <ReusableInput
+          label={t('profile.userDetials.regDate')}
+          type="text"
+          value={editedUser.regDate}
+          onChange={(e) => handleInputChange('regDate', e.target.value)}
+          extraClass="bg-Input-gray w-40"
+        />
+        <ReusableInput
+          label={t('profile.userDetials.country')}
+          type="text"
+          value={editedUser.address}
+          onChange={(e) => handleInputChange('address', e.target.value)}
+          extraClass="bg-Input-gray w-40"
+        />
+        <ReusableInput
+          label={t('profile.userDetials.email')}
+          type="email"
+          value={editedUser.email}
+          onChange={(e) => handleInputChange('email', e.target.value)}
+          extraClass="bg-Input-blue w-40"
+        />
+        {/* <ReusableSelect
+          label="Email Activation"
+          value={editedUser.isActivated.email ? '1' : '0'}
+          options={[
+            { value: '1', label: 'Activated' },
+            { value: '0', label: 'Deactivated' },
+          ]}
+          onChange={(e) =>
+            handleInputChange('isActivated.email', e.target.value === '1')
+          }
+          extraClass="bg-Input-red text-Input-TextRed w-40"
+        /> */}
+        <ReusableSelect
+          label={t('profile.userDetials.mobileconfirm')}
+          value={editedUser.isActivated.email ? '1' : '0'}
+          options={[
+            { value: '1', label: 'Activated' },
+            { value: '0', label: 'Deactivated' },
+          ]}
+          onChange={(e) =>
+            handleInputChange('isActivated', e.target.value === '1', 'email')
+          }
+          extraClass="bg-Input-red text-Input-TextRed w-40"
+        />
+      </div>
+      <div className="bg-SaveIconBg rounded-md w-35 flex justify-center self-center">
+        <img
+          src={SaveIconSrc}
+          className="w-8 h-8 text-center p-1 cursor-pointer"
+          onClick={handleEditClick}
+          alt="Save Icon"
         />
       </div>
     </div>

@@ -15,7 +15,6 @@ const NotBannedIconSrc = '/unblock.svg';
 const RemoveIconSrc = '/remove.svg';
 
 const Profile = () => {
-  const breadcrumbLinks = [{ label: 'المستخدمين/', path: '/' }];
   const { id } = useParams<{ id: string }>();
   const { user, loading, error } = useUser(Number(id));
   const { banUser } = useBanUser();
@@ -32,7 +31,6 @@ const Profile = () => {
 
   return (
     <>
-      <Breadcrumb breadcrumbLinks={breadcrumbLinks} pageName="العملاء" />
       <div className="overflow-hidden">
         {/* image section */}
         <ProfileImages user={user} />
