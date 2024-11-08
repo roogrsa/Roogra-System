@@ -18,7 +18,7 @@ interface LogData {
 }
 
 interface MainTableProps {
-  logs: LogData[];
+  logs: any;
   headers?: ColumnConfig[]; // Made headers optional
   // headers2?: ColumnConfig[]; // Optional second set of headers
   header2?: boolean; // Optional header2 flag
