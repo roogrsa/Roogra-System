@@ -9,7 +9,7 @@ const useEditUser = () => {
   const editUser = async (id: string, updatedData: User) => {
     setLoading(true);
     setError(null);
-    // console.log(id, updatedData);
+    console.log(id, updatedData);
 
     try {
       const response = await axiosInstance.put(`/api/users/${id}`, updatedData);

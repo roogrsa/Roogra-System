@@ -38,11 +38,11 @@ import Home from './pages/home';
 import verifaction_requestByStatus from './pages/verifaction_request/verifaction_requestByStatus';
 import ChatReport from './pages/Reports/ChatReport';
 import ProductReport from './pages/Reports/ProductReport';
-import BlockList from './pages/BlockList/BlockList';
 import Inquiries from './pages/contactUs/Inquiries';
 import Issues from './pages/contactUs/Issues';
 import Suggestions from './pages/contactUs/Suggestions';
 import Chat from './components/reports/Chat';
+import BlockUserList from './pages/BlockList/BlockUserList';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -285,28 +285,7 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-      {
-        path: 'reports',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={Products}
-              hasPermission={storedPermissions[5]}
-            />
-          </Guard>
-        ),
-      },
-      {
-        path: 'reports/product',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={ProductReport}
-              hasPermission={storedPermissions[5]}
-            />
-          </Guard>
-        ),
-      },
+
       {
         path: 'contact-us/inquiries',
         element: (
@@ -341,6 +320,28 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'reports',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Products}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'reports/product',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductReport}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
         path: 'reports/chat',
         element: (
           <Guard>
@@ -367,7 +368,7 @@ const router = createBrowserRouter([
         element: (
           <Guard>
             <ProtectedRoute
-              component={BlockList}
+              component={BlockUserList}
               hasPermission={storedPermissions[5]}
             />
           </Guard>

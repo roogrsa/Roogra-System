@@ -76,7 +76,11 @@
 
         "regDate": "Reg-Date",
         "mobileconfirm": " Mobile Confirm",
-        "emailleconfirm": "Emaille Confirm"
+        "emailleconfirm": "Emaille Confirm",
+            "Activated":"Activated",
+            "Deactivated":"Deactivated ",
+                 "customer":"customer",
+            "advertiser":"advertiser"
     },
     "UserInfo":{
         "follower": "Followers",

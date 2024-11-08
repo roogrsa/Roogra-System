@@ -109,8 +109,11 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
           label={t('profile.userDetials.type')}
           value={editedUser.type}
           options={[
-            { value: 'advertiser', label: 'advertiser' },
-            { value: 'customer', label: 'customer' },
+            {
+              value: 'advertiser',
+              label: t('profile.userDetials.advertiser'),
+            },
+            { value: 'customer', label: t('profile.userDetials.customer') },
           ]}
           onChange={(e) => handleInputChange('type', e.target.value)}
           extraClass="bg-Input-blue text-Input-TextBlue w-40"
@@ -152,8 +155,8 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
           label={t('profile.userDetials.mobileconfirm')}
           value={editedUser.isActivated.account ? '1' : '0'}
           options={[
-            { value: '1', label: 'Activated' },
-            { value: '0', label: 'Deactivated' },
+            { value: '1', label: t('profile.userDetials.Activated') },
+            { value: '0', label: t('profile.userDetials.Deactivated') },
           ]}
           onChange={(e) =>
             handleInputChange('isActivated', e.target.value === '1', 'account')
@@ -195,11 +198,11 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
           extraClass="bg-Input-red text-Input-TextRed w-40"
         /> */}
         <ReusableSelect
-          label={t('profile.userDetials.mobileconfirm')}
+          label={t('profile.userDetials.emailleconfirm')}
           value={editedUser.isActivated.email ? '1' : '0'}
           options={[
-            { value: '1', label: 'Activated' },
-            { value: '0', label: 'Deactivated' },
+            { value: '1', label: t('profile.userDetials.Activated') },
+            { value: '0', label: t('profile.userDetials.Deactivated') },
           ]}
           onChange={(e) =>
             handleInputChange('isActivated', e.target.value === '1', 'email')
@@ -207,14 +210,14 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
           extraClass="bg-Input-red text-Input-TextRed w-40"
         />
       </div>
-      <div className="bg-SaveIconBg rounded-md w-35 flex justify-center self-center">
+      {/* <div className="bg-SaveIconBg rounded-md w-35 flex justify-center self-center">
         <img
           src={SaveIconSrc}
           className="w-8 h-8 text-center p-1 cursor-pointer"
           onClick={handleEditClick}
           alt="Save Icon"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

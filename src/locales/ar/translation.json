@@ -73,8 +73,13 @@
             "phone": "الهاتف",
             "country": "البلد",
             "regDate": "تاريخ التسجيل",
-            "mobileconfirm": "رقم الجوال",
-            "emailleconfirm": "البريد الالكتروني"
+            "mobileconfirm": "تفعيل الهاتف",
+            "emailleconfirm": "تفعيل البريد ",
+            "Activated":"مفعل",
+            "Deactivated":" غير مفعل",
+            "customer":"زبون",
+            "advertiser":"معلن"
+
         },
         "UserInfo": {
             "follower": "المتابعين",
@@ -336,22 +341,22 @@
             "Supervisors": "المشرفون"
         }
     },
-    "contact-us": {
+        "contact-us": {
         "contact-us": "التواصل",
         "inquiries": "الاستفسارات",
         "issues": "المشاكل",
         "suggestions": "المقترحات",
-        "replied":"تم الرد",
-        "username":"اسم المستخدم",
-        "inquiryDate":"تاريخ الاستفسار",
-        "ticketNumber":"رقم التذكرة",
-        "view":"عرض",
-        "replyBy":"تم بواسطة",
-        "replyDate":"تاريخ الرد",
-        "closeTicket":"رد واغلاق",
-        "ticketDetails":"تفاصيل التذكرة",
-        "reply":"الرد",
-        "deleteTicket":"حذف التذكرة"
+        "replied": "تم الرد",
+        "username": "اسم المستخدم",
+        "inquiryDate": "تاريخ الاستفسار",
+        "ticketNumber": "رقم التذكرة",
+        "view": "عرض",
+        "replyBy": "تم بواسطة",
+        "replyDate": "تاريخ الرد",
+        "closeTicket": "رد واغلاق",
+        "ticketDetails": "تفاصيل التذكرة",
+        "reply": "الرد",
+        "deleteTicket": "حذف التذكرة"
     },
     "lastNews":{
         "title":"أخر الأحداث",
@@ -368,16 +373,5 @@
 
  "customers":"عدد الزبائن",
  "advertisers":"عدد المعلنين"
-        "replied": "تم الرد",
-        "username": "اسم المستخدم",
-        "inquiryDate": "تاريخ الاستفسار",
-        "ticketNumber": "رقم التذكرة",
-        "view": "عرض",
-        "replyBy": "تم بواسطة",
-        "replyDate": "تاريخ الرد",
-        "closeTicket": "رد واغلاق",
-        "ticketDetails": "تفاصيل التذكرة",
-        "reply": "الرد",
-        "deleteTicket": "حذف التذكرة"
     }
 }
