@@ -42,6 +42,7 @@ const MainCategories: React.FC = () => {
             "content-type": "Application/json",
           }}
         );
+        displayCategories()
         console.log(res);
         toast.success(t('categoriesPage.categoriesToast'))
     } catch (error: any) {
