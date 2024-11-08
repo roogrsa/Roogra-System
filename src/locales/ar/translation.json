@@ -56,31 +56,32 @@
         "search": "إضغط / للبحث ..."
     },
     "profile": {
-         "detials":"البيانات",
-        "info":"المعلومات",
-        "products":"الاعلانات",
-        "banList":"قائمة الحظر",
-        "contactUs":"تواصل معنا",
-        "ticket":"تذاكر الاشتراك",
-        "chats":"المحادثات",
-        "reprts":"البلاغات",
-    "userDetials": {
-        "id": "رقم الهويه",
-        "name": "أسم المستخدم",
-        "alias": "اسم المستعار",
-        "type": "الفئه",
-        "email": "البريد الالكتروني",
-        "phone": "الهاتف",
-        "country":"البلد",
-        "regDate": "تاريخ التسجيل",
-        "mobileconfirm": "رقم الجوال",
-        "emailleconfirm": "البريد الالكتروني"
+        "detials": "البيانات",
+        "info": "المعلومات",
+        "products": "الاعلانات",
+        "banList": "قائمة الحظر",
+        "contactUs": "تواصل معنا",
+        "ticket": "تذاكر الاشتراك",
+        "chats": "المحادثات",
+        "reprts": "البلاغات",
+        "userDetials": {
+            "id": "رقم الهويه",
+            "name": "أسم المستخدم",
+            "alias": "اسم المستعار",
+            "type": "الفئه",
+            "email": "البريد الالكتروني",
+            "phone": "الهاتف",
+            "country": "البلد",
+            "regDate": "تاريخ التسجيل",
+            "mobileconfirm": "رقم الجوال",
+            "emailleconfirm": "البريد الالكتروني"
+        },
+        "UserInfo": {
+            "follower": "المتابعين",
+            "rates": "التقييم",
+            "bio": "نبذة"
+        }
     },
-    "UserInfo":{
-        "follower": "المتابعين",
-        "rates": "التقييم",
-        "bio": "نبذة"
-    }  },
     "admins": {
         "title": "صفحة الإدأريين",
         "title-add": "تحرير الصفحة",
@@ -135,22 +136,20 @@
             "products": "المنتجات",
             "banlist": "قائمة الحظر"
         },
-        "supervisor":"مشرف",
-        "delegate":"نائب",
-        "observer":"مراقب",
-        "adminList":{
+        "supervisor": "مشرف",
+        "delegate": "نائب",
+        "observer": "مراقب",
+        "adminList": {
             "id": "رقم الهويه",
             "name": "الأسم",
             "email": "البريد الالكتروني",
             "phone": "الهاتف",
             "status": "الحالة",
-"dateAdded":"تاريخ الاضافه",
-"lastLogin":"موعد التسجيل"
+            "dateAdded": "تاريخ الاضافه",
+            "lastLogin": "موعد التسجيل"
         }
-    
     },
     "users": {
-        
         "label": {
             "label": "المستخدمين",
             "allusers": "الكل",
@@ -167,28 +166,21 @@
         "BanStatus": "الحالة"
     },
     "products": {
-        "label":
-        {
-
-        "label":"المنتجات",
-        "pageNameUnPaid":"رئيسية",
-        "pageNamePaid":"الاشتراك",
-        "pageNameAll":"الكل"
-  
-
+        "label": {
+            "label": "المنتجات",
+            "pageNameUnPaid": "رئيسية",
+            "pageNamePaid": "الاشتراك",
+            "pageNameAll": "الكل"
         },
-
-        "id":"رقم الاعلان",
-        "name":" أسم المعلن",
-        "date":"التاريخ",
-        "time":"الوقت",
-        "category":"القسم",
-        "ProdName":"أسم الاعلان",
-        "photo":"الصورة",
-        "Edit":"تحرير",
-        "BanStatus":"الحالة"
-
-      
+        "id": "رقم الاعلان",
+        "name": " أسم المعلن",
+        "date": "التاريخ",
+        "time": "الوقت",
+        "category": "القسم",
+        "ProdName": "أسم الاعلان",
+        "photo": "الصورة",
+        "Edit": "تحرير",
+        "BanStatus": "الحالة"
     },
     "unauthorized": {
         "title": "غير مصرح لك",
@@ -201,26 +193,26 @@
         "sms": "الرسائل",
         "verification": "التوثيق",
         "banners": "الاعلانات التجارية",
-        "settings":"الإعدادات",
-        "comissionError":"",
+        "settings": "الإعدادات",
+        "comissionError": "",
         "commercial": "رسوم السجل التجاري",
         "maroof": "رسوم وثيقة 'معروف'",
         "self-employment": "رسوم وثيقة العمل الحر",
         "subscription": "رسوم اقسام الاشتراك",
         "verification-check-fees": "رسوم علامة مضمون",
-        "usernameSms":"اسم المستخدم",
-        "senderNameSms":"اسم المرسل",
-        "tokenSms":"الرمز(Token)",
-        "accountHolder":"اسم صاحب الحساب",
-        "bankName":"اسم البنك",
-        "accountNumber":"رقم الحساب",
-        "bankIBAN":"ايبان",
-        "bankLogo":"شعار البنك",
-        "edit":"تحرير",
-        "bannerName":"اسم الاعلان",
-        "bannerurl":"رابط الموقع",
-        "duration":"المدة",
-        "bannerImage":"شعار الاعلان"
+        "usernameSms": "اسم المستخدم",
+        "senderNameSms": "اسم المرسل",
+        "tokenSms": "الرمز(Token)",
+        "accountHolder": "اسم صاحب الحساب",
+        "bankName": "اسم البنك",
+        "accountNumber": "رقم الحساب",
+        "bankIBAN": "ايبان",
+        "bankLogo": "شعار البنك",
+        "edit": "تحرير",
+        "bannerName": "اسم الاعلان",
+        "bannerurl": "رابط الموقع",
+        "duration": "المدة",
+        "bannerImage": "شعار الاعلان"
     },
     "categoriesPage": {
         "title": "الأقسام",
@@ -230,7 +222,7 @@
         "editCat": "تحرير القسم",
         "order": "الترتيب",
         "edit": "تحرير",
-        "categoriesToast":"تم تحديث الاقسام بنجاح.",
+        "categoriesToast": "تم تحديث الاقسام بنجاح.",
         "catMain": {
             "label": "رئيسية",
             "catName": "اسم القسم",
@@ -259,122 +251,106 @@
         "category_name": "اسم القسم"
     },
     "subscriptions": {
-        "titles":{
-            "processing":"طلب",
-            "approved":"فعال",
-
-            "rejected":"رفض",
-            "expired":"منتهي"
-
-
+        "titles": {
+            "processing": "طلب",
+            "approved": "فعال",
+            "rejected": "رفض",
+            "expired": "منتهي"
         },
-        "headers":{
-            "id":"رقم التذكرة",
-            "category_name":" القسم الرئيسي ",
-            "sub_name":" القسم الفرعي ",
-            "transaction_image":"صورة التحويل",
-            "created_at":" تاريخ الطلب ",
-            "verification_period":"المده",
-            "verified_by_accept":"قبول",
-            "edit":"تحرير",
-            "verified_by_reject":"رفض"
+        "headers": {
+            "id": "رقم التذكرة",
+            "category_name": " القسم الرئيسي ",
+            "sub_name": " القسم الفرعي ",
+            "transaction_image": "صورة التحويل",
+            "created_at": " تاريخ الطلب ",
+            "verification_period": "المده",
+            "verified_by_accept": "قبول",
+            "edit": "تحرير",
+            "verified_by_reject": "رفض"
         }
-    
-
     },
-     "verification_request": {
-            "label": {
+    "verification_request": {
+        "label": {
             "label": "تذاكر الاشتراك",
-            "Part":"قسم",
-            "confirm":"توثيق"
+            "Part": "قسم",
+            "confirm": "توثيق"
         },
-        "titles":{
-            "processing":"طلب",
-            "approved":"فعال",
-
-            "rejected":"رفض",
-            "expired":"منتهي"
-
-
+        "titles": {
+            "processing": "طلب",
+            "approved": "فعال",
+            "rejected": "رفض",
+            "expired": "منتهي"
         },
-        "headers":{
-            "id":"رقم التذكرة",
-            "verification_type":"الجهة",
-            "verification_type_number":"رقم الجهة",
-            "verification_type_image":"صورة الجهة ",
-            "verification_required":"مضمون",
-            "transaction_image":" التحويل",
-            "created_at":" تاريخ الطلب ",
-            "verified_at":"التفعيل",
-            "By-admin":"بواسطة",
-            "verification_period":"المده",
-            "verified_by_accept":"قبول",
-            "verified_by_reject":"رفض",
-          "remove":"حذف"
-
+        "headers": {
+            "id": "رقم التذكرة",
+            "verification_type": "الجهة",
+            "verification_type_number": "رقم الجهة",
+            "verification_type_image": "صورة الجهة ",
+            "verification_required": "مضمون",
+            "transaction_image": " التحويل",
+            "created_at": " تاريخ الطلب ",
+            "verified_at": "التفعيل",
+            "By-admin": "بواسطة",
+            "verification_period": "المده",
+            "verified_by_accept": "قبول",
+            "verified_by_reject": "رفض",
+            "remove": "حذف"
         }
-    
-
     },
-     "Reports": {
-            "label": {
+    "Reports": {
+        "label": {
             "label": "البلاغات",
-            "product":"المنتجات",
-            "chat":"المحادثات"
+            "product": "المنتجات",
+            "chat": "المحادثات",
+            "userChat":"محادثة"
         },
-        "titles":{
-            "reports":"بلاغ",
-            "revision":"المراجعات"
-
-
+        "titles": {
+            "reports": "بلاغ",
+            "revision": "المراجعات"
         },
-        "headers":{
-            "id":"رقم البلاغ",
-            "name":"بلاغ العميل",
-            "product":"المنتج",
-            "created_at":" تاريخ الطلب ",
-            "actions":"عرض",
-            "speakerTo":"المتحدث إلية"
+        "headers": {
+            "id": "رقم البلاغ",
+            "name": "بلاغ العميل",
+            "product": "المنتج",
+            "created_at": " تاريخ الطلب ",
+            "actions": "عرض",
+            "speakerTo": "المتحدث إلية"
         }
-    
-
-    },"notifications": {
-  
-     "popup": {
-            "add":"إضافة إشعار",
-
-    "expiry_date": "تاريخ الانتهاء",
-    "placeholderMessage": "أدخل رسالة الإشعار هنا",
-    "message": "رسالة الإشعار",
-    "placeholderTitle": "أدخل عنوان الإشعار هنا",
-    "title": "عنوان الإشعار",
-    "save": "حفظ",
-    "cancel": "إلغاء",
-    "customers": "الزبائن",
-    "advertisers": "المعلنين",
-    "successfully":"تم إضافة الإشعار بنجاح",
-    "error":"خطأ أثناء الاضافه",
-      "Delegates":"المندوبون",
-    "Observers":"المراقبون",
-    "Supervisors":"المشرفون"
-}
-
     },
-    "contact-us":{
-        "contact-us":"التواصل",
+    "notifications": {
+        "popup": {
+            "add": "إضافة إشعار",
+            "expiry_date": "تاريخ الانتهاء",
+            "placeholderMessage": "أدخل رسالة الإشعار هنا",
+            "message": "رسالة الإشعار",
+            "placeholderTitle": "أدخل عنوان الإشعار هنا",
+            "title": "عنوان الإشعار",
+            "save": "حفظ",
+            "cancel": "إلغاء",
+            "customers": "الزبائن",
+            "advertisers": "المعلنين",
+            "successfully": "تم إضافة الإشعار بنجاح",
+            "error": "خطأ أثناء الاضافه",
+            "Delegates": "المندوبون",
+            "Observers": "المراقبون",
+            "Supervisors": "المشرفون"
+        }
+    },
+    "contact-us": {
+        "contact-us": "التواصل",
         "inquiries": "الاستفسارات",
         "issues": "المشاكل",
         "suggestions": "المقترحات",
-        "replied":"تم الرد",
-        "username":"اسم المستخدم",
-        "inquiryDate":"تاريخ الاستفسار",
-        "ticketNumber":"رقم التذكرة",
-        "view":"عرض",
-        "replyBy":"تم بواسطة",
-        "replyDate":"تاريخ الرد",
-        "closeTicket":"رد واغلاق",
-        "ticketDetails":"تفاصيل التذكرة",
-        "reply":"الرد",
-        "deleteTicket":"حذف التذكرة"
+        "replied": "تم الرد",
+        "username": "اسم المستخدم",
+        "inquiryDate": "تاريخ الاستفسار",
+        "ticketNumber": "رقم التذكرة",
+        "view": "عرض",
+        "replyBy": "تم بواسطة",
+        "replyDate": "تاريخ الرد",
+        "closeTicket": "رد واغلاق",
+        "ticketDetails": "تفاصيل التذكرة",
+        "reply": "الرد",
+        "deleteTicket": "حذف التذكرة"
     }
 }
