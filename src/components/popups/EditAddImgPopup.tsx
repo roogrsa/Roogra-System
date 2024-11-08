@@ -42,14 +42,14 @@ const EditAddImgPopup = ({
   console.log(imagePreview);
   const initialValues: CategoryValues = {
     name: name || '',
-    thumbnail: imagePreview,
+    thumbnail: imageUrl || '',
     isPaid: isPaid ? '1' : '0',
   };
   useEffect(() => {
     if (imageUrl) {
       setImagePreview(imageUrl);
     }
-  }, [imageUrl,imagePreview]);
+  }, [imageUrl]);
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -72,9 +72,9 @@ const EditAddImgPopup = ({
       }
       console.log(base64String);
     }
-    
+
   };
-console.log(imagePreview);
+  console.log(imagePreview);
 
   const handleCategorySubmit = async (
     values: CategoryValues,

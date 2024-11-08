@@ -352,7 +352,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'reports/chat/:chatId',
+        path: 'reports/chat/:userId',
         element: (
           <Guard>
             <ProtectedRoute
