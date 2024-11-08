@@ -1,6 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useTranslation } from 'react-i18next';
 
 interface ChartThreeProps {
   series: number[];
@@ -17,6 +18,8 @@ const ChartThree: React.FC<ChartThreeProps> = ({
   title = '',
   total = 0,
 }) => {
+  const { t } = useTranslation();
+
   const options: ApexOptions = {
     chart: {
       fontFamily: 'Satoshi, sans-serif',
@@ -79,14 +82,22 @@ const ChartThree: React.FC<ChartThreeProps> = ({
           {statesData.length > 0 ? (
             statesData.map((state, index) => (
               <div key={index} className="flex">
-                <p className="flex w-full justify-between text-[20px] font-[400] text-black dark:text-white">
-                  <span>({state.count})</span>
-                  <span>{state.label}</span>
-                </p>
                 <span
-                  className="mr-2 mt-2 block my-1 h-3 w-full max-w-3 rounded-full"
+                  className="mx-2 mt-2 block my-1 h-3 w-full max-w-3 rounded-full"
                   style={{ backgroundColor: state.color }}
                 ></span>
+                <p className="flex w-full justify-between text-[18px] font-[400] text-black dark:text-white">
+                  <span>
+                    {state.label === 'Active'
+                      ? t('charts.Active')
+                      : state.label === 'Lazy'
+                      ? t('charts.Lazy')
+                      : state.label === 'Inactive'
+                      ? t('charts.Inactive')
+                      : state.label}
+                  </span>
+                  <span>({state.count})</span>
+                </p>
               </div>
             ))
           ) : (

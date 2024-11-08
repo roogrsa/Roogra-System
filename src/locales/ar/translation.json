@@ -376,5 +376,21 @@
         "ticketDetails":"تفاصيل التذكرة",
         "reply":"الرد",
         "deleteTicket":"حذف التذكرة"
+    },
+    "lastNews":{
+        "title":"أخر الأحداث",
+        "lastLogin":"قام بتسجيل الدخول",
+        "register":"إنشاء حساب جديد" ,
+        "edit":"تم تعديل الحساب"
+    },
+     "charts":{
+        "Active":"نشط",
+        "Lazy":"كسول",
+        "Inactive":"غير نشط",
+"customer":"زبون",
+"advertiser":"معلن",
+
+ "customers":"عدد الزبائن",
+ "advertisers":"عدد المعلنين"
     }
 }

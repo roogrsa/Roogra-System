@@ -358,5 +358,20 @@
         "ticketDetails":"Ticket details",
         "reply":"Reply",
         "deleteTicket":"Delete ticket"
+    },  "lastNews":{
+        "title":"Last news",
+        "lastLogin":"Has Logged In",
+        "register":"New Account",
+        "edit":"Acocount updated"
+ 
+    },
+       "charts":{
+         "Active":"Active",
+        "Lazy":"Lazy",
+        "Inactive":"Inactive",
+        "customer":"Customer",
+"advertiser":"Advertiser",
+ "customers":"Number of customers",
+ "advertisers":"Number of advertisers"
     }
 }
