@@ -305,7 +305,8 @@
         "label": {
             "label": "Reports",
             "product": "Products",
-            "chat": "chats"
+            "chat": "chats",
+            "userChat":"chat"
         },
         "titles": {
             "reports": "Report",

@@ -49,7 +49,7 @@ const EditAddImgPopup = ({
     if (imageUrl) {
       setImagePreview(imageUrl);
     }
-  }, [imageUrl]);
+  }, [imageUrl,imagePreview]);
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

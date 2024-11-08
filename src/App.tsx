@@ -42,6 +42,7 @@ import BlockList from './pages/BlockList/BlockList';
 import Inquiries from './pages/contactUs/Inquiries';
 import Issues from './pages/contactUs/Issues';
 import Suggestions from './pages/contactUs/Suggestions';
+import Chat from './components/reports/Chat';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -345,6 +346,17 @@ const router = createBrowserRouter([
           <Guard>
             <ProtectedRoute
               component={ChatReport}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'reports/chat/:chatId',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Chat}
               hasPermission={storedPermissions[5]}
             />
           </Guard>
