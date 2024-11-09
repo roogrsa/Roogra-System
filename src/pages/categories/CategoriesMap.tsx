@@ -22,11 +22,12 @@ interface CategoryMap {
 const CategoriesMap: React.FC = () => {
     const { t } = useTranslation();
     const [categoriesMap, setCategoriesMap] = useState<CategoryMap[]>([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [categoriesCount, setcategoriesCount] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<CategoryMap | null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [categoriesCount, setcategoriesCount] = useState<number>(0);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
 
     const openModal = (category: CategoryMap) => {
         setSelectedCategory(category);
@@ -34,7 +35,7 @@ const CategoriesMap: React.FC = () => {
     };
     const openEditModal = (category: CategoryMap) => {
         setSelectedCategory(category);
-        setIsAddModalOpen(true);
+        setIsEditModalOpen(true);
     };
     const openAddModal = () => {
         setSelectedCategory(null)
@@ -157,13 +158,13 @@ const CategoriesMap: React.FC = () => {
                                                             setIsModalOpen={setIsModalOpen}
                                                         />
                                                     )}
-                                                    {selectedCategory && (
+                                                    {selectedCategory&&isEditModalOpen && (
                                                         <EditAddPopup
                                                             name={selectedCategory.name}
                                                             id={selectedCategory.map_category_id}
                                                             url={`map-categories`}
-                                                            isModalOpen={isAddModalOpen}
-                                                            setIsModalOpen={setIsAddModalOpen}
+                                                            isModalOpen={isEditModalOpen}
+                                                            setIsModalOpen={setIsEditModalOpen}
                                                             display={displayCategoriesMap}
                                                         />
                                                     )}
@@ -178,7 +179,7 @@ const CategoriesMap: React.FC = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-            {!selectedCategory && (
+            {!selectedCategory&&isAddModalOpen && (
                 <EditAddPopup
                     url={`map-categories`}
                     isModalOpen={isAddModalOpen}
