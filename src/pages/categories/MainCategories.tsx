@@ -88,34 +88,6 @@ const MainCategories: React.FC = () => {
   };
 
   const breadcrumbLinks = [{ label: t("categoriesPage.title"), path: "/categories/main" }];
-
-  const DraggableCategory = React.memo(({ cat, index }: { cat: Category; index: number }) => (
-    <Draggable key={`cat-${index}`} draggableId={`cat-${cat.parent_id}-${index}`} index={index}>
-      {(provided, snapshot) => (
-        <tr
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className={`border-b dark:border-secondaryBG-light ${index % 2 !== 0
-            ? "dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight"
-            : "dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight"} ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
-        >
-          <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.parent_sort_order}</td>
-          <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
-            {cat.category_name}
-          </td>
-          <td className="px-6 py-4"><img src={cat.parent_image} alt="" width={40} /></td>
-          <td className="py-4" onClick={() => openModal("EDIT", cat)}>
-            <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
-          </td>
-          <td className="py-4" onClick={() => openModal("DELETE", cat)}>
-            <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
-          </td>
-        </tr>
-      )}
-    </Draggable>
-  ));
-
   return (
     <div className="relative overflow-x-auto">
       <div className="flex justify-between">
@@ -142,7 +114,30 @@ const MainCategories: React.FC = () => {
                 </thead>
                 <tbody>
                   {categories.map((cat, index) => (
-                    <DraggableCategory cat={cat} index={index} key={index} />
+                    <Draggable key={`cat-${index}`} draggableId={`cat-${cat.parent_id}-${index}`} index={index}>
+                      {(provided, snapshot) => (
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className={`border-b dark:border-secondaryBG-light ${index % 2 !== 0
+                            ? "dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight"
+                            : "dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight"} ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
+                        >
+                          <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.parent_sort_order}</td>
+                          <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
+                            {cat.category_name}
+                          </td>
+                          <td className="px-6 py-4"><img src={cat.parent_image} alt="" width={40} /></td>
+                          <td className="py-4" onClick={() => openModal("EDIT", cat)}>
+                            <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
+                          </td>
+                          <td className="py-4" onClick={() => openModal("DELETE", cat)}>
+                            <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
+                          </td>
+                        </tr>
+                      )}
+                    </Draggable>
                   ))}
                   {provided.placeholder}
                 </tbody>
