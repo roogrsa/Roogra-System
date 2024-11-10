@@ -7,13 +7,21 @@ import axiosInstance from '../../axiosConfig/instanc';
 import AccordionHeader2 from '../Accordion/AccordionHeader2';
 import NotFoundSection from '../Notfound/NotfoundSection';
 import useAdminsByType from '../../hooks/admins/AbminType';
-
+import useBanUser from '../../hooks/useBanUser';
+import useHandleAction from '../../hooks/useHandleAction';
+import useBanAdmin from '../../hooks/useBanAdmin';
+//
+const NotBannedIconSrc = '/unblock.svg';
+const BannedIconSrc = '/block.svg';
+const CheckboxIconSrc = '/checkbox.svg';
+const EditIconSrc = '/Edit.svg';
 const AdminsList: React.FC = () => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(0);
   const [adminsCount, setAdminsCount] = useState(0);
   const [adminType, setAdminType] = useState('observer');
-
+  const { banAdmin, loading: banLoading, error: banError } = useBanAdmin();
+  const { handleAction, loading: actionLoading } = useHandleAction();
   const navigate = useNavigate();
   // Define a mapping object for role types
   const roleTypeMap = {
@@ -62,15 +70,10 @@ const AdminsList: React.FC = () => {
   };
 
   // Utility function to map admin data to logs
-  const mapAdminLogs = (admins) =>
-    admins.map((admin) => ({
+  const mapAdminLogs = (admins: any) =>
+    admins.map((admin: any) => ({
       id: admin.id,
       columns: [
-        {
-          key: 'id',
-          content: admin.id,
-          className: 'dark:text-white text-black text-center',
-        },
         {
           key: 'name',
           content: (
@@ -78,20 +81,29 @@ const AdminsList: React.FC = () => {
               className="cursor-pointer dark:text-TextGreen text-TextBlue"
               onClick={() => handleClickName(admin.id)}
             >
-              {admin.first_name} {admin.last_name}
+              {admin.first_name}
+              {admin.last_name}
             </span>
           ),
           className: 'dark:text-[#32E26B] text-[#0E1FB2]',
         },
         {
-          key: 'email',
-          content: admin.email,
+          key: 'phone',
+          content: admin.phone ? admin.phone : '00000000000',
           className: 'dark:text-white text-black',
         },
         {
           key: 'status',
-          content: admin.status === 1 ? 'Active' : 'Inactive',
-          className: 'dark:text-white text-black text-right',
+          content: (
+            <div className="flex items-center justify-center">
+              <span
+                className={`w-3 h-3 rounded-full mr-2 ${
+                  admin.status === 1 ? 'bg-TextGreen' : 'bg-gray-400'
+                }`}
+              ></span>
+            </div>
+          ),
+          className: 'text-center',
         },
         {
           key: 'date_added',
@@ -101,16 +113,58 @@ const AdminsList: React.FC = () => {
           className: 'flex dark:text-white text-black',
         },
         {
-          key: 'last_login',
-          content: admin.last_login
-            ? new Date(admin.last_login).toLocaleDateString()
+          key: 'start_working_hour',
+          // content: admin.start_working_hour ? admin.start_working_hour : 'N/A',
+          content: admin.start_working_hour
+            ? new Date(
+                `1970-01-01T${admin.start_working_hour}`,
+              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             : 'N/A',
           className: 'flex dark:text-white text-black text-center',
         },
         {
-          key: 'phone',
-          content: admin.phone || 'N/A',
-          className: 'dark:text-white text-black text-center',
+          key: 'finish_working_hour',
+
+          content: admin.finish_working_hour
+            ? new Date(
+                `1970-01-01T${admin.finish_working_hour}`,
+              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            : 'N/A',
+          className: 'flex dark:text-white text-black text-center',
+        },
+        {
+          key: 'Edit',
+          content: (
+            <div className="bg-EditIconBg rounded-md">
+              <img
+                src={EditIconSrc}
+                className="w-6 h-6 text-center p-1 cursor-pointer"
+                // mariem function here
+              />
+            </div>
+          ),
+          className: 'flex justify-center',
+        },
+        {
+          key: 'isBanned',
+          content: (
+            <img
+              src={admin.is_banned ? BannedIconSrc : NotBannedIconSrc}
+              alt={admin.is_banned ? t('admins.banned') : t('admins.notBanned')}
+              className={`w-6 h-6 text-center cursor-pointer ${
+                actionLoading ? 'opacity-50' : ''
+              }`}
+              onClick={() =>
+                !actionLoading &&
+                admin?.id &&
+                handleAction(admin.id, admin.is_banned === 1, 'ban', banAdmin, {
+                  confirmButtonClass: 'bg-BlockIconBg',
+                  cancelButtonClass: '',
+                })
+              }
+            />
+          ),
+          className: 'flex justify-center',
         },
       ],
     }));
@@ -120,15 +174,14 @@ const AdminsList: React.FC = () => {
   const logsDelegates = mapAdminLogs(delegates);
 
   const headers = [
-    { key: 'id', content: t('admins.adminList.id'), className: 'text-center' },
     {
       key: 'name',
       content: t('admins.adminList.name'),
       className: 'text-center',
     },
     {
-      key: 'email',
-      content: t('admins.adminList.email'),
+      key: 'phone',
+      content: t('admins.adminList.phone'),
       className: 'text-center',
     },
     {
@@ -142,13 +195,23 @@ const AdminsList: React.FC = () => {
       className: 'text-center',
     },
     {
-      key: 'last_login',
-      content: t('admins.adminList.lastLogin'),
+      key: 'start_working_hour',
+      content: t('admins.adminList.start_working_hour'),
       className: 'text-center',
     },
     {
-      key: 'phone',
-      content: t('admins.adminList.phone'),
+      key: 'finish_working_hour',
+      content: t('admins.adminList.finish_working_hour'),
+      className: 'text-center',
+    },
+    {
+      key: 'Edit',
+      content: t('admins.adminList.edit'),
+      className: 'text-center',
+    },
+    {
+      key: 'BanStatus',
+      content: t('admins.adminList.BanStatus'),
       className: 'text-center',
     },
   ];

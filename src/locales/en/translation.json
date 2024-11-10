@@ -151,8 +151,13 @@
             "email": "Email",
             "phone": "Phone",
             "status": "Status",
-"dateAdded":"Date Added",
-"lastLogin":"Last Login"
+            "dateAdded":"Date Added",
+            "lastLogin":"Last Login",
+            "finish_working_hour": "Logout Time",
+            "start_working_hour": "Logout Time",
+              "edit":"Edit",
+            "BanStatus":"BanStatus"
+
         }
     },
     "users": {

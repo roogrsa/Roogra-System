@@ -151,7 +151,12 @@
             "phone": "الهاتف",
             "status": "الحالة",
             "dateAdded": "تاريخ الاضافه",
-            "lastLogin": "موعد التسجيل"
+            "lastLogin": "موعد التسجيل",
+            "finish_working_hour": "وقت الخروج",
+            "start_working_hour": "وقت الدخول",
+            "edit":"تحرير",
+            "BanStatus":"الحالة"
+
         }
     },
     "users": {
