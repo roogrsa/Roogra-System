@@ -2,11 +2,12 @@ import { useSelector } from 'react-redux';
 import { selectLanguage } from '../../store/slices/language';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ChatCardProps {
     id: number,
 }
-interface MassagesValue {
+interface MessagesValue {
     customer_id: number,
     form_name: string,
     advertizer_id: number,
@@ -15,16 +16,18 @@ interface MassagesValue {
     text: string,
     attachment: string,
     date_added: string,
-    status: number
+    status: number,
+    length: number
 }
 export default function ChatCard({ id }: ChatCardProps) {
+    const { t } = useTranslation();
     const language = useSelector(selectLanguage);
-    const [massages, setMassages] = useState<MassagesValue[]>([]);
+    const [messages, setMessages] = useState<MessagesValue[]>([]);
     const displayChatMsg = async () => {
         try {
             const res = await axiosInstance.get(`/api/chats/messages/${id}`);
             console.log(res.data.data);
-            setMassages(res.data.data)
+            setMessages(res.data.data)
         } catch (error: any) {
             console.error(error);
             console.log(error?.response?.data?.message);
@@ -33,9 +36,12 @@ export default function ChatCard({ id }: ChatCardProps) {
     useEffect(() => {
         displayChatMsg()
     }, []);
+    console.log(messages);
+    
     return (
-        <>
-        {massages.map((msg)=>(
+        <div className='max-h-50 overflow-y-scroll p-3'>
+        {messages.length>0?
+        messages.map((msg)=>(
             <>
             <div className="flex items-start gap-2.5 mb-6"
                 dir={language === 'ar' ? 'rtl' : 'ltr'}
@@ -46,7 +52,7 @@ export default function ChatCard({ id }: ChatCardProps) {
                         <span className="font-semibold text-secondaryBG-dark dark:text-secondaryBG-light">{msg.text}</span>
                 </div>
             </div>
-            <div className="flex items-start gap-2.5 mb-6"
+            <div className="flex items-start gap-2.5"
                 dir={language === 'ar' ? 'ltr' : 'rtl'}
             >
                     <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light" ></div>
@@ -56,8 +62,9 @@ export default function ChatCard({ id }: ChatCardProps) {
                 </div>
             </div>
             </>
-
-        ))}
-        </>
+        )):
+        <div className='font-semibold'>{t(`Reports.label.isMsg`)}</div>
+        }
+        </div>
     )
 }

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
@@ -16,84 +15,82 @@ import { toast } from "react-toastify";
 interface CategoryMap {
     map_category_id: number;
     name: string;
-    sort_order:number;
-};
+    sort_order: number;
+}
+
+type ModalType = "DELETE" | "ADD" | "EDIT" | null;
 
 const CategoriesMap: React.FC = () => {
     const { t } = useTranslation();
     const [categoriesMap, setCategoriesMap] = useState<CategoryMap[]>([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [categoriesCount, setcategoriesCount] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<CategoryMap | null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [categoriesCount, setCategoriesCount] = useState<number>(0);
+    const [modalType, setModalType] = useState<ModalType>(null);
 
-    const openModal = (category: CategoryMap) => {
+    const openModal = (type: ModalType, category: CategoryMap | null = null) => {
         setSelectedCategory(category);
-        setIsModalOpen(true);
+        setModalType(type);
     };
-    const openEditModal = (category: CategoryMap) => {
-        setSelectedCategory(category);
-        setIsAddModalOpen(true);
-    };
-    const openAddModal = () => {
-        setSelectedCategory(null)
-        setIsAddModalOpen(true);
-    };
+
     useEffect(() => {
         const fetchCategoriesCount = async () => {
             try {
-                const response = await axiosInstance.get(`/api/map-categories/count`);
-                setcategoriesCount(response.data.data.count / 8);
-            } catch (err) { }
+                const response = await axiosInstance.get<{ data: { count: number } }>(`/api/map-categories/count`);
+                setCategoriesCount(response.data.data.count / 8);
+            } catch (error) {
+                console.error("Failed to fetch categories count:", error);
+                toast.error(t('categoriesPage.countError'));
+            }
         };
         fetchCategoriesCount();
     }, []);
-    const totalPages = Math.ceil(categoriesCount);
+
     const displayCategoriesMap = async () => {
         try {
-            const res = await axiosInstance.get(`/api/map-categories?limit=8&page=${currentPage}`);
-            console.log(res.data.data);
-            setCategoriesMap(res.data.data.sort((a:any, b:any) => a.sort_order - b.sort_order))
+            const res = await axiosInstance.get<{ data: CategoryMap[] }>(`/api/map-categories?limit=8&page=${currentPage}`);
+            setCategoriesMap(res.data.data.sort((a, b) => a.sort_order - b.sort_order));
         } catch (error: any) {
-            console.error(error);
-            console.log(error?.response?.data?.message);
+            console.error("Failed to fetch categories:", error);
+            toast.error(t('categoriesPage.fetchError'));
         }
     };
+
     const changeOrder = async (id: number, order: number) => {
         try {
-            const res = await axiosInstance.patch(`/api/categories`, { categories: [{ id: id, order: order }] });
-            console.log(res);
-            toast.success(t('categoriesPage.categoriesToast'))
+            await axiosInstance.patch(`/api/categories`, { categories: [{ id: id, order: order }] });
+            toast.success(t('categoriesPage.categoriesToast'));
         } catch (error: any) {
-            console.error(error);
+            console.error("Failed to change category order:", error);
+            toast.error(t('categoriesPage.orderError'));
         }
     };
-    useEffect(() => {
-        displayCategoriesMap()
-    }, [currentPage]);
 
     const handleOnDragEnd = (result: DropResult) => {
         const { destination, source } = result;
-        if (!destination) return;
-        if (destination.index === source.index) return;
+        if (!destination || destination.index === source.index) return;
+
         const reorderedCategoriesMap = Array.from(categoriesMap);
         const [movedCategory] = reorderedCategoriesMap.splice(source.index, 1);
         reorderedCategoriesMap.splice(destination.index, 0, movedCategory);
         setCategoriesMap(reorderedCategoriesMap);
-        console.log(destination.droppableId);
-        console.log(destination.index);
-        console.log(movedCategory);
-        changeOrder(movedCategory.map_category_id, destination.index)
 
+        changeOrder(movedCategory.map_category_id, destination.index);
     };
-    const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }]
+
+    useEffect(() => {
+        displayCategoriesMap();
+    }, [currentPage]);
+
+    const totalPages = Math.ceil(categoriesCount);
+    const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }];
+
     return (
         <div className="relative overflow-x-auto">
             <div className="flex justify-between">
                 <Breadcrumb pageName={t('categoriesPage.catMap.label')} breadcrumbLinks={breadcrumbLinks} />
-                <Link to={``}>
-                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" onClick={() => openAddModal()} />
+                <Link to="#">
+                    <CgAddR className="text-3xl text-Input-TextGreen" role="button" onClick={() => openModal("ADD")} />
                 </Link>
             </div>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -107,12 +104,12 @@ const CategoriesMap: React.FC = () => {
                             >
                                 <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
                                     <tr className="px-2 py-2 text-[18px] font-[400]">
-                                        <th scope="col" className="px-2 py-3 rounded-s-lg text-[18px] font-[400]
-                                        dark:text-secondaryBG-light">
-                                            {t('categoriesPage.order')}</th>
+                                        <th scope="col" className="px-2 py-3 rounded-s-lg text-[18px] font-[400] dark:text-secondaryBG-light">
+                                            {t('categoriesPage.order')}
+                                        </th>
                                         <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{t('categoriesPage.catMap.regionName')}</th>
                                         <th scope="col" className="py-3 text-[18px] font-[400]">{t('categoriesPage.edit')}</th>
-                                        <th scope="col" className=" py-3 text-[18px] font-[400] rounded-e-lg">
+                                        <th scope="col" className="py-3 text-[18px] font-[400] rounded-e-lg">
                                             <RiDeleteBin6Line className="text-xl text-Input-TextRed" />
                                         </th>
                                     </tr>
@@ -121,53 +118,26 @@ const CategoriesMap: React.FC = () => {
                                     {categoriesMap.map((cat, index) => (
                                         <Draggable key={`cat-${index}`} draggableId={`cat-${cat.map_category_id}-${index}`} index={index}>
                                             {(provided, snapshot) => (
-                                                <>
-                                                    <tr
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                        className={`dark:border-gray-700  ${index % 2 !== 0
-                                                            ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
-                                                            : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b 
-                                                            dark:border-secondaryBG-light
-                                                    ${snapshot.isDragging ? "bg-header-inputBorder" : ""}
-                                                    `}>
-                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.sort_order}</td>
-                                                        <td
-                                                            scope="row"
-                                                            className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap
-                                                                dark:text-white"
-                                                        >
-                                                            {cat.name}
-                                                        </td>
-                                                        <td className="py-4 font-[400] text-[17px]">
-                                                            <FiEdit3 className="text-xl text-Input-TextGreen" role="button"
-                                                                onClick={() => openEditModal(cat)} />
-                                                        </td>
-                                                        <td className="py-4 font-[400] text-[17px]" onClick={() => openModal(cat)}>
-                                                            <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" /></td>
-                                                    </tr>
-                                                    {selectedCategory && (
-                                                        <DeletePopup
-                                                            deleteName={selectedCategory.name}
-                                                            deleteId={selectedCategory.map_category_id}
-                                                            url={`map-categories`}
-                                                            isModalOpen={isModalOpen}
-                                                            display={displayCategoriesMap}
-                                                            setIsModalOpen={setIsModalOpen}
-                                                        />
-                                                    )}
-                                                    {selectedCategory && (
-                                                        <EditAddPopup
-                                                            name={selectedCategory.name}
-                                                            id={selectedCategory.map_category_id}
-                                                            url={`map-categories`}
-                                                            isModalOpen={isAddModalOpen}
-                                                            setIsModalOpen={setIsAddModalOpen}
-                                                            display={displayCategoriesMap}
-                                                        />
-                                                    )}
-                                                </>
+                                                <tr
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    className={`dark:border-gray-700 ${index % 2 !== 0
+                                                        ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                                        : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b dark:border-secondaryBG-light
+                                                        ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
+                                                >
+                                                    <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.sort_order}</td>
+                                                    <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
+                                                        {cat.name}
+                                                    </td>
+                                                    <td className="py-4 font-[400] text-[17px]">
+                                                        <FiEdit3 className="text-xl text-Input-TextGreen" role="button" onClick={() => openModal("EDIT", cat)} />
+                                                    </td>
+                                                    <td className="py-4 font-[400] text-[17px]" onClick={() => openModal("DELETE", cat)}>
+                                                        <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
+                                                    </td>
+                                                </tr>
                                             )}
                                         </Draggable>
                                     ))}
@@ -178,14 +148,30 @@ const CategoriesMap: React.FC = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-            {!selectedCategory && (
+
+            {/* Modals */}
+            {modalType === "DELETE" && selectedCategory && (
+                <DeletePopup
+                    deleteName={selectedCategory.name}
+                    deleteId={selectedCategory.map_category_id}
+                    url="map-categories"
+                    isModalOpen={Boolean(modalType)}
+                    display={displayCategoriesMap}
+                    setIsModalOpen={() => setModalType(null)}
+                />
+            )}
+            {(modalType === "EDIT" || modalType === "ADD") && (
                 <EditAddPopup
-                    url={`map-categories`}
-                    isModalOpen={isAddModalOpen}
-                    setIsModalOpen={setIsAddModalOpen}
+                    name={modalType === "EDIT" && selectedCategory ? selectedCategory.name : undefined}
+                    id={modalType === "EDIT" && selectedCategory ? selectedCategory.map_category_id : undefined}
+                    url="map-categories"
+                    isModalOpen={Boolean(modalType)}
+                    setIsModalOpen={() => setModalType(null)}
                     display={displayCategoriesMap}
                 />
             )}
+
+            {/* Pagination */}
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -196,8 +182,3 @@ const CategoriesMap: React.FC = () => {
 };
 
 export default CategoriesMap;
-
-
-
-
-

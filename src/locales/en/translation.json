@@ -315,7 +315,10 @@
             "label": "Reports",
             "product": "Products",
             "chat": "chats",
-            "userChat":"chat"
+            "userChat":"chat",
+            "isMsg":"no messages in this chat",
+            "banReason":"Ban Reason",
+            "ban": "Ban"
         },
         "titles": {
             "reports": "Report",
