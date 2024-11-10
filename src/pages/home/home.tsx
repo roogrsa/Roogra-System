@@ -115,16 +115,19 @@ import HeaderLastNews from '../../components/lastnews/HeaderLastNews';
 import { MdOutlineWatchLater } from 'react-icons/md';
 import Pagination from '../../components/pagination/Pagination';
 import axiosInstance from '../../axiosConfig/instanc';
+import { useTranslation } from 'react-i18next';
 
 const Charts = () => {
   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
-  const colorEvenClass = 'dark:text-[#2F44FF] text-[#19930E]';
-  const colorOddClass = 'text-[#A130BE]';
+  const colorEvenClass = 'text-[20px] dark:text-[#2F44FF] text-[#19930E]';
+  const colorOddClass = ' text-[20px] text-[#A130BE]';
   const TypeClass = 'dark:text-white text-black';
   const timeClass = 'flex dark:text-white text-black';
   const iconClass = 'mx-3 mt-1';
   const [currentPage, setCurrentPage] = useState(0);
   const [logsCount, setLogsCount] = useState(0);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchLogsCount = async () => {
@@ -167,7 +170,8 @@ const Charts = () => {
 
   // Generate columns dynamically from the logs data
   const dynamicColumns = logs.map((log, index) => {
-    const logType = log.type === 1 ? 'customer' : 'advertiser'; // Check if type is customer (1) or advertiser (2)
+    const logType =
+      log.type === 1 ? t('charts.customer') : t('charts.advertiser'); // Check if type is customer (1) or advertiser (2)
 
     return {
       customer_activity_id: log.customer_activity_id,
@@ -182,10 +186,10 @@ const Charts = () => {
           key: 'key',
           content:
             log.key === 'login'
-              ? 'قام بتسجيل الدخول   '
+              ? t('lastNews.lastLogin')
               : log.key === 'register'
-              ? '  إنشاء حساب جديد'
-              : 'تم تعديل الحساب',
+              ? t('lastNews.register')
+              : t('lastNews.edit'),
           className: index % 2 === 0 ? colorEvenClass : colorOddClass,
         },
         {
@@ -213,7 +217,7 @@ const Charts = () => {
           series={customerChartData.series}
           labels={customerChartData.labels}
           statesData={customerChartData.statesData}
-          title="عدد الزبائن"
+          title={t('charts.customers')}
           total={customerChartData.total}
         />
 
@@ -222,7 +226,7 @@ const Charts = () => {
           series={advertiserChartData.series}
           labels={advertiserChartData.labels}
           statesData={advertiserChartData.statesData}
-          title="عدد المعلنين"
+          title={t('charts.advertisers')}
           total={advertiserChartData.total}
         />
       </div>

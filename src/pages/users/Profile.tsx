@@ -46,13 +46,13 @@ const Profile = () => {
         </div>
         {/* icons section */}
         <div className=" mx-auto flex justify-end gap-x-8">
-          <div className="bg-SaveIconBg rounded-md">
+          {/* <div className="bg-SaveIconBg rounded-md">
             <img
               src={SaveIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               // onClick={() => handleEditClick(user.id)}
             />
-          </div>
+          </div> */}
 
           <div className="bg-BlockIconBg rounded-md">
             <img

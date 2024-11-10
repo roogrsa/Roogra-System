@@ -38,9 +38,9 @@ const AddNotification = ({
   const closeModal = () => setIsModalOpen(false);
 
   const initialValues: NotificationValues = {
-    title: '',
+    title: 'title',
     message: '',
-    date: '',
+    date: '2100',
     customers: false,
     advertisers: false,
     delegates: false,
