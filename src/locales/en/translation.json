@@ -92,6 +92,7 @@
         "title": "Administrators",
         "title-add": "Edit page",
         "label": "Administrators",
+        "edit":"Edit",
         "add": "Add New Admin",
         "form": {
             "placeholder": "please write",

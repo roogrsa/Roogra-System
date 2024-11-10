@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import Pagination from '../../components/pagination/Pagination';
 import { useTranslation } from 'react-i18next';
 import axiosInstance from '../../axiosConfig/instanc';
@@ -136,11 +136,12 @@ const AdminsList: React.FC = () => {
           key: 'Edit',
           content: (
             <div className="bg-EditIconBg rounded-md">
+              <Link to={`/admins/edit-admin/${admin.id}`}>
               <img
                 src={EditIconSrc}
                 className="w-6 h-6 text-center p-1 cursor-pointer"
-                // mariem function here
               />
+              </Link>
             </div>
           ),
           className: 'flex justify-center',
