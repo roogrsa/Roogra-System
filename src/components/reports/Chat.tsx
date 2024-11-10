@@ -57,15 +57,7 @@ export default function Chat() {
             console.error(error);
         }
     };
-    const banUnbanChat = async (chatId: number) => {
-        try {
-            const res = await axiosInstance.patch(`/api/chats/${chatId}`);
-            toast.success(res.data.message);
-        } catch (error: any) {
-            console.error(error);
-        }
-    };
-    // console.log(chats);
+    console.log(chats);
 
     useEffect(() => {
         displayChats();
@@ -76,10 +68,10 @@ export default function Chat() {
     return (
         <>
             <Breadcrumb pageName={t('Reports.label.userChat')} breadcrumbLinks={breadcrumbLinks} />
-            <div className={`bg-secondaryBG dark:bg-secondaryBG-dark p-4 rounded-md`}>
+            <div className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md`}>
                 {chats.map((chat) => (
-                    <>
-                        <div key={chat.id} className={`bg-[#EDEDED] dark:bg-[#3E3E46] rounded-md mt-5 p-3 flex flex-col`}>
+                    <div  key={chat.id}>
+                        <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${chats.length > 1&& 'mb-5'} p-3 flex flex-col`}>
                             <div className="flex justify-between">
                                 <div className="flex items-center" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                                     <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light"></div>
@@ -107,7 +99,7 @@ export default function Chat() {
                         </div>
                         {showMassages[chat.id] && <>
                             <ChatCard id={chat.id} />
-                            <div className="flex justify-center p-4 bg-[#EDEDED] dark:bg-[#3E3E46]">
+                            <div className="flex justify-center p-4 bg-[#F7F5F9] dark:bg-[#2E2D3D]">
                                 <div className="flex gap-10">
                                     <RiDeleteBin6Line className="text-2xl text-Input-TextRed" role="button"
                                         onClick={() => openModal(chat)} />
@@ -135,7 +127,7 @@ export default function Chat() {
                                 setIsModalOpen={setIsBanModalOpen}
                             />
                         )}
-                    </>
+                    </div>
                 ))}
             </div>
             <ToastContainer position="top-right" autoClose={5000} />
