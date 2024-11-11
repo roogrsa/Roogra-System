@@ -120,7 +120,7 @@ const MainCategories: React.FC = () => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className={`border-b dark:border-secondaryBG-light ${index % 2 !== 0
+                          className={`dark:border-secondaryBG-light ${index % 2 !== 0
                             ? "dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight"
                             : "dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight"} ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                         >

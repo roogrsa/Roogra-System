@@ -124,7 +124,7 @@ const CategoriesMap: React.FC = () => {
                                                     {...provided.dragHandleProps}
                                                     className={`dark:border-gray-700 ${index % 2 !== 0
                                                         ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
-                                                        : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b dark:border-secondaryBG-light
+                                                        : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} dark:border-secondaryBG-light
                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                 >
                                                     <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.sort_order}</td>

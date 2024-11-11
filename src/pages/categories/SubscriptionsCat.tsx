@@ -34,6 +34,7 @@ const SubscriptionsCat: React.FC = () => {
     const [modalType, setModalType] = useState<ModalType>(null);
     const [selectedCategory, setSelectedCategory] = useState<SubscriptionsCategory | null>(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
+console.log(modalType);
 
     const openModal = (
         type: ModalType,
@@ -161,7 +162,7 @@ const SubscriptionsCat: React.FC = () => {
                                                 display={displaySubscriptionsCat}
                                             />
                                         }
-                                        {(modalType === "EditParent" || modalType === "AddParent") && (
+                                        {(modalType === "EditParent" || modalType === "AddParent") && selectedCategory&&
                                             <EditAddImgPopup
                                                 isPaid={true}
                                                 name={selectedCategory?.category_name}
@@ -172,7 +173,7 @@ const SubscriptionsCat: React.FC = () => {
                                                 display={displaySubscriptionsCat}
                                                 imageUrl={selectedCategory?.parent_image}
                                             />
-                                        )}
+                                        }
                                     </thead>
                                     {expandedCategoryId === cat.parent_id &&
                                         <Droppable droppableId={`droppable-${cat.sub}`}>
@@ -193,7 +194,7 @@ const SubscriptionsCat: React.FC = () => {
                                                                             {...provided.dragHandleProps}
                                                                             className={`${index % 2 !== 0
                                                                                 ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
-                                                                                : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b
+                                                                                : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'}
                                                                             dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                                         >
@@ -220,7 +221,7 @@ const SubscriptionsCat: React.FC = () => {
                                                                                     display={displaySubscriptionsCat}
                                                                                 />
                                                                             }
-                                                                            {(modalType === "EditSub") && (
+                                                                            {(modalType === "EditSub") && selectedSubCategory&&
                                                                                 <EditAddPopup
                                                                                     name={selectedSubCategory?.category_name}
                                                                                     id={selectedSubCategory?.category_id}
@@ -229,15 +230,15 @@ const SubscriptionsCat: React.FC = () => {
                                                                                     setIsModalOpen={() => setModalType(null)}
                                                                                     display={displaySubscriptionsCat}
                                                                                 />
-                                                                            )}
-                                                                            {(modalType === "AddSub") && (
+                                                                            }
+                                                                            {(modalType === "AddSub") &&selectedCategory&&
                                                                                 <EditAddPopup
                                                                                     url={`categories/${selectedCategory?.parent_id}`}
                                                                                     isModalOpen={modalType === "AddSub"}
                                                                                     setIsModalOpen={() => setModalType(null)}
                                                                                     display={displaySubscriptionsCat}
                                                                                 />
-                                                                            )}
+                                                                            }
                                                                         </tr>
                                                                     )}
                                                                 </Draggable>
