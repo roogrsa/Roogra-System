@@ -84,7 +84,7 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
               key: 'id',
               content:
                 reportType === 'Userproduct'
-                  ? 'RC-' + item.report_id
+                  ? 'RT-' + item.report_id
                   : 'RC-' + item.chat_report_id,
 
               className: 'flex justify-center',

@@ -158,7 +158,7 @@ const VerifactionRequestByUserid = () => {
           columns: [
             {
               key: 'id',
-              content: 'RS-' + item.verification_request_id,
+              content: 'RD-' + item.verification_request_id,
               className: 'flex justify-center text-sm',
             },
             {

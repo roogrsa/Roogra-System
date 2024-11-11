@@ -97,11 +97,13 @@ const AdminsList: React.FC = () => {
               {/* {admin.last_name} */}
             </span>
           ),
-          className: 'dark:text-[#32E26B] text-[#0E1FB2]',
+          className: 'dark:text-[#32E26B] text-[#0E1FB2] text-center',
         },
         {
           key: 'phone',
-          content: admin.phone ? admin.phone : '00000000000',
+          content: admin.phone
+            ? admin.phone.split(' ').slice(0, 2).join(' ').slice(0, 12)
+            : '00000000000',
           className: 'dark:text-white text-black',
         },
         {

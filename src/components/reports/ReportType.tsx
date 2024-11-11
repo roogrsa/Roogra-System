@@ -15,9 +15,9 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
   const { t } = useTranslation();
   const [status, setStatus] = useState(0);
   const navigate = useNavigate();
-  const {rc_search} = useParams();
+  const { rc_search } = useParams();
   console.log(rc_search);
-  
+
   const breadcrumbLinks = [{ label: t('Reports.label.label'), path: '/' }];
   const { data, loading, error } = useProductReports(reportType, status);
 
@@ -73,7 +73,7 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
               key: 'id',
               content:
                 reportType === 'product'
-                  ? 'RC-' + item.report_id
+                  ? 'RT-' + item.report_id
                   : 'RC-' + item.chat_report_id,
 
               className: 'flex justify-center',
@@ -117,12 +117,14 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
                   key: 'actions',
                   content: (
                     <div className="bg-EditIconBg rounded-md ">
-                      <Link to={`/reports/chat/${item.customer_id}`}
-                      state={{ reportId: item.chat_report_id }}>
-                      <img
-                        src={EditIconSrc}
-                        className="w-6 h-6 text-center p-1 cursor-pointer"
-                      />
+                      <Link
+                        to={`/reports/chat/${item.customer_id}`}
+                        state={{ reportId: item.chat_report_id }}
+                      >
+                        <img
+                          src={EditIconSrc}
+                          className="w-6 h-6 text-center p-1 cursor-pointer"
+                        />
                       </Link>
                     </div>
                   ),
