@@ -28,46 +28,31 @@ interface SubCategory {
     category_id: number;
     category_name: string;
 }
-
+type ModalType = "DeleteParent" | "AddParent" | "EditParent" | "DeleteSub" | "AddSub" | "EditSub" | null;
 const SubscriptionsCat: React.FC = () => {
     const { t } = useTranslation();
-    const [subscriptionscategories, setSubscriptionscategories] = useState<SubscriptionsCategory[]>([]);
-    const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(null);
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isSubModalOpen, setIsSubModalOpen] = useState(false);
-    const [isAddParentModalOpen, setIsAddParentModalOpen] = useState(false);
+    const [modalType, setModalType] = useState<ModalType>(null);
     const [selectedCategory, setSelectedCategory] = useState<SubscriptionsCategory | null>(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
-    const openDeleteGenericPopup = (category: SubscriptionsCategory | SubCategory) => {
-        if ('parent_id' in category) {
-            setSelectedCategory(category);
-            setSelectedSubCategory(null);
-            setIsModalOpen(true);
-        } else {
-            setSelectedSubCategory(category);
-            setSelectedCategory(null);
-            setIsSubModalOpen(true);
-        }
-    };
-    const openGenericPopup = (category: SubscriptionsCategory | SubCategory) => {
-        if ('parent_id' in category) {
-            setSelectedCategory(category);
-            setSelectedSubCategory(null);
-        } else {
-            setSelectedSubCategory(category);
+
+    const openModal = (
+        type: ModalType,
+        category: SubscriptionsCategory | SubCategory | null
+    ) => {
+        setModalType(type);
+        if ("parent_id" in (category || {})) {
+            setSelectedCategory(category as SubscriptionsCategory);
+        } else if (!category) {
             setSelectedCategory(null);
         }
-        setIsAddModalOpen(true);
-    };
-    const openGenericParentPopup = (category: SubscriptionsCategory | null) => {
-        if (category) {
-            setSelectedCategory(category);
-        } else {
-            setSelectedCategory(null);
+        else {
+            setSelectedSubCategory(category as SubCategory);
         }
-        setIsAddParentModalOpen(true);
     };
+
+    const [subscriptionscategories, setSubscriptionscategories] = useState<SubscriptionsCategory[]>([]);
+    const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(null);
+
     const displaySubscriptionsCat = async () => {
         try {
             const res = await axiosInstance.get(`/api/categories/extensive`);
@@ -127,7 +112,7 @@ const SubscriptionsCat: React.FC = () => {
                 <Breadcrumb pageName={t('categoriesPage.catSubscriptions.label')} breadcrumbLinks={breadcrumbLinks} />
                 <Link to={``}>
                     <CgAddR className="text-3xl text-Input-TextGreen" role="button"
-                        onClick={() => openGenericParentPopup(null)} />
+                        onClick={() => openModal("AddParent", null)} />
                 </Link>
             </div>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -148,13 +133,13 @@ const SubscriptionsCat: React.FC = () => {
                                                 <img src={cat.parent_image} width={100} alt="" />
                                             </th>
                                             <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{cat.category_name}</th>
-                                            <th scope="col" className="py-3" onClick={() => openGenericPopup(cat)}>
+                                            <th scope="col" className="py-3" onClick={() => openModal("AddSub", cat)}>
                                                 <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
                                             </th>
-                                            <th scope="col" className="py-3" onClick={() => openGenericParentPopup(cat)}>
+                                            <th scope="col" className="py-3" onClick={() => openModal("EditParent", cat)}>
                                                 <LiaEditSolid className="text-3xl text-Input-TextGreen" role="button" />
                                             </th>
-                                            <th scope="col" className=" py-3" onClick={() => openDeleteGenericPopup(cat)} role="button">
+                                            <th scope="col" className=" py-3" onClick={() => openModal("DeleteParent", cat)} role="button">
                                                 <RiDeleteBin6Line className="text-3xl text-Input-TextRed" />
                                             </th>
                                             <th scope="col" className=" py-3 rounded-e-lg" role="button"
@@ -166,26 +151,26 @@ const SubscriptionsCat: React.FC = () => {
                                                 )}
                                             </th>
                                         </tr>
-                                        {selectedCategory &&
+                                        {modalType === "DeleteParent" && selectedCategory &&
                                             <DeletePopup
                                                 deleteName={selectedCategory.category_name}
                                                 deleteId={selectedCategory.parent_id}
                                                 url={`categories`}
-                                                isModalOpen={isModalOpen}
+                                                isModalOpen={modalType === "DeleteParent"}
+                                                setIsModalOpen={() => setModalType(null)}
                                                 display={displaySubscriptionsCat}
-                                                setIsModalOpen={setIsModalOpen}
                                             />
                                         }
-                                        {selectedCategory && (
+                                        {(modalType === "EditParent" || modalType === "AddParent") && (
                                             <EditAddImgPopup
                                                 isPaid={true}
-                                                name={selectedCategory.category_name}
-                                                id={selectedCategory.parent_id}
+                                                name={selectedCategory?.category_name}
+                                                id={selectedCategory?.parent_id}
                                                 url={`categories`}
-                                                isModalOpen={isAddParentModalOpen}
-                                                setIsModalOpen={setIsAddParentModalOpen}
+                                                isModalOpen={modalType === "EditParent" || modalType === "AddParent"}
+                                                setIsModalOpen={() => setModalType(null)}
                                                 display={displaySubscriptionsCat}
-                                                imageUrl={selectedCategory.parent_image}
+                                                imageUrl={selectedCategory?.parent_image}
                                             />
                                         )}
                                     </thead>
@@ -198,58 +183,65 @@ const SubscriptionsCat: React.FC = () => {
                                                 >
                                                     {cat.sub.length ?
                                                         cat.sub.
-                                                        // sort((a:any, b:any) => a.parent_sort_order - b.parent_sort_order).
-                                                        map((sub, index) => (
-                                                            <Draggable key={`sub-${index}`} draggableId={`sub-${sub.category_id}-${index}`} index={index}>
-                                                                {(provided, snapshot) => (
-                                                                    <tr
-                                                                        ref={provided.innerRef}
-                                                                        {...provided.draggableProps}
-                                                                        {...provided.dragHandleProps}
-                                                                        className={`${index % 2 !== 0
-                                                                            ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
-                                                                            : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b
+                                                            // sort((a:any, b:any) => a.parent_sort_order - b.parent_sort_order).
+                                                            map((sub, index) => (
+                                                                <Draggable key={`sub-${index}`} draggableId={`sub-${sub.category_id}-${index}`} index={index}>
+                                                                    {(provided, snapshot) => (
+                                                                        <tr
+                                                                            ref={provided.innerRef}
+                                                                            {...provided.draggableProps}
+                                                                            {...provided.dragHandleProps}
+                                                                            className={`${index % 2 !== 0
+                                                                                ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                                                                : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} border-b
                                                                             dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
-                                                                    >
-                                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {sub.parent_sort_order}</td>
-                                                                        <td className="px-2 py-4"></td>
-                                                                        <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
-                                                                            {sub.category_name}
-                                                                        </td>
-                                                                        <td className="px-2 py-4"></td>
-                                                                        <td className="py-4" onClick={() => openGenericPopup(sub)}>
-                                                                            <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
-                                                                        </td>
-                                                                        <td className="py-4" onClick={() => openDeleteGenericPopup(sub)}>
-                                                                            <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
-                                                                        </td>
-                                                                        <td className="py-4"></td>
-                                                                        {selectedSubCategory &&
-                                                                            <DeletePopup
-                                                                                deleteName={selectedSubCategory.category_name}
-                                                                                deleteId={selectedSubCategory.category_id}
-                                                                                url={`categories`}
-                                                                                isModalOpen={isSubModalOpen}
-                                                                                display={displaySubscriptionsCat}
-                                                                                setIsModalOpen={setIsSubModalOpen}
-                                                                            />
-                                                                        }
-                                                                        {selectedSubCategory && (
-                                                                            <EditAddPopup
-                                                                                name={selectedSubCategory?.category_name}
-                                                                                id={selectedSubCategory?.category_id}
-                                                                                url={`categories`}
-                                                                                isModalOpen={isAddModalOpen}
-                                                                                setIsModalOpen={setIsAddModalOpen}
-                                                                                display={displaySubscriptionsCat}
-                                                                            />
-
-                                                                        )}
-                                                                    </tr>
-                                                                )}
-                                                            </Draggable>
-                                                        ))
+                                                                        >
+                                                                            <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {sub.parent_sort_order}</td>
+                                                                            <td className="px-2 py-4"></td>
+                                                                            <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
+                                                                                {sub.category_name}
+                                                                            </td>
+                                                                            <td className="px-2 py-4"></td>
+                                                                            <td className="py-4" onClick={() => openModal("EditSub", sub)}>
+                                                                                <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
+                                                                            </td>
+                                                                            <td className="py-4" onClick={() => openModal("DeleteSub", sub)}>
+                                                                                <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
+                                                                            </td>
+                                                                            <td className="py-4"></td>
+                                                                            {modalType === "DeleteSub" && selectedSubCategory &&
+                                                                                <DeletePopup
+                                                                                    deleteName={selectedSubCategory.category_name}
+                                                                                    deleteId={selectedSubCategory.category_id}
+                                                                                    url={`categories`}
+                                                                                    isModalOpen={modalType === "DeleteSub"}
+                                                                                    setIsModalOpen={() => setModalType(null)}
+                                                                                    display={displaySubscriptionsCat}
+                                                                                />
+                                                                            }
+                                                                            {(modalType === "EditSub") && (
+                                                                                <EditAddPopup
+                                                                                    name={selectedSubCategory?.category_name}
+                                                                                    id={selectedSubCategory?.category_id}
+                                                                                    url={`categories`}
+                                                                                    isModalOpen={modalType === "EditSub"}
+                                                                                    setIsModalOpen={() => setModalType(null)}
+                                                                                    display={displaySubscriptionsCat}
+                                                                                />
+                                                                            )}
+                                                                            {(modalType === "AddSub") && (
+                                                                                <EditAddPopup
+                                                                                    url={`categories/${selectedCategory?.parent_id}`}
+                                                                                    isModalOpen={modalType === "AddSub"}
+                                                                                    setIsModalOpen={() => setModalType(null)}
+                                                                                    display={displaySubscriptionsCat}
+                                                                                />
+                                                                            )}
+                                                                        </tr>
+                                                                    )}
+                                                                </Draggable>
+                                                            ))
                                                         :
                                                         <div className="font-semibold text-xl my-5">
                                                             {t('categoriesPage.catSubscriptions.noSub')}
@@ -265,23 +257,6 @@ const SubscriptionsCat: React.FC = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-            {selectedCategory &&
-                <EditAddPopup
-                    url={`categories/${selectedCategory.parent_id}`}
-                    isModalOpen={isAddModalOpen}
-                    setIsModalOpen={setIsAddModalOpen}
-                    display={displaySubscriptionsCat}
-                />
-            }
-            {!selectedCategory &&
-                <EditAddImgPopup
-                    isPaid={true}
-                    url={`categories`}
-                    setIsModalOpen={setIsAddParentModalOpen}
-                    isModalOpen={isAddParentModalOpen}
-                    display={displaySubscriptionsCat}
-                />
-            }
         </div>
     );
 };
