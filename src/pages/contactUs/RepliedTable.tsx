@@ -8,8 +8,12 @@ import ContactUsType from "../../types/Contactus";
 
 interface ContactUsTableProps {
     type: string
+    idPre: string;
+    query?: string;
 }
-export default function RepliedTable({ type }: ContactUsTableProps) {
+export default function RepliedTable({ type, idPre, query }: ContactUsTableProps) {
+    console.log(query);
+    
     const { t } = useTranslation()
     const [contactUs, setContactUs] = useState<ContactUsType[]>([])
     const [selectedSupport, setSelectedSupport] = useState<ContactUsType>();
@@ -28,7 +32,9 @@ export default function RepliedTable({ type }: ContactUsTableProps) {
     };
     const displayContactUs = async () => {
         try {
-            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`);
+            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`,{params: {
+                q: query || ''
+            }});
             console.log(res.data.data);
             setContactUs(res.data.data)
         } catch (error: any) {
@@ -53,7 +59,7 @@ export default function RepliedTable({ type }: ContactUsTableProps) {
                                 : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'}`}
                         >
                             <td scope="row" className="px-2 py-2 font-[400] text-[17px] text-center">
-                                {support.ticket_id}
+                                {idPre}{support.ticket_id}
                             </td>
                             <td scope="row" className="px-2 py-2 font-[400] text-[17px] text-center">
                                 {support.customer_name}

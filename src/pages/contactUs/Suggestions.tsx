@@ -1,14 +1,22 @@
 import { useTranslation } from "react-i18next";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { CgAddR } from "react-icons/cg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AccordionHeader2 from "../../components/Accordion/AccordionHeader2";
 import ContactUsTable from "./ContactUsTable";
 import RepliedTable from "./RepliedTable";
+import { useParams } from "react-router-dom";
 
 export default function Suggestions() {
     const { t } = useTranslation();
-    // const [status, setStatus] = useState('processing');
+    const {rfp_search} = useParams();
+    // const [query, setQuery] = useState('');
+    // useEffect(()=>{
+    //     if (rfp_search) {
+    //         setQuery(rfp_search)
+    //     }
+    // },[])
+    // const [status, setStatus] = useState();
     const breadcrumbLinks = [{ label: t('contact-us.contact-us'), path: '' }]
     return (
         <div>
@@ -27,10 +35,10 @@ export default function Suggestions() {
                 // }}
                 children={[
                     <div>
-                        <ContactUsTable type="الاقتراحات"/>
+                        <ContactUsTable type="الاقتراحات" idPre={`RFP-`} query={rfp_search}/>
                     </div>,
                     <div>
-                        <RepliedTable type="الاقتراحات"/>
+                        <RepliedTable type="الاقتراحات" idPre={`RFP-`} query={rfp_search}/>
                     </div>
                 ]}
             />

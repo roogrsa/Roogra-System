@@ -7,8 +7,10 @@ import ContactUsType from '../../types/Contactus';
 
 interface ContactUsTableProps {
   type: string;
+  idPre: string;
+  query?: string;
 }
-export default function ContactUsTable({ type }: ContactUsTableProps) {
+export default function ContactUsTable({ type, idPre, query }: ContactUsTableProps) {
   const { t } = useTranslation();
   const [contactUs, setContactUs] = useState<ContactUsType[]>([]);
   const [selectedSupport, setSelectedSupport] = useState<ContactUsType>();
@@ -27,7 +29,11 @@ export default function ContactUsTable({ type }: ContactUsTableProps) {
   const displayContactUs = async () => {
     try {
       const res = await axiosInstance.get(
-        `/api/support/type/${type}/status/open`,
+        `/api/support/type/${type}/status/open`, {
+          params: {
+            q: query || ''
+          }
+      }
       );
       console.log(res.data.data);
       setContactUs(res.data.data);
@@ -49,17 +55,16 @@ export default function ContactUsTable({ type }: ContactUsTableProps) {
           {contactUs.map((support, index) => (
             <tr
               key={support.ticket_id}
-              className={`dark:border-gray-700  ${
-                index % 2 !== 0
+              className={`dark:border-gray-700  ${index % 2 !== 0
                   ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
                   : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
-              }`}
+                }`}
             >
               <td
                 scope="row"
                 className="px-2 py-2 font-[400] text-[17px] text-center"
               >
-                {`RQ1-${support.ticket_id}`}
+                {idPre}{support.ticket_id}
               </td>
               <td className="px-2 py-2 font-[400] text-[17px] text-center">
                 {support.customer_name}
