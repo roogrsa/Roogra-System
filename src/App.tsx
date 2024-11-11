@@ -159,7 +159,29 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: '/part/subscription/:rs_search',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={CategorySubscription}
+              hasPermission={storedPermissions[13]}
+            />
+          </Guard>
+        ),
+      },
+      {
         path: '/confirm/subscription',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={verifaction_requestByStatus}
+              hasPermission={storedPermissions[13]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: '/confirm/subscription/:rd_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -285,9 +307,19 @@ const router = createBrowserRouter([
           </Guard>
         ),
       },
-
       {
         path: 'contact-us/inquiries',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Inquiries}
+              hasPermission={storedPermissions[15]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'contact-us/inquiries/:rq1_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -309,7 +341,29 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'contact-us/issues/:rq2_search',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Issues}
+              hasPermission={storedPermissions[16]}
+            />
+          </Guard>
+        ),
+      },
+      {
         path: 'contact-us/suggestions',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={Suggestions}
+              hasPermission={storedPermissions[17]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'contact-us/suggestions/:rfp_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -342,7 +396,29 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: 'reports/product/:rt-search',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ProductReport}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
         path: 'reports/chat',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={ChatReport}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'reports/chat/:rc_search',
         element: (
           <Guard>
             <ProtectedRoute

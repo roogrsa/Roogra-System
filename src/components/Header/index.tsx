@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { useSelector } from 'react-redux';
 import { selectLanguage } from '../../store/slices/language';
@@ -16,8 +16,43 @@ const Header = (props: {
 }) => {
   const { t } = useTranslation();
   const language = useSelector(selectLanguage);
-
   const [colorMode] = useColorMode();
+  const navigate = useNavigate();
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
+    if ((event as React.KeyboardEvent).key === "Enter" || event.type === "click") {
+      const target = event.target as HTMLInputElement;
+      if (target.value.startsWith('rc-')) {
+        const id =target.value.slice(3)
+        navigate(`/reports/chat/${id}`);
+      }
+      else if(target.value.startsWith('rt-')){
+        const id =target.value.slice(3)
+        navigate(`/reports/product/${id}`);
+      }
+      else if(target.value.startsWith('rq1-')){
+        const id =target.value.slice(4)
+        navigate(`/contact-us/inquiries/${id}`);
+      }
+      else if(target.value.startsWith('rq2-')){
+        const id =target.value.slice(4)
+        navigate(`/contact-us/issues/${id}`);
+      }
+      else if(target.value.startsWith('rfp-')){
+        const id =target.value.slice(4)
+        navigate(`/contact-us/suggestions/${id}`);
+      }
+      else if(target.value.startsWith('rd-')){
+        const id =target.value.slice(3)
+        navigate(`/confirm/subscription/${id}`);
+      }
+      else if(target.value.startsWith('rs-')){
+        const id =target.value.slice(3)
+        navigate(`/part/subscription/${id}`);
+      }
+    }
+  };
+
   return (
     <header
       dir="ltr"
@@ -83,20 +118,19 @@ const Header = (props: {
           className="hidden sm:block"
           dir={language === 'ar' ? 'rtl' : 'ltr'}
         >
-          <form action="https://formbold.com/s/unique_form_id" method="POST">
             <div className="relative">
               <CiSearch
                 className={`absolute top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold
                   ${language === 'ar' ? 'left-2' : 'right-2'} `}
               />
               <input
-                type="text"
+                type="search"
                 placeholder={t(`header.search`)}
+                onKeyDown={(event)=>handleSearch(event)}
                 className="px-4 py-1 rounded-3xl border-header-inputBorder text-black dark:bg-header-inputDark dark:text-white
                 border-2 bg-header-inputLight outline-none"
               />
             </div>
-          </form>
         </div>
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">

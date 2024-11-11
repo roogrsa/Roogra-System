@@ -56,43 +56,41 @@
         "search": "Type to search..."
     },
     "profile": {
-        "detials":"Detials",
-        "info":"Information",
-        "products":"Products",
-        "banList":"Ban List",
-        "contactUs":"Contact Us",
-        "ticket":"Tickets",
-        "chats":"chats",
-        "reprts":"Reprts",
-
-           "userDetials": {
-        "id": "ID",
-        "name": "User Name",
-        "alias": "Alias",
-        "type": "Type",
-        "email": "Email",
-        "phone": "Phone",
-                "country":"country",
-
-        "regDate": "Reg-Date",
-        "mobileconfirm": " Mobile Confirm",
-        "emailleconfirm": "Emaille Confirm",
-            "Activated":"Activated",
-            "Deactivated":"Deactivated ",
-                 "customer":"customer",
-            "advertiser":"advertiser"
-    },
-    "UserInfo":{
-        "follower": "Followers",
-        "rates": "Rates",
-        "bio": "Bio"
-    }
+        "detials": "Detials",
+        "info": "Information",
+        "products": "Products",
+        "banList": "Ban List",
+        "contactUs": "Contact Us",
+        "ticket": "Tickets",
+        "chats": "chats",
+        "reprts": "Reprts",
+        "userDetials": {
+            "id": "ID",
+            "name": "User Name",
+            "alias": "Alias",
+            "type": "Type",
+            "email": "Email",
+            "phone": "Phone",
+            "country": "country",
+            "regDate": "Reg-Date",
+            "mobileconfirm": " Mobile Confirm",
+            "emailleconfirm": "Emaille Confirm",
+            "Activated": "Activated",
+            "Deactivated": "Deactivated ",
+            "customer": "customer",
+            "advertiser": "advertiser"
+        },
+        "UserInfo": {
+            "follower": "Followers",
+            "rates": "Rates",
+            "bio": "Bio"
+        }
     },
     "admins": {
         "title": "Administrators",
         "title-add": "Edit page",
         "label": "Administrators",
-        "edit":"Edit",
+        "edit": "Edit",
         "add": "Add New Admin",
         "form": {
             "placeholder": "please write",
@@ -146,19 +144,18 @@
         "supervisor": "supervisor",
         "delegate": "delegate",
         "observer": "observer",
-            "adminList":{
+        "adminList": {
             "id": "ID",
             "name": "Name",
             "email": "Email",
             "phone": "Phone",
             "status": "Status",
-            "dateAdded":"Date Added",
-            "lastLogin":"Last Login",
+            "dateAdded": "Date Added",
+            "lastLogin": "Last Login",
             "finish_working_hour": "Logout Time",
             "start_working_hour": "Logout Time",
-              "edit":"Edit",
-            "BanStatus":"BanStatus"
-
+            "edit": "Edit",
+            "BanStatus": "BanStatus"
         }
     },
     "users": {
@@ -184,17 +181,15 @@
             "pageNamePaid": "Paid",
             "pageNameAll": "All"
         },
-
-        
-        "id":"ID",
-        "name":"Name",
-        "date":"Date",
-        "time":"Time",
-        "category":"Category",
-        "ProdName":"Product",
-        "photo":"Image",
-        "Edit":"Show",
-        "BanStatus":"Status"
+        "id": "ID",
+        "name": "Name",
+        "date": "Date",
+        "time": "Time",
+        "category": "Category",
+        "ProdName": "Product",
+        "photo": "Image",
+        "Edit": "Show",
+        "BanStatus": "Status"
     },
     "unauthorized": {
         "title": "sorry, You are not authorized",
@@ -214,19 +209,19 @@
         "self-employment": "Self-Employment Certificate Fees",
         "subscription": "Subscription Category Fees",
         "verification-check-fees": "Verification Check Fees",
-        "usernameSms":"Username",
-        "senderNameSms":"Sender Name",
-        "tokenSms":"Token",
-        "accountHolder":"Account Holder",
-        "bankName":"Bank name",
-        "accountNumber":"Account Number",
-        "bankIBAN":"IBAN",
-        "bankLogo":"Bank Logo",
-        "edit":"Edit",
-        "bannerName":"Banner Name",
-        "bannerurl":"Banner URL",
-        "duration":"Duration",
-        "bannerImage":"Bank Logo"
+        "usernameSms": "Username",
+        "senderNameSms": "Sender Name",
+        "tokenSms": "Token",
+        "accountHolder": "Account Holder",
+        "bankName": "Bank name",
+        "accountNumber": "Account Number",
+        "bankIBAN": "IBAN",
+        "bankLogo": "Bank Logo",
+        "edit": "Edit",
+        "bannerName": "Banner Name",
+        "bannerurl": "Banner URL",
+        "duration": "Duration",
+        "bannerImage": "Bank Logo"
     },
     "categoriesPage": {
         "title": "categories",
@@ -236,7 +231,7 @@
         "editCat": "EDIT CATEGORY",
         "order": "Order",
         "edit": "Edit",
-        "categoriesToast":"Categories updated successfully.",
+        "categoriesToast": "Categories updated successfully.",
         "catMain": {
             "label": "Primary",
             "catName": "Category name",
@@ -316,76 +311,73 @@
             "label": "Reports",
             "product": "Products",
             "chat": "chats",
-            "userChat":"chat",
-            "isMsg":"no messages in this chat",
-            "banReason":"Ban Reason",
+            "userChat": "chat",
+            "isMsg": "no messages in this chat",
+            "banReason": "Ban Reason",
             "ban": "Ban"
         },
         "titles": {
             "reports": "Report",
             "revision": "Revision"
         },
-        "headers":{
-            "id":"Rep-Id",
-            "name":"Customer",
-            "product":"Product",
-            "created_at":"Req-Date",
-            "actions":"Show",
-            "speakerTo":"speaker to"
+        "headers": {
+            "id": "Rep-Id",
+            "name": "Customer",
+            "product": "Product",
+            "created_at": "Req-Date",
+            "actions": "Show",
+            "speakerTo": "speaker to"
         }
     },
     "notifications": {
         "popup": {
-            "add":"Add New Notification",
-            "expiry_date":"expiry_date",
-            "placeholderMessage":" Enter Notification message here",
-            "message":"Notification Message",
-            "placeholderTitle":"Enter Notification Title here",
-            "title":"Notification Title",
-            "save":"Save",
-            "cancel":"Cancel",
-            "customers":"Customers",
-            "advertisers":"Advertisers",
-            "successfully":"Notification Added successfully",
-    "error":"Error in adding notification",
-    "Delegates":"Delegates",
-    "Observers":"Observers",
-    "Supervisors":"Supervisors"
-
-
-
+            "add": "Add New Notification",
+            "expiry_date": "expiry_date",
+            "placeholderMessage": " Enter Notification message here",
+            "message": "Notification Message",
+            "placeholderTitle": "Enter Notification Title here",
+            "title": "Notification Title",
+            "save": "Save",
+            "cancel": "Cancel",
+            "customers": "Customers",
+            "advertisers": "Advertisers",
+            "successfully": "Notification Added successfully",
+            "error": "Error in adding notification",
+            "Delegates": "Delegates",
+            "Observers": "Observers",
+            "Supervisors": "Supervisors"
         }
     },
-    "contact-us":{
-        "contact-us":"Contact Us",
-        "inquiries":"Inquiries",
-        "issues":"Issues",
-        "suggestions":"Suggestions",
-        "replied":"Replied",
-        "username":"Username",
-        "inquiryDate":"Inquiry date",
-        "ticketNumber":"Ticke number",
-        "view":"View",
-        "replyBy":"Reply by",
-        "replyDate":"Reply date",
-        "closeTicket":"Reply and close",
-        "ticketDetails":"Ticket details",
-        "reply":"Reply",
-        "deleteTicket":"Delete ticket"
-    },  "lastNews":{
-        "title":"Last news",
-        "lastLogin":"Has Logged In",
-        "register":"New Account",
-        "edit":"Acocount updated"
- 
+    "contact-us": {
+        "contact-us": "Contact Us",
+        "inquiries": "Inquiries",
+        "issues": "Issues",
+        "suggestions": "Suggestions",
+        "replied": "Replied",
+        "username": "Username",
+        "inquiryDate": "Inquiry date",
+        "ticketNumber": "Ticke number",
+        "view": "View",
+        "replyBy": "Reply by",
+        "replyDate": "Reply date",
+        "closeTicket": "Reply and close",
+        "ticketDetails": "Ticket details",
+        "reply": "Reply",
+        "deleteTicket": "Delete ticket"
     },
-       "charts":{
-         "Active":"Active",
-        "Lazy":"Lazy",
-        "Inactive":"Inactive",
-        "customer":"Customer",
-"advertiser":"Advertiser",
- "customers":"Number of customers",
- "advertisers":"Number of advertisers"
+    "lastNews": {
+        "title": "Last news",
+        "lastLogin": "Has Logged In",
+        "register": "New Account",
+        "edit": "Acocount updated"
+    },
+    "charts": {
+        "Active": "Active",
+        "Lazy": "Lazy",
+        "Inactive": "Inactive",
+        "customer": "Customer",
+        "advertiser": "Advertiser",
+        "customers": "Number of customers",
+        "advertisers": "Number of advertisers"
     }
 }
