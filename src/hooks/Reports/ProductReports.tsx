@@ -11,7 +11,7 @@ interface ApiResponse {
 }
 
 // Custom Hook with parameters for type and status
-export const useProductReports = (type: string, status: number = 0) => {
+export const useProductReports = (type: string, status: number = 0, query?: string) => {
   const [data, setData] = useState<ReportData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,11 @@ export const useProductReports = (type: string, status: number = 0) => {
       setLoading(true);
       try {
         const response = await axiosInstance.get<ApiResponse>(
-          `/api/reports/type/${type}/status/${status}`,
+          `/api/reports/type/${type}/status/${status}`, {
+          params: {
+            q: query || ''
+          }
+        }
         );
 
         if (response.data.success) {
@@ -38,7 +42,7 @@ export const useProductReports = (type: string, status: number = 0) => {
     };
 
     fetchReports();
-  }, [type, status]);
+  }, [type, status, query]);
 
   return { data, loading, error };
 };

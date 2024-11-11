@@ -398,7 +398,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'reports/product/search/:rt-search',
+        path: 'reports/product/search/:rt_search',
         element: (
           <Guard>
             <ProtectedRoute

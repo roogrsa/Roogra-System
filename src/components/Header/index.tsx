@@ -22,7 +22,7 @@ const Header = (props: {
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     if ((event as React.KeyboardEvent).key === "Enter" || event.type === "click") {
       const target = event.target as HTMLInputElement;
-      if (target.value.startsWith('rc-')) {
+      if (target.value.startsWith('rc-')&&target.value.length>3) {
         const id = target.value.slice(3)
         navigate(`/reports/chat/search/${id}`);
       } else if (target.value.startsWith('rt-')) {
