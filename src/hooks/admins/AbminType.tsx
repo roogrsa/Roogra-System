@@ -28,32 +28,32 @@ const useAdminsByType = (adminType: number) => {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const fetchAdminsByType = async () => {
+    setLoading(true);
+    setError(null);
 
-  useEffect(() => {
-    const fetchAdminsByType = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await axiosInstance.get<AdminResponse>(
-          `/api/admins/type/${adminType}`,
-        );
-        if (response.data.success) {
-          setAdmins(response.data.data);
-        } else {
-          setError('Failed to fetch admins');
-        }
-      } catch (err) {
-        setError('Error fetching admins');
-      } finally {
-        setLoading(false);
+    try {
+      const response = await axiosInstance.get<AdminResponse>(
+        `/api/admins/type/${adminType}`,
+      );
+      if (response.data.success) {
+        setAdmins(response.data.data);
+      } else {
+        setError('Failed to fetch admins');
       }
-    };
-
+    } catch (err) {
+      setError('Error fetching admins');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchAdminsByType();
   }, [adminType]);
-
-  return { admins, loading, error };
+  const refreshAdminsByType = () => {
+    fetchAdminsByType();
+  };
+  return { admins, loading, error, refreshAdminsByType };
 };
 
 export default useAdminsByType;

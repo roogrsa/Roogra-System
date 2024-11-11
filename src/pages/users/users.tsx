@@ -165,9 +165,6 @@ const Users: React.FC = () => {
 
   //
   const breadcrumbLinks = [{ label: t('users.label.label'), path: '/' }];
-
-  // const breadcrumbLinks = [{ label: 'المستخدمين', path: '/' }];
-  //
   return (
     <div>
       <Breadcrumb

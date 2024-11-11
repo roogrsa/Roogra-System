@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axiosInstance from '../axiosConfig/instanc'; // Ensure correct path to axios instance
+import axiosInstance from '../../axiosConfig/instanc';
 
 const useBanProduct = () => {
   const [loadingPrdBan, setLoadingPrdBan] = useState(false);
@@ -10,7 +10,7 @@ const useBanProduct = () => {
     setError(null);
     try {
       const response = await axiosInstance.patch(`/api/products/${productId}`, {
-        key: reason, // Sending the reason as part of the body
+        key: reason,
       });
 
       if (response.status < 200 || response.status >= 300) {

@@ -7,7 +7,6 @@ import axiosInstance from '../../axiosConfig/instanc';
 import AccordionHeader2 from '../Accordion/AccordionHeader2';
 import NotFoundSection from '../Notfound/NotfoundSection';
 import useAdminsByType from '../../hooks/admins/AbminType';
-import useBanUser from '../../hooks/useBanUser';
 import useHandleAction from '../../hooks/useHandleAction';
 import useBanAdmin from '../../hooks/admins/useBanAdmin';
 //
@@ -23,30 +22,30 @@ const AdminsList: React.FC = () => {
   const { banAdmin, loading: banLoading, error: banError } = useBanAdmin();
   const { handleAction, loading: actionLoading } = useHandleAction();
   const navigate = useNavigate();
-  // Define a mapping object for role types
   const roleTypeMap = {
     observer: 2,
     supervisor: 3,
     delegates: 1,
   };
-
-  // Use roleTypeMap to pass the number to `useAdminsByType`
   const {
     admins: observers,
     loading: observerLoading,
     error: observerError,
+    refreshAdminsByType: refreshObservers,
   } = useAdminsByType(roleTypeMap['observer']);
 
   const {
     admins: supervisors,
     loading: supervisorLoading,
     error: supervisorError,
+    refreshAdminsByType: refreshSupervisors,
   } = useAdminsByType(roleTypeMap['supervisor']);
 
   const {
     admins: delegates,
     loading: delegateLoading,
     error: delegateError,
+    refreshAdminsByType: refreshDelegates,
   } = useAdminsByType(roleTypeMap['delegates']);
 
   useEffect(() => {
@@ -55,21 +54,34 @@ const AdminsList: React.FC = () => {
         const response = await axiosInstance.get(
           `/api/admins/type/${adminType}/count`,
         );
-        setAdminsCount(response.data.data.count / 8); // Assume 8 per page
+        setAdminsCount(response.data.data.count / 8);
       } catch (err) {
         console.error('Error fetching admin count:', err);
       }
     };
     fetchAdminsCount();
-  }, [adminType]); // Re-fetch when adminType changes
+  }, [adminType]);
 
-  // const totalPages = Math.ceil(adminsCount);
+  useEffect(() => {
+    const refreshFunction = getRefreshFunction();
+    refreshFunction();
+  }, [adminType]);
 
   const handleClickName = (adminId: number) => {
     navigate(`/profile/${adminId}`);
   };
-
-  // Utility function to map admin data to logs
+  const getRefreshFunction = () => {
+    switch (adminType) {
+      case 'observer':
+        return refreshObservers;
+      case 'supervisor':
+        return refreshSupervisors;
+      case 'delegates':
+        return refreshDelegates;
+      default:
+        return () => {};
+    }
+  };
   const mapAdminLogs = (admins: any) =>
     admins.map((admin: any) => ({
       id: admin.id,
@@ -81,8 +93,8 @@ const AdminsList: React.FC = () => {
               className="cursor-pointer dark:text-TextGreen text-TextBlue"
               onClick={() => handleClickName(admin.id)}
             >
-              {admin.first_name}
-              {admin.last_name}
+              {admin.first_name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+              {/* {admin.last_name} */}
             </span>
           ),
           className: 'dark:text-[#32E26B] text-[#0E1FB2]',
@@ -107,14 +119,12 @@ const AdminsList: React.FC = () => {
         },
         {
           key: 'date_added',
-          // content: admin.date_added.split(' ')[0],
-          content: new Date(admin.date_added).toLocaleDateString(), // Will display only the date
+          content: new Date(admin.date_added).toLocaleDateString(),
 
           className: 'flex dark:text-white text-black',
         },
         {
           key: 'start_working_hour',
-          // content: admin.start_working_hour ? admin.start_working_hour : 'N/A',
           content: admin.start_working_hour
             ? new Date(
                 `1970-01-01T${admin.start_working_hour}`,
@@ -137,10 +147,10 @@ const AdminsList: React.FC = () => {
           content: (
             <div className="bg-EditIconBg rounded-md">
               <Link to={`/admins/edit-admin/${admin.id}`}>
-              <img
-                src={EditIconSrc}
-                className="w-6 h-6 text-center p-1 cursor-pointer"
-              />
+                <img
+                  src={EditIconSrc}
+                  className="w-6 h-6 text-center p-1 cursor-pointer"
+                />
               </Link>
             </div>
           ),
@@ -155,14 +165,23 @@ const AdminsList: React.FC = () => {
               className={`w-6 h-6 text-center cursor-pointer ${
                 actionLoading ? 'opacity-50' : ''
               }`}
-              onClick={() =>
+              onClick={() => {
+                const refreshFunction = getRefreshFunction();
+
                 !actionLoading &&
-                admin?.id &&
-                handleAction(admin.id, admin.is_banned === 1, 'ban', banAdmin, {
-                  confirmButtonClass: 'bg-BlockIconBg',
-                  cancelButtonClass: '',
-                })
-              }
+                  admin?.id &&
+                  handleAction(
+                    admin.id,
+                    admin.is_banned === 1,
+                    'ban',
+                    banAdmin,
+                    {
+                      confirmButtonClass: 'bg-BlockIconBg',
+                      cancelButtonClass: '',
+                    },
+                    refreshFunction,
+                  );
+              }}
             />
           ),
           className: 'flex justify-center',
@@ -225,49 +244,23 @@ const AdminsList: React.FC = () => {
           t('admins.supervisor'),
           t('admins.delegate'),
         ]}
-        onClick={(index) => {
+        onClick={(index: number) => {
           const types = ['observer', 'supervisor', 'delegate'];
-          setAdminType(types[index]); // Update the adminType based on the clicked title
+          setAdminType(types[index]);
         }}
         children={[
-          observerLoading ? (
-            <p>Loading...</p>
-          ) : observerError ? (
-            <p>Error: {observerError}</p>
-          ) : (
-            <>
-              <NotFoundSection data={logsObserver} />
-              <MainTable logs={logsObserver} header2={true} headers={headers} />
-            </>
-          ),
-          supervisorLoading ? (
-            <p>Loading...</p>
-          ) : supervisorError ? (
-            <p>Error: {supervisorError}</p>
-          ) : (
-            <>
-              <NotFoundSection data={logsSupervisor} />
-              <MainTable
-                logs={logsSupervisor}
-                header2={true}
-                headers={headers}
-              />
-            </>
-          ),
-          delegateLoading ? (
-            <p>Loading...</p>
-          ) : delegateError ? (
-            <p>Error: {delegateError}</p>
-          ) : (
-            <>
-              <NotFoundSection data={logsDelegates} />
-              <MainTable
-                logs={logsDelegates}
-                header2={true}
-                headers={headers}
-              />
-            </>
-          ),
+          <>
+            <NotFoundSection data={logsObserver} />
+            <MainTable logs={logsObserver} header2={true} headers={headers} />
+          </>,
+          <>
+            <NotFoundSection data={logsSupervisor} />
+            <MainTable logs={logsSupervisor} header2={true} headers={headers} />
+          </>,
+          <>
+            <NotFoundSection data={logsDelegates} />
+            <MainTable logs={logsDelegates} header2={true} headers={headers} />
+          </>,
         ]}
         footerItems={[
           <div className="flex gap-5">

@@ -41,8 +41,9 @@ const BanUserList: React.FC = () => {
     columns: [
       {
         key: 'name',
-        content: user.name || 'N/A',
-        className: 'text-center',
+        content:
+          user.name.split(' ').slice(0, 2).join(' ').slice(0, 13) || 'N/A',
+        className: 'text-center dark:text-[#32E26B] text-[#0E1FB2]',
       },
       {
         key: 'created_at',

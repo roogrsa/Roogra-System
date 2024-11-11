@@ -7,7 +7,7 @@ import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import MainTable from '../../components/lastnews/MainTable';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useBanProduct from '../../hooks/useBanProduct';
+import useBanProduct from '../../hooks/products/useBanProduct';
 import useBannedProducts from './../../hooks/Ban/ProdBanList';
 
 const BannedIconSrc = '/block.svg';
@@ -46,7 +46,9 @@ const BanProdList: React.FC = () => {
     columns: [
       {
         key: 'name',
-        content: prod.product_name || 'N/A',
+        content:
+          prod.product_name.split(' ').slice(0, 2).join(' ').slice(0, 10) +
+            '..' || 'N/A',
         className: 'text-center',
       },
       {

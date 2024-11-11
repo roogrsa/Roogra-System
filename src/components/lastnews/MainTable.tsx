@@ -8,7 +8,7 @@ interface ColumnConfig {
   className: string | ((index: number) => string);
   isIcon?: boolean;
   iconClass?: string;
-  IconComponent?: React.ElementType; // Add optional IconComponent for each column
+  IconComponent?: React.ElementType;
 }
 
 interface LogData {
@@ -19,25 +19,19 @@ interface LogData {
 
 interface MainTableProps {
   logs: any;
-  headers?: ColumnConfig[]; // Made headers optional
-  // headers2?: ColumnConfig[]; // Optional second set of headers
-  header2?: boolean; // Optional header2 flag
+  headers?: ColumnConfig[];
+  header2?: boolean;
 }
 
-const MainTable: React.FC<MainTableProps> = ({
-  logs,
-  headers,
-  // headers2,
-  header2,
-}) => {
+const MainTable: React.FC<MainTableProps> = ({ logs, headers, header2 }) => {
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-[20px] text-left rtl:text-right">
         {/* Render thead for headers if provided */}
-        {headers && logs.length > 0 && headers.length > 0 && (
+        {headers && logs?.length > 0 && headers.length > 0 && (
           <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
             <tr className="flex justify-between">
-              {headers.map((header) => (
+              {headers?.map((header) => (
                 <HeaderTableCell
                   key={header.key}
                   content={header.content}
@@ -54,13 +48,13 @@ const MainTable: React.FC<MainTableProps> = ({
 
         <tbody>
           {/* Render logs */}
-          {logs.map((log, index) => (
+          {logs?.map((log, index) => (
             <tr
               key={log.id}
               className={`flex justify-between items-center ${
                 header2 // Check if header2 is true
                   ? index % 2 === 0
-                    ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight' // Reversed classes
+                    ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
                     : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
                   : index % 2 === 0
                   ? 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'

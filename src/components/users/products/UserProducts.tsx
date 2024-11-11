@@ -1,12 +1,13 @@
-import React from 'react';
-import useUserProducts from '../../../hooks/useUserProducts';
+import React, { useEffect, useState } from 'react';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 import useHandleAction from '../../../hooks/useHandleAction';
 import { useNavigate } from 'react-router-dom';
-import useBanProduct from '../../../hooks/useBanProduct';
+import useBanProduct from '../../../hooks/products/useBanProduct';
 import { User } from '../../../types/user';
 import { useTranslation } from 'react-i18next';
+import useUserProducts from '../../../hooks/products/useUserProducts';
+import useDeleteProducts from '../../../hooks/products/DelProducts';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
@@ -24,25 +25,56 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
 
   const { handleAction, loading: actionLoading } = useHandleAction();
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
+  const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
 
   const {
     products: logsUserProducts,
     loading: productsLoading,
     error: productsError,
+    refreshProductsUser,
   } = useUserProducts(user.id);
-
+  const {
+    deleteProducts,
+    isLoading: deleting,
+    error: deleteError,
+    isSuccess,
+  } = useDeleteProducts();
+  useEffect(() => {
+    if (isSuccess) {
+      refreshProductsUser();
+    }
+  }, [isSuccess, refreshProductsUser]);
   // Handle ban/unban action
   const handleBan = (productId: number, isBanned: boolean) => {
-    handleAction(productId, isBanned, 'ban', banProduct, {
-      confirmButtonClass: 'bg-BlockIconBg',
-      cancelButtonClass: 'bg-gray-300',
-    });
+    handleAction(
+      productId,
+      isBanned,
+      'ban',
+      banProduct,
+      {
+        confirmButtonClass: 'bg-BlockIconBg',
+        cancelButtonClass: 'bg-gray-300',
+      },
+      refreshProductsUser,
+    );
   };
-  //
+
   const handleProdProfile = (productId: number) => {
     navigate(`/products/${productId}`);
   };
-  //
+
+  const handleRemoveClick = (productId: number) => {
+    setSelectedProductIds((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+  };
+
+  const confirmDeletion = () => {
+    deleteProducts(selectedProductIds);
+    setSelectedProductIds([]);
+  };
   const logsProducts = logsUserProducts?.map((product) => {
     const createdAtDate = new Date(product.date);
     const datePart = createdAtDate.toLocaleDateString();
@@ -127,9 +159,14 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
             <img
               src={CheckboxIconSrc}
               alt="Remove"
-              className={`w-5 h-5 text-center cursor-pointer 
-              
-              `}
+              onClick={() => handleRemoveClick(product.id)}
+              className={`w-5 h-5 text-center cursor-pointer ${
+                loadingPrdBan ? 'opacity-50' : ''
+              } ${
+                selectedProductIds.includes(product.id)
+                  ? 'bg-red-600 rounded-full p-1'
+                  : ''
+              }`}
             />
           ),
           className: 'flex justify-center',
@@ -163,18 +200,17 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
       key: 'removeStatus',
       content: (
         <img
-          src={CheckboxIconSrc}
+          src="/redRemove.svg"
           alt="Remove"
-          className={`w-5 h-5 text-center cursor-pointer
-        
-          `}
+          onClick={confirmDeletion}
+          className="cursor-pointer"
         />
       ),
       className: 'text-center flex justify-center',
     },
   ];
   return (
-    <div>
+    <div className="my-5">
       <NotFoundSection data={logsProducts} />
       <MainTable logs={logsProducts || []} headers={headers || []} />
     </div>

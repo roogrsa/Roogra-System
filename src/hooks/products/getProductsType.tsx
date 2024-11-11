@@ -12,6 +12,7 @@ interface UseFetchProductsByType {
   products: Product[] | null;
   loading: boolean;
   error: string | null;
+  refreshProductsType: any;
 }
 
 const useProductsByType = (
@@ -22,33 +23,31 @@ const useProductsByType = (
   const [products, setProducts] = useState<Product[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get<ApiResponse>(
+        `/api/products/type/${type}?page=${page}&limit=${limit}`,
+      );
 
-  useEffect(() => {
-    // Define async function to call the API
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get<ApiResponse>(
-          `/api/products/type/${type}?page=${page}&limit=${limit}`,
-        );
-
-        // Check if the response is successful and update state
-        if (response.data.success) {
-          setProducts(response.data.data);
-        } else {
-          setError('Failed to fetch products');
-        }
-      } catch (err: any) {
-        setError(err.message || 'An error occurred while fetching products');
-      } finally {
-        setLoading(false);
+      if (response.data.success) {
+        setProducts(response.data.data);
+      } else {
+        setError('Failed to fetch products');
       }
-    };
-
+    } catch (err: any) {
+      setError(err.message || 'An error occurred while fetching products');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchProducts();
   }, [type, page, limit]);
-
-  return { products, loading, error };
+  const refreshProductsType = () => {
+    fetchProducts();
+  };
+  return { products, loading, error, refreshProductsType };
 };
 
 export default useProductsByType;

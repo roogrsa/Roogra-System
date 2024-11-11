@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import MainTable from '../../components/lastnews/MainTable';
-import useAllProducts from '../../hooks/useAllProducts'; // Updated hook
-import useBanProduct from '../../hooks/useBanProduct';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useHandleAction from '../../hooks/useHandleAction';
 import Pagination from '../../components/pagination/Pagination';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useTranslation } from 'react-i18next';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
+import { ToastContainer } from 'react-toastify';
+import useDeleteProducts from '../../hooks/products/DelProducts';
+import useAllProducts from '../../hooks/products/useAllProducts';
+import useBanProduct from '../../hooks/products/useBanProduct';
 
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
@@ -17,14 +19,21 @@ const EditIconSrc = '/Edit.svg';
 
 const Products: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { products, loading, error } = useAllProducts(currentPage);
+  const { products, loading, error, refreshProducts } =
+    useAllProducts(currentPage);
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
   const { handleAction, loading: actionLoading } = useHandleAction();
-
-  const navigate = useNavigate();
+  const {
+    deleteProducts,
+    isLoading: deleting,
+    error: deleteError,
+    isSuccess,
+  } = useDeleteProducts();
   const [productsCount, setProductsCount] = useState(0);
+  const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchProductsCount = async () => {
@@ -35,13 +44,19 @@ const Products: React.FC = () => {
     };
     fetchProductsCount();
   }, []);
+
+  useEffect(() => {
+    // Refresh products when deletion is successful
+    if (isSuccess) {
+      refreshProducts();
+    }
+  }, [isSuccess, refreshProducts]);
   const totalPages = Math.ceil(productsCount);
 
   // Handle loading and error states for fetching products
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error fetching products: {error}</p>;
 
-  // Handle the click on the edit icon to navigate to the product edit page
   const handleEditClick = (productId: number) => {
     navigate(`/products/${productId}`);
   };
@@ -50,15 +65,34 @@ const Products: React.FC = () => {
     navigate(`/profile/${authorId}`);
   };
 
-  // Handle ban/unban action
   const handleBan = (productId: number, isBanned: boolean) => {
-    handleAction(productId, isBanned, 'ban', banProduct, {
-      confirmButtonClass: 'bg-BlockIconBg',
-      cancelButtonClass: 'bg-gray-300',
-    });
+    handleAction(
+      productId,
+      isBanned,
+      'ban',
+      banProduct,
+      {
+        confirmButtonClass: 'bg-BlockIconBg',
+        cancelButtonClass: 'bg-gray-300',
+      },
+      refreshProducts,
+    );
   };
 
-  // Transform the product data to fit the format that MainTable expects
+  const handleRemoveClick = (productId: number) => {
+    setSelectedProductIds((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+    refreshProducts;
+  };
+
+  const confirmDeletion = () => {
+    deleteProducts(selectedProductIds);
+    setSelectedProductIds([]);
+  };
+
   const logs = products.map((product) => {
     const createdAtDate = new Date(product.date);
     const datePart = createdAtDate.toLocaleDateString();
@@ -109,11 +143,6 @@ const Products: React.FC = () => {
               alt="Transaction"
               className="w-10 h-10 object-cover"
             />
-            // <img
-            //   src={product.thumbnail}
-            //   alt={product.product_name}
-            //   className="w-10 h-10 object-cover"
-            // />
           ),
           className: 'flex justify-center',
         },
@@ -151,8 +180,13 @@ const Products: React.FC = () => {
             <img
               src={CheckboxIconSrc}
               alt="Remove"
+              onClick={() => handleRemoveClick(product.id)}
               className={`w-5 h-5 text-center cursor-pointer ${
                 loadingPrdBan ? 'opacity-50' : ''
+              } ${
+                selectedProductIds.includes(product.id)
+                  ? 'bg-red-600 rounded-full p-1'
+                  : ''
               }`}
             />
           ),
@@ -161,6 +195,7 @@ const Products: React.FC = () => {
       ],
     };
   });
+
   const headers = [
     { key: 'id', content: t('products.id'), className: 'text-center' },
     { key: 'name', content: t('products.name'), className: 'text-center' },
@@ -187,11 +222,10 @@ const Products: React.FC = () => {
       key: 'removeStatus',
       content: (
         <img
-          src={CheckboxIconSrc}
+          src="/redRemove.svg"
           alt="Remove"
-          className={`w-5 h-5 text-center cursor-pointer ${
-            loadingPrdBan ? 'opacity-50' : ''
-          }`}
+          onClick={confirmDeletion}
+          className="cursor-pointer"
         />
       ),
       className: 'text-center flex justify-center',
@@ -205,16 +239,14 @@ const Products: React.FC = () => {
       <Breadcrumb
         breadcrumbLinks={breadcrumbLinks}
         pageName={t('products.label.pageNameAll')}
-        // product={product}
       />
-
-      {banPrdError && <p>Error banning product: {banPrdError}</p>}
       <MainTable logs={logs} headers={headers} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
+      <ToastContainer position="top-right" autoClose={5000} />
     </>
   );
 };

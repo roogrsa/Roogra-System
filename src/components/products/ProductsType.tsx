@@ -3,12 +3,13 @@ import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
-import useBanProduct from '../../hooks/useBanProduct';
+import useBanProduct from '../../hooks/products/useBanProduct';
 import axiosInstance from '../../axiosConfig/instanc';
 import Pagination from '../pagination/Pagination';
 import useProductsByType from '../../hooks/products/getProductsType';
 import { useTranslation } from 'react-i18next';
 import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
+import useDeleteProducts from '../../hooks/products/DelProducts';
 
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
@@ -23,19 +24,23 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
   const { t } = useTranslation();
 
   const [currentPage, setCurrentPage] = useState(0);
-  //
-  const { products, loading, error } = useProductsByType(
+
+  const { products, loading, error, refreshProductsType } = useProductsByType(
     ProductsSType,
     currentPage,
   );
-  //
-  console.log(products);
 
   const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
   const { handleAction, loading: actionLoading } = useHandleAction();
-
+  const {
+    deleteProducts,
+    isLoading: deleting,
+    error: deleteError,
+    isSuccess,
+  } = useDeleteProducts();
   const navigate = useNavigate();
   const [productsCount, setProductsCount] = useState(0);
+  const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchProductsCount = async () => {
@@ -48,14 +53,18 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
     };
     fetchProductsCount();
   }, []);
+  useEffect(() => {
+    // Refresh products when deletion is successful
+    if (isSuccess) {
+      refreshProductsType();
+    }
+  }, [isSuccess, refreshProductsType]);
   const totalPages = Math.ceil(productsCount);
-  console.log(totalPages);
+  // console.log(totalPages);
 
-  // Handle loading and error states for fetching products
-  if (loading) return <p>Loading products...</p>;
-  if (error) return <p>Error fetching products: {error}</p>;
+  // if (loading) return <p>Loading products...</p>;
+  // if (error) return <p>Error fetching products: {error}</p>;
 
-  // Handle the click on the edit icon to navigate to the product edit page
   const handleEditClick = (productId: number) => {
     navigate(`/products/${productId}`);
   };
@@ -66,10 +75,29 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
 
   // Handle ban/unban action
   const handleBan = (productId: number, isBanned: boolean) => {
-    handleAction(productId, isBanned, 'ban', banProduct, {
-      confirmButtonClass: 'bg-BlockIconBg',
-      cancelButtonClass: 'bg-gray-300',
-    });
+    handleAction(
+      productId,
+      isBanned,
+      'ban',
+      banProduct,
+      {
+        confirmButtonClass: 'bg-BlockIconBg',
+        cancelButtonClass: 'bg-gray-300',
+      },
+      refreshProductsType,
+    );
+  };
+  const handleRemoveClick = (productId: number) => {
+    setSelectedProductIds((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+  };
+
+  const confirmDeletion = () => {
+    deleteProducts(selectedProductIds);
+    setSelectedProductIds([]);
   };
 
   const logs = products?.map((product) => {
@@ -93,8 +121,8 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
               className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
               onClick={() => handleClickName(product.author_id)}
             >
-              {/* {product.author.split(' ').slice(0, 2).join(' ').slice(0, 12)} */}
-              {product.author}
+              {product.author.split(' ').slice(0, 2).join(' ').slice(0, 10) +
+                '..'}
             </span>
           ),
           className: 'text-TextBlue dark:text-TextGreen',
@@ -108,11 +136,9 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
         },
         {
           key: 'product_name',
-          content: product.product_name
-            .split(' ')
-            .slice(0, 2)
-            .join(' ')
-            .slice(0, 12),
+          content:
+            product.product_name.split(' ').slice(0, 2).join(' ').slice(0, 12) +
+            '..',
           className: 'flex justify-center',
         },
         {
@@ -124,11 +150,6 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
                 alt="Transaction"
                 className="w-10 h-10 object-cover"
               />
-              {/* <img
-                src={product.thumbnail}
-                alt={product.product_name}
-                className="w-10 h-10 object-cover"
-              /> */}
             </>
           ),
           className: 'flex justify-center',
@@ -167,8 +188,13 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
             <img
               src={CheckboxIconSrc}
               alt="Remove"
+              onClick={() => handleRemoveClick(product.id)}
               className={`w-5 h-5 text-center cursor-pointer ${
                 loadingPrdBan ? 'opacity-50' : ''
+              } ${
+                selectedProductIds.includes(product.id)
+                  ? 'bg-red-600 rounded-full p-1'
+                  : ''
               }`}
             />
           ),
@@ -203,11 +229,10 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
       key: 'removeStatus',
       content: (
         <img
-          src={CheckboxIconSrc}
+          src="/redRemove.svg"
           alt="Remove"
-          className={`w-5 h-5 text-center cursor-pointer ${
-            loadingPrdBan ? 'opacity-50' : ''
-          }`}
+          onClick={confirmDeletion}
+          className="cursor-pointer"
         />
       ),
       className: 'text-center flex justify-center',

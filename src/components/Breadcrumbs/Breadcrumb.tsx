@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import useBanProduct from '../../hooks/useBanProduct';
+import useBanProduct from '../../hooks/products/useBanProduct';
 import useHandleAction from '../../hooks/useHandleAction';
 
 const NotBannedIconSrc = '/unblock.svg';
