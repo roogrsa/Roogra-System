@@ -1,7 +1,15 @@
 import React from 'react';
 
 const Home = () => {
-  return <div>homeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>;
+  return (
+    <div className="flex items-center justify-center h-screen ">
+      <img
+        src="/public/Dashboard-amico.png"
+        alt="Dashboard Animation"
+        className="w-full max-w-lg h-auto object-cover "
+      />
+    </div>
+  );
 };
 
 export default Home;

@@ -21,6 +21,8 @@ const AdminsList: React.FC = () => {
   const [adminType, setAdminType] = useState('observer');
   const { banAdmin, loading: banLoading, error: banError } = useBanAdmin();
   const { handleAction, loading: actionLoading } = useHandleAction();
+  const [selectedAdminIds, setSelectedAdminIds] = useState<number[]>([]);
+
   const navigate = useNavigate();
   const roleTypeMap = {
     observer: 2,
@@ -82,6 +84,28 @@ const AdminsList: React.FC = () => {
         return () => {};
     }
   };
+  // const {
+  //   deleteAdmins,
+  //   isLoading: deleting,
+  //   error: deleteError,
+  //   isSuccess,
+  // } = useDeleteAdmins();
+  const handleRemoveClick = (productId: number) => {
+    setSelectedAdminIds((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+  };
+  //   const confirmDeletion = () => {
+  //     deleteAdmins(selectedAdminIds);
+  //     setSelectedAdminIds([]);
+  // };
+  //  useEffect(() => {
+  //   if (isSuccess) {
+  //     refreshAdmins();
+  //   }
+  // }, [isSuccess, refreshAdmins]);
   const mapAdminLogs = (admins: any) =>
     admins.map((admin: any) => ({
       id: admin.id,
@@ -188,6 +212,24 @@ const AdminsList: React.FC = () => {
           ),
           className: 'flex justify-center',
         },
+
+        {
+          key: 'remove',
+          content: (
+            <img
+              src={CheckboxIconSrc}
+              alt="Remove"
+              onClick={() => handleRemoveClick(admin.id)}
+              className={`w-5 h-5 text-center cursor-pointer 
+              ${
+                selectedAdminIds.includes(admin.id)
+                  ? 'bg-red-600 rounded-full p-1'
+                  : ''
+              }`}
+            />
+          ),
+          className: 'flex justify-center',
+        },
       ],
     }));
 
@@ -236,6 +278,18 @@ const AdminsList: React.FC = () => {
       content: t('admins.adminList.BanStatus'),
       className: 'text-center',
     },
+    {
+      key: 'removeStatus',
+      content: (
+        <img
+          src="/redRemove.svg"
+          alt="Remove"
+          // onClick={confirmDeletion}
+          className="cursor-pointer"
+        />
+      ),
+      className: 'text-center flex justify-center',
+    },
   ];
 
   return (
@@ -267,21 +321,12 @@ const AdminsList: React.FC = () => {
         footerItems={[
           <div className="flex gap-5">
             <span key="1">({logsObserver.length || 0})</span>
-            <span key="3">
-              <img src="/redRemove.svg" alt="Remove" />
-            </span>
           </div>,
           <div className="flex gap-5">
             <span key="1">({logsSupervisor.length || 0})</span>
-            <span key="3">
-              <img src="/redRemove.svg" alt="Remove" />
-            </span>
           </div>,
           <div className="flex gap-5">
             <span key="1">({logsDelegates.length || 0})</span>
-            <span key="3">
-              <img src="/redRemove.svg" alt="Remove" />
-            </span>
           </div>,
         ]}
       />
