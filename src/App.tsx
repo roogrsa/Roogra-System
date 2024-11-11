@@ -233,7 +233,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'admins/add-admin',
+        path: 'admins/edit-admin/:adminId',
         element: (
           <Guard>
             <ProtectedRoute
