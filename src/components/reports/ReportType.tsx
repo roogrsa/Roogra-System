@@ -122,7 +122,6 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
                       <img
                         src={EditIconSrc}
                         className="w-6 h-6 text-center p-1 cursor-pointer"
-                        // onClick={'mariem'}
                       />
                       </Link>
                     </div>
