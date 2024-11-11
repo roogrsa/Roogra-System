@@ -5,7 +5,7 @@ import NotFoundSection from '../Notfound/NotfoundSection';
 import MainTable from '../lastnews/MainTable';
 import AccordionHeader2 from '../Accordion/AccordionHeader2';
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 interface ReportType {
   reportType: 'product' | 'chat';
 }
@@ -15,7 +15,9 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
   const { t } = useTranslation();
   const [status, setStatus] = useState(0);
   const navigate = useNavigate();
-
+  const {rc_search} = useParams();
+  console.log(rc_search);
+  
   const breadcrumbLinks = [{ label: t('Reports.label.label'), path: '/' }];
   const { data, loading, error } = useProductReports(reportType, status);
 
@@ -120,7 +122,6 @@ const ReportType: React.FC<ReportType> = ({ reportType }) => {
                       <img
                         src={EditIconSrc}
                         className="w-6 h-6 text-center p-1 cursor-pointer"
-                        // onClick={'mariem'}
                       />
                       </Link>
                     </div>

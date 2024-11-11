@@ -76,11 +76,10 @@
             "regDate": "تاريخ التسجيل",
             "mobileconfirm": "تفعيل الهاتف",
             "emailleconfirm": "تفعيل البريد ",
-            "Activated":"مفعل",
-            "Deactivated":" غير مفعل",
-            "customer":"زبون",
-            "advertiser":"معلن"
-
+            "Activated": "مفعل",
+            "Deactivated": " غير مفعل",
+            "customer": "زبون",
+            "advertiser": "معلن"
         },
         "UserInfo": {
             "follower": "المتابعين",
@@ -92,7 +91,7 @@
         "title": "صفحة الإدأريين",
         "title-add": "تحرير الصفحة",
         "label": "الإدأرة",
-        "edit":"تحرير",
+        "edit": "تحرير",
         "add": "إضافة جديدة",
         "form": {
             "placeholder": "الرجاء الكتابة",
@@ -156,9 +155,8 @@
             "lastLogin": "موعد التسجيل",
             "finish_working_hour": "وقت الخروج",
             "start_working_hour": "وقت الدخول",
-            "edit":"تحرير",
-            "BanStatus":"الحالة"
-
+            "edit": "تحرير",
+            "BanStatus": "الحالة"
         }
     },
     "users": {
@@ -351,7 +349,7 @@
             "Supervisors": "المشرفون"
         }
     },
-        "contact-us": {
+    "contact-us": {
         "contact-us": "التواصل",
         "inquiries": "الاستفسارات",
         "issues": "المشاكل",
@@ -368,11 +366,11 @@
         "reply": "الرد",
         "deleteTicket": "حذف التذكرة"
     },
-    "lastNews":{
-        "title":"أخر الأحداث",
-        "lastLogin":"قام بتسجيل الدخول",
-        "register":"إنشاء حساب جديد" ,
-        "edit":"تم تعديل الحساب"
+    "lastNews": {
+        "title": "أخر الأحداث",
+        "lastLogin": "قام بتسجيل الدخول",
+        "register": "إنشاء حساب جديد",
+        "edit": "تم تعديل الحساب"
     },
      "charts":{
         "Active":"نشط",
@@ -432,5 +430,13 @@
         "status":"الحالة"
         }
        
+    "charts": {
+        "Active": "نشط",
+        "Lazy": "كسول",
+        "Inactive": "غير نشط",
+        "customer": "زبون",
+        "advertiser": "معلن",
+        "customers": "عدد الزبائن",
+        "advertisers": "عدد المعلنين"
     }
 }

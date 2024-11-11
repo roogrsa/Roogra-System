@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { Formik, FormikHelpers, FormikProps, Form } from 'formik';
 import axiosInstance from '../../axiosConfig/instanc';
@@ -7,8 +7,9 @@ import InputText from '../../components/form/InputText';
 import SelectLevel from '../../components/form/SelectLevel';
 import SelectTime from '../../components/form/SelectTime';
 import CheckboxGroup from './CheckboxGroup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
 export interface CheckboxItem {
   isChecked: boolean;
@@ -39,27 +40,67 @@ interface AddAdminValues {
     banlist: { chats: number; products: number };
   };
 }
+interface Admin {
+  id: number;
+  email: string;
+  phone: string;
+  first_name: string;
+  last_name: string;
+  start_working_hour: string;
+  finish_working_hour: string;
+  group_id: string;
+  permissions: {
+    super: number;
+    charts: number;
+    admins: number;
+    settings: number;
+    ads: { all: number; primary: number; subscription: number };
+    users: { all: number; advertisers: number; customers: number };
+    categories: { primary: number; subscription: number; region: number };
+    requests: { attestation: number; category: number };
+    contact: { inquiries: number; issues: number; suggestions: number };
+    reports: { chats: number; products: number };
+    banlist: { chats: number; products: number };
+  };
+}
+
 
 export default function AddAdmin() {
   const { t } = useTranslation();
-  const [loggedValues, setLoggedValues] = useState<string>('');
-  const [permissions, setpermissions] = useState({
-    super: 0,
-    charts: 0,
-    admins: 0,
-    settings: 0,
-    ads: { all: 0, primary: 0, subscription: 0 },
-    users: { all: 0, advertisers: 0, customers: 0 },
-    categories: { primary: 0, subscription: 0, region: 0 },
-    requests: { attestation: 0, category: 0 },
-    contact: { inquiries: 0, issues: 0, suggestions: 0 },
-    reports: { chats: 0, products: 0 },
-    banlist: { chats: 0, products: 0 },
-  });
+  const { adminId } = useParams();
+  console.log(adminId);
 
+  const [loggedValues, setLoggedValues] = useState<string>('');
+  const [admin, setAdmin] = useState<Admin | null>(null);
+  const [permissions, setpermissions] = useState({
+    super: admin?.permissions?.super || 0,
+    charts: admin?.permissions?.charts || 0,
+    admins: admin?.permissions?.admins || 0,
+    settings: admin?.permissions?.settings || 0,
+    ads: { all: admin?.permissions?.ads?.all || 0, primary: admin?.permissions?.ads?.primary || 0, subscription: admin?.permissions?.ads?.subscription || 0 },
+    users: { all: admin?.permissions?.users?.all || 0, advertisers: admin?.permissions?.users?.advertisers || 0, customers: admin?.permissions?.users?.customers || 0 },
+    categories: { primary: admin?.permissions?.categories?.primary || 0, subscription: admin?.permissions?.categories?.subscription || 0, region: admin?.permissions?.categories?.region || 0 },
+    requests: { attestation: admin?.permissions?.requests?.attestation || 0, category: admin?.permissions?.requests?.category || 0 },
+    contact: { inquiries: admin?.permissions?.contact?.inquiries || 0, issues: admin?.permissions?.contact?.issues || 0, suggestions: admin?.permissions?.contact?.suggestions || 0 },
+    reports: { chats: admin?.permissions?.reports?.chats || 0, products: admin?.permissions?.reports?.products || 0 },
+    banlist: { chats: admin?.permissions?.banlist?.chats || 0, products: admin?.permissions?.banlist?.products || 0 },
+  });
+  useEffect(() => {
+    const displayAdmin = async () => {
+      try {
+        const res = await axiosInstance.get(`/api/admins/${adminId}`);
+        setAdmin(res.data.data);
+      } catch (error: any) {
+        console.error(error);
+      }
+    }
+    if (adminId) {
+      displayAdmin()
+    }
+  }, []);
   const validationSchema = yup.object().shape({
     name: yup.string().required(t('admins.form.nameError')),
-    password: yup.string().required(t('admins.form.PasswordError')),
+    // password: yup.string().required(t('admins.form.PasswordError')),
     email: yup.string().required(t('admins.form.emailError')),
     phone: yup.string().required(t('admins.form.phoneError')),
     username: yup.string().required(t('admins.form.userNameError')),
@@ -107,18 +148,21 @@ export default function AddAdmin() {
       settings: yup.boolean(),
     }),
   });
+  console.log(admin);
 
   const initialValues: AddAdminValues = {
-    email: '',
-    phone: '',
-    username: '',
-    name: '',
+    email: admin?.email || '',
+    phone: admin?.phone || '',
+    username: admin?.last_name || '',
+    name: admin?.first_name || '',
     password: '',
-    type: '2',
-    start_working_hour: '',
-    finish_working_hour: '',
-    permissions: permissions,
+    type: admin?.group_id || '2',
+    start_working_hour: admin?.start_working_hour || '',
+    finish_working_hour: admin?.finish_working_hour || '',
+    permissions: admin?.permissions || permissions,
   };
+  console.log('initialValues',initialValues);
+
   const logValues = (obj: any): string => {
     let result = '';
     for (const key in obj) {
@@ -134,23 +178,30 @@ export default function AddAdmin() {
     }
     return result;
   };
-
-  //   const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }]
+  const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }]
   const navigate = useNavigate();
-  const back = () => navigate(-1);
   const handleAddAdminSubmit = async (
     values: AddAdminValues,
     { setSubmitting }: FormikHelpers<AddAdminValues>,
   ) => {
     try {
       setSubmitting(true);
-      const res = await axiosInstance.post(`/api/admins`, {
-        ...values,
-        permissions: loggedValues,
-      });
-      console.log(res);
-      toast.success(`admin successfully submitted`);
-      navigate(`/admins`);
+      if (adminId) {
+        const res = await axiosInstance.put(`/api/admins/${adminId}`, {
+          ...values,
+          permissions: loggedValues,
+        });
+        console.log(res);
+        toast.success(`admin updated successfully`);
+        navigate(`/admins`);
+      } else if (!adminId) {
+        const res = await axiosInstance.post(`/api/admins`, {
+          ...values,
+          permissions: loggedValues,
+        });
+        console.log(res);
+        toast.success(`admin successfully submitted`);
+      }
     } catch (error: any) {
       console.error(error);
       console.log(error?.response?.data?.message);
@@ -309,12 +360,12 @@ export default function AddAdmin() {
   ]);
   return (
     <div>
-      <div className="flex justify-between md:mb-2">
-      </div>
+      <Breadcrumb pageName={t('admins.edit')} breadcrumbLinks={breadcrumbLinks} />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleAddAdminSubmit}
+        enableReinitialize
       >
         {({
           isSubmitting,
@@ -350,11 +401,13 @@ export default function AddAdmin() {
                   name={`email`}
                   label={t('admins.form.email')}
                 />
-                <InputText
-                  type={`password`}
-                  name={`password`}
-                  label={t('admins.form.Password')}
-                />
+                {!adminId &&
+                  <InputText
+                    type={`password`}
+                    name={`password`}
+                    label={t('admins.form.Password')}
+                  />
+                }
                 <SelectTime
                   name={`start_working_hour`}
                   label={t('admins.form.from')}
