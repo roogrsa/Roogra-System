@@ -13,7 +13,7 @@ interface ContactUsTableProps {
 }
 export default function RepliedTable({ type, idPre, query }: ContactUsTableProps) {
     console.log(query);
-    
+
     const { t } = useTranslation()
     const [contactUs, setContactUs] = useState<ContactUsType[]>([])
     const [selectedSupport, setSelectedSupport] = useState<ContactUsType>();
@@ -32,9 +32,11 @@ export default function RepliedTable({ type, idPre, query }: ContactUsTableProps
     };
     const displayContactUs = async () => {
         try {
-            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`,{params: {
-                q: query || ''
-            }});
+            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`, {
+                params: {
+                    q: query || ''
+                }
+            });
             console.log(res.data.data);
             setContactUs(res.data.data)
         } catch (error: any) {

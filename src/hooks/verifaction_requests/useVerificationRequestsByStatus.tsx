@@ -17,8 +17,8 @@ interface UseVerificationRequestsByStatusReturn {
 const useVerificationRequestsByStatus = (
   status: string,
   currentPage: number = 0,
+  query?: string,
   refresh?: boolean, // Optional `refresh` parameter
-
   limit: number = 8,
 ): UseVerificationRequestsByStatusReturn => {
   const [data, setData] = useState<VerificationRequest[] | null>(null);
@@ -32,7 +32,11 @@ const useVerificationRequestsByStatus = (
 
       try {
         const response = await axiosInstance.get<VerificationRequestResponse>(
-          `/api/verification_request/status/${status}?page=${currentPage}&limit=${limit}`,
+          `/api/verification_request/status/${status}?page=${currentPage}&limit=${limit}`, {
+          params: {
+            q: query || ''
+          }
+        }
         );
 
         // Handle the success response
@@ -51,7 +55,7 @@ const useVerificationRequestsByStatus = (
     };
 
     fetchVerificationRequestsByStatus();
-  }, [status, currentPage, limit, refresh]); // Re-fetch data when `status`, `currentPage`, or `limit` changes
+  }, [status, currentPage, limit, refresh, query]); // Re-fetch data when `status`, `currentPage`, or `limit` changes
 
   return { data, loading, error };
 };
