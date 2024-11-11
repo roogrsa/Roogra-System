@@ -64,7 +64,7 @@ export default function SelectTime({name, label}:SelectTimeProps) {
         text-sm rounded-md md:w-50 w-full p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">
             <option value="" hidden>{t('admins.form.select-time')}</option>
             {hours.map((hour)=>(
-                <option value={hour}>{hour}</option>
+                <option value={`${hour}:00`}>{hour}</option>
             ))}
         </Field>
         </div>
