@@ -42,7 +42,9 @@ import Inquiries from './pages/contactUs/Inquiries';
 import Issues from './pages/contactUs/Issues';
 import Suggestions from './pages/contactUs/Suggestions';
 import Chat from './components/reports/Chat';
-import BlockUserList from './pages/BlockList/BlockUserList';
+import BanUserList from './pages/BankList/BanUserList';
+import BanProdList from './pages/BankList/BanProdList';
+import BanChatsList from './pages/BankList/BanChatsList';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -364,11 +366,33 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/Block',
+        path: 'Ban/users',
         element: (
           <Guard>
             <ProtectedRoute
-              component={BlockUserList}
+              component={BanUserList}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'Ban/chats',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={BanChatsList}
+              hasPermission={storedPermissions[5]}
+            />
+          </Guard>
+        ),
+      },
+      {
+        path: 'Ban/products',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={BanProdList}
               hasPermission={storedPermissions[5]}
             />
           </Guard>

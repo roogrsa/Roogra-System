@@ -441,7 +441,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <div className="relative">
                     <div onClick={() => setIsBanListOpen(!isBanListOpen)}>
                       <SidebarLink
-                        to={`/Block`}
+                        to={`#`}
                         isOpen={isOpen}
                         text={'sidebar.ban-list.ban-list'}
                         icon={<MdOutlineBlock className="text-2xl" />}
@@ -455,14 +455,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         {permission.banlist.chats == 1 && (
                           <DropLink
-                            to={`/ban-list/users`}
+                            to={`/Ban/users`}
                             text={'sidebar.ban-list.users'}
                           />
                         )}
                         {permission.banlist.products == 1 && (
                           <DropLink
-                            to={`/ban-list/products`}
+                            to={`/Ban/products`}
                             text={'sidebar.ban-list.products'}
+                          />
+                        )}
+                        {permission.banlist.products == 1 && (
+                          <DropLink
+                            to={`/Ban/chats`}
+                            text={'sidebar.ban-list.chats'}
                           />
                         )}
                       </ul>

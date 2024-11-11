@@ -1,23 +1,22 @@
 import { useState } from 'react';
-import axiosInstance from '../axiosConfig/instanc'; // Ensure correct path to axios instance
+import axiosInstance from '../../axiosConfig/instanc';
 
-const useBanUser = () => {
+const useUnBanChat = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const banUser = async (userId: number, reason: string) => {
+  const unbanChat = async (chatId: number, reason: string) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axiosInstance.patch(`/api/users/${userId}`, {
+      const response = await axiosInstance.patch(`/api/chats/${chatId}`, {
         key: reason,
       });
 
       if (response.status < 200 || response.status >= 300) {
-        throw new Error(`Failed to ban user with ID: ${userId}`);
+        throw new Error(`Failed to ban user with ID: ${chatId}`);
       }
 
-      console.log('User banned:', response.data);
       return response.data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
@@ -26,7 +25,7 @@ const useBanUser = () => {
     }
   };
 
-  return { banUser, loading, error };
+  return { unbanChat, loading, error };
 };
 
-export default useBanUser;
+export default useUnBanChat;

@@ -38,7 +38,9 @@
         "ban-list": {
             "ban-list": "Ban list",
             "users": "Users",
-            "products": "Products"
+            "products": "Products",
+            "chats":"Chats"
+
         },
         "admins": "admins",
         "settings": "Settings",
@@ -150,7 +152,7 @@
             "name": "Name",
             "email": "Email",
             "phone": "Phone",
-            "status": "Status",
+            "status": "Active",
             "dateAdded":"Date Added",
             "lastLogin":"Last Login",
             "finish_working_hour": "Logout Time",
@@ -386,5 +388,52 @@
 "advertiser":"Advertiser",
  "customers":"Number of customers",
  "advertisers":"Number of advertisers"
+    }, "BanList":{
+        
+        "Ban":"Ban",
+        "unBan":"unBan",
+
+        "chats":{
+            
+            "label":"Banned",
+            "pageName":"Chats",
+        "ChatId":"ChatId",
+        "byAdmin":"by Admin",
+        "banReason":"Reason",
+        "Date":"Date",
+        "show":"Show",
+        "UnBanbyAdmin":"byAdmin",
+        "UnBanReason":"UnBan Reason",
+        "UnBanDate":"UnBan Date",
+        "status":"Status"
+        },
+        "users":{
+            
+        "label":"Banned",
+        "pageName":"Users",
+        "name":"Name",
+        "byAdmin":"by Admin",
+        "banReason":"Reason",
+        "Date":"Date",
+        "show":"Show",
+        "UnBanbyAdmin":"byAdmin",
+        "UnBanReason":"UnBan Reason",
+        "UnBanDate":"UnBan Date",
+        "status":"Status"
+        },
+      "products":{
+        "label":"Banned",
+        "pageName":"products",
+        "name":"Name",
+        "byAdmin":"by Admin",
+        "banReason":"Reason",
+        "Date":"Date",
+        "show":"Show",
+        "UnBanbyAdmin":"byAdmin",
+        "UnBanReason":"UnBan Reason",
+        "UnBanDate":"UnBan Date",
+        "status":"Status"
+        }
+       
     }
 }

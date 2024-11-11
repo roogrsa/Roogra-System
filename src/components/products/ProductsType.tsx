@@ -15,7 +15,11 @@ const BannedIconSrc = '/block.svg';
 const CheckboxIconSrc = '/checkbox.svg';
 const EditIconSrc = '/Edit.svg';
 
-const ProductsType = ({ ProductsSType }) => {
+interface ProductsTypeProps {
+  ProductsSType: string;
+}
+
+const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
   const { t } = useTranslation();
 
   const [currentPage, setCurrentPage] = useState(0);

@@ -39,10 +39,9 @@ const verifaction_requestByStatus = () => {
     { label: t('verification_request.label.label'), path: '/' },
   ];
 
-  // State to handle dynamic status
+  //
   const [status, setStatus] = useState('processing');
   const [refresh, setRefresh] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(0);
   const [verificationRequestCount, setverificationRequestCount] = useState(0);
   const [Count, setCount] = useState(0);

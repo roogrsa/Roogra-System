@@ -9,7 +9,7 @@ import NotFoundSection from '../Notfound/NotfoundSection';
 import useAdminsByType from '../../hooks/admins/AbminType';
 import useBanUser from '../../hooks/useBanUser';
 import useHandleAction from '../../hooks/useHandleAction';
-import useBanAdmin from '../../hooks/useBanAdmin';
+import useBanAdmin from '../../hooks/admins/useBanAdmin';
 //
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';

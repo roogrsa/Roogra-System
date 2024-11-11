@@ -38,7 +38,8 @@
         "ban-list": {
             "ban-list": "المحظورين",
             "users": "المستخدمين",
-            "products": "المنتجات"
+            "products": "المنتجات",
+            "chats":"المحادثات"
         },
         "admins": "الإدارة",
         "settings": "الإعدادات",
@@ -149,7 +150,7 @@
             "name": "الأسم",
             "email": "البريد الالكتروني",
             "phone": "الهاتف",
-            "status": "الحالة",
+            "status": "النشاط",
             "dateAdded": "تاريخ الاضافه",
             "lastLogin": "موعد التسجيل",
             "finish_working_hour": "وقت الخروج",
@@ -381,5 +382,54 @@
 
  "customers":"عدد الزبائن",
  "advertisers":"عدد المعلنين"
+    },
+    "BanList":{
+
+        "Ban":"حظر",
+        "unBan":"رفع الحظر",
+
+        "chats":{
+            
+            "label":"المحظورين",
+            "pageName":"المحادثات",
+        "ChatId":"المحادثه",
+        "byAdmin":"تم بواسطة",
+        "banReason":"سبب الحظر",
+        "Date":"وقت الحظر",
+        "UnBanbyAdmin":"تم بواسطة",
+        "UnBanReason":"سبب  رفع الحظر",
+        "UnBanDate":"وقت رفع الحظر",
+        "show":"عرض",
+        "status":"الحالة"
+        },
+         "users":{
+            "label":"المحظورين",
+            "pageName":"المستخدمين",
+
+        "name":"أسم المستخدم",
+        "byAdmin":"تم بواسطة",
+        "banReason":"سبب الحظر",
+        "Date":"وقت الحظر",
+        "UnBanbyAdmin":"تم بواسطة",
+        "UnBanReason":"سبب  رفع الحظر",
+        "UnBanDate":"وقت رفع الحظر",
+        "show":"عرض",
+        "status":"الحالة"
+        },
+          "products":{
+            "label":"المحظورين",
+            "pageName":"الاعلانات",
+
+        "name":"اسم المنتج",
+        "byAdmin":"تم بواسطة",
+        "banReason":"سبب الحظر",
+        "Date":"وقت الحظر",
+        "UnBanbyAdmin":"تم بواسطة",
+        "UnBanReason":"سبب  رفع الحظر",
+        "UnBanDate":"وقت رفع الحظر",
+        "show":"عرض",
+        "status":"الحالة"
+        }
+       
     }
 }
