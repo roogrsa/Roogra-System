@@ -44,7 +44,7 @@ export default function ContactUsTable({ type, idPre, query }: ContactUsTablePro
   };
   useEffect(() => {
     displayContactUs();
-  }, []);
+  }, [type, query]);
   console.log(contactUs);
 
   return (

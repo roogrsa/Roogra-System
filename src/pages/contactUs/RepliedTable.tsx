@@ -44,7 +44,7 @@ export default function RepliedTable({ type, idPre, query }: ContactUsTableProps
     };
     useEffect(() => {
         displayContactUs()
-    }, []);
+    }, [type, query]);
     console.log(contactUs);
     return (
         <div>
