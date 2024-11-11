@@ -23,32 +23,26 @@ const Header = (props: {
     if ((event as React.KeyboardEvent).key === "Enter" || event.type === "click") {
       const target = event.target as HTMLInputElement;
       if (target.value.startsWith('rc-')) {
-        const id =target.value.slice(3)
-        navigate(`/reports/chat/${id}`);
-      }
-      else if(target.value.startsWith('rt-')){
-        const id =target.value.slice(3)
-        navigate(`/reports/product/${id}`);
-      }
-      else if(target.value.startsWith('rq1-')){
-        const id =target.value.slice(4)
-        navigate(`/contact-us/inquiries/${id}`);
-      }
-      else if(target.value.startsWith('rq2-')){
-        const id =target.value.slice(4)
-        navigate(`/contact-us/issues/${id}`);
-      }
-      else if(target.value.startsWith('rfp-')){
-        const id =target.value.slice(4)
-        navigate(`/contact-us/suggestions/${id}`);
-      }
-      else if(target.value.startsWith('rd-')){
-        const id =target.value.slice(3)
-        navigate(`/confirm/subscription/${id}`);
-      }
-      else if(target.value.startsWith('rs-')){
-        const id =target.value.slice(3)
-        navigate(`/part/subscription/${id}`);
+        const id = target.value.slice(3)
+        navigate(`/reports/chat/search/${id}`);
+      } else if (target.value.startsWith('rt-')) {
+        const id = target.value.slice(3)
+        navigate(`/reports/product/search/${id}`);
+      } else if (target.value.startsWith('rq1-')) {
+        const id = target.value.slice(4)
+        navigate(`/contact-us/inquiries/search/${id}`);
+      } else if (target.value.startsWith('rq2-')) {
+        const id = target.value.slice(4)
+        navigate(`/contact-us/issues/search/${id}`);
+      } else if (target.value.startsWith('rfp-')) {
+        const id = target.value.slice(4)
+        navigate(`/contact-us/suggestions/search/${id}`);
+      } else if (target.value.startsWith('rd-')) {
+        const id = target.value.slice(3)
+        navigate(`/confirm/subscription/search/${id}`);
+      } else if (target.value.startsWith('rs-')) {
+        const id = target.value.slice(3)
+        navigate(`/part/subscription/search/${id}`);
       }
     }
   };
@@ -72,31 +66,26 @@ const Header = (props: {
             <span className="relative block h-5.5 w-5.5 cursor-pointer">
               <span className="du-block absolute right-0 h-full w-full">
                 <span
-                  className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-[0] duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!w-full delay-300'
-                  }`}
+                  className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-[0] duration-200 ease-in-out dark:bg-white ${!props.sidebarOpen && '!w-full delay-300'
+                    }`}
                 ></span>
                 <span
-                  className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-150 duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && 'delay-400 !w-full'
-                  }`}
+                  className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-150 duration-200 ease-in-out dark:bg-white ${!props.sidebarOpen && 'delay-400 !w-full'
+                    }`}
                 ></span>
                 <span
-                  className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-200 duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!w-full delay-500'
-                  }`}
+                  className={`relative left-0 top-0 my-1 block h-0.5 w-0 rounded-sm bg-black delay-200 duration-200 ease-in-out dark:bg-white ${!props.sidebarOpen && '!w-full delay-500'
+                    }`}
                 ></span>
               </span>
               <span className="absolute right-0 h-full w-full rotate-45">
                 <span
-                  className={`absolute left-2.5 top-0 block h-full w-0.5 rounded-sm bg-black delay-300 duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!h-0 !delay-[0]'
-                  }`}
+                  className={`absolute left-2.5 top-0 block h-full w-0.5 rounded-sm bg-black delay-300 duration-200 ease-in-out dark:bg-white ${!props.sidebarOpen && '!h-0 !delay-[0]'
+                    }`}
                 ></span>
                 <span
-                  className={`delay-400 absolute left-0 top-2.5 block h-0.5 w-full rounded-sm bg-black duration-200 ease-in-out dark:bg-white ${
-                    !props.sidebarOpen && '!h-0 !delay-200'
-                  }`}
+                  className={`delay-400 absolute left-0 top-2.5 block h-0.5 w-full rounded-sm bg-black duration-200 ease-in-out dark:bg-white ${!props.sidebarOpen && '!h-0 !delay-200'
+                    }`}
                 ></span>
               </span>
             </span>
@@ -118,19 +107,19 @@ const Header = (props: {
           className="hidden sm:block"
           dir={language === 'ar' ? 'rtl' : 'ltr'}
         >
-            <div className="relative">
-              <CiSearch
-                className={`absolute top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold
+          <div className="relative">
+            <CiSearch
+              className={`absolute top-1/2 -translate-y-1/2 text-header-inputBorder text-2xl font-bold
                   ${language === 'ar' ? 'left-2' : 'right-2'} `}
-              />
-              <input
-                type="search"
-                placeholder={t(`header.search`)}
-                onKeyDown={(event)=>handleSearch(event)}
-                className="px-4 py-1 rounded-3xl border-header-inputBorder text-black dark:bg-header-inputDark dark:text-white
+            />
+            <input
+              type="search"
+              placeholder={t(`header.search`)}
+              onKeyDown={(event) => handleSearch(event)}
+              className="px-4 py-1 rounded-3xl border-header-inputBorder text-black dark:bg-header-inputDark dark:text-white
                 border-2 bg-header-inputLight outline-none"
-              />
-            </div>
+            />
+          </div>
         </div>
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">

@@ -159,7 +159,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/part/subscription/:rs_search',
+        path: '/part/subscription/search/:rs_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -181,7 +181,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/confirm/subscription/:rd_search',
+        path: '/confirm/subscription/search/:rd_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -319,7 +319,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'contact-us/inquiries/:rq1_search',
+        path: 'contact-us/inquiries/search/:rq1_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -341,7 +341,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'contact-us/issues/:rq2_search',
+        path: 'contact-us/issues/search/:rq2_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -363,7 +363,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'contact-us/suggestions/:rfp_search',
+        path: 'contact-us/suggestions/search/:rfp_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -396,7 +396,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'reports/product/:rt-search',
+        path: 'reports/product/search/:rt-search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -418,7 +418,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'reports/chat/:rc_search',
+        path: 'reports/chat/search/:rc_search',
         element: (
           <Guard>
             <ProtectedRoute
