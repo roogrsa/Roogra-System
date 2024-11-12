@@ -29,86 +29,83 @@ interface SubCategory {
     category_name: string;
 }
 type ModalType = "DeleteParent" | "AddParent" | "EditParent" | "DeleteSub" | "AddSub" | "EditSub" | null;
-
 const SubscriptionsCat: React.FC = () => {
-    const { t } = useTranslation();
+const { t } = useTranslation();
+const [modalType, setModalType] = useState<ModalType>(null);
+const [selectedCategory, setSelectedCategory] = useState<SubscriptionsCategory | null>(null);
+const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
+const [subscriptionscategories, setSubscriptionscategories] = useState<SubscriptionsCategory[]>([]);
+const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(null);
 
-    // State management
-    const [modalType, setModalType] = useState<ModalType>(null);
-    const [selectedCategory, setSelectedCategory] = useState<SubscriptionsCategory | null>(null);
-    const [selectedSubCategory, setSelectedSubCategory] = useState<SubCategory | null>(null);
-    const [subscriptionscategories, setSubscriptionscategories] = useState<SubscriptionsCategory[]>([]);
-    const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(null);
+const displaySubscriptionsCat = async () => {
+    try {
+        const res = await axiosInstance.get(`/api/categories/extensive`);
+        setSubscriptionscategories(res.data.data);
+    } catch (error: any) {
+        console.error(error);
+        toast.error(error?.response?.data?.message || t('categoriesPage.fetchError'));
+    }
+};
 
-    // Fetch categories
-    const displaySubscriptionsCat = async () => {
-        try {
-            const res = await axiosInstance.get(`/api/categories/extensive`);
-            setSubscriptionscategories(res.data.data);
-        } catch (error: any) {
-            console.error(error);
-            toast.error(error?.response?.data?.message || t('categoriesPage.fetchError'));
-        }
-    };
+useEffect(() => {
+    displaySubscriptionsCat();
+}, []);
 
-    useEffect(() => {
-        displaySubscriptionsCat();
-    }, []);
+const openModal = (type: ModalType, category: SubscriptionsCategory | SubCategory | null) => {
+    setModalType(type);
+    if ("parent_id" in (category || {})) {
+        setSelectedCategory(category as SubscriptionsCategory);
+    } else if (!category) {
+        setSelectedCategory(null);
+    } else {
+        setSelectedSubCategory(category as SubCategory);
+    }
+};
 
-    // Handle modal open
-    const openModal = (type: ModalType, category: SubscriptionsCategory | SubCategory | null) => {
-        setModalType(type);
-        if ("parent_id" in (category || {})) {
-            setSelectedCategory(category as SubscriptionsCategory);
-        } else if (!category) {
-            setSelectedCategory(null);
-        } else {
-            setSelectedSubCategory(category as SubCategory);
-        }
-    };
+const changeOrder = async (id: number, order: number) => {
+    try {
+        await axiosInstance.patch(`/api/categories`, { categories: [{ id, order }] });
+        toast.success(t('categoriesPage.categoriesToast'));
+    } catch (error: any) {
+        console.error(error);
+        toast.error(error?.response?.data?.message || t('categoriesPage.orderUpdateError'));
+    }
+};
 
-    // Update category order
-    const changeOrder = async (id: number, order: number) => {
-        try {
-            await axiosInstance.patch(`/api/categories`, { categories: [{ id, order }] });
-            toast.success(t('categoriesPage.categoriesToast'));
-        } catch (error: any) {
-            console.error(error);
-            toast.error(error?.response?.data?.message || t('categoriesPage.orderUpdateError'));
-        }
-    };
+const handleOnDragEnd = (result: DropResult) => {
+    const { destination, source } = result;
+    if (!destination || destination.index === source.index) return;
 
-    // Handle drag-and-drop ordering
-    const handleOnDragEnd = (result: DropResult) => {
-        const { destination, source } = result;
-        if (!destination || destination.index === source.index) return;
+    const categoryIndex = subscriptionscategories.findIndex(
+        (cat) => cat.parent_id === expandedCategoryId
+    );
+    if (categoryIndex === -1) return;
 
-        const categoryIndex = subscriptionscategories.findIndex(
-            (cat) => cat.parent_id === expandedCategoryId
-        );
-        if (categoryIndex === -1) return;
+    const reorderedSubcategories = Array.from(subscriptionscategories[categoryIndex].sub);
+    const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
+    reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
+    changeOrder(movedSubcategory.category_id, destination.index + 1);
 
-        const reorderedSubcategories = Array.from(subscriptionscategories[categoryIndex].sub);
-        const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
-        reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
-        changeOrder(movedSubcategory.category_id, destination.index + 1);
+    const updatedCategories = [...subscriptionscategories];
+    updatedCategories[categoryIndex].sub = reorderedSubcategories;
+    setSubscriptionscategories(updatedCategories);
+};
 
-        const updatedCategories = [...subscriptionscategories];
-        updatedCategories[categoryIndex].sub = reorderedSubcategories;
-        setSubscriptionscategories(updatedCategories);
-    };
+const toggleSubcategories = (parentId: number) => {
+    setExpandedCategoryId(expandedCategoryId === parentId ? null : parentId);
+};
+console.log(modalType);
 
-    const toggleSubcategories = (parentId: number) => {
-        setExpandedCategoryId(expandedCategoryId === parentId ? null : parentId);
-    };
-
-    const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }];
+const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/main' }];
 
     return (
         <div className="relative overflow-x-auto">
             <div className="flex justify-between">
                 <Breadcrumb pageName={t('categoriesPage.catSubscriptions.label')} breadcrumbLinks={breadcrumbLinks} />
-                <CgAddR className="text-3xl text-Input-TextGreen" role="button" onClick={() => openModal("AddParent", null)} />
+                <Link to={``}>
+                    <CgAddR className="text-3xl text-Input-TextGreen" role="button"
+                        onClick={() => openModal("AddParent", null)} />
+                </Link>
             </div>
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="supCategories">
@@ -123,21 +120,22 @@ const SubscriptionsCat: React.FC = () => {
                                 >
                                     <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
                                         <tr className="px-2 py-2 text-[18px] font-[400]">
-                                            <th className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
-                                            <th className="px-6 py-3">
-                                                <img src={cat.parent_image} width={100} alt={cat.category_name} />
+                                            <th scope="col" className="px-2 py-3 text-[18px] font-[400] rounded-s-lg">{t('categoriesPage.order')}</th>
+                                            <th scope="col" className="px-6 py-3">
+                                                <img src={cat.parent_image} width={100} alt="" />
                                             </th>
-                                            <th className="px-6 py-3 text-[18px] font-[400]">{cat.category_name}</th>
-                                            <th className="py-3" onClick={() => openModal("AddSub", cat)}>
+                                            <th scope="col" className="px-6 py-3 text-[18px] font-[400]">{cat.category_name}</th>
+                                            <th scope="col" className="py-3" onClick={() => openModal("AddSub", cat)}>
                                                 <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
                                             </th>
-                                            <th className="py-3" onClick={() => openModal("EditParent", cat)}>
+                                            <th scope="col" className="py-3" onClick={() => openModal("EditParent", cat)}>
                                                 <LiaEditSolid className="text-3xl text-Input-TextGreen" role="button" />
                                             </th>
-                                            <th className="py-3" onClick={() => openModal("DeleteParent", cat)} role="button">
+                                            <th scope="col" className=" py-3" onClick={() => openModal("DeleteParent", cat)} role="button">
                                                 <RiDeleteBin6Line className="text-3xl text-Input-TextRed" />
                                             </th>
-                                            <th className="py-3 rounded-e-lg" onClick={() => toggleSubcategories(cat.parent_id)}>
+                                            <th scope="col" className=" py-3 rounded-e-lg" role="button"
+                                                onClick={() => toggleSubcategories(cat.parent_id)}>
                                                 {expandedCategoryId === cat.parent_id ? (
                                                     <IoMdArrowDropdown className="text-3xl" />
                                                 ) : (
@@ -147,42 +145,49 @@ const SubscriptionsCat: React.FC = () => {
                                         </tr>
                                     </thead>
                                     {expandedCategoryId === cat.parent_id &&
-                                        <Droppable droppableId={`droppable-${cat.parent_id}`}>
+                                        <Droppable droppableId={`droppable-${cat.sub}`}>
                                             {(provided) => (
-                                                <tbody {...provided.droppableProps} ref={provided.innerRef}>
-                                                    {cat.sub.length ? (
-                                                        cat.sub.map((sub, index) => (
-                                                            <Draggable key={`sub-${sub.category_id}`} draggableId={`sub-${sub.category_id}`} index={index}>
-                                                                {(provided, snapshot) => (
-                                                                    <tr
-                                                                        ref={provided.innerRef}
-                                                                        {...provided.draggableProps}
-                                                                        {...provided.dragHandleProps}
-                                                                        className={`${index % 2 ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight' : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'}
+                                                <tbody
+                                                    {...provided.droppableProps}
+                                                    ref={provided.innerRef}
+                                                >
+                                                    {cat.sub.length ?
+                                                        cat.sub.
+                                                            // sort((a:any, b:any) => a.parent_sort_order - b.parent_sort_order).
+                                                            map((sub, index) => (
+                                                                <Draggable key={`sub-${index}`} draggableId={`sub-${sub.category_id}-${index}`} index={index}>
+                                                                    {(provided, snapshot) => (
+                                                                        <tr
+                                                                            ref={provided.innerRef}
+                                                                            {...provided.draggableProps}
+                                                                            {...provided.dragHandleProps}
+                                                                            className={`${index % 2 !== 0
+                                                                                ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                                                                : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'}
+                                                                            dark:border-secondaryBG-light
                                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
-                                                                    >
-                                                                        <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
-                                                                        <td className="px-2 py-4"></td>
-                                                                        <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 dark:text-white">
-                                                                            {sub.category_name}
-                                                                        </td>
-                                                                        <td className="py-4" onClick={() => openModal("EditSub", sub)}>
-                                                                            <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
-                                                                        </td>
-                                                                        <td className="py-4" onClick={() => openModal("DeleteSub", sub)}>
-                                                                            <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
-                                                                        </td>
-                                                                    </tr>
-                                                                )}
-                                                            </Draggable>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <td colSpan={6} className="text-center py-4 font-semibold text-xl">
-                                                                {t('categoriesPage.catSubscriptions.noSub')}
-                                                            </td>
-                                                        </tr>
-                                                    )}
+                                                                        >
+                                                                            <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {sub.parent_sort_order}</td>
+                                                                            <td className="px-2 py-4"></td>
+                                                                            <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
+                                                                                {sub.category_name}
+                                                                            </td>
+                                                                            <td className="px-2 py-4"></td>
+                                                                            <td className="py-4" onClick={() => openModal("EditSub", sub)}>
+                                                                                <FiEdit3 className="text-xl text-Input-TextGreen" role="button" />
+                                                                            </td>
+                                                                            <td className="py-4" onClick={() => openModal("DeleteSub", sub)}>
+                                                                                <RiDeleteBin6Line className="text-xl text-Input-TextRed" role="button" />
+                                                                            </td>
+                                                                            <td className="py-4"></td>
+                                                                        </tr>
+                                                                    )}
+                                                                </Draggable>
+                                                            ))
+                                                        :
+                                                        <div className="font-semibold text-xl my-5">
+                                                            {t('categoriesPage.catSubscriptions.noSub')}
+                                                        </div>}
                                                     {provided.placeholder}
                                                 </tbody>
                                             )}
@@ -194,8 +199,6 @@ const SubscriptionsCat: React.FC = () => {
                     )}
                 </Droppable>
             </DragDropContext>
-
-            {/* Modal Components */}
             {modalType && (
                 <>
                     {modalType === "DeleteParent" && selectedCategory && (
@@ -208,7 +211,16 @@ const SubscriptionsCat: React.FC = () => {
                             display={displaySubscriptionsCat}
                         />
                     )}
-                    {(modalType === "EditParent" || modalType === "AddParent") && selectedCategory && (
+                    {(modalType === "AddParent") && (
+                        <EditAddImgPopup
+                            isPaid
+                            url="categories"
+                            isModalOpen
+                            setIsModalOpen={() => setModalType(null)}
+                            display={displaySubscriptionsCat}
+                        />
+                    )}
+                    {(modalType === "EditParent") && selectedCategory && (
                         <EditAddImgPopup
                             isPaid
                             name={selectedCategory?.category_name}
@@ -230,11 +242,19 @@ const SubscriptionsCat: React.FC = () => {
                             display={displaySubscriptionsCat}
                         />
                     )}
-                    {(modalType === "EditSub" || modalType === "AddSub") && selectedCategory && (
+                    {(modalType === "EditSub") && selectedCategory && (
                         <EditAddPopup
-                            name={selectedSubCategory?.category_name || ""}
-                            id={selectedSubCategory?.category_id || 0}
+                            name={selectedSubCategory?.category_name}
+                            id={selectedSubCategory?.category_id}
                             url="categories"
+                            isModalOpen
+                            setIsModalOpen={() => setModalType(null)}
+                            display={displaySubscriptionsCat}
+                        />
+                    )}
+                    {( modalType === "AddSub") && selectedCategory && (
+                        <EditAddPopup
+                            url={`categories/${selectedCategory?.parent_id}`}
                             isModalOpen
                             setIsModalOpen={() => setModalType(null)}
                             display={displaySubscriptionsCat}
