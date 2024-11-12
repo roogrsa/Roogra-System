@@ -26,13 +26,11 @@ interface BreadcrumbProps {
   breadcrumbLinks: BreadcrumbLink[];
   pageName: string;
   product?: Product;
-  to?: string;
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({
   breadcrumbLinks,
   pageName,
-  to,
   product,
 }) => {
   const { banProduct } = useBanProduct(); // API hook to ban/unban product
@@ -56,7 +54,8 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
             </li>
           ))}
           <li className="font-medium text-[20px] text-primary">
-            <Link to={to?to:''}>/ {pageName}</Link>
+            {' '}
+            / {pageName}
           </li>
         </ol>
       </nav>
