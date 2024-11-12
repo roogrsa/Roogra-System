@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
+import { toast } from 'react-toastify';
 
 const useRemoveUser = () => {
   const [loading, setLoading] = useState(false);
@@ -22,12 +23,15 @@ const useRemoveUser = () => {
 
       if (responseData.success) {
         setSuccess(true);
-        console.log('User removed:', responseData.message);
+        // toast.success(`products successfully deleted`);
       } else {
+        // toast.error('API response unsuccessful');
+
         throw new Error(`API response unsuccessful: ${responseData.message}`);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }

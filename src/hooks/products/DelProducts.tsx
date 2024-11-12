@@ -27,7 +27,6 @@ const useDeleteProducts = (): UseDeleteProductsReturn => {
 
       const response = await axiosInstance.delete(url);
       if (response.status === 204) {
-        // No Content status
         toast.success(`products successfully deleted`);
 
         setIsSuccess(true);

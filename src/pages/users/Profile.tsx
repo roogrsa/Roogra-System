@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProfileAccordion from '../../components/users/ProfileAccordion';
 import { useParams } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
@@ -7,25 +7,31 @@ import ProfileImages from '../../components/users/ProfileImages';
 import useUser from '../../hooks/users/useGetUser';
 import useBanUser from '../../hooks/users/useBanUser';
 import useRemoveUser from '../../hooks/users/useRemoveUser';
+import { ToastContainer } from 'react-toastify';
+
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
 const RemoveIconSrc = '/remove.svg';
 
 const Profile = () => {
   const { id } = useParams<{ id: string }>();
-  const { user, loading, error } = useUser(Number(id));
-  const { banUser } = useBanUser();
-  const { removeUser } = useRemoveUser();
+  const { user, loading, error, refreshProfile } = useUser(Number(id));
+  const { banUser, isSuccess } = useBanUser();
+  const { removeUser, success: removeSuccess } = useRemoveUser();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
+  // if (error) {
+  //   return <p>Error: {error}</p>;
+  // }
+  useEffect(() => {
+    if (isSuccess || removeSuccess) {
+      refreshProfile();
+    }
+  }, [isSuccess, refreshProfile]);
   return (
     <>
       <div className="overflow-hidden">
@@ -58,10 +64,17 @@ const Profile = () => {
               onClick={() =>
                 !actionLoading &&
                 user?.id &&
-                handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
-                  confirmButtonClass: 'bg-BlockIconBg ', // Ban button class
-                  cancelButtonClass: '', // Cancel button class
-                })
+                handleAction(
+                  user.id,
+                  user.isBanned === 1,
+                  'ban',
+                  banUser,
+                  {
+                    confirmButtonClass: 'bg-BlockIconBg ',
+                    cancelButtonClass: '',
+                  },
+                  refreshProfile,
+                )
               }
             />
           </div>
@@ -73,10 +86,17 @@ const Profile = () => {
               onClick={() =>
                 !actionLoading &&
                 user?.id &&
-                handleAction(user.id, false, 'remove', removeUser, {
-                  confirmButtonClass: 'bg-RemoveIconBg ', // Remove button class
-                  cancelButtonClass: '', // Cancel button class
-                })
+                handleAction(
+                  user.id,
+                  false,
+                  'remove',
+                  removeUser,
+                  {
+                    confirmButtonClass: 'bg-RemoveIconBg ',
+                    cancelButtonClass: '',
+                  },
+                  refreshProfile,
+                )
               }
             />
           </div>
@@ -84,6 +104,7 @@ const Profile = () => {
         {/* accordion section */}
         <ProfileAccordion user={user} loading={loading} error={error} />
       </div>
+      <ToastContainer position="top-right" autoClose={5000} />
     </>
   );
 };

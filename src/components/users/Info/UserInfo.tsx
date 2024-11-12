@@ -27,7 +27,6 @@ interface ProfileAccordionProps {
   //   error: string | null;
 }
 const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
-  //   console.log(user);
   const { t } = useTranslation();
 
   const { handleAction, loading: actionLoading } = useHandleAction();
@@ -76,17 +75,12 @@ const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
     loading: followersLoading,
     error: followersError,
   } = useFollowers(user.id);
-  // console.log(followers);
-
-  //
   const {
     data: rates,
     loading: ratesLoading,
     error: ratesError,
   } = useUserRates(user.id);
-  // console.log(rates);
 
-  //
   const handleClickName = (CustomerId: number) => {
     navigate(`/profile/${CustomerId}`);
   };

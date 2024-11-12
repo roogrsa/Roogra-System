@@ -6,6 +6,7 @@ interface UseUserResponse {
   user: User | null;
   loading: boolean;
   error: string | null;
+  refreshProfile: any;
 }
 
 const useUser = (id: number): UseUserResponse => {
@@ -13,42 +14,29 @@ const useUser = (id: number): UseUserResponse => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        setLoading(true);
-
-        // Use axiosInstance for the GET request
-        const response = await axiosInstance.get(`/api/users/${id}`);
-        const { success, data } = response.data;
-        // console.log(data);
-
-        if (success) {
-          setUser(data);
-        } else {
-          setError('Failed to fetch user data');
-        }
-      } catch (err: any) {
-        setError(err.message || 'Failed to fetch product');
-      } finally {
-        setLoading(false);
+  const fetchUser = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get(`/api/users/${id}`);
+      const { success, data } = response.data;
+      if (success) {
+        setUser(data);
+      } else {
+        setError('Failed to fetch user data');
       }
-      //   } catch (err) {
-      //     // Customize error handling based on the error object
-      //     if (axiosInstance.isAxiosError(err)) {
-      //       setError(err.response?.data?.message || 'Error fetching user data');
-      //     } else {
-      //       setError('Unexpected error occurred');
-      //     }
-      //   } finally {
-      //     setLoading(false);
-      //   }
-    };
-
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch product');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchUser();
   }, [id]);
-
-  return { user, loading, error };
+  const refreshProfile = () => {
+    fetchUser();
+  };
+  return { user, loading, error, refreshProfile };
 };
 
 export default useUser;

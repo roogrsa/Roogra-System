@@ -50,8 +50,8 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
     <div className="">
       {/*  */}
       <Accordion title={t('profile.detials')}>
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
+        {/* {loading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>} */}
         {user && <UserForm user={user} loading={loading} error={error} />}
       </Accordion>
 

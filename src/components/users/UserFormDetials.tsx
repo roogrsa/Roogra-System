@@ -87,13 +87,13 @@ const UserForm: React.FC<ProfileAccordionProps> = ({
     }
   };
 
-  if (loading || editLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (loading || editLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (error || editError) {
-    return <p>{error || editError}</p>;
-  }
+  // if (error || editError) {
+  //   return <p>{error || editError}</p>;
+  // }
 
   return (
     <div className="my-3 flex justify-center flex-col gap-10 bg-secondaryBG-light dark:bg-secondaryBG-dark p-6">
