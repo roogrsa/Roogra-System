@@ -21,7 +21,7 @@ export default function Issues() {
     return (
         <div>
             <div className="flex justify-between">
-                <Breadcrumb pageName={t('contact-us.issues')} breadcrumbLinks={breadcrumbLinks} />
+                <Breadcrumb pageName={t('contact-us.issues')} to="/contact-us/issues" breadcrumbLinks={breadcrumbLinks} />
                 <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
             </div>
             <AccordionHeader2

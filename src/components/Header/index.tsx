@@ -22,27 +22,29 @@ const Header = (props: {
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     if ((event as React.KeyboardEvent).key === "Enter" || event.type === "click") {
       const target = event.target as HTMLInputElement;
-      if (target.value.startsWith('rc-')&&target.value.length>3) {
+      if (target.value.startsWith('rc-') && target.value.length > 3) {
         const id = target.value.slice(3)
         navigate(`/reports/chat/search/${id}`);
-      } else if (target.value.startsWith('rt-')&&target.value.length>3) {
+      } else if ((target.value.startsWith('rt-') || target.value.startsWith('RT-')) && target.value.length > 3) {
         const id = target.value.slice(3)
         navigate(`/reports/product/search/${id}`);
-      } else if (target.value.startsWith('rq1-')&&target.value.length>4) {
+      } else if ((target.value.startsWith('rq1-')) && target.value.length > 4) {
         const id = target.value.slice(4)
         navigate(`/contact-us/inquiries/search/${id}`);
-      } else if (target.value.startsWith('rq2-')&&target.value.length>4) {
+      } else if (target.value.startsWith('rq2-') && target.value.length > 4) {
         const id = target.value.slice(4)
         navigate(`/contact-us/issues/search/${id}`);
-      } else if (target.value.startsWith('rfp-')&&target.value.length>4) {
+      } else if (target.value.startsWith('rfp-') && target.value.length > 4) {
         const id = target.value.slice(4)
         navigate(`/contact-us/suggestions/search/${id}`);
-      } else if (target.value.startsWith('rd-')&&target.value.length>3) {
+      } else if (target.value.startsWith('rd-') && target.value.length > 3) {
         const id = target.value.slice(3)
         navigate(`/confirm/subscription/search/${id}`);
-      } else if (target.value.startsWith('rs-')&&target.value.length>3) {
+      } else if (target.value.startsWith('rs-') && target.value.length > 3) {
         const id = target.value.slice(3)
         navigate(`/part/subscription/search/${id}`);
+      } else {
+        navigate(`/users`);
       }
     }
   };
