@@ -142,7 +142,7 @@ const MainCategories: React.FC = () => {
                     <th className="py-6 text-[20px] font-[400]">
                       {t('categoriesPage.edit')}
                     </th>
-                    <th className="py-3 ">
+                    <th className="py-3 rounded-e-lg">
                       <RiDeleteBin6Line className="text-xl text-Input-TextRed" />
                     </th>
                   </tr>

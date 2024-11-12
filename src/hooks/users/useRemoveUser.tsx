@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axiosInstance from '../axiosConfig/instanc';
+import axiosInstance from '../../axiosConfig/instanc';
 
 const useRemoveUser = () => {
   const [loading, setLoading] = useState(false);

@@ -36,8 +36,8 @@ const BanProdList: React.FC = () => {
     navigate(`/products/${prodId}`);
   };
 
-  if (bannedProdsLoading) return <p>Loading...</p>;
-  if (bannedProdsError) return <p>Error: {bannedProdsError}</p>;
+  // if (bannedProdsLoading) return <p>Loading...</p>;
+  // if (bannedProdsError) return <p>Error: {bannedProdsError}</p>;
   const handleActionCallback = () => {
     refreshBannedProds();
   };
@@ -57,8 +57,8 @@ const BanProdList: React.FC = () => {
         className: 'text-center',
       },
       {
-        key: 'admin',
-        content: prod.admin || 'N/A',
+        key: 'admin_name',
+        content: prod.admin_name || 'N/A',
         className: 'text-center',
       },
       {

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
-import useFetchUsers from '../../hooks/useTypeUsers';
-import useBanUser from '../../hooks/useBanUser';
+
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
 import { useTranslation } from 'react-i18next';
+import useFetchUsers from '../../hooks/users/useTypeUsers';
+import useBanUser from '../../hooks/users/useBanUser';
 // import { useTranslation } from 'react-i18next';
 
 const BannedIconSrc = '/block.svg';
@@ -22,14 +23,27 @@ interface UserTypeProps {
 const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const { t } = useTranslation();
 
-  const { users, loading, error } = useFetchUsers(userType, 0, 10);
-  const { banUser, loading: banLoading, error: banError } = useBanUser();
+  const { users, loading, error, refreshUserType } = useFetchUsers(
+    userType,
+    0,
+    10,
+  );
+  const {
+    banUser,
+    loading: banLoading,
+    error: banError,
+    isSuccess,
+  } = useBanUser();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
   const navigate = useNavigate();
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  useEffect(() => {
+    if (isSuccess) {
+      refreshUserType();
+    }
+  }, [isSuccess, refreshUserType]);
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>{error}</p>;
 
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
@@ -116,10 +130,17 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
             onClick={() =>
               !actionLoading &&
               user?.id &&
-              handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
-                confirmButtonClass: 'bg-BlockIconBg',
-                cancelButtonClass: '',
-              })
+              handleAction(
+                user.id,
+                user.isBanned === 1,
+                'ban',
+                banUser,
+                {
+                  confirmButtonClass: 'bg-BlockIconBg',
+                  cancelButtonClass: '',
+                },
+                refreshUserType,
+              )
             }
           />
         ),
@@ -127,8 +148,6 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       },
     ],
   }));
-
-  // Headers with proper translation keys
   const headers = [
     { key: 'id', content: t('users.id'), className: 'text-center' },
     { key: 'name', content: t('users.name'), className: 'text-center' },

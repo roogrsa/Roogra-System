@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axiosInstance from '../axiosConfig/instanc';
-import { Follower } from '../types/follower';
+import { Follower } from '../../types/follower';
+import axiosInstance from '../../axiosConfig/instanc';
 
 interface FollowersApiResponse {
   success: boolean;

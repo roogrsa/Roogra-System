@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import useUsers from '../../hooks/useAllusers';
+import useUsers from '../../hooks/users/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useBanUser from '../../hooks/useBanUser';
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
 import axiosInstance from '../../axiosConfig/instanc';
 import Pagination from '../../components/pagination/Pagination';
 import { useTranslation } from 'react-i18next';
+import useBanUser from '../../hooks/users/useBanUser';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -22,7 +22,7 @@ const Users: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [usersCount, setUsersCount] = useState(0);
 
-  const { users, loading, error } = useUsers(currentPage);
+  const { users, loading, error, refreshUsers } = useUsers(currentPage);
   const { handleAction, loading: actionLoading } = useHandleAction();
   useEffect(() => {
     const fetchUsersCount = async () => {
@@ -34,11 +34,20 @@ const Users: React.FC = () => {
     fetchUsersCount();
   }, []);
   const totalPages = Math.ceil(usersCount);
-  const { banUser, loading: banUserLoading, error: banError } = useBanUser();
+  const {
+    banUser,
+    loading: banUserLoading,
+    error: banError,
+    isSuccess,
+  } = useBanUser();
   const navigate = useNavigate();
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  useEffect(() => {
+    if (isSuccess) {
+      refreshUsers();
+    }
+  }, [isSuccess, refreshUsers]);
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   //
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
@@ -126,10 +135,17 @@ const Users: React.FC = () => {
             onClick={() =>
               !actionLoading &&
               user?.id &&
-              handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
-                confirmButtonClass: 'bg-BlockIconBg ',
-                cancelButtonClass: '',
-              })
+              handleAction(
+                user.id,
+                user.isBanned === 1,
+                'ban',
+                banUser,
+                {
+                  confirmButtonClass: 'bg-BlockIconBg ',
+                  cancelButtonClass: '',
+                },
+                refreshUsers,
+              )
             }
           />
         ),
@@ -137,7 +153,6 @@ const Users: React.FC = () => {
       },
     ],
   }));
-  //
 
   const headers = [
     { key: 'id', content: t('users.id'), className: 'text-center' },
@@ -163,7 +178,6 @@ const Users: React.FC = () => {
     },
   ];
 
-  //
   const breadcrumbLinks = [{ label: t('users.label.label'), path: '/' }];
   return (
     <div>

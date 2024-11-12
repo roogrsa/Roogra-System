@@ -54,7 +54,6 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
     fetchProductsCount();
   }, []);
   useEffect(() => {
-    // Refresh products when deletion is successful
     if (isSuccess) {
       refreshProductsType();
     }

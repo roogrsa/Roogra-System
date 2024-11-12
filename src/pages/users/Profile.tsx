@@ -1,15 +1,12 @@
 import React from 'react';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import ProfileAccordion from '../../components/users/ProfileAccordion';
 import { useParams } from 'react-router-dom';
-import useUser from '../../hooks/useGetUser';
-import useRemoveUser from '../../hooks/useRemoveUser';
 import useHandleAction from '../../hooks/useHandleAction';
-import useBanUser from '../../hooks/useBanUser';
 import StarRating from '../../components/users/StarRating';
 import ProfileImages from '../../components/users/ProfileImages';
-
-const SaveIconSrc = '/save.svg';
+import useUser from '../../hooks/users/useGetUser';
+import useBanUser from '../../hooks/users/useBanUser';
+import useRemoveUser from '../../hooks/users/useRemoveUser';
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
 const RemoveIconSrc = '/remove.svg';

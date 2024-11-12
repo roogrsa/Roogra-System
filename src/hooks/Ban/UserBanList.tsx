@@ -12,6 +12,7 @@ const useBannedUsers = () => {
       );
       if (response.data.success) {
         setBannedUsers(response.data.data.banned);
+        // console.log(response.data.data.banned);
       } else {
         throw new Error(
           response.data.message || 'Failed to fetch banned chats',

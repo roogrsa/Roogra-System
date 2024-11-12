@@ -7,8 +7,8 @@ import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import MainTable from '../../components/lastnews/MainTable';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import useBanUser from '../../hooks/users/useBanUser';
 import useBannedUsers from '../../hooks/Ban/UserBanList';
-import useBanUser from '../../hooks/useBanUser';
 
 const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
@@ -37,7 +37,7 @@ const BanUserList: React.FC = () => {
   if (bannedUsersError) return <p>Error: {bannedUsersError}</p>;
 
   const userlogs = bannedUsers.map((user) => ({
-    id: user.id,
+    id: user.customer_id,
     columns: [
       {
         key: 'name',
@@ -67,7 +67,7 @@ const BanUserList: React.FC = () => {
             <img
               src={EditIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() => handleClickName(user.id)}
+              onClick={() => handleClickName(user.customer_id)}
             />
           </div>
         ),
@@ -82,9 +82,9 @@ const BanUserList: React.FC = () => {
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
                 !actionLoading &&
-                user?.id &&
+                user?.customer_id &&
                 handleAction(
-                  user.id,
+                  user.customer_id,
                   user.is_banned === 1,
                   'ban',
                   banUser,

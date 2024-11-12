@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axiosInstance from '../axiosConfig/instanc'; // Import the axios config
-import { User } from '../types/user';
+import { User } from '../../types/user';
+import axiosInstance from '../../axiosConfig/instanc';
 
 interface UseUserResponse {
   user: User | null;

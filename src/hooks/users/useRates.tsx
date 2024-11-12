@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axiosInstance from '../axiosConfig/instanc';
-import { UserRate } from '../types/rate';
+import { UserRate } from '../../types/rate';
+import axiosInstance from '../../axiosConfig/instanc';
 
 interface UseUserRatesReturn {
   data: UserRate[] | null;

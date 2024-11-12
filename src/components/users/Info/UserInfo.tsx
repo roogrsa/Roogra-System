@@ -1,6 +1,5 @@
 import React from 'react';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
-import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 import Bio from '../bio';
 import { MdOutlineStarOutline } from 'react-icons/md';
@@ -8,14 +7,14 @@ import ReactDOMServer from 'react-dom/server';
 
 import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../../hooks/useHandleAction';
-import useBanUser from '../../../hooks/useBanUser';
 import StarRating from '../StarRating';
 import Swal from 'sweetalert2';
 import 'sweetalert2/src/sweetalert2.scss';
-import useFollowers from '../../../hooks/useUserFollowers';
-import useUserRates from '../../../hooks/useRates';
+import useUserRates from '../../../hooks/users/useRates';
 import { User } from '../../../types/user';
 import { useTranslation } from 'react-i18next';
+import useBanUser from '../../../hooks/users/useBanUser';
+import useFollowers from '../../../hooks/users/useUserFollowers';
 //
 const EditIconSrc = '/Edit.svg';
 const CheckboxIconSrc = '/checkbox.svg';
