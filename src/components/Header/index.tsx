@@ -22,28 +22,31 @@ const Header = (props: {
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     if ((event as React.KeyboardEvent).key === "Enter" || event.type === "click") {
       const target = event.target as HTMLInputElement;
+      let id;
       if (target.value.toLowerCase().startsWith('rc-')) {
-        const id = target.value.slice(3)
+        id = target.value.slice(3)
         navigate(`/reports/chat`, { state: { id } });
       } else if (target.value.toLowerCase().startsWith('rt-')) {
-        const id = target.value.slice(3)
+        id = target.value.slice(3)
         navigate(`/reports/product`, { state: { id } });
       } else if (target.value.toLowerCase().startsWith('rq1-')) {
-        const id = target.value.slice(4)
+        id = target.value.slice(4)
         navigate(`/contact-us/inquiries`, { state: { id } });
       } else if (target.value.toLowerCase().startsWith('rq2-')) {
-        const id = target.value.slice(4)
+        id = target.value.slice(4)
         navigate(`/contact-us/issues`, { state: { id } });
       } else if (target.value.toLowerCase().startsWith('rfp-')) {
-        const id = target.value.slice(4)
+        id = target.value.slice(4)
         navigate(`/contact-us/suggestions`, { state: { id } });
       } else if (target.value.toLowerCase().startsWith('rd-')) {
-        const id = target.value.slice(3)
+        id = target.value.slice(3)
         navigate(`/confirm/subscription`, { state: { id } });
       } else if (target.value.toLowerCase().startsWith('rs-')) {
-        const id = target.value.slice(3)
+        id = target.value.slice(3)
         navigate(`/part/subscription`, { state: { id } });
-      } else {
+      } else if(target.value.length==0){
+        id = target.value
+      }else {
         const userName = target.value
         navigate('/users', { state: { userName } });
       }
