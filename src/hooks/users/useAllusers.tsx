@@ -8,7 +8,7 @@ interface ApiResponse {
   data: User[];
 }
 
-const useUsers = (page: number = 0 , userName:string) => {
+const useUsers = (page: number = 0 , userName:string='') => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

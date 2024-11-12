@@ -100,15 +100,11 @@ export default function AddAdmin() {
   }, []);
   const validationSchema = yup.object().shape({
     name: yup.string().required(t('admins.form.nameError')),
-    // password: yup.string().required(t('admins.form.PasswordError')),
+    password: yup.string().required(t('admins.form.PasswordError')),
     email: yup.string().required(t('admins.form.emailError')),
     phone: yup.string().required(t('admins.form.phoneError')),
     username: yup.string().required(t('admins.form.userNameError')),
     type: yup.string().required(t('admins.form.levelError')),
-    // workingHours: yup.object().shape({
-    //     start: yup.string().required(t('validation.required')),
-    //     end: yup.string().required(t('validation.required')),
-    // }),
     permissions: yup.object().shape({
       super: yup.boolean(),
       charts: yup.boolean(),
@@ -363,7 +359,7 @@ export default function AddAdmin() {
       <Breadcrumb pageName={t('admins.edit')} breadcrumbLinks={breadcrumbLinks} />
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={!adminId&&validationSchema}
         onSubmit={handleAddAdminSubmit}
         enableReinitialize
       >

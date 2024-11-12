@@ -22,7 +22,7 @@ const Users: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [usersCount, setUsersCount] = useState(0);
   const location = useLocation();
-  const { userName } = location.state;
+  const { userName } = location.state || {};
   const { users, loading, error, refreshUsers } = useUsers(currentPage, userName);
   const { handleAction, loading: actionLoading } = useHandleAction();
   useEffect(() => {
