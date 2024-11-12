@@ -79,7 +79,9 @@ const verifaction_requestByStatus = () => {
       refreshRequest();
     }
   }, [isSuccess, refreshRequest]);
-
+  const display = () => {
+    refreshRequest();
+  };
   const breadcrumbLinks = [
     { label: t('verification_request.label.label'), path: '/' },
   ];
@@ -346,7 +348,7 @@ const verifaction_requestByStatus = () => {
             {
               key: 'verified_by_reject',
               content:
-                status === 'rejected' ? (
+                item.STATUS === 'rejected' ? (
                   <img
                     src={cofirmIcon}
                     alt="Accept"
@@ -400,7 +402,7 @@ const verifaction_requestByStatus = () => {
                           onClick={() =>
                             handleOpenDeleteModal(
                               item.verification_request_id,
-                              `RS-${item.verification_request_id}`,
+                              `RD-${item.verification_request_id}`,
                             )
                           }
                         />
@@ -463,10 +465,10 @@ const verifaction_requestByStatus = () => {
         <DeletePopup
           deleteName={deleteName}
           deleteId={deleteId}
-          url="verification_request" // replace with the appropriate API endpoint path if needed
+          url="verification_request"
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          display={display} // Function to refresh data after deletion
+          display={display}
         />
       )}
       <Pagination

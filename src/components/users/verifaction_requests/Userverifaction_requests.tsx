@@ -15,6 +15,7 @@ import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
+import DeletePopup from '../../popups/DeletePopup';
 
 //
 const ApprovedSubscription = '/true.png';
@@ -24,7 +25,10 @@ const Notfound = '/not.png';
 
 const VerifactionRequestByUserid = () => {
   const { t } = useTranslation();
-
+  //
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteName, setDeleteName] = useState<string>('');
   //
   const {
     EditVerificationRequest,
@@ -33,6 +37,11 @@ const VerifactionRequestByUserid = () => {
     success: editSuccess,
   } = useEditVerificationRequest();
   //
+  const handleOpenDeleteModal = (id: number, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+    setIsModalOpen(true);
+  };
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
   const [status, setStatus] = useState('processing');
@@ -372,14 +381,12 @@ const VerifactionRequestByUserid = () => {
                         <img
                           src={RemoveIconSrc}
                           className="w-6 h-6 text-center p-1 cursor-pointer"
-                          // onClick={() =>
-                          //   !actionLoading &&
-                          //   user?.id &&
-                          //   handleAction(user.id, false, 'remove', removeUser, {
-                          //     confirmButtonClass: 'bg-RemoveIconBg ', // Remove button class
-                          //     cancelButtonClass: '', // Cancel button class
-                          //   })
-                          // }
+                          onClick={() =>
+                            handleOpenDeleteModal(
+                              item.verification_request_id,
+                              `RD-${item.verification_request_id}`,
+                            )
+                          }
                         />
                       </div>
                     ),
@@ -430,6 +437,17 @@ const VerifactionRequestByUserid = () => {
           </div>,
         ]}
       />
+      {/* Delete Popup */}
+      {deleteId && (
+        <DeletePopup
+          deleteName={deleteName}
+          deleteId={deleteId}
+          url="verification_request"
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          display={display}
+        />
+      )}
     </div>
   );
 };
