@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useUsers from '../../hooks/users/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
 import axiosInstance from '../../axiosConfig/instanc';
 import Pagination from '../../components/pagination/Pagination';
@@ -21,15 +21,16 @@ const Users: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [usersCount, setUsersCount] = useState(0);
-
-  const { users, loading, error, refreshUsers } = useUsers(currentPage);
+  const location = useLocation();
+  const { userName } = location.state;
+  const { users, loading, error, refreshUsers } = useUsers(currentPage, userName);
   const { handleAction, loading: actionLoading } = useHandleAction();
   useEffect(() => {
     const fetchUsersCount = async () => {
       try {
         const response = await axiosInstance.get(`/api/users/count`);
         setUsersCount(response.data.data.count / 8);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchUsersCount();
   }, []);

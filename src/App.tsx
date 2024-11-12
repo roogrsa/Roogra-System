@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Loader from './common/Loader';
 import DefaultLayout from './layout/DefaultLayout';
 import Guard from './components/guards/Guards';
-import ECommerce from './pages/Dashboard/ECommerce';
 import Users from './pages/users/users';
 import Advertiser from './pages/users/advertiser';
 import Customer from './pages/users/Customer';

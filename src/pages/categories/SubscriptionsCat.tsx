@@ -153,7 +153,6 @@ const breadcrumbLinks = [{ label: t('categoriesPage.title'), path: '/categories/
                                                 >
                                                     {cat.sub.length ?
                                                         cat.sub.
-                                                            // sort((a:any, b:any) => a.parent_sort_order - b.parent_sort_order).
                                                             map((sub, index) => (
                                                                 <Draggable key={`sub-${index}`} draggableId={`sub-${sub.category_id}-${index}`} index={index}>
                                                                     {(provided, snapshot) => (
