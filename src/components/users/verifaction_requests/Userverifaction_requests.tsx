@@ -4,20 +4,17 @@ import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
 
 import { useTranslation } from 'react-i18next';
-import useEditVerificationRequest from '../../hooks/category_subscription/useEditVerficationReq';
-import axiosInstance from '../../axiosConfig/instanc';
-import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
-// import VerificationRequestsByUserid from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
-import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
-import ReusableInput from '../products/ReusableInput';
-import PeriodInput from '../../pages/category_subscription/PeriodInput';
-import handleStatus from '../../hooks/category_subscription/handleStatus';
-import handleEditVerificationRequest from '../../hooks/verifaction_requests/handleEditVerificationReq';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import AccordionHeader2 from '../Accordion/AccordionHeader2';
-import MainTable from '../lastnews/MainTable';
-import NotFoundSection from '../Notfound/NotfoundSection';
-import VerificationRequestsByUserid from '../../hooks/verifaction_requests/useVerificationRequestsByUserid';
+import VerificationRequestsByUserid from '../../../hooks/verifaction_requests/useVerificationRequestsByUserid';
+import useEditVerificationRequest from '../../../hooks/category_subscription/useEditVerficationReq';
+import ImageWithFullscreen from '../../Fullscreen/Fulllscreen';
+import ReusableInput from '../../products/ReusableInput';
+import PeriodInput from '../../../pages/category_subscription/PeriodInput';
+import handleEditVerificationRequest from '../../../hooks/verifaction_requests/handleEditVerificationReq';
+import handleStatus from '../../../hooks/category_subscription/handleStatus';
+import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
+import AccordionHeader2 from '../../Accordion/AccordionHeader2';
+import NotFoundSection from '../../Notfound/NotfoundSection';
+import MainTable from '../../lastnews/MainTable';
 
 //
 const ApprovedSubscription = '/true.png';
@@ -38,14 +35,17 @@ const VerifactionRequestByUserid = () => {
   //
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
-  // State to handle dynamic status
   const [status, setStatus] = useState('processing');
 
-  const { data, loading, error } = VerificationRequestsByUserid(
+  const { data, loading, error, refreshRequest } = VerificationRequestsByUserid(
     status,
     // currentPage,
   );
-
+  useEffect(() => {
+    if (editSuccess) {
+      refreshRequest();
+    }
+  }, [refreshRequest]);
   // console.log(data);
 
   // if (loading) return <p>Loading...</p>;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useCategorySubscriptionsByStatus from '../../hooks/category_subscription/CatSubscriptionByStatus';
@@ -9,15 +9,14 @@ import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
-// import handleStatus from '../../hooks/category_subscription/handleStatus';
 import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
 import { useTranslation } from 'react-i18next';
 import PeriodInput from './PeriodInput';
 import Pagination from '../../components/pagination/Pagination';
-// import CategorySubscription from './CategorySubscription';
 import axiosInstance from '../../axiosConfig/instanc';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
@@ -61,15 +60,16 @@ const CategorySubscription = () => {
   const totalPages = Math.ceil(categorySubscriptionCount);
 
   //
-  const { data, loading, error } = useCategorySubscriptionsByStatus(
-    status,
-    currentPage,
-    id
-  );
+  const { data, loading, error, refreshRequest } =
+    useCategorySubscriptionsByStatus(status, currentPage, id);
   // console.log(data);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  useEffect(() => {
+    if (editSuccess) {
+      refreshRequest();
+    }
+  }, [refreshRequest]);
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   //
   const headers = [
     {
@@ -339,6 +339,7 @@ const CategorySubscription = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
+      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 };

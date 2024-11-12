@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import axios, { AxiosError } from 'axios';
 import axiosInstance from '../../axiosConfig/instanc';
+import { toast } from 'react-toastify';
 
 interface EditResponse {
   status: string;
@@ -30,16 +30,18 @@ const useEditVerificationRequest = (): EditVerificationRequestResult => {
       const response = await axiosInstance.patch<EditResponse>(
         `/api/verification_request/${id}`,
         {
-          status: newStatus, // Updating the status field only
+          status: newStatus,
         },
       );
 
       if (response.status === 200) {
         setSuccess(true);
+        toast.success(`updated sucessfully`);
       }
     } catch (err) {
       const axiosError = err as AxiosError;
       setError(axiosError.response?.data?.message || 'An error occurred');
+      toast.error(`Error updating`);
     } finally {
       setLoading(false);
     }

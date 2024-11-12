@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import axiosInstance from '../../axiosConfig/instanc';
+import { toast } from 'react-toastify';
 
 interface EditResponse {
   status: string;
@@ -40,9 +41,12 @@ const useEditCategorySubscriptionStatus =
 
         if (response.status === 200) {
           setSuccess(true);
+          toast.success(`updated sucessfully`);
         }
       } catch (err) {
         const axiosError = err as AxiosError;
+        toast.error(`Error updating`);
+
         setError(axiosError.response?.data?.message || 'An error occurred');
       } finally {
         setLoading(false);

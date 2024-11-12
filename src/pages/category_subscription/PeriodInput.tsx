@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
 import axios, { AxiosError } from 'axios';
 import ReusableInput from '../../components/products/ReusableInput';
+import { toast, ToastContainer } from 'react-toastify';
 
 // Define the response type for the update function
 interface UpdatePeriodResponse {
@@ -62,19 +63,24 @@ const VerifiedUpdatePeriod = async (
     );
 
     if (response.data.success) {
-      console.log('Update successful:', response.data.message);
+      // console.log('Update successful:', response.data.message);
+      toast.success(`updated sucessfully`);
+
       return response.data;
     } else {
-      console.error('Update failed:', response.data.message);
+      // console.error('Update failed:', response.data.message);
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
+      toast.error(`Error updating`);
+
       console.error(
         'Axios error updating period:',
         (error as AxiosError).message,
       );
     } else {
       console.error('Unexpected error updating period:', error);
+      toast.error(`Error updating`);
     }
   }
 };
@@ -132,14 +138,17 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ item }) => {
   ]); // Dependencies for the effect
 
   return (
-    <ReusableInput
-      label=""
-      type="text"
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)} // Update state on input change
-      widthClass="w-20"
-      extraClass="bg-Input-blue text-center"
-    />
+    <>
+      <ReusableInput
+        label=""
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        widthClass="w-20"
+        extraClass="bg-Input-blue text-center"
+      />
+      <ToastContainer position="top-right" autoClose={5000} />
+    </>
   );
 };
 

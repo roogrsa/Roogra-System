@@ -27,20 +27,6 @@ const RemoveIconSrc = '/remove.svg';
 
 const verifaction_requestByStatus = () => {
   const { t } = useTranslation();
-
-  //
-  const {
-    EditVerificationRequest,
-    loading: editLoading,
-    error: editError,
-    success: editSuccess,
-  } = useEditVerificationRequest();
-  //
-  const breadcrumbLinks = [
-    { label: t('verification_request.label.label'), path: '/' },
-  ];
-
-  //
   const [status, setStatus] = useState('processing');
   const [refresh, setRefresh] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -51,12 +37,15 @@ const verifaction_requestByStatus = () => {
   const [deleteName, setDeleteName] = useState<string>('');
   const location = useLocation();
   const { id } = location.state || {};
+  //
+  const {
+    EditVerificationRequest,
+    loading: editLoading,
+    error: editError,
+    success: editSuccess,
+  } = useEditVerificationRequest();
+  //
 
-  //
-  const display = async () => {
-    // setRefresh(true);
-  };
-  //
   useEffect(() => {
     const fetchUsersCount = async () => {
       try {
@@ -74,21 +63,26 @@ const verifaction_requestByStatus = () => {
 
   //
 
-  const { data, loading, error } = useVerificationRequestsByStatus(
-    status,
-    currentPage,
-    id,
-    // refresh,
-  );
+  const { data, loading, error, refreshRequest } =
+    useVerificationRequestsByStatus(status, currentPage, id);
 
   const handleOpenDeleteModal = (id: number, name: string) => {
     setDeleteId(id);
     setDeleteName(name);
     setIsModalOpen(true);
   };
-  const { toggleVerificationRequired } = useToggleVerification();
-  // console.log(data);
 
+  const { toggleVerificationRequired, isSuccess } = useToggleVerification();
+
+  useEffect(() => {
+    if (isSuccess || editSuccess) {
+      refreshRequest();
+    }
+  }, [isSuccess, refreshRequest]);
+
+  const breadcrumbLinks = [
+    { label: t('verification_request.label.label'), path: '/' },
+  ];
   const headers = [
     {
       key: 'id',
@@ -236,28 +230,16 @@ const verifaction_requestByStatus = () => {
                       item.verification_request_id,
                       item.verification_required,
                     );
-                    // setStatus('approved');
-                    // setStatus('rejected');
-                    setRefresh(!refresh);
+
+                    refreshRequest;
                   }}
-                  // disabled={updateLoading}
                   className={`w-10 rounded-xl text-center text-sm ${
                     item.verification_required
-                      ? !refresh
-                        ? 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
-                        : 'bg-Input-red text-Input-TextRed border-Input-TextRed'
-                      : !refresh
-                      ? 'bg-Input-red text-Input-TextRed border-Input-TextRed'
-                      : 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
+                      ? 'bg-Input-green text-Input-TextGreen border-Input-TextGreen'
+                      : 'bg-Input-red text-Input-TextRed border-Input-TextRed'
                   }`}
                 >
-                  {item.verification_required
-                    ? !refresh
-                      ? 'نعم'
-                      : 'لا'
-                    : !refresh
-                    ? 'لا'
-                    : 'نعم'}
+                  {item.verification_required ? 'نعم' : 'لا'}
                 </button>
               ),
               className: 'flex justify-center text-sm',

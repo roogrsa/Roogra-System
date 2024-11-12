@@ -1,12 +1,13 @@
 import React from 'react';
 import Accordion from '../Accordion/Accordion';
 import UserForm from './UserFormDetials';
-import CategorySubscriptionUserid from '../Category-subscription/UserCategorySubscription';
-import VerifactionRequestByUserid from './../verifaction_requests/Userverifaction_requests';
+
 import UserReportType from '../reports/UserReportType';
 import UserProducts from './products/UserProducts';
 import UserInfo from './Info/UserInfo';
 import { useTranslation } from 'react-i18next';
+import CategorySubscriptionUserid from './Category-subscription/UserCategorySubscription';
+import VerifactionRequestByUserid from './verifaction_requests/Userverifaction_requests';
 
 //
 interface User {
@@ -68,6 +69,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       {/*  */}
       <Accordion title={t('profile.ticket')}>
         <CategorySubscriptionUserid />
+
         <VerifactionRequestByUserid />
       </Accordion>
 

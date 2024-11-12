@@ -3,17 +3,17 @@ import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
 
 import { useTranslation } from 'react-i18next';
-import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
-import CategorySubscriptionsByUserid from '../../hooks/category_subscription/getCategorySubscriptionByUserId';
-import ReusableInput from '../products/ReusableInput';
-import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
-import PeriodInput from '../../pages/category_subscription/PeriodInput';
-import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
-import handleStatus from '../../hooks/category_subscription/handleStatus';
-import MainTable from '../lastnews/MainTable';
-import NotFoundSection from '../Notfound/NotfoundSection';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import AccordionHeader2 from '../Accordion/AccordionHeader2';
+import useEditCategorySubscriptionStatus from '../../../hooks/category_subscription/useEditCategorySubscriptionStatus';
+import CategorySubscriptionsByUserid from '../../../hooks/category_subscription/getCategorySubscriptionByUserId';
+import ReusableInput from '../../products/ReusableInput';
+import ImageWithFullscreen from '../../Fullscreen/Fulllscreen';
+import PeriodInput from '../../../pages/category_subscription/PeriodInput';
+import handleStatus from '../../../hooks/category_subscription/handleStatus';
+import handleEditSubscribtionClick from '../../../hooks/category_subscription/handleEditSubscribtionClick';
+import MainTable from '../../lastnews/MainTable';
+import NotFoundSection from '../../Notfound/NotfoundSection';
+import AccordionHeader2 from '../../Accordion/AccordionHeader2';
+import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 
 //
 const ApprovedSubscription = '/true.png';
@@ -34,12 +34,17 @@ const CategorySubscriptionUserid = () => {
   const [status, setStatus] = useState('processing');
 
   //
-  const { data, loading, error } = CategorySubscriptionsByUserid(
-    status,
-    // currentPage,
-  );
+  const { data, loading, error, refreshRequest } =
+    CategorySubscriptionsByUserid(
+      status,
+      // currentPage,
+    );
   // console.log(data);
-
+  useEffect(() => {
+    if (editSuccess) {
+      refreshRequest();
+    }
+  }, [refreshRequest]);
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   //
@@ -250,7 +255,7 @@ const CategorySubscriptionUserid = () => {
 
                           undefined, // Pass undefined if EditVerificationRequest is not used
 
-                          editCategorySubscriptionStatus, // Function for updating category subscription status
+                          editCategorySubscriptionStatus,
                         )
                       }
                     />

@@ -1,46 +1,6 @@
-// import { useState } from 'react';
-// import axiosInstance from '../../axiosConfig/instanc';
-
-// interface UpdateVerificationResponse {
-//   success: boolean;
-//   message?: string;
-// }
-
-// const useUpdateVerification = () => {
-//   const [loading, setLoading] = useState<boolean>(false);
-//   const [error, setError] = useState<string | null>(null);
-
-//   const updateVerificationRequired = async (
-//     id: string,
-//     verificationRequired: number,
-//   ): Promise<UpdateVerificationResponse | null> => {
-//     setLoading(true);
-//     setError(null);
-
-//     try {
-//       const response = await axiosInstance.put(
-//         `/api/verification_request/${id}`,
-//         {
-//           verification_required: verificationRequired,
-//         },
-//       );
-
-//       return { success: true, message: response.data.message };
-//     } catch (err: unknown) {
-//       setError((err as Error).message);
-//       return null;
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return { updateVerificationRequired, loading, error };
-// };
-
-// export default useUpdateVerification;
 import { useState } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 interface UpdateVerificationResponse {
   success: boolean;
@@ -50,6 +10,7 @@ interface UpdateVerificationResponse {
 const useToggleVerification = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const toggleVerificationRequired = async (
     id: number,
@@ -57,10 +18,10 @@ const useToggleVerification = () => {
   ): Promise<UpdateVerificationResponse | null> => {
     setLoading(true);
     setError(null);
+    setIsSuccess(false);
 
     try {
       const newVerificationRequired = currentVerificationRequired === 1 ? 0 : 1;
-      //   console.log(newVerificationRequired, 'newVerificationRequired');
 
       const response = await axiosInstance.put(
         `/api/verification_request/${id}`,
@@ -69,6 +30,7 @@ const useToggleVerification = () => {
         },
       );
       toast.success(`updated sucessfully`);
+      setIsSuccess(true);
 
       return { success: true, message: response.data.message };
     } catch (err: unknown) {
@@ -83,7 +45,7 @@ const useToggleVerification = () => {
     }
   };
 
-  return { toggleVerificationRequired, loading, error };
+  return { toggleVerificationRequired, loading, error, isSuccess };
 };
 
 export default useToggleVerification;

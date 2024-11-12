@@ -1,63 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import axiosInstance from '../../axiosConfig/instanc';
-// import { useParams } from 'react-router-dom';
-// import { VerificationRequest } from '../../types/VerificationRequest';
-
-// interface VerificationRequestResponse {
-//   success: boolean;
-//   message: string;
-//   data: VerificationRequest[];
-// }
-
-// interface UseVerificationRequestsByStatusReturn {
-//   data: VerificationRequest[] | null;
-//   loading: boolean;
-//   error: string | null;
-// }
-
-// const VerificationRequestsByUserid = (
-//   status: string,
-//   currentPage: number = 0,
-//   limit: number = 8,
-// ): UseVerificationRequestsByStatusReturn => {
-//   const { id } = useParams<{ id: string }>();
-
-//   const [data, setData] = useState<VerificationRequest[] | null>(null);
-//   const [loading, setLoading] = useState<boolean>(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchVerificationRequestsByStatus = async () => {
-//       setLoading(true); // Start loading
-//       setError(null); // Reset error state
-
-//       try {
-//         const response = await axiosInstance.get<VerificationRequestResponse>(
-//           `/api/verification_request/users/${id}?page=${currentPage}&limit=${limit}`,
-//         );
-
-//         // Handle the success response
-//         if (response.data.success) {
-//           setData(response.data.data);
-//           // console.log(response.data.data);
-//         } else {
-//           setError(response.data.message);
-//         }
-//       } catch (err) {
-//         // Handle errors
-//         setError(err instanceof Error ? err.message : 'Unknown error occurred');
-//       } finally {
-//         setLoading(false); // End loading
-//       }
-//     };
-
-//     fetchVerificationRequestsByStatus();
-//   }, [status, currentPage, limit]); // Re-fetch data when `status`, `currentPage`, or `limit` changes
-
-//   return { data, loading, error };
-// };
-
-// export default VerificationRequestsByUserid;
 import { useState, useEffect } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useParams } from 'react-router-dom';
@@ -73,6 +13,7 @@ interface UseVerificationRequestsByStatusReturn {
   data: VerificationRequest[] | null;
   loading: boolean;
   error: string | null;
+  refreshRequest: any;
 }
 
 const VerificationRequestsByUserid = (
@@ -85,38 +26,36 @@ const VerificationRequestsByUserid = (
   const [data, setData] = useState<VerificationRequest[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchVerificationRequestsByStatus = async () => {
+    setLoading(true); // Start loading
+    setError(null); // Reset error state
 
-  useEffect(() => {
-    const fetchVerificationRequestsByStatus = async () => {
-      setLoading(true); // Start loading
-      setError(null); // Reset error state
+    try {
+      const response = await axiosInstance.get<VerificationRequestResponse>(
+        `/api/verification_request/users/${id}/status/${status}?page=${currentPage}&limit=${limit}`,
+      );
 
-      try {
-        const response = await axiosInstance.get<VerificationRequestResponse>(
-          `/api/verification_request/users/${id}/status/${status}?page=${currentPage}&limit=${limit}`,
-        );
-
-        // Handle the success response
-        if (response.data.success) {
-          setData(response.data.data);
-        } else {
-          setError(response.data.message);
-        }
-      } catch (err) {
-        // Handle errors
-        setError(err instanceof Error ? err.message : 'Unknown error occurred');
-      } finally {
-        setLoading(false); // End loading
+      // Handle the success response
+      if (response.data.success) {
+        setData(response.data.data);
+      } else {
+        setError(response.data.message);
       }
-    };
-
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     if (id && status) {
-      // Ensure id and status are defined before making the request
       fetchVerificationRequestsByStatus();
     }
-  }, [id, status, currentPage, limit]); // Re-fetch data when `id`, `status`, `currentPage`, or `limit` changes
-
-  return { data, loading, error };
+  }, [id, status, currentPage, limit]);
+  const refreshRequest = () => {
+    fetchVerificationRequestsByStatus();
+  };
+  return { data, loading, error, refreshRequest };
 };
 
 export default VerificationRequestsByUserid;
