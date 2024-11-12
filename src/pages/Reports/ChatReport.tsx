@@ -1,12 +1,12 @@
 import ReportType from '../../components/reports/ReportType';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const ChatReport = () => {
-  const { rc_search } = useParams();
-  console.log(rc_search);
+  const location = useLocation();
+  const { id } = location.state || {};
   return (
     <div>
-      <ReportType reportType="chat" query={rc_search}/>
+      <ReportType reportType="chat" query={id}/>
     </div>
   );
 };

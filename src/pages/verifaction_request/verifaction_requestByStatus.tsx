@@ -18,7 +18,7 @@ import useVerificationRequestsByStatus from '../../hooks/verifaction_requests/us
 import DeletePopup from '../../components/popups/DeletePopup';
 import useToggleVerification from '../../hooks/verifaction_requests/useUpdateVerification';
 import { ToastContainer } from 'react-toastify';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 //
 const ApprovedSubscription = '/true.png';
@@ -49,7 +49,8 @@ const verifaction_requestByStatus = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteName, setDeleteName] = useState<string>('');
-  const {rd_search}=useParams()
+  const location = useLocation();
+  const { id } = location.state || {};
   
   //
   const display = async () => {
@@ -76,7 +77,7 @@ const verifaction_requestByStatus = () => {
   const { data, loading, error } = useVerificationRequestsByStatus(
     status,
     currentPage,
-    rd_search
+    id
     // refresh,
   );
 

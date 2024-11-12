@@ -17,7 +17,7 @@ import Pagination from '../../components/pagination/Pagination';
 // import CategorySubscription from './CategorySubscription';
 import axiosInstance from '../../axiosConfig/instanc';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
@@ -42,8 +42,8 @@ const CategorySubscription = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
   const [Count, setCount] = useState(0);
-const {rs_search}=useParams();
-console.log(rs_search);
+  const location = useLocation();
+  const { id } = location.state || {};
   //
   useEffect(() => {
     const fetchUsersCount = async () => {
@@ -64,7 +64,7 @@ console.log(rs_search);
   const { data, loading, error } = useCategorySubscriptionsByStatus(
     status,
     currentPage,
-    rs_search
+    id
   );
   // console.log(data);
 

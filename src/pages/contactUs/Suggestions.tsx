@@ -1,27 +1,20 @@
 import { useTranslation } from "react-i18next";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { CgAddR } from "react-icons/cg";
-import { useEffect, useState } from "react";
 import AccordionHeader2 from "../../components/Accordion/AccordionHeader2";
 import ContactUsTable from "./ContactUsTable";
 import RepliedTable from "./RepliedTable";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Suggestions() {
     const { t } = useTranslation();
-    const {rfp_search} = useParams();
-    // const [query, setQuery] = useState('');
-    // useEffect(()=>{
-    //     if (rfp_search) {
-    //         setQuery(rfp_search)
-    //     }
-    // },[])
-    // const [status, setStatus] = useState();
+    const location = useLocation();
+    const { id } = location.state || {};
     const breadcrumbLinks = [{ label: t('contact-us.contact-us'), path: '' }]
     return (
         <div>
             <div className="flex justify-between">
-                <Breadcrumb pageName={t('contact-us.suggestions')} to="/contact-us/suggestions" breadcrumbLinks={breadcrumbLinks} />
+                <Breadcrumb pageName={t('contact-us.suggestions')} breadcrumbLinks={breadcrumbLinks} />
                 <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
             </div>
             <AccordionHeader2
@@ -29,16 +22,12 @@ export default function Suggestions() {
                     t('contact-us.suggestions'),
                     t('contact-us.replied'),
                 ]}
-                // onTitleClick={(index) => {
-                //     const statusMap = ['processing', 'approved'];
-                //     setStatus(statusMap[index]);
-                // }}
                 children={[
                     <div>
-                        <ContactUsTable type="الاقتراحات" idPre={`RFP-`} query={rfp_search}/>
+                        <ContactUsTable type="الاقتراحات" idPre={`RFP-`} query={id}/>
                     </div>,
                     <div>
-                        <RepliedTable type="الاقتراحات" idPre={`RFP-`} query={rfp_search}/>
+                        <RepliedTable type="الاقتراحات" idPre={`RFP-`} query={id}/>
                     </div>
                 ]}
             />

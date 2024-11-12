@@ -1,12 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ReportType from '../../components/reports/ReportType';
 
 const ProductReport = () => {
-  const { rt_search } = useParams();
-  console.log(rt_search);
+  const location = useLocation();
+    const { id } = location.state || {};
   return (
     <div>
-      <ReportType reportType="product" query={rt_search}/>
+      <ReportType reportType="product" query={id}/>
     </div>
   );
 };

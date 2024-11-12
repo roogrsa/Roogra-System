@@ -161,29 +161,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/part/subscription/search/:rs_search',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={CategorySubscription}
-              hasPermission={storedPermissions[13]}
-            />
-          </Guard>
-        ),
-      },
-      {
         path: '/confirm/subscription',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={verifaction_requestByStatus}
-              hasPermission={storedPermissions[13]}
-            />
-          </Guard>
-        ),
-      },
-      {
-        path: '/confirm/subscription/search/:rd_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -321,17 +299,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'contact-us/inquiries/search/:rq1_search',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={Inquiries}
-              hasPermission={storedPermissions[15]}
-            />
-          </Guard>
-        ),
-      },
-      {
         path: 'contact-us/issues',
         element: (
           <Guard>
@@ -343,29 +310,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: 'contact-us/issues/search/:rq2_search',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={Issues}
-              hasPermission={storedPermissions[16]}
-            />
-          </Guard>
-        ),
-      },
-      {
         path: 'contact-us/suggestions',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={Suggestions}
-              hasPermission={storedPermissions[17]}
-            />
-          </Guard>
-        ),
-      },
-      {
-        path: 'contact-us/suggestions/search/:rfp_search',
         element: (
           <Guard>
             <ProtectedRoute
@@ -388,17 +333,6 @@ const router = createBrowserRouter([
       },
       {
         path: 'reports/product',
-        element: (
-          <Guard>
-            <ProtectedRoute
-              component={ProductReport}
-              hasPermission={storedPermissions[5]}
-            />
-          </Guard>
-        ),
-      },
-      {
-        path: 'reports/product/search/:rt_search',
         element: (
           <Guard>
             <ProtectedRoute
