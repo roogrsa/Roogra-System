@@ -21,7 +21,7 @@ export default function Suggestions() {
     return (
         <div>
             <div className="flex justify-between">
-                <Breadcrumb pageName={t('contact-us.suggestions')} breadcrumbLinks={breadcrumbLinks} />
+                <Breadcrumb pageName={t('contact-us.suggestions')} to="/contact-us/suggestions" breadcrumbLinks={breadcrumbLinks} />
                 <CgAddR className="text-3xl text-Input-TextGreen" role="button" />
             </div>
             <AccordionHeader2
