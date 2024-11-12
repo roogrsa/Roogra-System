@@ -49,8 +49,8 @@ const verifaction_requestByStatus = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteName, setDeleteName] = useState<string>('');
-  const {rd_search}=useParams()
-  
+  const { rd_search } = useParams();
+
   //
   const display = async () => {
     // setRefresh(true);
@@ -76,7 +76,7 @@ const verifaction_requestByStatus = () => {
   const { data, loading, error } = useVerificationRequestsByStatus(
     status,
     currentPage,
-    rd_search
+    rd_search,
     // refresh,
   );
 
@@ -205,7 +205,7 @@ const verifaction_requestByStatus = () => {
             },
             {
               key: 'verification_type_number',
-              content: item.verification_type_number,
+              content: item.verification_type_number.toString().slice(0, 12),
               className: 'flex justify-center text-sm',
             },
             {
