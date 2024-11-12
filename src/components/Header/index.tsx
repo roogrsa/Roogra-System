@@ -119,7 +119,7 @@ const Header = (props: {
                   ${language === 'ar' ? 'left-2' : 'right-2'} `}
             />
             <input
-              type="search"
+              type="text"
               placeholder={t(`header.search`)}
               onKeyDown={(event) => handleSearch(event)}
               className="px-4 py-1 rounded-3xl border-header-inputBorder text-black dark:bg-header-inputDark dark:text-white
