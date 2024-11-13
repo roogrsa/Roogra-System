@@ -12,6 +12,7 @@ interface UseFollowersResult {
   followers: Follower[];
   loading: boolean;
   error: string | null;
+  refreshFollowers: any;
 }
 
 const useFollowers = (userId: number): UseFollowersResult => {
@@ -19,29 +20,30 @@ const useFollowers = (userId: number): UseFollowersResult => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchFollowers = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axiosInstance.get<FollowersApiResponse>(
+        `/api/users/${userId}/followers`,
+      );
+      const { data } = response.data;
+      setFollowers(data);
+      // console.log(data);
+    } catch (err) {
+      setError('Failed to fetch followers');
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchFollowers = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await axiosInstance.get<FollowersApiResponse>(
-          `/api/users/${userId}/followers`,
-        );
-        const { data } = response.data;
-        setFollowers(data);
-        // console.log(data);
-      } catch (err) {
-        setError('Failed to fetch followers');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchFollowers();
   }, [userId]);
-
-  return { followers, loading, error };
+  const refreshFollowers = () => {
+    fetchFollowers();
+  };
+  return { followers, loading, error, refreshFollowers };
 };
 
 export default useFollowers;

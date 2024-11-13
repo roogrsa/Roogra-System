@@ -21,7 +21,7 @@ const useBanUser = () => {
         throw new Error(`Failed to ban user with ID: ${userId}`);
       }
 
-      console.log('User banned:', response.data);
+      // console.log('User banned:', response.data);
       return response.data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
