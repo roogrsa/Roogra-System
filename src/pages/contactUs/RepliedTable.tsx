@@ -10,6 +10,7 @@ interface ContactUsTableProps {
     type: string
     idPre: string;
     query?: string;
+    id?:string;
 }
 export default function RepliedTable({ type, idPre, query }: ContactUsTableProps) {
     console.log(query);

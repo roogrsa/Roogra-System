@@ -8,6 +8,9 @@ import UserInfo from './Info/UserInfo';
 import { useTranslation } from 'react-i18next';
 import CategorySubscriptionUserid from './Category-subscription/UserCategorySubscription';
 import VerifactionRequestByUserid from './verifaction_requests/Userverifaction_requests';
+import UserontactUs from './contactUs/UserontactUs';
+import { useParams } from 'react-router-dom';
+import AccordionContacUs from './contactUs/AccordionContacUs';
 
 //
 interface User {
@@ -46,6 +49,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
   error,
 }) => {
   const { t } = useTranslation();
+  const { id } = useParams();
 
   return (
     <div className="">
@@ -80,7 +84,9 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title={t('profile.contactUs')}>
-        <div className="text-gray-700"></div>
+        <AccordionContacUs idPre="RQ1-" id={id} pageName="contact-us.inquiries" type="الاستفسار" />
+        <AccordionContacUs idPre="RQ2-" id={id} pageName="contact-us.issues" type="البلاغات" />
+        <AccordionContacUs idPre="RFP-" id={id} pageName="contact-us.suggestions" type="الاقتراحات" />
       </Accordion>
 
       {/*  */}

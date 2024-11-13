@@ -15,6 +15,7 @@ interface ApiResponse {
 // Custom Hook for fetching user reports
 export const useUserReports = () => {
   const { id } = useParams<{ id: string }>();
+console.log(id, 'profile');
 
   const [data, setData] = useState<{
     chats: ReportData[];

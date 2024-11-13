@@ -9,6 +9,7 @@ interface ContactUsTableProps {
   type: string;
   idPre: string;
   query?: string;
+  id?:string;
 }
 export default function ContactUsTable({ type, idPre, query }: ContactUsTableProps) {
   const { t } = useTranslation();
