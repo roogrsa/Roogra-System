@@ -10,7 +10,6 @@ const useBanUser = () => {
     setLoading(true);
     setError(null);
     setIsSuccess(false);
-
     try {
       const response = await axiosInstance.patch(`/api/users/${userId}`, {
         key: reason,

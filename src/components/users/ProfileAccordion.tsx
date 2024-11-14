@@ -117,7 +117,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       <Accordion title={t('profile.banList')}>
         <BanProfileList />
         <UserBanProdList />
-        <UserChatBanList />
+        {/* <UserChatBanList /> */}
       </Accordion>
     </div>
   );

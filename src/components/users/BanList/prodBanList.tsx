@@ -1,114 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useBanProduct from '../../../hooks/products/useBanProduct';
 import useHandleAction from '../../../hooks/useHandleAction';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
-import useBannedProducts from '../../../hooks/Ban/ProdBanList';
+import useBannedUserProducts from '../../../hooks/users/UserBanProduct';
 
 const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
+const NotBannedIconSrc = '/unblock.svg';
 
 const UserBanProdList: React.FC = () => {
+  const { id } = useParams();
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState('');
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
-  const {
-    banProduct,
-    loadingPrdBan: unbanLoading,
-    banPrdError: unbanError,
-  } = useBanProduct();
+  const { banProduct, isSuccess } = useBanProduct();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
-  const {
-    bannedProds,
-    loading: bannedProdsLoading,
-    error: bannedProdsError,
-    refreshBannedProds,
-  } = useBannedProducts();
+  const { bannedUserProds, refreshBannedUserProds } = useBannedUserProducts(id);
+  useEffect(() => {
+    if (isSuccess) {
+      refreshBannedUserProds();
+    }
+  }, [isSuccess, refreshBannedUserProds]);
   const handleClickName = (prodId: number) => {
     navigate(`/products/${prodId}`);
   };
 
   // if (bannedProdsLoading) return <p>Loading...</p>;
   // if (bannedProdsError) return <p>Error: {bannedProdsError}</p>;
-  const handleActionCallback = () => {
-    refreshBannedProds();
-  };
-  const userlogs = bannedProds.map((prod) => ({
-    id: prod.id,
-    columns: [
-      {
-        key: 'name',
-        content:
-          prod.product_name.split(' ').slice(0, 2).join(' ').slice(0, 10) +
-            '..' || 'N/A',
-        className: 'text-center',
-      },
-      {
-        key: 'date_of_ban',
-        content: new Date(prod.date_of_ban).toLocaleDateString(),
-        className: 'text-center',
-      },
-      {
-        key: 'admin_name',
-        content: prod.admin_name || 'N/A',
-        className: 'text-center',
-      },
-      {
-        key: 'ban_reason',
-        content: prod.ban_reason || 'N/A',
-        className: 'text-center',
-      },
-      {
-        key: 'Edit',
-        content: (
-          <div className="bg-EditIconBg rounded-md">
-            <img
-              src={EditIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() => handleClickName(prod.id)}
-            />
-          </div>
-        ),
-        className: 'flex justify-center',
-      },
-      {
-        key: 'is_banned',
-        content: (
-          <div className="bg-BlockIconBg rounded-md">
-            <img
-              src={BannedIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() =>
-                !actionLoading &&
-                prod?.id &&
-                handleAction(
-                  prod.id,
-                  prod.is_banned === 1,
-                  'ban',
-                  banProduct,
-                  {
-                    confirmButtonClass: 'bg-BlockIconBg ',
-                    cancelButtonClass: '',
-                  },
-                  handleActionCallback,
-                )
-              }
-            />
-          </div>
-        ),
-        className: 'flex justify-center',
-      },
-    ],
-  }));
-
+  // const handleActionCallback = () => {
+  // refreshBannedUserProds();
+  // };
   const headers = [
     {
       key: 'name',
@@ -176,6 +107,78 @@ const UserBanProdList: React.FC = () => {
       className: 'text-center',
     },
   ];
+
+  const userlogs = bannedUserProds.map((prod) => ({
+    id: prod.id,
+    columns: [
+      {
+        key: 'name',
+        content: prod.product_name
+          ? prod.product_name.split(' ').slice(0, 2).join(' ').slice(0, 10) +
+            '..'
+          : 'N/A',
+        className: 'text-center',
+      },
+      {
+        key: 'date_of_ban',
+        content: prod.created_at
+          ? new Date(prod.created_at).toLocaleDateString()
+          : 'null',
+        className: 'text-center',
+      },
+      {
+        key: 'admin_name',
+        content: prod.admin
+          ? prod.admin.split(' ').slice(0, 2).join(' ').slice(0, 10)
+          : 'N/A',
+        className: 'text-center',
+      },
+      {
+        key: 'ban_reason',
+        content: prod.reason || 'N/A',
+        className: 'text-center',
+      },
+      {
+        key: 'Edit',
+        content: (
+          <div className="bg-EditIconBg rounded-md">
+            <img
+              src={EditIconSrc}
+              className="w-6 h-6 text-center p-1 cursor-pointer"
+              onClick={() => handleClickName(prod.product_id)}
+            />
+          </div>
+        ),
+        className: 'flex justify-center',
+      },
+      {
+        key: 'is_banned',
+        content: (
+          <div className="bg-BlockIconBg rounded-md">
+            <img
+              src={prod.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
+              className="w-6 h-6 text-center p-1 cursor-pointer"
+              onClick={() =>
+                !actionLoading &&
+                handleAction(
+                  prod.product_id,
+                  prod.is_banned === 1,
+                  'ban',
+                  banProduct,
+                  {
+                    confirmButtonClass: 'bg-BlockIconBg ',
+                    cancelButtonClass: '',
+                  },
+                )
+              }
+            />
+          </div>
+        ),
+        className: 'flex justify-center',
+      },
+    ],
+  }));
+
   return (
     <>
       <Breadcrumb
@@ -199,13 +202,12 @@ const UserBanProdList: React.FC = () => {
           <div className="flex gap-5" key="footer">
             <span>({userlogs.length || 0})</span>
             {/* <span>
-              <img src="/redRemove.svg" alt="Remove" />
-            </span> */}
+            <img src="/redRemove.svg" alt="Remove" />
+          </span> */}
           </div>,
         ]}
       />
     </>
   );
 };
-
 export default UserBanProdList;
