@@ -14,7 +14,6 @@ import { User } from '../../../types/user';
 import { useTranslation } from 'react-i18next';
 import useBanUser from '../../../hooks/users/useBanUser';
 import useFollowers from '../../../hooks/users/useUserFollowers';
-import NotFoundSection from '../../Notfound/NotfoundSection';
 import useDeleteFollowers from '../../../hooks/users/DelFollowers';
 import useDeleteRates from '../../../hooks/users/DelRates';
 
@@ -26,7 +25,6 @@ const BannedIconSrc = '/block.svg';
 interface ProfileAccordionProps {
   user: User;
 }
-
 const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
   const { t } = useTranslation();
   const [selectedRatesIds, setSelectedRateIds] = useState<number[]>([]);
@@ -39,11 +37,8 @@ const UserInfo: React.FC<ProfileAccordionProps> = ({ user }) => {
   const { followers, refreshFollowers } = useFollowers(user.id);
   const { data: rates, refreshRates } = useUserRates(user.id);
   const { deleteFollowers, isSuccess: followersDeleted } = useDeleteFollowers();
-  const {
-    deleteRates,
+  const { deleteRates, isSuccess: ratesDeleted } = useDeleteRates();
 
-    isSuccess: ratesDeleted,
-  } = useDeleteRates();
   useEffect(() => {
     if (followersDeleted || BanisSuccess) {
       refreshFollowers();

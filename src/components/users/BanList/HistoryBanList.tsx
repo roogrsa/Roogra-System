@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { useNavigate } from 'react-router-dom';
-import useHandleAction from '../../hooks/useHandleAction';
-import NotFoundSection from '../../components/Notfound/NotfoundSection';
-import MainTable from '../../components/lastnews/MainTable';
-import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import useBanUser from '../../hooks/users/useBanUser';
-import useBannedUsers from '../../hooks/Ban/UserBanList';
+import useBanUser from '../../../hooks/users/useBanUser';
+import useHandleAction from '../../../hooks/useHandleAction';
+import useBannedUsers from '../../../hooks/Ban/UserBanList';
+import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
+import AccordionHeader2 from '../../Accordion/AccordionHeader2';
+import NotFoundSection from '../../Notfound/NotfoundSection';
+import MainTable from '../../lastnews/MainTable';
 
 const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
@@ -17,7 +16,7 @@ const BanProfileList: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState('');
-  const breadcrumbLinks = [{ label: t('BanList.users.label'), path: '/' }];
+  const breadcrumbLinks = [{ label: '', path: '/' }];
 
   const { banUser, loading: unbanLoading, error: unbanError } = useBanUser();
   const { handleAction, loading: actionLoading } = useHandleAction();

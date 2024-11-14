@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { useNavigate } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
-import NotFoundSection from '../../components/Notfound/NotfoundSection';
-import MainTable from '../../components/lastnews/MainTable';
-import useBannedChats from '../../hooks/Ban/BanChatList';
-import useUnBanChat from '../../hooks/Ban/UnBanChat';
-import useHandleAction from '../../hooks/useHandleAction';
+import useBannedChats from '../../../hooks/Ban/BanChatList';
+import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
+import AccordionHeader2 from '../../Accordion/AccordionHeader2';
+import NotFoundSection from '../../Notfound/NotfoundSection';
+import MainTable from '../../lastnews/MainTable';
+import useUnBanChat from '../../../hooks/Ban/UnBanChat';
+import useHandleAction from '../../../hooks/useHandleAction';
 
 const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
 
-const BanListType: React.FC = () => {
+const UserChatBanList: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState('');
-  const breadcrumbLinks = [{ label: t('BanList.chats.label'), path: '/' }];
+  const breadcrumbLinks = [{ label: '', path: '/' }];
 
   const {
     bannedChats,
@@ -204,4 +203,4 @@ const BanListType: React.FC = () => {
   );
 };
 
-export default BanListType;
+export default UserChatBanList;

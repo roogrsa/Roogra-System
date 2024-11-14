@@ -8,6 +8,9 @@ import UserInfo from './Info/UserInfo';
 import { useTranslation } from 'react-i18next';
 import CategorySubscriptionUserid from './Category-subscription/UserCategorySubscription';
 import VerifactionRequestByUserid from './verifaction_requests/Userverifaction_requests';
+import UserBanProdList from './BanList/prodBanList';
+import UserChatBanList from './BanList/ChatBanList';
+import BanProfileList from './BanList/HistoryBanList';
 
 //
 interface User {
@@ -91,7 +94,9 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/* */}
       <Accordion title={t('profile.banList')}>
-        <div className="text-gray-700"></div>
+        <BanProfileList />
+        <UserBanProdList />
+        <UserChatBanList />
       </Accordion>
     </div>
   );
