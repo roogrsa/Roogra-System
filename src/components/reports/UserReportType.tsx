@@ -35,7 +35,11 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   const handleEditClick = (productId: number) => {
-    navigate(`/products/${productId}`);
+    if (reportType === 'Userproduct') {
+      navigate(`/products/${productId}`);
+    } else if (reportType === 'Userchat') {
+      navigate(`/reports/chat/${productId}`);
+    }
   };
   const headers = [
     {
@@ -50,15 +54,15 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
     },
     reportType === 'Userproduct'
       ? {
-          key: 'product',
-          content: t('Reports.headers.product'),
-          className: 'text-center ',
-        }
+        key: 'product',
+        content: t('Reports.headers.product'),
+        className: 'text-center ',
+      }
       : {
-          key: 'speakerTo',
-          content: t('Reports.headers.speakerTo'),
-          className: 'text-center ',
-        },
+        key: 'speakerTo',
+        content: t('Reports.headers.speakerTo'),
+        className: 'text-center ',
+      },
     {
       key: 'created_at',
       content: t('Reports.headers.created_at'),
@@ -73,59 +77,59 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
 
   const logs = Array.isArray(ReportData)
     ? ReportData.map((item) => {
-        const createdAtDate = new Date(item.created_at);
-        const datePart = createdAtDate.toLocaleDateString();
+      const createdAtDate = new Date(item.created_at);
+      const datePart = createdAtDate.toLocaleDateString();
 
-        return {
-          id: item.report_id,
-          type: 2,
-          columns: [
-            {
-              key: 'id',
-              content:
-                reportType === 'Userproduct'
-                  ? 'RT-' + item.report_id
-                  : 'RC-' + item.chat_report_id,
+      return {
+        id: item.report_id,
+        type: 2,
+        columns: [
+          {
+            key: 'id',
+            content:
+              reportType === 'Userproduct'
+                ? 'RT-' + item.report_id
+                : 'RC-' + item.chat_report_id,
 
-              className: 'flex justify-center',
-            },
-            {
-              key: 'name',
-              content: reportType === 'Userproduct' ? item.name : item.reported,
+            className: 'flex justify-center',
+          },
+          {
+            key: 'name',
+            content: reportType === 'Userproduct' ? item.name : item.reported,
+            className: 'flex justify-center ',
+          },
+          reportType === 'Userproduct'
+            ? {
+              key: 'product',
+              content: item.product_name,
+              className: 'flex justify-center ',
+            }
+            : {
+              key: 'reported_customer',
+              content: item.reporter,
               className: 'flex justify-center ',
             },
-            reportType === 'Userproduct'
-              ? {
-                  key: 'product',
-                  content: item.product_name,
-                  className: 'flex justify-center ',
-                }
-              : {
-                  key: 'reported_customer',
-                  content: item.reporter,
-                  className: 'flex justify-center ',
-                },
-            {
-              key: 'created_at',
-              content: datePart,
-              className: 'flex justify-center ',
-            },
-            {
-              key: 'actions',
-              content: (
-                <div className="bg-EditIconBg rounded-md ">
-                  <img
-                    src={EditIconSrc}
-                    className="w-6 h-6 text-center p-1 cursor-pointer"
-                    onClick={() => handleEditClick(item.product_id)}
-                  />
-                </div>
-              ),
-              className: 'flex justify-center ',
-            },
-          ],
-        };
-      })
+          {
+            key: 'created_at',
+            content: datePart,
+            className: 'flex justify-center ',
+          },
+          {
+            key: 'actions',
+            content: (
+              <div className="bg-EditIconBg rounded-md ">
+                <img
+                  src={EditIconSrc}
+                  className="w-6 h-6 text-center p-1 cursor-pointer"
+                  onClick={() => handleEditClick(reportType === 'Userproduct'? item.product_id : item.chat_report_id)}
+                />
+              </div>
+            ),
+            className: 'flex justify-center ',
+          },
+        ],
+      };
+    })
     : [];
 
   return (

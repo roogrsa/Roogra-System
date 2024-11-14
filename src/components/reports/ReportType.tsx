@@ -118,7 +118,7 @@ const ReportType: React.FC<ReportType> = ({ reportType, query }) => {
                   content: (
                     <div className="bg-EditIconBg rounded-md ">
                       <Link
-                        to={`/reports/chat/${item.customer_id}`}
+                        to={`/reports/chats/${item.customer_id}`}
                         state={{ reportId: item.chat_report_id }}
                       >
                         <img

@@ -3,13 +3,14 @@ import { BiErrorCircle } from 'react-icons/bi';
 import { IoClose } from 'react-icons/io5';
 import axiosInstance from '../../axiosConfig/instanc';
 import { toast, ToastContainer } from 'react-toastify';
+import { ChatValue } from '../../types/ChatValue';
 interface DeletePopupProps {
   deleteName: string;
   deleteId: number;
   url: any;
   isModalOpen: boolean;
   setIsModalOpen: (isModalOpen: boolean) => void;
-  display: () => Promise<void>;
+  display: () => ChatValue[] | ChatValue | null | Promise<void>;
 }
 const DeletePopup = ({
   deleteName,

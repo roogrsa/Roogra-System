@@ -11,6 +11,13 @@ import VerifactionRequestByUserid from './verifaction_requests/Userverifaction_r
 import UserBanProdList from './BanList/prodBanList';
 import UserChatBanList from './BanList/ChatBanList';
 import BanProfileList from './BanList/HistoryBanList';
+import UserontactUs from './contactUs/UserontactUs';
+import { useParams } from 'react-router-dom';
+import AccordionContacUs from './contactUs/AccordionContacUs';
+import Breadcrumb from '../Breadcrumbs/Breadcrumb';
+import Chat from '../reports/Chat';
+import useDisplayUserChats from '../../hooks/chat/useDisplayUserChats';
+import NotFoundSection from '../Notfound/NotfoundSection';
 
 //
 interface User {
@@ -48,8 +55,12 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
   loading,
   error,
 }) => {
+  const { id } = useParams();
+  const chats = useDisplayUserChats(id);
   const { t } = useTranslation();
-
+  const displayChats = () => {
+    return chats;
+  };
   return (
     <div className="">
       {/*  */}
@@ -78,12 +89,47 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title={t('profile.chats')}>
-        <div className="text-gray-700"></div>
+        {chats.length == 0 ? (
+          <NotFoundSection data={chats} />
+        ) : (
+          <>
+            {/* <Breadcrumb pageName={t('Reports.label.userChat')} breadcrumbLinks={[]} /> */}
+            <div
+              className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md`}
+            >
+              {chats.map((chat) => (
+                <Chat
+                  chat={chat}
+                  key={chat.id}
+                  displayChats={displayChats}
+                  length={chats.length}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </Accordion>
 
       {/*  */}
       <Accordion title={t('profile.contactUs')}>
-        <div className="text-gray-700"></div>
+        <AccordionContacUs
+          idPre="RQ1-"
+          id={id}
+          pageName="contact-us.inquiries"
+          type="الاستفسار"
+        />
+        <AccordionContacUs
+          idPre="RQ2-"
+          id={id}
+          pageName="contact-us.issues"
+          type="البلاغات"
+        />
+        <AccordionContacUs
+          idPre="RFP-"
+          id={id}
+          pageName="contact-us.suggestions"
+          type="الاقتراحات"
+        />
       </Accordion>
 
       {/*  */}
