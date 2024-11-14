@@ -3,7 +3,6 @@ import { selectLanguage } from '../../store/slices/language';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 
 interface ChatCardProps {
     id: number;
@@ -25,7 +24,6 @@ interface MessagesValue {
 
 export default function ChatCard({ id ,userId}: ChatCardProps) {
     const { t } = useTranslation();
-    // const { userId } = useParams<{ userId: string }>();
     const language = useSelector(selectLanguage);
     const [messages, setMessages] = useState<MessagesValue[]>([]);
 

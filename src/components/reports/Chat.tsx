@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useState } from "react";
 import ChatCard from "./ChatCard";
 import { TfiAngleDown, TfiAngleUp } from "react-icons/tfi";
@@ -16,12 +16,10 @@ interface ChatProps {
     displayChats: () => ChatValue[] | ChatValue | null | Promise<void>;
 }
 export default function Chat({ chat, displayChats ,length, userId}: ChatProps) {
-    // const [chats, setChats] = useState<ChatValue[]>([]);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
-    // const { userId } = useParams();
     const location = useLocation();
     const reportId = location.state?.reportId;
     const language = useSelector(selectLanguage);
