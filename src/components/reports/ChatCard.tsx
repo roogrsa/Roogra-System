@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 interface ChatCardProps {
     id: number;
+    userId?:string;
 }
 interface MessagesValue {
     customer_id: number;
@@ -22,9 +23,9 @@ interface MessagesValue {
     length: number;
 }
 
-export default function ChatCard({ id }: ChatCardProps) {
+export default function ChatCard({ id ,userId}: ChatCardProps) {
     const { t } = useTranslation();
-    const { userId } = useParams<{ userId: string }>();
+    // const { userId } = useParams<{ userId: string }>();
     const language = useSelector(selectLanguage);
     const [messages, setMessages] = useState<MessagesValue[]>([]);
 
