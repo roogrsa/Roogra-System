@@ -1,7 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom"
 import { useState } from "react";
-import Breadcrumb from "../Breadcrumbs/Breadcrumb";
-import { useTranslation } from "react-i18next";
 import ChatCard from "./ChatCard";
 import { TfiAngleDown, TfiAngleUp } from "react-icons/tfi";
 import { useSelector } from "react-redux";
@@ -11,24 +9,21 @@ import DeletePopup from "../popups/DeletePopup";
 import { ToastContainer } from "react-toastify";
 import BanUnbanPopup from "../popups/BanUnbanPopup";
 import { ChatValue } from "../../types/ChatValue";
-import useDisplayUserChats from "../../hooks/chat/useDisplayUserChats";
 interface ChatProps {
     chat: ChatValue ;
+    length?: number |undefined;
     displayChats: () => ChatValue[] | ChatValue | null | Promise<void>;
 }
-export default function Chat({ chat, displayChats }: ChatProps) {
+export default function Chat({ chat, displayChats ,length}: ChatProps) {
     // const [chats, setChats] = useState<ChatValue[]>([]);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
     const { userId } = useParams();
-    const chats = useDisplayUserChats(userId)
-    
     const location = useLocation();
     const reportId = location.state?.reportId;
     const language = useSelector(selectLanguage);
-    // console.log(reportId);
     const openModal = (chat: ChatValue) => {
         setٍelectedChat(chat);
         setIsModalOpen(true);
@@ -43,14 +38,9 @@ export default function Chat({ chat, displayChats }: ChatProps) {
             [chatId]: !prevState[chatId]
         }));
     };
-    console.log(displayChats());
-    
     return (
         <>
-            {/* <div className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md`}></div> */}
-                {/* {chats.map((chat) => (
-                    <div key={chat.id}> */}
-                <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${chats.length > 1 && 'mb-5'} p-3 flex flex-col`}>
+                <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${length&&length > 1 ? 'mb-5':''} p-3 flex flex-col`}>
                     <div className="flex justify-between">
                         <div className="flex items-center" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                             <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light"></div>
@@ -106,9 +96,6 @@ export default function Chat({ chat, displayChats }: ChatProps) {
                         setIsModalOpen={setIsBanModalOpen}
                     />
                 )}
-            {/* </div> */}
-            {/* ))}
-            </div> */}
             <ToastContainer position="top-right" autoClose={5000} />
         </>
     );

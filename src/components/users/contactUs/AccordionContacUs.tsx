@@ -5,28 +5,28 @@ import AccordionHeader2 from "../../Accordion/AccordionHeader2";
 import Breadcrumb from "../../Breadcrumbs/Breadcrumb";
 
 interface AccordionContacUsProps {
-id?: string;
-idPre: string;
-type: string;
-pageName: string;
+    id?: string;
+    idPre: string;
+    type: string;
+    pageName: string;
 }
 
-export default function AccordionContacUs({pageName, idPre ,type , id}: AccordionContacUsProps) {
+export default function AccordionContacUs({ pageName, idPre, type, id }: AccordionContacUsProps) {
     const { t } = useTranslation();
     return (
         <>
-            <Breadcrumb breadcrumbLinks={[]} pageName={t(pageName)}/>
-         <AccordionHeader2
+            <Breadcrumb breadcrumbLinks={[]} pageName={t(pageName)} />
+            <AccordionHeader2
                 titles={[
                     t(pageName),
                     t('contact-us.replied'),
                 ]}
                 children={[
                     <div>
-                        <ContactUsTable type={type} idPre={idPre} id={id}/>
+                        <ContactUsTable type={type} idPre={idPre} id={id} />
                     </div>,
                     <div>
-                        <RepliedTable type={type} idPre={idPre} id={id}/>
+                        <RepliedTable type={type} idPre={idPre} id={id} />
                     </div>
                 ]}
             />

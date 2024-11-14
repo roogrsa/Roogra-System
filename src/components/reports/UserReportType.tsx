@@ -34,11 +34,11 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
   }, [data, reportType]);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
-  const handleEditClick = (id: number) => {
+  const handleEditClick = (productId: number) => {
     if (reportType === 'Userproduct') {
-      navigate(`/products/${id}`);
+      navigate(`/products/${productId}`);
     } else if (reportType === 'Userchat') {
-      navigate(`/reports/chats/${id}`);
+      navigate(`/reports/chat/${productId}`);
     }
   };
   const headers = [
@@ -121,7 +121,7 @@ const UserReportType: React.FC<ReportType> = ({ reportType }) => {
                 <img
                   src={EditIconSrc}
                   className="w-6 h-6 text-center p-1 cursor-pointer"
-                  onClick={() => handleEditClick(reportType === 'Userproduct'? item.product_id : item.customer_id)}
+                  onClick={() => handleEditClick(reportType === 'Userproduct'? item.product_id : item.chat_report_id)}
                 />
               </div>
             ),
