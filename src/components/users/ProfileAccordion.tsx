@@ -92,7 +92,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
         {/* <Breadcrumb pageName={t('Reports.label.userChat')} breadcrumbLinks={[]} /> */}
         <div className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md`}>
         {chats.map((chat)=>(
-            <Chat chat={chat} key={chat.id} displayChats={displayChats} length={chats.length}/>
+            <Chat chat={chat} key={chat.id} displayChats={displayChats} length={chats.length} userId={id}/>
         ))}
         </div>
         </>

@@ -12,15 +12,16 @@ import { ChatValue } from "../../types/ChatValue";
 interface ChatProps {
     chat: ChatValue ;
     length?: number |undefined;
+    userId?:string;
     displayChats: () => ChatValue[] | ChatValue | null | Promise<void>;
 }
-export default function Chat({ chat, displayChats ,length}: ChatProps) {
+export default function Chat({ chat, displayChats ,length, userId}: ChatProps) {
     // const [chats, setChats] = useState<ChatValue[]>([]);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
-    const { userId } = useParams();
+    // const { userId } = useParams();
     const location = useLocation();
     const reportId = location.state?.reportId;
     const language = useSelector(selectLanguage);
@@ -67,7 +68,7 @@ export default function Chat({ chat, displayChats ,length}: ChatProps) {
                     </div>
                 </div>
                 {showMassages[chat?.id] && <>
-                    <ChatCard id={chat?.id} />
+                    <ChatCard id={chat?.id} userId={userId}/>
                     <div className="flex justify-center p-4 bg-[#F7F5F9] dark:bg-[#2E2D3D]">
                         <div className="flex gap-10">
                             <RiDeleteBin6Line className="text-2xl text-Input-TextRed" role="button"

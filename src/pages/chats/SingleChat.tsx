@@ -31,7 +31,7 @@ export default function SingleChat() {
         <>
             <Breadcrumb pageName={t('Reports.label.userChat')} breadcrumbLinks={breadcrumbLinks} />
             <div className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md`}>
-                <Chat chatData={chat} displayChats={displayChats} />
+                <Chat chatData={chat} displayChats={displayChats} userId={chatId}/>
             </div>
         </>
     )
