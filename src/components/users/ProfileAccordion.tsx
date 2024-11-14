@@ -11,37 +11,12 @@ import VerifactionRequestByUserid from './verifaction_requests/Userverifaction_r
 import UserBanProdList from './BanList/prodBanList';
 import UserChatBanList from './BanList/ChatBanList';
 import BanProfileList from './BanList/HistoryBanList';
-import UserontactUs from './contactUs/UserontactUs';
 import { useParams } from 'react-router-dom';
 import AccordionContacUs from './contactUs/AccordionContacUs';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Chat from '../reports/Chat';
 import useDisplayUserChats from '../../hooks/chat/useDisplayUserChats';
 import NotFoundSection from '../Notfound/NotfoundSection';
-
-//
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  telephone: string;
-  type: 'advertiser' | 'customer';
-  isActivated: {
-    account: boolean;
-    email: boolean;
-  };
-  status: number; // Status of the account (e.g., 1 = Active)
-  isBanned: boolean;
-  ban_reason: string;
-  regDate: string; // Registration date in "YYYY-MM-DD HH:MM:SS" format
-  address: string;
-  countery_id: number | null;
-  bio: string;
-  rating: number;
-  image: string;
-  alias: string;
-}
+import { User } from '../../types/user';
 
 interface ProfileAccordionProps {
   user: User;
@@ -95,7 +70,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
           <>
             {/* <Breadcrumb pageName={t('Reports.label.userChat')} breadcrumbLinks={[]} /> */}
             <div
-              className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md`}
+              className={`bg-secondaryBG dark:bg-secondaryBG-dark py-5 my-5 rounded-md`}
             >
               {chats.map((chat) => (
                 <Chat
