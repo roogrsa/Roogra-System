@@ -29,22 +29,15 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
 
   const {
     products: logsUserProducts,
-    loading: productsLoading,
-    error: productsError,
+
     refreshProductsUser,
   } = useUserProducts(user.id);
-  const {
-    deleteProducts,
-    isLoading: deleting,
-    error: deleteError,
-    isSuccess,
-  } = useDeleteProducts();
+  const { deleteProducts, isSuccess } = useDeleteProducts();
   useEffect(() => {
     if (isSuccess) {
       refreshProductsUser();
     }
   }, [isSuccess, refreshProductsUser]);
-  // Handle ban/unban action
   const handleBan = (productId: number, isBanned: boolean) => {
     handleAction(
       productId,

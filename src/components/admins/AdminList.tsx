@@ -9,6 +9,9 @@ import NotFoundSection from '../Notfound/NotfoundSection';
 import useAdminsByType from '../../hooks/admins/AbminType';
 import useHandleAction from '../../hooks/useHandleAction';
 import useBanAdmin from '../../hooks/admins/useBanAdmin';
+import useDeleteAdmins from '../../hooks/admins/DelAdmins';
+import { toast, ToastContainer } from 'react-toastify';
+
 //
 const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
@@ -16,10 +19,10 @@ const CheckboxIconSrc = '/checkbox.svg';
 const EditIconSrc = '/Edit.svg';
 const AdminsList: React.FC = () => {
   const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(0);
+  // const [currentPage, setCurrentPage] = useState(0);
   const [adminsCount, setAdminsCount] = useState(0);
   const [adminType, setAdminType] = useState('observer');
-  const { banAdmin, loading: banLoading, error: banError } = useBanAdmin();
+  const { banAdmin } = useBanAdmin();
   const { handleAction, loading: actionLoading } = useHandleAction();
   const [selectedAdminIds, setSelectedAdminIds] = useState<number[]>([]);
 
@@ -29,26 +32,16 @@ const AdminsList: React.FC = () => {
     supervisor: 3,
     delegates: 1,
   };
-  const {
-    admins: observers,
-    loading: observerLoading,
-    error: observerError,
-    refreshAdminsByType: refreshObservers,
-  } = useAdminsByType(roleTypeMap['observer']);
+  const { admins: observers, refreshAdminsByType: refreshObservers } =
+    useAdminsByType(roleTypeMap['observer']);
 
-  const {
-    admins: supervisors,
-    loading: supervisorLoading,
-    error: supervisorError,
-    refreshAdminsByType: refreshSupervisors,
-  } = useAdminsByType(roleTypeMap['supervisor']);
+  const { deleteAdmins, isSuccess: AdminDeleted } = useDeleteAdmins();
 
-  const {
-    admins: delegates,
-    loading: delegateLoading,
-    error: delegateError,
-    refreshAdminsByType: refreshDelegates,
-  } = useAdminsByType(roleTypeMap['delegates']);
+  const { admins: supervisors, refreshAdminsByType: refreshSupervisors } =
+    useAdminsByType(roleTypeMap['supervisor']);
+
+  const { admins: delegates, refreshAdminsByType: refreshDelegates } =
+    useAdminsByType(roleTypeMap['delegates']);
 
   useEffect(() => {
     const fetchAdminsCount = async () => {
@@ -63,11 +56,34 @@ const AdminsList: React.FC = () => {
     };
     fetchAdminsCount();
   }, [adminType]);
-
   useEffect(() => {
     const refreshFunction = getRefreshFunction();
     refreshFunction();
   }, [adminType]);
+  useEffect(() => {
+    if (AdminDeleted) {
+      refreshSupervisors();
+      refreshDelegates();
+      refreshObservers();
+    }
+  }, [AdminDeleted, refreshSupervisors, refreshDelegates, refreshObservers]);
+
+  const handleAdminesSelection = (adminId: number) => {
+    setSelectedAdminIds((prev) =>
+      prev.includes(adminId)
+        ? prev.filter((id) => id !== adminId)
+        : [...prev, adminId],
+    );
+  };
+
+  const confirmDeletionAdmins = () => {
+    if (selectedAdminIds.length > 0) {
+      deleteAdmins(selectedAdminIds); // Only pass selectedAdminIds
+      setSelectedAdminIds([]);
+    } else {
+      toast.error('Please select at least one admin to delete.');
+    }
+  };
 
   const handleClickName = (adminId: number) => {
     navigate(`/profile/${adminId}`);
@@ -84,28 +100,7 @@ const AdminsList: React.FC = () => {
         return () => {};
     }
   };
-  // const {
-  //   deleteAdmins,
-  //   isLoading: deleting,
-  //   error: deleteError,
-  //   isSuccess,
-  // } = useDeleteAdmins();
-  const handleRemoveClick = (productId: number) => {
-    setSelectedAdminIds((prev) =>
-      prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId],
-    );
-  };
-  //   const confirmDeletion = () => {
-  //     deleteAdmins(selectedAdminIds);
-  //     setSelectedAdminIds([]);
-  // };
-  //  useEffect(() => {
-  //   if (isSuccess) {
-  //     refreshAdmins();
-  //   }
-  // }, [isSuccess, refreshAdmins]);
+
   const mapAdminLogs = (admins: any) =>
     admins.map((admin: any) => ({
       id: admin.id,
@@ -219,13 +214,15 @@ const AdminsList: React.FC = () => {
             <img
               src={CheckboxIconSrc}
               alt="Remove"
-              onClick={() => handleRemoveClick(admin.id)}
               className={`w-5 h-5 text-center cursor-pointer 
               ${
                 selectedAdminIds.includes(admin.id)
                   ? 'bg-red-600 rounded-full p-1'
                   : ''
               }`}
+              onClick={() => {
+                handleAdminesSelection(admin.id);
+              }}
             />
           ),
           className: 'flex justify-center',
@@ -284,7 +281,7 @@ const AdminsList: React.FC = () => {
         <img
           src="/redRemove.svg"
           alt="Remove"
-          // onClick={confirmDeletion}
+          onClick={confirmDeletionAdmins}
           className="cursor-pointer"
         />
       ),
@@ -335,6 +332,7 @@ const AdminsList: React.FC = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       /> */}
+      <ToastContainer position="top-left" autoClose={5000} />
     </div>
   );
 };
