@@ -8,15 +8,12 @@ import UserInfo from './Info/UserInfo';
 import { useTranslation } from 'react-i18next';
 import CategorySubscriptionUserid from './Category-subscription/UserCategorySubscription';
 import VerifactionRequestByUserid from './verifaction_requests/Userverifaction_requests';
-import UserontactUs from './contactUs/UserontactUs';
 import { useParams } from 'react-router-dom';
 import AccordionContacUs from './contactUs/AccordionContacUs';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 import Chat from '../reports/Chat';
 import useDisplayUserChats from '../../hooks/chat/useDisplayUserChats';
 import NotFoundSection from '../Notfound/NotfoundSection';
 
-//
 interface User {
   id: number;
   name: string;
@@ -89,7 +86,6 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
       {chats.length==0?
         <NotFoundSection data={chats} />:
         <>
-        {/* <Breadcrumb pageName={t('Reports.label.userChat')} breadcrumbLinks={[]} /> */}
         <div className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md mt-4`}>
         {chats.map((chat)=>(
             <Chat chat={chat} key={chat.id} displayChats={displayChats} length={chats.length} userId={id}/>
