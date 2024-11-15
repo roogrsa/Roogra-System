@@ -37,7 +37,7 @@ const useUsers = (page: number = 0 , userName:string='') => {
   };
   useEffect(() => {
     fetchUsers();
-  }, [page]);
+  }, [page, userName]);
   const refreshUsers = () => {
     fetchUsers();
   };

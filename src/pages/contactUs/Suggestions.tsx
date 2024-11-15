@@ -24,10 +24,10 @@ export default function Suggestions() {
                 ]}
                 children={[
                     <div>
-                        <ContactUsTable type="الاقتراحات" idPre={`RFP-`} query={id}/>
+                        <ContactUsTable type="suggestion" idPre={`RFP-`} query={id}/>
                     </div>,
                     <div>
-                        <RepliedTable type="الاقتراحات" idPre={`RFP-`} query={id}/>
+                        <RepliedTable type="suggestion" idPre={`RFP-`} query={id}/>
                     </div>
                 ]}
             />

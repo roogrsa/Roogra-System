@@ -24,10 +24,10 @@ export default function Inquiries() {
                 ]}
                 children={[
                     <div>
-                        <ContactUsTable type="الاستفسار" idPre={`RQ1-`} query={id}/>
+                        <ContactUsTable type="inquiry" idPre={`RQ1-`} query={id}/>
                     </div>,
                     <div>
-                        <RepliedTable type="الاستفسار" idPre={`RQ1-`} query={id}/>
+                        <RepliedTable type="inquiry" idPre={`RQ1-`} query={id}/>
                     </div>
                 ]}
             />
