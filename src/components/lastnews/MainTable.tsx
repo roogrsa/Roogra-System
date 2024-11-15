@@ -61,14 +61,6 @@ const MainTable: React.FC<MainTableProps> = ({ logs, headers, header2 }) => {
                   : 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
               }`}
             >
-              {/* // <tr
-            //   key={log.id}
-            //   className={`flex justify-between items-center ${
-            //     index % 2 === 0
-            //       ? 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
-            //       : 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
-            //   }`}
-            // > */}
               {log.columns.map((col) => (
                 <TableCell
                   key={col.key}

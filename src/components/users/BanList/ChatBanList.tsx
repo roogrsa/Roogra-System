@@ -1,49 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import useBannedChats from '../../../hooks/Ban/BanChatList';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 import useUnBanChat from '../../../hooks/Ban/UnBanChat';
 import useHandleAction from '../../../hooks/useHandleAction';
+import useChatUserHistory from '../../../hooks/users/UserBanChats';
 
 const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
+const NotBannedIconSrc = '/unblock.svg';
 
-const UserChatBanList: React.FC = () => {
+const UserChatBanList: React.FC = ({ user }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState('');
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
   const {
-    bannedChats,
-    loading: bannedChatsLoading,
-    error: bannedChatsError,
-    refreshBannedChats,
-  } = useBannedChats();
-  const {
-    unbanChat,
-    loading: unbanLoading,
-    error: unbanError,
-  } = useUnBanChat();
+    chatHistory,
+    // loading: bannedChatsLoading,
+    // error: bannedChatsError,
+    refreshChatHistory,
+  } = useChatUserHistory(user.id);
+  const { unbanChat, isSuccess } = useUnBanChat();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
+  useEffect(() => {
+    if (isSuccess) {
+      refreshChatHistory();
+    }
+  }, [isSuccess, refreshChatHistory]);
   const handleClickName = (chatId: number) => {
     navigate(`/chat/${chatId}`);
   };
 
-  if (bannedChatsLoading) return <p>Loading...</p>;
-  if (bannedChatsError) return <p>Error: {bannedChatsError}</p>;
+  // if (bannedChatsLoading) return <p>Loading...</p>;
+  // if (bannedChatsError) return <p>Error: {bannedChatsError}</p>;
 
-  const Chatlogs = bannedChats.map((chat) => ({
-    id: chat.id,
+  const Chatlogs = chatHistory.map((chat) => ({
+    id: chat.chat_id,
     columns: [
       {
         key: 'id',
-        content: `RC-${chat.id}`,
+        content: `RC-${chat.chat_id}`,
         className: 'text-center',
       },
       {
@@ -53,47 +55,47 @@ const UserChatBanList: React.FC = () => {
       },
       {
         key: 'admin_name',
-        content: chat.admin_name || 'N/A',
+        content: chat.admin || 'N/A',
         className: 'text-center',
       },
       {
         key: 'ban_reason',
-        content: chat.ban_reason || 'N/A',
+        content:
+          chat.reason.split(' ').slice(0, 2).join(' ').slice(0, 13) || 'N/A',
         className: 'text-center',
       },
-      // {
-      //   key: 'Edit',
-      //   content: (
-      //     <div className="bg-EditIconBg rounded-md">
-      //       <img
-      //         src={EditIconSrc}
-      //         className="w-6 h-6 text-center p-1 cursor-pointer"
-      //         onClick={() => handleClickName(chat.id)}
-      //       />
-      //     </div>
-      //   ),
-      //   className: 'flex justify-center',
-      // },
+      {
+        key: 'Edit',
+        content: (
+          <div className="bg-EditIconBg rounded-md">
+            <img
+              src={EditIconSrc}
+              className="w-6 h-6 text-center p-1 cursor-pointer"
+              onClick={() => handleClickName(chat.chat_id)}
+            />
+          </div>
+        ),
+        className: 'flex justify-center',
+      },
       {
         key: 'is_banned',
         content: (
           <div className="bg-BlockIconBg rounded-md">
             <img
-              src={BannedIconSrc}
+              src={chat.banned === 0 ? NotBannedIconSrc : BannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
                 !actionLoading &&
-                chat?.id &&
                 handleAction(
-                  chat.id,
-                  chat.is_banned === 1,
+                  chat.chat_id,
+                  chat.banned === 1,
                   'ban',
                   unbanChat,
                   {
                     confirmButtonClass: 'bg-BlockIconBg ',
                     cancelButtonClass: '',
                   },
-                  refreshBannedChats,
+                  refreshChatHistory,
                 )
               }
             />
@@ -126,11 +128,11 @@ const UserChatBanList: React.FC = () => {
       className: 'text-center',
     },
 
-    // {
-    //   key: 'show',
-    //   content: t('BanList.chats.show'),
-    //   className: 'text-center',
-    // },
+    {
+      key: 'show',
+      content: t('BanList.chats.show'),
+      className: 'text-center',
+    },
     {
       key: 'BanStatus',
       content: t('BanList.chats.status'),

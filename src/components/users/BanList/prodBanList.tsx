@@ -135,7 +135,8 @@ const UserBanProdList: React.FC = () => {
       },
       {
         key: 'ban_reason',
-        content: prod.reason || 'N/A',
+        content:
+          prod.reason.split(' ').slice(0, 2).join(' ').slice(0, 13) || 'N/A',
         className: 'text-center',
       },
       {
@@ -159,7 +160,7 @@ const UserBanProdList: React.FC = () => {
               src={prod.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
-                !actionLoading &&
+                // !actionLoading &&
                 handleAction(
                   prod.product_id,
                   prod.is_banned === 1,

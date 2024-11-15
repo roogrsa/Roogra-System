@@ -1,98 +1,81 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useBanUser from '../../../hooks/users/useBanUser';
 import useHandleAction from '../../../hooks/useHandleAction';
-import useBannedUsers from '../../../hooks/Ban/UserBanList';
+import useUserBanHistory from '../../../hooks/users/UserBanHistory';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 
 const BannedIconSrc = '/block.svg';
-const EditIconSrc = '/Edit.svg';
+const NotBannedIconSrc = '/unblock.svg';
 
-const BanProfileList: React.FC = () => {
+const BanProfileList: React.FC = ({ user }) => {
+  // console.log(user);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [status, setStatus] = useState('');
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
-  const { banUser, loading: unbanLoading, error: unbanError } = useBanUser();
+  const { banUser, isSuccess } = useBanUser();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
   const {
-    bannedUsers,
+    banHistory,
     loading: bannedUsersLoading,
     error: bannedUsersError,
-    refreshBannedUsers,
-  } = useBannedUsers();
+    refreshBanHistory,
+  } = useUserBanHistory(user.id);
 
-  const handleClickName = (adminId: number) => {
-    navigate(`/profile/${adminId}`);
-  };
+  useEffect(() => {
+    if (isSuccess) {
+      refreshBanHistory();
+    }
+  }, [isSuccess, refreshBanHistory]);
+  // console.log(banHistory);
 
-  if (bannedUsersLoading) return <p>Loading...</p>;
-  if (bannedUsersError) return <p>Error: {bannedUsersError}</p>;
-
-  const userlogs = bannedUsers.map((user) => ({
-    id: user.customer_id,
+  const userlogs = banHistory.map((ban) => ({
+    id: ban.admin_id, // This should be unique for each user
     columns: [
       {
         key: 'name',
         content:
-          user.name.split(' ').slice(0, 2).join(' ').slice(0, 13) || 'N/A',
+          user.name?.split(' ').slice(0, 2).join(' ').slice(0, 13) || 'N/A',
         className: 'text-center dark:text-[#32E26B] text-[#0E1FB2]',
       },
       {
         key: 'created_at',
-        content: new Date(user.created_at).toLocaleDateString(),
+        content: ban.created_at
+          ? new Date(ban.created_at).toLocaleDateString()
+          : 'N/A',
         className: 'text-center',
       },
       {
         key: 'admin',
-        content: user.admin || 'N/A',
+        content: ban.admin_name || 'N/A',
         className: 'text-center',
       },
       {
         key: 'ban_reason',
-        content: user.ban_reason || 'N/A',
+        content:
+          ban.reason.split(' ').slice(0, 2).join(' ').slice(0, 13) || 'N/A',
         className: 'text-center',
-      },
-      {
-        key: 'Edit',
-        content: (
-          <div className="bg-EditIconBg rounded-md">
-            <img
-              src={EditIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() => handleClickName(user.customer_id)}
-            />
-          </div>
-        ),
-        className: 'flex justify-center',
       },
       {
         key: 'is_banned',
         content: (
           <div className="bg-BlockIconBg rounded-md">
             <img
-              src={BannedIconSrc}
+              src={ban.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
-                !actionLoading &&
-                user?.customer_id &&
-                handleAction(
-                  user.customer_id,
-                  user.is_banned === 1,
-                  'ban',
-                  banUser,
-                  {
-                    confirmButtonClass: 'bg-BlockIconBg ',
-                    cancelButtonClass: '',
-                  },
-                  refreshBannedUsers,
-                )
+                // !actionLoading &&
+                handleAction(user.id, ban.is_banned === 1, 'ban', banUser, {
+                  confirmButtonClass: 'bg-BlockIconBg',
+                  cancelButtonClass: '',
+                })
               }
             />
           </div>
@@ -104,71 +87,32 @@ const BanProfileList: React.FC = () => {
 
   const headers = [
     {
-      key: 'name',
+      key: 'Historyname',
       content: t('BanList.users.name'),
       className: 'text-center',
     },
     {
-      key: 'Date',
+      key: 'HistoryDate',
       content: t('BanList.users.Date'),
       className: 'text-center',
     },
     {
-      key: 'byAdmin',
+      key: 'HistorybyAdmin',
       content: t('BanList.users.byAdmin'),
       className: 'text-center',
     },
     {
-      key: 'banReason',
+      key: 'HistorybanReason',
       content: t('BanList.users.banReason'),
       className: 'text-center',
     },
-
     {
-      key: 'show',
-      content: t('BanList.users.show'),
-      className: 'text-center',
-    },
-    {
-      key: 'BanStatus',
+      key: 'HistoryBanStatus',
       content: t('BanList.users.status'),
       className: 'text-center',
     },
   ];
-  // const UnBanheaders = [
-  //   {
-  //     key: 'ChatId',
-  //     content: t('BanList.users.ChatId'),
-  //     className: 'text-center',
-  //   },
 
-  //   {
-  //     key: 'UnBanDate',
-  //     content: t('BanList.users.UnBanDate'),
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'UnBanbyAdmin',
-  //     content: t('BanList.users.UnBanbyAdmin'),
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'UnBanbanReason',
-  //     content: t('BanList.users.UnBanReason'),
-  //     className: 'text-center',
-  //   },
-
-  //   {
-  //     key: 'show',
-  //     content: t('BanList.users.show'),
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'BanStatus',
-  //     content: t('BanList.users.status'),
-  //     className: 'text-center',
-  //   },
-  // ];
   return (
     <>
       <Breadcrumb
@@ -180,20 +124,23 @@ const BanProfileList: React.FC = () => {
         onClick={(index: number) => setStatus(index === 0 ? 'Ban' : 'UnBan')}
         children={[
           <div key="Ban">
-            <NotFoundSection data={userlogs} />
-            <MainTable logs={userlogs} header2={true} headers={headers} />
+            {/* {bannedUsersLoading ? (
+              <p>Loading...</p>
+            ) : bannedUsersError ? (
+              <p>Error: {bannedUsersError}</p>
+            ) : ( */}
+            <>
+              <NotFoundSection data={userlogs} />
+
+              <MainTable logs={userlogs} header2={true} headers={headers} />
+            </>
+            {/* )} */}
           </div>,
-          <div key="UnBan">
-            {/* <NotFoundSection data={Chatlogs} /> */}
-            {/* <MainTable logs={Chatlogs} header2={true} headers={UnBanheaders} /> */}
-          </div>,
+          <div key="UnBan">{/* Handle UnBan logic here */}</div>,
         ]}
         footerItems={[
           <div className="flex gap-5" key="footer">
-            <span>({userlogs.length || 0})</span>
-            {/* <span>
-              <img src="/redRemove.svg" alt="Remove" />
-            </span> */}
+            <span>({userlogs.length})</span>
           </div>,
         ]}
       />
