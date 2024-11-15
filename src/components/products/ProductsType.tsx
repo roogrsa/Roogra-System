@@ -15,7 +15,7 @@ const NotBannedIconSrc = '/unblock.svg';
 const BannedIconSrc = '/block.svg';
 const CheckboxIconSrc = '/checkbox.svg';
 const EditIconSrc = '/Edit.svg';
-
+const NotImage = '/not.png';
 interface ProductsTypeProps {
   ProductsSType: string;
 }
@@ -145,7 +145,7 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
           content: (
             <>
               <ImageWithFullscreen
-                src={product.thumbnail}
+                src={product.thumbnail || NotImage}
                 alt="Transaction"
                 className="w-10 h-10 object-cover"
               />

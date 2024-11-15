@@ -15,7 +15,7 @@ interface ApiResponse {
 // Custom Hook for fetching user reports
 export const useUserReports = () => {
   const { id } = useParams<{ id: string }>();
-console.log(id, 'profile');
+  console.log(id, 'profile');
 
   const [data, setData] = useState<{
     chats: ReportData[];
@@ -23,30 +23,30 @@ console.log(id, 'profile');
   }>({ chats: [], products: [] });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchReports = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get<ApiResponse>(
+        `/api/reports/users/${id}`,
+      );
 
-  useEffect(() => {
-    const fetchReports = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get<ApiResponse>(
-          `/api/reports/users/${id}`,
-        );
-
-        if (response.data.success) {
-          setData(response.data.data);
-          //   console.log('userreportttt', response.data.data);
-        } else {
-          setError('Failed to fetch reports');
-        }
-      } catch (err) {
-        setError('An error occurred while fetching the data');
-      } finally {
-        setLoading(false);
+      if (response.data.success) {
+        setData(response.data.data);
+        //   console.log('userreportttt', response.data.data);
+      } else {
+        setError('Failed to fetch reports');
       }
-    };
-
+    } catch (err) {
+      setError('An error occurred while fetching the data');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchReports();
   }, [id]);
-
-  return { data, loading, error };
+  const refreshUserReports = () => {
+    fetchReports();
+  };
+  return { data, loading, error, refreshUserReports };
 };

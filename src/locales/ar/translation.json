@@ -327,6 +327,9 @@
       "product": "المنتج",
       "created_at": " تاريخ الطلب ",
       "actions": "عرض",
+      "revision": "مراجعه",
+      "remove": "حذف",
+
       "speakerTo": "المتحدث إلية"
     }
   },

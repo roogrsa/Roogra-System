@@ -11,38 +11,46 @@ interface ApiResponse {
 }
 
 // Custom Hook with parameters for type and status
-export const useProductReports = (type: string, status: number = 0, query?: string) => {
+export const useProductReports = (
+  type: string,
+  status: number,
+  query?: string,
+  // refreshReports: () => void,
+) => {
   const [data, setData] = useState<ReportData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const fetchReports = async () => {
+    setLoading(true);
+    console.log(status);
 
-  useEffect(() => {
-    const fetchReports = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosInstance.get<ApiResponse>(
-          `/api/reports/type/${type}/status/${status}`, {
+    try {
+      const response = await axiosInstance.get<ApiResponse>(
+        `/api/reports/type/${type}/status/${status}`,
+        {
           params: {
-            q: query || ''
-          }
-        }
-        );
+            q: query || '',
+          },
+        },
+      );
 
-        if (response.data.success) {
-          setData(response.data.data);
-          // console.log(response.data.data);
-        } else {
-          setError('Failed to fetch reports');
-        }
-      } catch (err) {
-        setError('An error occurred while fetching the data');
-      } finally {
-        setLoading(false);
+      if (response.data.success) {
+        setData(response.data.data);
+        console.log(response.data.data);
+      } else {
+        setError('Failed to fetch reports');
       }
-    };
-
+    } catch (err) {
+      setError('An error occurred while fetching the data');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchReports();
   }, [type, status, query]);
-
-  return { data, loading, error };
+  const refreshReports = () => {
+    fetchReports();
+  };
+  return { data, loading, error, refreshReports };
 };

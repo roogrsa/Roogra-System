@@ -327,6 +327,9 @@
       "product": "Product",
       "created_at": "Req-Date",
       "actions": "Show",
+      "revision": "confirm",
+      "remove": "remove",
+
       "speakerTo": "speaker to"
     }
   },
