@@ -10,9 +10,9 @@ interface ContactUsTableProps {
     type: string
     idPre: string;
     query?: string;
-    id?:string;
+    id?: string;
 }
-export default function RepliedTable({ type, idPre, query }: ContactUsTableProps) {
+export default function RepliedTable({ type, idPre, query, id}: ContactUsTableProps) {
     console.log(query);
 
     const { t } = useTranslation()
@@ -33,11 +33,7 @@ export default function RepliedTable({ type, idPre, query }: ContactUsTableProps
     };
     const displayContactUs = async () => {
         try {
-            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`, {
-                params: {
-                    q: query || ''
-                }
-            });
+            const res = await axiosInstance.get(`/api/support/type/${type}/status/closed`);
             console.log(res.data.data);
             setContactUs(res.data.data)
         } catch (error: any) {
@@ -45,9 +41,25 @@ export default function RepliedTable({ type, idPre, query }: ContactUsTableProps
             console.log(error?.response?.data?.message);
         }
     };
+    const displayContactUsByUser = async () => {
+        try {
+            const res = await axiosInstance.get(
+                `/api/support/users/${id}/type/${type}`, {}
+            );
+            console.log(res.data.data);
+            setContactUs(res.data.data);
+        } catch (error: any) {
+            console.error(error);
+            console.log(error?.response?.data?.message);
+        }
+    };
     useEffect(() => {
-        displayContactUs()
-    }, [type, query]);
+        if (!id) {
+            displayContactUs();
+        } else if (id) {
+            displayContactUsByUser()
+        }
+    }, [type, query, id]);
     console.log(contactUs);
     return (
         <div>

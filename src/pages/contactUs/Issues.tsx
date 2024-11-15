@@ -24,10 +24,10 @@ export default function Issues() {
                 ]}
                 children={[
                     <div>
-                        <ContactUsTable type="البلاغات" idPre={`RQ2-`} query={id}/>
+                        <ContactUsTable type="issue" idPre={`RQ2-`} query={id}/>
                     </div>,
                     <div>
-                        <RepliedTable type="البلاغات" idPre={`RQ2-`} query={id}/>
+                        <RepliedTable type="issue" idPre={`RQ2-`} query={id}/>
                     </div>
                 ]}
             />

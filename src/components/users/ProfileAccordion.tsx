@@ -101,9 +101,9 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title={t('profile.contactUs')}>
-        <AccordionContacUs idPre="RQ1-" id={id} pageName="contact-us.inquiries" type="الاستفسار" />
-        <AccordionContacUs idPre="RQ2-" id={id} pageName="contact-us.issues" type="البلاغات" />
-        <AccordionContacUs idPre="RFP-" id={id} pageName="contact-us.suggestions" type="الاقتراحات" />
+        <AccordionContacUs idPre="RQ1-" id={id} pageName="contact-us.inquiries" type="inquiry" />
+        <AccordionContacUs idPre="RQ2-" id={id} pageName="contact-us.issues" type="issue" />
+        <AccordionContacUs idPre="RFP-" id={id} pageName="contact-us.suggestions" type="suggestion" />
       </Accordion>
 
       {/*  */}

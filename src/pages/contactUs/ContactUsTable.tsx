@@ -11,7 +11,7 @@ interface ContactUsTableProps {
   query?: string;
   id?:string;
 }
-export default function ContactUsTable({ type, idPre, query }: ContactUsTableProps) {
+export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTableProps) {
   const { t } = useTranslation();
   const [contactUs, setContactUs] = useState<ContactUsType[]>([]);
   const [selectedSupport, setSelectedSupport] = useState<ContactUsType>();
@@ -29,12 +29,18 @@ export default function ContactUsTable({ type, idPre, query }: ContactUsTablePro
   };
   const displayContactUs = async () => {
     try {
+      const res = await axiosInstance.get(`/api/support/type/${type}/status/open`);
+      console.log(res.data.data);
+      setContactUs(res.data.data);
+    } catch (error: any) {
+      console.error(error);
+      console.log(error?.response?.data?.message);
+    }
+  };
+  const displayContactUsByUser = async () => {
+    try {
       const res = await axiosInstance.get(
-        `/api/support/type/${type}/status/open`, {
-          params: {
-            q: query || ''
-          }
-      }
+        `/api/support/users/${id}/type/${type}`, {}
       );
       console.log(res.data.data);
       setContactUs(res.data.data);
@@ -44,8 +50,12 @@ export default function ContactUsTable({ type, idPre, query }: ContactUsTablePro
     }
   };
   useEffect(() => {
-    displayContactUs();
-  }, [type, query]);
+    if(!id){
+      displayContactUs();
+    }else if(id){
+      displayContactUsByUser()
+    }
+  }, [type, query,id]);
   console.log(contactUs);
 
   return (
