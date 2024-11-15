@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
@@ -15,7 +15,6 @@ const NotBannedIconSrc = '/unblock.svg';
 
 const UserChatBanList: React.FC = ({ user }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [status, setStatus] = useState('');
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
@@ -33,9 +32,6 @@ const UserChatBanList: React.FC = ({ user }) => {
       refreshChatHistory();
     }
   }, [isSuccess, refreshChatHistory]);
-  const handleClickName = (chatId: number) => {
-    navigate(`/chat/${chatId}`);
-  };
 
   // if (bannedChatsLoading) return <p>Loading...</p>;
   // if (bannedChatsError) return <p>Error: {bannedChatsError}</p>;
@@ -68,11 +64,15 @@ const UserChatBanList: React.FC = ({ user }) => {
         key: 'Edit',
         content: (
           <div className="bg-EditIconBg rounded-md">
-            <img
-              src={EditIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() => handleClickName(chat.chat_id)}
-            />
+            <Link
+              to={`/reports/chats/${chat.chat_id}`}
+              // state={{ reportId: chat.chat_report_id }}
+            >
+              <img
+                src={EditIconSrc}
+                className="w-6 h-6 text-center p-1 cursor-pointer"
+              />
+            </Link>
           </div>
         ),
         className: 'flex justify-center',
