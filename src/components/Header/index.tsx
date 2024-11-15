@@ -1,14 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { useSelector } from 'react-redux';
 import { selectLanguage } from '../../store/slices/language';
 import LanguageSwitcher from './LanguageSwitcher';
-import useColorMode from '../../hooks/useColorMode';
 import { CiSearch } from 'react-icons/ci';
 import { useTranslation } from 'react-i18next';
 import DropdownNotification from '../notification/DropdownNotification';
-const logoLight = '../../../logo/logoLight.png';
-const logoDark = '../../../logo/logoDark.png';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -16,7 +13,6 @@ const Header = (props: {
 }) => {
   const { t } = useTranslation();
   const language = useSelector(selectLanguage);
-  const [colorMode] = useColorMode();
   const navigate = useNavigate();
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
@@ -97,18 +93,7 @@ const Header = (props: {
             </span>
           </button>
         </div>
-        <div className="flex items-center gap-2 2xsm:gap-4">
-          <Link to={`/`}>
-            <img
-              src={colorMode === 'light' ? logoLight : logoDark}
-              width={100}
-              height={100}
-              alt="logo"
-            />
-          </Link>
-
           <DarkModeSwitcher />
-        </div>
         <div
           className="hidden sm:block"
           dir={language === 'ar' ? 'rtl' : 'ltr'}

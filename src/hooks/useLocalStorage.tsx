@@ -20,12 +20,12 @@ function useLocalStorage<T>(
       return initialValue;
     }
   });
-
+  let valueToStore
   // useEffect to update local storage when the state changes
   useEffect(() => {
     try {
       // Allow value to be a function so we have same API as useState
-      const valueToStore =
+       valueToStore =
         typeof storedValue === 'function'
           ? storedValue(storedValue)
           : storedValue;
