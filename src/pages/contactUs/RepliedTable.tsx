@@ -44,7 +44,7 @@ export default function RepliedTable({ type, idPre, query, id}: ContactUsTablePr
     const displayContactUsByUser = async () => {
         try {
             const res = await axiosInstance.get(
-                `/api/support/users/${id}/type/${type}`, {}
+                `/api/support/users/${id}/type/${type}/status/closed`, {}
             );
             console.log(res.data.data);
             setContactUs(res.data.data);

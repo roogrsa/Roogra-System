@@ -40,7 +40,7 @@ export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTable
   const displayContactUsByUser = async () => {
     try {
       const res = await axiosInstance.get(
-        `/api/support/users/${id}/type/${type}`, {}
+        `/api/support/users/${id}/type/${type}/status/open`, {}
       );
       console.log(res.data.data);
       setContactUs(res.data.data);
