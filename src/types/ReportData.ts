@@ -1,4 +1,4 @@
- export interface ReportData {
+export interface ReportData {
   report_id: number;
   chat_report_id: number;
   customer_id: number;
@@ -6,7 +6,8 @@
   content: string;
   created_at: string;
   product_name: string;
- reported: string;
+  product_image: string; 
+  reported: string;
   reporter: string;
   status: number;
   close_date: string | null;

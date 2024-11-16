@@ -10,7 +10,7 @@ import useRemoveUser from '../../hooks/users/useRemoveUser';
 import { ToastContainer } from 'react-toastify';
 
 const BannedIconSrc = '/block.svg';
-const NotBannedIconSrc = '/unblock.svg';
+const NotBannedIconSrc = '/whiteblock.png';
 const RemoveIconSrc = '/remove.svg';
 
 const Profile = () => {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import axiosInstance from '../../axiosConfig/instanc';
 
 interface Notification {
@@ -28,29 +27,29 @@ const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await axiosInstance.get<NotificationsResponse>(
-          '/api/notifications/my-notifications',
-        );
-        if (response.data.success) {
-          setNotifications(response.data.data);
-        } else {
-          setError(response.data.message || 'Failed to fetch notifications');
-        }
-      } catch (err) {
-        setError('An error occurred while fetching notifications');
-      } finally {
-        setLoading(false);
+  const fetchNotifications = async () => {
+    try {
+      const response = await axiosInstance.get<NotificationsResponse>(
+        '/api/notifications/my-notifications',
+      );
+      if (response.data.success) {
+        setNotifications(response.data.data);
+      } else {
+        setError(response.data.message || 'Failed to fetch notifications');
       }
-    };
-
+    } catch (err) {
+      setError('An error occurred while fetching notifications');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchNotifications();
   }, []);
-
-  return { notifications, loading, error };
+  const refreshNotifications = () => {
+    fetchNotifications();
+  };
+  return { notifications, loading, error, refreshNotifications };
 };
 
 export default useNotifications;

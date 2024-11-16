@@ -28,14 +28,14 @@ const ProfileImages: React.FC<ProfileImagesProps> = ({ user }) => {
 
       {/* Profile Image */}
       <div className="px-4 text-center">
-        <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur">
+        <div className="relative z-30 mx-auto -mt-22 h-32 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur">
           <img
             src={
               user?.image === 'https://roogr.sa/api/image/'
                 ? userSix
                 : user?.image || userSix
             }
-            className="rounded-full text-center"
+            className="rounded-full h-30 w-30 text-center"
             alt="profile"
           />
         </div>

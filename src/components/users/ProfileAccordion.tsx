@@ -16,29 +16,9 @@ import NotFoundSection from '../Notfound/NotfoundSection';
 import UserChatBanList from './BanList/ChatBanList';
 import BanProfileList from './BanList/HistoryBanList';
 import UserBanProdList from './BanList/prodBanList';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  telephone: string;
-  type: 'advertiser' | 'customer';
-  isActivated: {
-    account: boolean;
-    email: boolean;
-  };
-  status: number; // Status of the account (e.g., 1 = Active)
-  isBanned: boolean;
-  ban_reason: string;
-  regDate: string; // Registration date in "YYYY-MM-DD HH:MM:SS" format
-  address: string;
-  countery_id: number | null;
-  bio: string;
-  rating: number;
-  image: string;
-  alias: string;
-}
+import { User } from '../../types/user';
+import UserProductReport from '../reports/UserProductReport';
+import UserChatReport from '../reports/UserChatReport';
 
 interface ProfileAccordionProps {
   user: User;
@@ -46,7 +26,6 @@ interface ProfileAccordionProps {
   error: string | null;
 }
 //
-
 const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
   user,
   loading,
@@ -91,7 +70,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
         ) : (
           <>
             <div
-              className={`bg-secondaryBG dark:bg-secondaryBG-dark border-2 border-[#D0D0D0] dark:border-[#333341] rounded-md mt-4`}
+              className={`bg-secondaryBG dark:bg-secondaryBG-dark  rounded-md mt-4`}
             >
               {chats.map((chat) => (
                 <Chat
@@ -131,8 +110,9 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
 
       {/*  */}
       <Accordion title={t('profile.reprts')}>
-        <UserReportType reportType="Userchat" />
-        <UserReportType reportType="Userproduct" />
+        <UserProductReport user={user} />
+
+        <UserChatReport user={user} />
       </Accordion>
 
       {/* */}

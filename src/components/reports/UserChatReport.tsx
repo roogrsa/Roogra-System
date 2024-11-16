@@ -1,48 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { useNavigate } from 'react-router-dom';
-import { useProductReports } from '../../hooks/Reports/ProductReports';
+import { Link } from 'react-router-dom';
 import useToggleReportStatus from '../../hooks/Reports/ToggleReportStatus';
-import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
+import { useTranslation } from 'react-i18next';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import MainTable from '../../components/lastnews/MainTable';
 import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import useDeleteReport from '../../hooks/Reports/DelReport';
+import { useUserReports } from '../../hooks/Reports/UserReports';
 
-const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
+const UserChatReport: React.FC<{ query?: string }> = ({ query, user }) => {
   const { t } = useTranslation();
   const [status, setStatus] = useState(0);
-  const navigate = useNavigate();
+  const [reportId, setReportId] = useState(0);
+  const { chats, refreshUserReports } = useUserReports(status);
 
-  const { data, refreshReports } = useProductReports('product', status, query);
-
+  //   const { data, refreshReports } = useProductReports('chat', status, query);
   const { isSuccess, toggleStatus, setIsSuccess } = useToggleReportStatus();
   const { deleteReport, isDeleted, resetDeleteStatus } = useDeleteReport();
 
   useEffect(() => {
     if (isSuccess) {
-      refreshReports();
+      refreshUserReports();
       setIsSuccess(false);
     }
-  }, [isSuccess, refreshReports, setIsSuccess]);
+  }, [isSuccess, refreshUserReports, setIsSuccess]);
   useEffect(() => {
     if (isDeleted) {
-      refreshReports();
+      refreshUserReports();
       resetDeleteStatus();
     }
-  }, [isDeleted, refreshReports, resetDeleteStatus]);
-  const handleEditClick = (productId: number) => {
-    navigate(`/products/${productId}`);
-  };
-
+  }, [isDeleted, refreshUserReports, resetDeleteStatus]);
   const handleToggleClick = (type: string, id: number) => {
     toggleStatus(type, id);
   };
   const handleDeleteClick = (type: string, id: number) => {
     deleteReport(type, id);
   };
+
   const headers = [
     { key: 'id', content: t('Reports.headers.id'), className: 'text-center' },
     {
@@ -51,8 +47,8 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
       className: 'text-center',
     },
     {
-      key: 'product',
-      content: t('Reports.headers.product'),
+      key: 'speakerTo',
+      content: t('Reports.headers.speakerTo'),
       className: 'text-center',
     },
     {
@@ -78,31 +74,24 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
         },
   ];
 
-  const logs = Array.isArray(data)
-    ? data.map((item) => ({
-        id: item.report_id,
+  const logs = Array.isArray(chats)
+    ? chats.map((item) => ({
+        id: item.chat_report_id,
         type: 2,
         columns: [
           {
             key: 'id',
-            content: `RT-${item.report_id}`,
+            content: `RC-${item.chat_report_id}`,
             className: 'flex justify-center',
           },
-          { key: 'name', content: item.name, className: 'flex justify-center' },
           {
-            key: 'product_image',
-
-            content: (
-              <ImageWithFullscreen
-                src={
-                  item.product_image === 'https://roogr.sa/api/image/'
-                    ? '/not.png'
-                    : item.product_image || '/not.png'
-                }
-                alt="Transaction"
-                className="w-10 h-10 object-cover"
-              />
-            ),
+            key: 'name',
+            content: item.reported || 'N/A',
+            className: 'flex justify-center',
+          },
+          {
+            key: 'speakerTo',
+            content: item.reporter || 'N/A',
             className: 'flex justify-center',
           },
           {
@@ -114,11 +103,15 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
             key: 'actions',
             content: (
               <div className="bg-EditIconBg rounded-md">
-                <img
-                  src="/Edit.svg"
-                  className="w-6 h-6 text-center p-1 cursor-pointer"
-                  onClick={() => handleEditClick(item.product_id)}
-                />
+                <Link
+                  to={`/reports/chats/${item.customer_id}`}
+                  state={{ reportId: item.chat_report_id }}
+                >
+                  <img
+                    src="/Edit.svg"
+                    className="w-6 h-6 text-center p-1 cursor-pointer"
+                  />
+                </Link>
               </div>
             ),
             className: 'flex justify-center',
@@ -132,7 +125,7 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
                       src="/confirm.png"
                       className="w-6 h-6 text-center p-1 cursor-pointer"
                       onClick={() =>
-                        handleToggleClick('product', item.report_id)
+                        handleToggleClick('chat', item.chat_report_id)
                       }
                     />
                   </div>
@@ -147,7 +140,7 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
                       src="/remove.svg"
                       className="w-6 h-6 text-center p-1 cursor-pointer"
                       onClick={() =>
-                        handleDeleteClick('product', item.report_id)
+                        handleDeleteClick('chat', item.chat_report_id)
                       }
                     />
                   </div>
@@ -161,23 +154,18 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
   return (
     <div>
       <Breadcrumb
-        breadcrumbLinks={[{ label: t('Reports.label.product'), path: '/' }]}
-        pageName={t('Reports.label.product')}
+        breadcrumbLinks={[{ label: t(''), path: '/' }]}
+        pageName={t('Reports.label.chat')}
       />
       <AccordionHeader2
         titles={[t('Reports.titles.reports'), t('Reports.titles.revision')]}
-        // onTitleClick={(index) => setStatus(index === 0 ? 0 : 1)}
-        onTitleClick={(index) => {
-          const statusMap = [0, 1];
-          setStatus(statusMap[index]);
-          console.log('Selected status:', statusMap[index]);
-        }}
+        onTitleClick={(index) => setStatus(index === 0 ? 0 : 1)}
         children={[
-          <div>
+          <div key={status}>
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
-          <div>
+          <div key={status}>
             <MainTable logs={logs} headers={headers} />
             <NotFoundSection data={logs} />
           </div>,
@@ -187,4 +175,4 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
   );
 };
 
-export default ProductReport;
+export default UserChatReport;

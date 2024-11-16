@@ -3,6 +3,7 @@
   "Successfully": "بنجاح",
   "failed": "فشل ",
   "error": "خطأ غير معروف",
+  "NotData": "لا يوجد محتوي لعرضه",
   "Ban": {
     "Ban": "حظر",
     "unBan": "رفع الحظر",
@@ -410,6 +411,7 @@
     "reply": "الرد",
     "deleteTicket": "حذف التذكرة"
   },
+
   "lastNews": {
     "title": "أخر الأحداث",
     "lastLogin": "قام بتسجيل الدخول",

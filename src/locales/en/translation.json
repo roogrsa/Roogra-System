@@ -3,6 +3,7 @@
   "Successfully": "Successfully",
   "error": "Unknown error",
   "failed": "Failed to",
+  "NotData": "Not Found Data yet",
 
   "Ban": {
     "Ban": "Ban",
@@ -463,8 +464,9 @@
       "UnBanDate": "UnBan Date",
       "status": "Status"
     },
+
     "lastNews": {
-      "title": "Last news",
+      "title": "Last News",
       "lastLogin": "Has Logged In",
       "register": "New Account",
       "edit": "Acocount updated"

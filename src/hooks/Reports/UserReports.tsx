@@ -12,27 +12,25 @@ interface ApiResponse {
   };
 }
 
-// Custom Hook for fetching user reports
-export const useUserReports = () => {
+export const useUserReports = (status: number) => {
   const { id } = useParams<{ id: string }>();
   console.log(id, 'profile');
 
-  const [data, setData] = useState<{
-    chats: ReportData[];
-    products: ReportData[];
-  }>({ chats: [], products: [] });
+  const [chats, setChats] = useState<ReportData[]>([]);
+  const [products, setProducts] = useState<ReportData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
   const fetchReports = async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get<ApiResponse>(
-        `/api/reports/users/${id}`,
+        `/api/reports/users/${id}/status/${status}`,
       );
 
       if (response.data.success) {
-        setData(response.data.data);
-        //   console.log('userreportttt', response.data.data);
+        setChats(response.data.data.chats);
+        setProducts(response.data.data.products);
       } else {
         setError('Failed to fetch reports');
       }
@@ -42,11 +40,14 @@ export const useUserReports = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchReports();
-  }, [id]);
+  }, [id, status]);
+
   const refreshUserReports = () => {
     fetchReports();
   };
-  return { data, loading, error, refreshUserReports };
+
+  return { chats, products, loading, error, refreshUserReports };
 };
