@@ -73,7 +73,7 @@ export default function AddAdmin() {
   const [loggedValues, setLoggedValues] = useState<string>('');
   const [admin, setAdmin] = useState<Admin | null>(null);
   const [permissions, setpermissions] = useState({
-    super: admin?.permissions?.super || 0,
+    super: admin?.permissions[0] || 0,
     charts: admin?.permissions?.charts || 0,
     admins: admin?.permissions?.admins || 0,
     settings: admin?.permissions?.settings || 0,
