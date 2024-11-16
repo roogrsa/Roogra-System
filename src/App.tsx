@@ -45,6 +45,7 @@ import UserChats from './pages/chats/UserChats';
 import SingleChat from './pages/chats/SingleChat';
 import Notfound from './pages/notfound/Notfound';
 import ErrorElement from './pages/errorElement/ErrorElement';
+import LogoutGuards from './components/guards/LogoutGuards';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -62,7 +63,12 @@ const router = createBrowserRouter([
     path: '/',
     element: <LoginLayout />,
     children: [
-      { path: '/auth/login', element: <SignIn />, errorElement: <ErrorElement /> },
+      {
+        path: '/auth/login', element: (
+          <LogoutGuards>
+            <SignIn />
+          </LogoutGuards>), errorElement: <ErrorElement />
+      },
     ],
   },
   {
