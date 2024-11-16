@@ -2,37 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
-import { useProductReports } from '../../hooks/Reports/ProductReports';
 import useToggleReportStatus from '../../hooks/Reports/ToggleReportStatus';
-import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
-import MainTable from '../../components/lastnews/MainTable';
-import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import useDeleteReport from '../../hooks/Reports/DelReport';
+import ImageWithFullscreen from '../Fullscreen/Fulllscreen';
+import Breadcrumb from '../Breadcrumbs/Breadcrumb';
+import AccordionHeader2 from '../Accordion/AccordionHeader2';
+import MainTable from '../lastnews/MainTable';
+import NotFoundSection from '../Notfound/NotfoundSection';
+import { useUserReports } from '../../hooks/Reports/UserReports';
 
-const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
+const UserProductReport: React.FC<{ query?: string }> = ({ query, user }) => {
   const { t } = useTranslation();
   const [status, setStatus] = useState(0);
   const navigate = useNavigate();
-
-  const { data, refreshReports } = useProductReports('product', status, query);
+  const { products, refreshUserReports } = useUserReports(status);
+  // console.log(products);
 
   const { isSuccess, toggleStatus, setIsSuccess } = useToggleReportStatus();
   const { deleteReport, isDeleted, resetDeleteStatus } = useDeleteReport();
 
   useEffect(() => {
     if (isSuccess) {
-      refreshReports();
+      refreshUserReports();
       setIsSuccess(false);
     }
-  }, [isSuccess, refreshReports, setIsSuccess]);
+  }, [isSuccess, refreshUserReports, setIsSuccess]);
   useEffect(() => {
     if (isDeleted) {
-      refreshReports();
+      refreshUserReports();
       resetDeleteStatus();
     }
-  }, [isDeleted, refreshReports, resetDeleteStatus]);
+  }, [isDeleted, refreshUserReports, resetDeleteStatus]);
   const handleEditClick = (productId: number) => {
     navigate(`/products/${productId}`);
   };
@@ -78,8 +78,8 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
         },
   ];
 
-  const logs = Array.isArray(data)
-    ? data.map((item) => ({
+  const logs = Array.isArray(products)
+    ? products.map((item) => ({
         id: item.report_id,
         type: 2,
         columns: [
@@ -88,7 +88,11 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
             content: `RT-${item.report_id}`,
             className: 'flex justify-center',
           },
-          { key: 'name', content: item.name, className: 'flex justify-center' },
+          {
+            key: 'name',
+            content: item.name ? item.name : user.name || 'N/A',
+            className: 'flex justify-center',
+          },
           {
             key: 'product_image',
 
@@ -161,12 +165,11 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
   return (
     <div>
       <Breadcrumb
-        breadcrumbLinks={[{ label: t('Reports.label.product'), path: '/' }]}
+        breadcrumbLinks={[{ label: t(''), path: '/' }]}
         pageName={t('Reports.label.product')}
       />
       <AccordionHeader2
         titles={[t('Reports.titles.reports'), t('Reports.titles.revision')]}
-        // onTitleClick={(index) => setStatus(index === 0 ? 0 : 1)}
         onTitleClick={(index) => {
           const statusMap = [0, 1];
           setStatus(statusMap[index]);
@@ -187,4 +190,4 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
   );
 };
 
-export default ProductReport;
+export default UserProductReport;

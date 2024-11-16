@@ -1,12 +1,14 @@
-//
-import { useTranslation } from 'react-i18next';
+import { Formik, FormikHelpers, Form, Field } from 'formik';
 import { IoClose } from 'react-icons/io5';
-import { toast, ToastContainer } from 'react-toastify';
-import { Formik, FormikHelpers, FormikProps, Form, Field } from 'formik';
+import { ToastContainer } from 'react-toastify';
 import { FaAsterisk } from 'react-icons/fa';
-import axiosInstance from '../../axiosConfig/instanc';
+
 import { useSelector } from 'react-redux';
 import { selectLanguage } from '../../store/slices/language';
+import useNotificationSubmit from '../../hooks/Notification/AddNotification';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import { NotificationValues } from '../../types/NotificationValue';
 
 interface EditPopupProps {
   name?: string;
@@ -14,17 +16,7 @@ interface EditPopupProps {
   url: string;
   isModalOpen: boolean;
   setIsModalOpen: (isModalOpen: boolean) => void;
-}
-
-interface NotificationValues {
-  title: string;
-  message: string;
-  date: string;
-  customers: boolean;
-  advertisers: boolean;
-  delegates: boolean;
-  observers: boolean;
-  supervisors: boolean;
+  refreshNotifications: any;
 }
 
 const AddNotification = ({
@@ -33,9 +25,12 @@ const AddNotification = ({
   url,
   isModalOpen,
   setIsModalOpen,
+  refreshNotifications,
 }: EditPopupProps) => {
   const { t } = useTranslation();
+
   const closeModal = () => setIsModalOpen(false);
+  const { submitNotification, isSuccess } = useNotificationSubmit(closeModal);
 
   const initialValues: NotificationValues = {
     title: 'title',
@@ -48,61 +43,12 @@ const AddNotification = ({
     supervisors: false,
   };
 
-  const handleNotificationSubmit = async (
-    values: NotificationValues,
-    { setSubmitting }: FormikHelpers<NotificationValues>,
-  ) => {
-    try {
-      setSubmitting(true);
-
-      // Format the date as "yyyy/MM/dd"
-      const formattedDate = new Date(values.date)
-        .toLocaleDateString('en-CA')
-        .replace(/-/g, '/');
-
-      const {
-        title,
-        message,
-        customers,
-        advertisers,
-        delegates,
-        observers,
-        supervisors,
-      } = values;
-
-      // Construct admin_group as a string of '1' and '0' based on the checkbox values
-      const admin_group = `${delegates ? '1' : '0'}${observers ? '1' : '0'}${
-        supervisors ? '1' : '0'
-      }`;
-
-      // Construct payload
-      const payload = {
-        title,
-        message,
-        expiry_date: formattedDate,
-        customers,
-        advertisers,
-        admin_group,
-      };
-      console.log(payload);
-
-      const res = await axiosInstance.post(`api/notifications`, payload);
-
-      toast.success(t('notifications.popup.successfully'));
-      closeModal();
-      console.log(res);
-    } catch (error: any) {
-      console.error(error);
-      toast.error(
-        error?.response?.data?.message || t('notifications.popup.error'),
-      );
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   const language = useSelector(selectLanguage);
-
+  useEffect(() => {
+    if (isSuccess) {
+      refreshNotifications();
+    }
+  }, [isSuccess, refreshNotifications]);
   return (
     <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {isModalOpen && (
@@ -125,10 +71,14 @@ const AddNotification = ({
               <div className="p-4 md:p-5">
                 <Formik
                   initialValues={initialValues}
-                  onSubmit={handleNotificationSubmit}
+                  onSubmit={(
+                    values: NotificationValues,
+                    { setSubmitting }: FormikHelpers<NotificationValues>,
+                  ) => submitNotification(values, setSubmitting)}
                 >
-                  {({ isSubmitting }: FormikProps<NotificationValues>) => (
+                  {({ isSubmitting }) => (
                     <Form className="flex flex-col gap-4">
+                      {/* Form fields */}
                       {/* <div className="flex flex-col">
                         <label className=".5 font-medium text-black dark:text-white flex">
                           {t('notifications.popup.title')}
@@ -177,8 +127,6 @@ const AddNotification = ({
                         />
                       </div> */}
 
-                      {/* Admin Group Checkboxes */}
-
                       <div className="flex flex-cl gap-8">
                         <div className="flex items-center">
                           <Field type="checkbox" name="delegates" />
@@ -214,20 +162,19 @@ const AddNotification = ({
                           </label>
                         </div>
                       </div>
-
                       <div className="flex justify-between mt-5">
                         <button
                           type="submit"
                           disabled={isSubmitting}
                           className="bg-login dark:bg-login-dark text-secondaryBG-light dark:text-black font-medium rounded-lg text-sm px-5 py-2.5"
                         >
-                          {t('notifications.popup.save')}
+                          Save
                         </button>
                         <button
                           onClick={closeModal}
                           className="py-2.5 px-5 text-sm font-medium text-gray-900 bg-secondaryBG-light rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-secondaryBG-dark dark:text-secondaryBG-light dark:border-gray-600"
                         >
-                          {t('notifications.popup.cancel')}
+                          Cancel
                         </button>
                       </div>
                     </Form>

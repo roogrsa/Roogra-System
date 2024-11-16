@@ -6,7 +6,6 @@ import Guard from './components/guards/Guards';
 import Users from './pages/users/users';
 import Advertiser from './pages/users/advertiser';
 import Customer from './pages/users/Customer';
-import AboutUs from './pages/aboutUs/AboutUs';
 import SignIn from './pages/Authentication/SignIn';
 import LoginLayout from './layout/LoginLayout';
 import { I18nextProvider } from 'react-i18next';
@@ -63,7 +62,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <LoginLayout />,
     children: [
-      { path: '/about-us', element: <AboutUs />, errorElement: <ErrorElement /> },
       { path: '/auth/login', element: <SignIn />, errorElement: <ErrorElement /> },
     ],
   },

@@ -10,6 +10,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
 }) => {
   const formattedDate = new Date(notification.date_add).toLocaleDateString();
+  // console.log(notification);
 
   return (
     <li>
