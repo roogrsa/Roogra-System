@@ -8,7 +8,6 @@ import Advertiser from './pages/users/advertiser';
 import Customer from './pages/users/Customer';
 import AboutUs from './pages/aboutUs/AboutUs';
 import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
 import LoginLayout from './layout/LoginLayout';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
@@ -40,13 +39,13 @@ import ProductReport from './pages/Reports/ProductReport';
 import Inquiries from './pages/contactUs/Inquiries';
 import Issues from './pages/contactUs/Issues';
 import Suggestions from './pages/contactUs/Suggestions';
-import Chat from './components/reports/Chat';
 import BanUserList from './pages/BankList/BanUserList';
 import BanProdList from './pages/BankList/BanProdList';
 import BanChatsList from './pages/BankList/BanChatsList';
 import UserChats from './pages/chats/UserChats';
 import SingleChat from './pages/chats/SingleChat';
 import Notfound from './pages/notfound/Notfound';
+import ErrorElement from './pages/errorElement/ErrorElement';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -64,9 +63,8 @@ const router = createBrowserRouter([
     path: '/',
     element: <LoginLayout />,
     children: [
-      { path: '/about-us', element: <AboutUs /> },
-      { path: '/auth/login', element: <SignIn /> },
-      { path: '/auth/signup', element: <SignUp /> },
+      { path: '/about-us', element: <AboutUs />, errorElement: <ErrorElement /> },
+      { path: '/auth/login', element: <SignIn />, errorElement: <ErrorElement /> },
     ],
   },
   {
@@ -87,6 +85,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'charts',
@@ -98,6 +97,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'users',
@@ -109,6 +109,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'profile/:id',
@@ -117,6 +118,7 @@ const router = createBrowserRouter([
             <Profile />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'users/customer',
@@ -128,6 +130,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'users/advertiser',
@@ -139,6 +142,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'ads',
@@ -150,6 +154,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: '/part/subscription',
@@ -161,6 +166,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: '/confirm/subscription',
@@ -172,6 +178,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'products',
@@ -183,6 +190,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'products/main',
@@ -194,6 +202,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'products/subscriptions',
@@ -205,6 +214,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'products',
@@ -213,6 +223,7 @@ const router = createBrowserRouter([
             <Products />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         // Make the path relative, as it's nested under 'products'
@@ -222,6 +233,7 @@ const router = createBrowserRouter([
             <PrdDetials />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'admins',
@@ -233,6 +245,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'admins/edit-admin/:adminId',
@@ -244,6 +257,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'settings',
@@ -255,6 +269,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'categories/main',
@@ -266,6 +281,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'categories/subscriptions',
@@ -277,6 +293,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'categories/map',
@@ -288,6 +305,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'contact-us/inquiries',
@@ -299,6 +317,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'contact-us/issues',
@@ -310,6 +329,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'contact-us/suggestions',
@@ -321,6 +341,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'reports',
@@ -332,6 +353,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'reports/product',
@@ -343,6 +365,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'reports/chat',
@@ -354,6 +377,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'reports/chat/search/:rc_search',
@@ -365,6 +389,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'reports/chats/:userId',
@@ -376,6 +401,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'reports/chat/:chatId',
@@ -387,6 +413,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'Ban/users',
@@ -398,6 +425,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'Ban/chats',
@@ -409,6 +437,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
       {
         path: 'Ban/products',
@@ -420,6 +449,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
 
       {
@@ -429,10 +459,11 @@ const router = createBrowserRouter([
             <Unauthorized />
           </Guard>
         ),
+        errorElement: <ErrorElement />
       },
     ],
   },
-  {path: '*',element: <Notfound />},
+  { path: '*', element: <Notfound /> },
 ]);
 
 const App: React.FC = () => {

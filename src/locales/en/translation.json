@@ -199,6 +199,9 @@
   "notfound": {
     "title": "sorry, page not found"
   },
+  "errorElement": {
+    "title": "sorry, we have some error please try again later"
+  },
   "settings": {
     "terms": "Terms & Conditions",
     "comission": "Comission",
