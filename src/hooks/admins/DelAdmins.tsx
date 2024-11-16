@@ -11,12 +11,13 @@ interface UseDeleteAdminsReturn {
 }
 
 const useDeleteAdmins = (): UseDeleteAdminsReturn => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const deleteAdmins = async (adminIds: number[]): Promise<void> => {
-    const { t } = useTranslation();
     setIsLoading(true);
     setError(null);
     setIsSuccess(false);

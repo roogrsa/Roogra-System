@@ -104,7 +104,7 @@ const Profile = () => {
         {/* accordion section */}
         <ProfileAccordion user={user} loading={loading} error={error} />
       </div>
-      <ToastContainer position="top-right" autoClose={5000} />
+      {/* <ToastContainer position="top-right" autoClose={5000} /> */}
     </>
   );
 };

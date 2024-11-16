@@ -16,7 +16,7 @@ import Pagination from '../../components/pagination/Pagination';
 import axiosInstance from '../../axiosConfig/instanc';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import { useLocation } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
 //
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
@@ -341,7 +341,7 @@ const CategorySubscription = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
-      <ToastContainer position="top-right" autoClose={5000} />
+      {/* <ToastContainer position="top-right" autoClose={5000} /> */}
     </div>
   );
 };

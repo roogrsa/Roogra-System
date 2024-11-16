@@ -1,8 +1,6 @@
 import React from 'react';
 import Accordion from '../Accordion/Accordion';
 import UserForm from './UserFormDetials';
-
-import UserReportType from '../reports/UserReportType';
 import UserProducts from './products/UserProducts';
 import UserInfo from './Info/UserInfo';
 import { useTranslation } from 'react-i18next';

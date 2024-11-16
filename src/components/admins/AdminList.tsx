@@ -78,7 +78,7 @@ const AdminsList: React.FC = () => {
 
   const confirmDeletionAdmins = () => {
     if (selectedAdminIds.length > 0) {
-      deleteAdmins(selectedAdminIds); // Only pass selectedAdminIds
+      deleteAdmins(selectedAdminIds);
       setSelectedAdminIds([]);
     } else {
       toast.error('Please select at least one admin to delete.');
@@ -332,7 +332,7 @@ const AdminsList: React.FC = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       /> */}
-      <ToastContainer position="top-left" autoClose={5000} />
+      {/* <ToastContainer position="top-left" autoClose={5000} /> */}
     </div>
   );
 };
