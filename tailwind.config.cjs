@@ -7,7 +7,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     colors: {
-      edit:'#0C94E1',
+      edit: '#0C94E1',
       primaryBG: {
         DEFAULT: '#F9FAFF',
         dark: '#14141A',
@@ -88,7 +88,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      satoshi: ['Satoshi', 'sans-serif'],
+      satoshi: ['sans-serif'],
     },
     screens: {
       '2xsm': '375px',
