@@ -40,7 +40,7 @@ export default function RepliedTable({
       const res = await axiosInstance.get(
         `/api/support/type/${type}/status/closed`,
       );
-      // console.log(res.data.data);
+      console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
@@ -50,10 +50,10 @@ export default function RepliedTable({
   const displayContactUsByUser = async () => {
     try {
       const res = await axiosInstance.get(
-        `/api/support/users/${id}/type/${type}`,
+        `/api/support/users/${id}/type/${type}/status/closed`,
         {},
       );
-      // console.log(res.data.data);
+      console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
@@ -67,7 +67,7 @@ export default function RepliedTable({
       displayContactUsByUser();
     }
   }, [type, query, id]);
-  // console.log(contactUs);
+  console.log(contactUs);
   return (
     <div>
       <table className="w-full text-[20px] text-left rtl:text-right text-text-light dark:text-text-dark">

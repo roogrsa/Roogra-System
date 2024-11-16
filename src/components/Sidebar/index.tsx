@@ -22,6 +22,7 @@ import DropLink from './DropLink';
 import { selectLanguage } from '../../store/slices/language';
 import { Link } from 'react-router-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
+// import OutsideClickHandler from 'react-outside-click-handler';
 
 interface SidebarProps {
   sidebarOpen: boolean;
