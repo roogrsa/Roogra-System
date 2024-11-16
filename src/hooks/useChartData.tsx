@@ -14,11 +14,10 @@ const useChartData = () => {
   useEffect(() => {
     const fetchChartData = async () => {
       try {
-        const response = await axiosInstance.get('/api/users/chart'); // Replace with your actual API URL
+        const response = await axiosInstance.get('/api/users/chart');
 
         const { customer, advertisers } = response.data.data;
 
-        // Customer chart data
         const customerData: ChartData = {
           series: [customer.active, customer.lazy, customer.inactive],
           labels: ['Active', 'Lazy', 'Inactive'],

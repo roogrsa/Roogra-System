@@ -166,11 +166,10 @@ const ProductReport: React.FC<{ query?: string }> = ({ query }) => {
       />
       <AccordionHeader2
         titles={[t('Reports.titles.reports'), t('Reports.titles.revision')]}
-        // onTitleClick={(index) => setStatus(index === 0 ? 0 : 1)}
         onTitleClick={(index) => {
           const statusMap = [0, 1];
           setStatus(statusMap[index]);
-          console.log('Selected status:', statusMap[index]);
+          // console.log('Selected status:', statusMap[index]);
         }}
         children={[
           <div>

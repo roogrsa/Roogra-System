@@ -173,7 +173,6 @@ const UserProductReport: React.FC<{ query?: string }> = ({ query, user }) => {
         onTitleClick={(index) => {
           const statusMap = [0, 1];
           setStatus(statusMap[index]);
-          console.log('Selected status:', statusMap[index]);
         }}
         children={[
           <div>

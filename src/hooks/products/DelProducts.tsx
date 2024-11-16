@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../axiosConfig/instanc';
+import { useTranslation } from 'react-i18next';
 
 interface UseDeleteProductsReturn {
   deleteProducts: (productIds: number[]) => Promise<void>;
@@ -10,6 +11,7 @@ interface UseDeleteProductsReturn {
 }
 
 const useDeleteProducts = (): UseDeleteProductsReturn => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -21,13 +23,10 @@ const useDeleteProducts = (): UseDeleteProductsReturn => {
 
     const queryParams = productIds.map((id) => `products[]=${id}`).join('&');
     const url = `/api/products/delete?${queryParams}`;
-
     try {
-      // console.log(url);
-
       const response = await axiosInstance.delete(url);
       if (response.status === 204) {
-        toast.success(`products successfully deleted`);
+        toast.success(t('toast.deleted'));
 
         setIsSuccess(true);
       } else {
@@ -36,7 +35,7 @@ const useDeleteProducts = (): UseDeleteProductsReturn => {
     } catch (err) {
       console.log(err);
 
-      toast.error(error?.response?.data?.message);
+      toast.error(t('toast.error'));
 
       setError(
         err instanceof Error ? err.message : 'An unknown error occurred',

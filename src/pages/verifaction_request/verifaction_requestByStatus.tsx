@@ -54,8 +54,9 @@ const verifaction_requestByStatus = () => {
         );
         setverificationRequestCount(response.data.data.count / 8);
         setCount(response.data.data.count);
-        // console.log(status, response.data.data.count);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchUsersCount();
   }, [Count, status]);

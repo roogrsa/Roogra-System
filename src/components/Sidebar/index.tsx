@@ -39,16 +39,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
-  type DropdownListType = "User" | "Ads" | "Categories" | "Subscription" | "Support" | "Reports" | "BanList" | null;
+  type DropdownListType =
+    | 'User'
+    | 'Ads'
+    | 'Categories'
+    | 'Subscription'
+    | 'Support'
+    | 'Reports'
+    | 'BanList'
+    | null;
   const [dropdownList, setDropdownList] = useState<DropdownListType>(null);
   const [open, setOpen] = useState<boolean>(false);
   const toggleMenu = (type: DropdownListType) => {
-    setDropdownList(type)
+    setDropdownList(type);
     setOpen(!open);
-  }
-  console.log(dropdownList);
-  console.log(open);
-  
+  };
+
   const handleClickOutside = () => {
     setDropdownList(null);
   };
@@ -168,25 +174,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     <>
       <aside
         ref={sidebar}
-        className={` ${isOpen ? 'w-55' : 'closed'
-          } absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
-        duration-300 ease-linear bg-boxdark lg:static lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+        className={` ${
+          isOpen ? 'w-55' : 'closed'
+        } absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-hidden
+        duration-300 ease-linear bg-boxdark lg:static lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-4">
           <button
             className={`absolute bg-sidebarHover  top-[1vh] rounded-[10px] p-2
-              ${isOpen
-                ? 'ltr:left-[180px] rtl:right-[175px]'
-                : 'ltr:left-[30px] rtl:right-[50px]'
+              ${
+                isOpen
+                  ? 'ltr:left-[180px] rtl:right-[175px]'
+                  : 'ltr:left-[30px] rtl:right-[50px]'
               }
                 rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
             onClick={toggleSidebar}
           >
             <FaChevronRight
-              className={`${isOpen ? 'rotate-180' : 'rotate-0'
-                } transition-all duration-300`}
+              className={`${
+                isOpen ? 'rotate-180' : 'rotate-0'
+              } transition-all duration-300`}
             />
           </button>
         </div>
@@ -214,98 +224,107 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {(permission.ads.all == 1 ||
                   permission.ads.primary == 1 ||
                   permission.ads.subscription == 1) && (
-                    <div className="relative">
-                      <div onClick={() => toggleMenu("Ads")}>
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.ads.ads'}
-                          icon={<AiFillHome className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList == "Ads"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
-                          <ul
-                            className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                              } top-12 z-10 rounded-xl`}
-                          >
-                            {permission.ads.all == 1 && (
-                              <DropLink to={`/products`} text={'sidebar.ads.all'} />
-                            )}
-                            {permission.ads.primary == 1 && (
-                              <DropLink
-                                to={`/products/main`}
-                                text={'sidebar.ads.main'}
-                              />
-                            )}
-                            {permission.ads.subscription == 1 && (
-                              <DropLink
-                                to={`/products/subscriptions`}
-                                text={'sidebar.ads.subscriptions'}
-                              />
-                            )}
-                          </ul>
-                        </OutsideClickHandler>
-                      )}
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('Ads')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.ads.ads'}
+                        icon={<AiFillHome className="text-2xl" />}
+                      />
                     </div>
-                  )}
+                    {dropdownList == 'Ads' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                        <ul
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
+                        >
+                          {permission.ads.all == 1 && (
+                            <DropLink
+                              to={`/products`}
+                              text={'sidebar.ads.all'}
+                            />
+                          )}
+                          {permission.ads.primary == 1 && (
+                            <DropLink
+                              to={`/products/main`}
+                              text={'sidebar.ads.main'}
+                            />
+                          )}
+                          {permission.ads.subscription == 1 && (
+                            <DropLink
+                              to={`/products/subscriptions`}
+                              text={'sidebar.ads.subscriptions'}
+                            />
+                          )}
+                        </ul>
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {/* users dropdown */}
                 {(permission.users.all == 1 ||
                   permission.users.advertisers == 1 ||
                   permission.users.customers == 1) && (
-                    <div className="relative">
-                      <div onClick={() => toggleMenu("User")}>
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.users.users'}
-                          icon={<PiUsersFill className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList == "User"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
-                          <ul
-                            className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                              } top-12 z-10 rounded-xl`}
-                          >
-                            {permission.users.all == 1 && (
-                              <DropLink to={`/users`} text={'sidebar.users.all'} />
-                            )}
-                            {permission.users.advertisers == 1 && (
-                              <DropLink
-                                to={`/users/advertiser`}
-                                text={'sidebar.users.advertisers'}
-                              />
-                            )}
-                            {permission.users.customers == 1 && (
-                              <DropLink
-                                to={`/users/customer`}
-                                text={'sidebar.users.customers'}
-                              />
-                            )}
-                          </ul>
-                        </OutsideClickHandler>
-                      )}
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('User')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.users.users'}
+                        icon={<PiUsersFill className="text-2xl" />}
+                      />
                     </div>
-                  )}
+                    {dropdownList == 'User' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                        <ul
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
+                        >
+                          {permission.users.all == 1 && (
+                            <DropLink
+                              to={`/users`}
+                              text={'sidebar.users.all'}
+                            />
+                          )}
+                          {permission.users.advertisers == 1 && (
+                            <DropLink
+                              to={`/users/advertiser`}
+                              text={'sidebar.users.advertisers'}
+                            />
+                          )}
+                          {permission.users.customers == 1 && (
+                            <DropLink
+                              to={`/users/customer`}
+                              text={'sidebar.users.customers'}
+                            />
+                          )}
+                        </ul>
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {/* categories dropdown */}
                 {(permission.categories.primary == 1 ||
                   permission.categories.subscription == 1 ||
                   permission.categories.region == 1) && (
-                    <div className="relative">
-                      <div onClick={() => toggleMenu("Categories")}>
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.categories.categories'}
-                          icon={<BiSolidCategory className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList=="Categories"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('Categories')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.categories.categories'}
+                        icon={<BiSolidCategory className="text-2xl" />}
+                      />
+                    </div>
+                    {dropdownList == 'Categories' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                            } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
                         >
                           {permission.categories.primary == 1 && (
                             <DropLink
@@ -326,29 +345,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             />
                           )}
                         </ul>
-                        </OutsideClickHandler>
-                      )}
-                    </div>
-                  )}
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {/* subscription dropdown */}
                 {(permission.requests.attestation == 1 ||
                   permission.requests.category == 1) && (
-                    <div className="relative">
-                      <div
-                        onClick={() => toggleMenu("Subscription")}
-                      >
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.requests.requests'}
-                          icon={<PiTicketFill className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList=="Subscription"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('Subscription')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.requests.requests'}
+                        icon={<PiTicketFill className="text-2xl" />}
+                      />
+                    </div>
+                    {dropdownList == 'Subscription' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                            } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
                         >
                           {permission.requests.attestation == 1 && (
                             <DropLink
@@ -363,28 +381,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             />
                           )}
                         </ul>
-                        </OutsideClickHandler>
-                      )}
-                    </div>
-                  )}
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {/* support dropdown */}
                 {(permission.contact.inquiries == 1 ||
                   permission.contact.issues == 1 ||
                   permission.contact.suggestions == 1) && (
-                    <div className="relative">
-                      <div onClick={() => toggleMenu("Support")}>
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.support.support'}
-                          icon={<PiHeadsetFill className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList=="Support"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('Support')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.support.support'}
+                        icon={<PiHeadsetFill className="text-2xl" />}
+                      />
+                    </div>
+                    {dropdownList == 'Support' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                            } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
                         >
                           {permission.contact.inquiries == 1 && (
                             <DropLink
@@ -405,27 +424,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             />
                           )}
                         </ul>
-                        </OutsideClickHandler>
-                      )}
-                    </div>
-                  )}
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {/* reports dropdown */}
                 {(permission.reports.chats == 1 ||
                   permission.reports.products == 1) && (
-                    <div className="relative">
-                      <div onClick={() => toggleMenu("Reports")}>
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.reports.reports'}
-                          icon={<PiEnvelopeFill className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList=="Reports"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('Reports')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.reports.reports'}
+                        icon={<PiEnvelopeFill className="text-2xl" />}
+                      />
+                    </div>
+                    {dropdownList == 'Reports' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                            } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
                         >
                           {permission.reports.chats == 1 && (
                             <DropLink
@@ -440,27 +460,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             />
                           )}
                         </ul>
-                        </OutsideClickHandler>
-                      )}
-                    </div>
-                  )}
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {/* ban list dropdown */}
                 {(permission.banlist.chats == 1 ||
                   permission.banlist.products == 1) && (
-                    <div className="relative">
-                      <div onClick={() => toggleMenu("BanList")}>
-                        <SidebarLink
-                          to={`#`}
-                          isOpen={isOpen}
-                          text={'sidebar.ban-list.ban-list'}
-                          icon={<MdOutlineBlock className="text-2xl" />}
-                        />
-                      </div>
-                      {dropdownList=="BanList"&&open && (
-                        <OutsideClickHandler onOutsideClick={handleClickOutside}>
+                  <div className="relative">
+                    <div onClick={() => toggleMenu('BanList')}>
+                      <SidebarLink
+                        to={`#`}
+                        isOpen={isOpen}
+                        text={'sidebar.ban-list.ban-list'}
+                        icon={<MdOutlineBlock className="text-2xl" />}
+                      />
+                    </div>
+                    {dropdownList == 'BanList' && open && (
+                      <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${language == 'ar' ? '-left-6' : '-right-6'
-                            } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-full ${
+                            language == 'ar' ? '-left-6' : '-right-6'
+                          } top-12 z-10 rounded-xl`}
                         >
                           {permission.banlist.chats == 1 && (
                             <DropLink
@@ -481,10 +502,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             />
                           )}
                         </ul>
-                        </OutsideClickHandler>
-                      )}
-                    </div>
-                  )}
+                      </OutsideClickHandler>
+                    )}
+                  </div>
+                )}
                 {permission.admins == 1 && (
                   <SidebarLink
                     to={`/admins`}
@@ -506,10 +527,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <div
               role="button"
               onClick={logout}
-              className={`bg-[#E02828] ${isOpen
+              className={`bg-[#E02828] ${
+                isOpen
                   ? 'brightness-150 w-full flex justify-around'
                   : 'hover:brightness-150'
-                } text-white text-[20px] p-3 rounded-xl transition-all duration-300`}
+              } text-white text-[20px] p-3 rounded-xl transition-all duration-300`}
             >
               <PiPowerFill className="text-2xl" />
               {isOpen && <div> {t('sidebar.sign-out')} </div>}

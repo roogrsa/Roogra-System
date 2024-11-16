@@ -4,16 +4,10 @@ import { useTranslation } from 'react-i18next';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useDispatch } from 'react-redux';
 import { setIsLoggedin } from '../../store/slices/auth';
-import { FaAsterisk } from "react-icons/fa";
-import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  Form,
-  Field
-} from 'formik';
-import { ToastContainer,toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { FaAsterisk } from 'react-icons/fa';
+import { Formik, FormikHelpers, FormikProps, Form, Field } from 'formik';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { setPermissions } from '../../store/slices/permissions';
 interface LoginValues {
   email: string;
@@ -22,23 +16,24 @@ interface LoginValues {
 const SignIn: React.FC = () => {
   const { t } = useTranslation();
   const initialValues: LoginValues = { email: '', password: '' };
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // console.log(cookies.get('token'));
   const handleRegisterSubmit = async (
     values: LoginValues,
-    { setSubmitting }: FormikHelpers<LoginValues>) => {
+    { setSubmitting }: FormikHelpers<LoginValues>,
+  ) => {
     try {
       setSubmitting(true);
       const res = await axiosInstance.post(`/api/admins/login`, values);
-      console.log(res.data.data);
-      dispatch(setPermissions(res.data.data.permissions))
-      localStorage.setItem("token", res.data.data.token);
+      // console.log(res.data.data);
+      dispatch(setPermissions(res.data.data.permissions));
+      localStorage.setItem('token', res.data.data.token);
       localStorage.setItem('email', res.data.data.email);
-      localStorage.setItem('first_name', res.data.data.first_name );
-      localStorage.setItem('last_name', res.data.data.last_name );
-      dispatch(setIsLoggedin())
-      navigate(`/`)
+      localStorage.setItem('first_name', res.data.data.first_name);
+      localStorage.setItem('last_name', res.data.data.last_name);
+      dispatch(setIsLoggedin());
+      navigate(`/`);
     } catch (error: any) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -46,7 +41,7 @@ const SignIn: React.FC = () => {
       setSubmitting(false);
     }
   };
-  
+
   return (
     <>
       <div className="rounded-sm  bg-white dark:bg-login-boxBgDark">
@@ -64,7 +59,10 @@ const SignIn: React.FC = () => {
                   <Form>
                     <div className="mb-4">
                       <label className="mb-2.5 font-medium text-black dark:text-white flex">
-                        {t('login.name')} <span><FaAsterisk className='text-[8px] text-[#E02828]' /></span>
+                        {t('login.name')}{' '}
+                        <span>
+                          <FaAsterisk className="text-[8px] text-[#E02828]" />
+                        </span>
                       </label>
                       <div className="">
                         <Field
@@ -78,7 +76,8 @@ const SignIn: React.FC = () => {
 
                     <div className="mt-6 mb-14">
                       <label className="mb-2.5 flex font-medium text-black dark:text-white">
-                        {t('login.password')} <FaAsterisk className='text-[8px] text-[#E02828]' />
+                        {t('login.password')}{' '}
+                        <FaAsterisk className="text-[8px] text-[#E02828]" />
                       </label>
                       <div className="">
                         <Field
@@ -87,7 +86,6 @@ const SignIn: React.FC = () => {
                           placeholder={t('login.password')}
                           className="w-full rounded-lg border border-stroke py-3 pl-6 pr-10 text-black outline-none focus-visible:shadow-none dark:border-form-strokedark"
                         />
-
                       </div>
                     </div>
                     <div className="mb-5">
@@ -95,7 +93,10 @@ const SignIn: React.FC = () => {
                         type="submit"
                         disabled={isSubmitting}
                         className="w-full cursor-pointer rounded-lg bg-login dark:bg-login-dark px-4 py-2 text-white dark:text-black text-2xl transition hover:bg-opacity-90"
-                      > {t('login.go')}</button>
+                      >
+                        {' '}
+                        {t('login.go')}
+                      </button>
                     </div>
                   </Form>
                 )}

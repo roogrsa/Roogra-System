@@ -8,7 +8,7 @@ interface ApiResponse {
   data: User[];
 }
 
-const useUsers = (page: number = 0 , userName:string='') => {
+const useUsers = (page: number = 0, userName: string = '') => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,15 +16,15 @@ const useUsers = (page: number = 0 , userName:string='') => {
   const fetchUsers = async () => {
     try {
       const response = await axiosInstance.get<ApiResponse>(
-        `/api/users?page=${page}&limit=8`,{
-          params:{
-            q:userName || ''
-          }
+        `/api/users?page=${page}&limit=8`,
+        {
+          params: {
+            q: userName || '',
+          },
         },
       );
       if (response.data.success) {
         setUsers(response.data.data);
-        console.log(response.data.data);
       } else {
         setError('Failed to fetch users');
       }

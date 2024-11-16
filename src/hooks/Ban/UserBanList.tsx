@@ -12,16 +12,14 @@ const useBannedUsers = () => {
       );
       if (response.data.success) {
         setBannedUsers(response.data.data.banned);
-        // console.log(response.data.data.banned);
       } else {
         throw new Error(
           response.data.message || 'Failed to fetch banned chats',
         );
       }
     } catch (err) {
-      console.log(err);
-
       setError(err.message || 'An error occurred');
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -29,7 +27,6 @@ const useBannedUsers = () => {
   useEffect(() => {
     fetchBannedUsers();
   }, []);
-  // Expose refresh function to manually update banned products list
   const refreshBannedUsers = () => {
     fetchBannedUsers();
   };

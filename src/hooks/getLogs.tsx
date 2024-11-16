@@ -6,8 +6,6 @@ interface LogsApiResponse {
   message: string;
   data: LogData[];
 }
-
-// Custom hook to fetch logs
 const useLogs = (page: number = 0) => {
   const [logs, setLogs] = useState<LogData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +21,6 @@ const useLogs = (page: number = 0) => {
 
         if (response.data.success) {
           setLogs(response.data.data);
-          // console.log('logs', response.data.data);
         } else {
           setError('Failed to fetch logs');
         }

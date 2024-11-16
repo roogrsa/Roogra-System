@@ -24,11 +24,12 @@ const useFetchUsers = (
       );
       if (response.data.success) {
         setUsers(response.data.data);
-        console.log('customers', response.data.data);
       } else {
         setError(response.data.message || 'Error fetching users');
       }
     } catch (err) {
+      console.log(err);
+
       setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);

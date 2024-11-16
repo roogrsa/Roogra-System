@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { ChatValue } from "../../types/ChatValue";
-import axiosInstance from "../../axiosConfig/instanc";
-
+import { useEffect, useState } from 'react';
+import { ChatValue } from '../../types/ChatValue';
+import axiosInstance from '../../axiosConfig/instanc';
 
 export default function useDisplayChat(userId?: string) {
   const [chat, setChat] = useState<ChatValue>();
@@ -13,10 +12,8 @@ export default function useDisplayChat(userId?: string) {
       console.error(error);
     }
   };
-  console.log(chat);
-
   useEffect(() => {
     displayChats();
   }, [userId]);
-  return chat
+  return chat;
 }

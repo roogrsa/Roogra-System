@@ -12,7 +12,6 @@ const useAllProducts = (page: number = 1) => {
         `/api/products?page=${page}&limit=8`,
       );
       setProducts(response.data.data);
-      // console.log('productssss', response.data.data);
     } catch (err) {
       setError('Failed to fetch products');
     } finally {

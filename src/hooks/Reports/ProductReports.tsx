@@ -22,8 +22,6 @@ export const useProductReports = (
   const [error, setError] = useState<string | null>(null);
   const fetchReports = async () => {
     setLoading(true);
-    console.log(status);
-
     try {
       const response = await axiosInstance.get<ApiResponse>(
         `/api/reports/type/${type}/status/${status}`,
@@ -36,11 +34,12 @@ export const useProductReports = (
 
       if (response.data.success) {
         setData(response.data.data);
-        console.log(response.data.data);
       } else {
         setError('Failed to fetch reports');
       }
     } catch (err) {
+      console.log(err);
+
       setError('An error occurred while fetching the data');
     } finally {
       setLoading(false);

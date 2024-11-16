@@ -1,4 +1,3 @@
-import React from 'react';
 import ProductsType from '../../components/products/ProductsType';
 
 const ProductsMain = () => {

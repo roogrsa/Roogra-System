@@ -17,8 +17,9 @@ const useUserRates = (id: number): UseUserRatesReturn => {
     try {
       const response = await axiosInstance.get(`/api/users/${id}/rates`);
       setData(response.data.data);
-      // console.log(response.data.data);
     } catch (err) {
+      console.log(err);
+
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);

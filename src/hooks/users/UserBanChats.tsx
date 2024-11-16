@@ -22,6 +22,8 @@ const useChatUserHistory = (userId: number) => {
         );
       }
     } catch (err) {
+      console.log(err);
+
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);

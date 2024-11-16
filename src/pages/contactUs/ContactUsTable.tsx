@@ -9,9 +9,14 @@ interface ContactUsTableProps {
   type: string;
   idPre: string;
   query?: string;
-  id?:string;
+  id?: string;
 }
-export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTableProps) {
+export default function ContactUsTable({
+  type,
+  idPre,
+  query,
+  id,
+}: ContactUsTableProps) {
   const { t } = useTranslation();
   const [contactUs, setContactUs] = useState<ContactUsType[]>([]);
   const [selectedSupport, setSelectedSupport] = useState<ContactUsType>();
@@ -29,8 +34,10 @@ export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTable
   };
   const displayContactUs = async () => {
     try {
-      const res = await axiosInstance.get(`/api/support/type/${type}/status/open`);
-      console.log(res.data.data);
+      const res = await axiosInstance.get(
+        `/api/support/type/${type}/status/open`,
+      );
+      // console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
@@ -40,9 +47,10 @@ export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTable
   const displayContactUsByUser = async () => {
     try {
       const res = await axiosInstance.get(
-        `/api/support/users/${id}/type/${type}`, {}
+        `/api/support/users/${id}/type/${type}`,
+        {},
       );
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
@@ -50,13 +58,13 @@ export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTable
     }
   };
   useEffect(() => {
-    if(!id){
+    if (!id) {
       displayContactUs();
-    }else if(id){
-      displayContactUsByUser()
+    } else if (id) {
+      displayContactUsByUser();
     }
-  }, [type, query,id]);
-  console.log(contactUs);
+  }, [type, query, id]);
+  // console.log(contactUs);
 
   return (
     <div>
@@ -66,16 +74,18 @@ export default function ContactUsTable({ type, idPre, query ,id}: ContactUsTable
           {contactUs.map((support, index) => (
             <tr
               key={support.ticket_id}
-              className={`dark:border-gray-700  ${index % 2 !== 0
+              className={`dark:border-gray-700  ${
+                index % 2 !== 0
                   ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
                   : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
-                }`}
+              }`}
             >
               <td
                 scope="row"
                 className="px-2 py-2 font-[400] text-[17px] text-center"
               >
-                {idPre}{support.ticket_id}
+                {idPre}
+                {support.ticket_id}
               </td>
               <td className="px-2 py-2 font-[400] text-[17px] text-center">
                 {support.customer_name}

@@ -31,7 +31,7 @@ const updatePeriod = async (
     );
 
     if (response.data.success) {
-      console.log('Update successful:', response.data.message);
+      // console.log('Update successful:', response.data.message);
       return response.data;
     } else {
       console.error('Update failed:', response.data.message);
@@ -120,7 +120,7 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ item }) => {
       }
 
       if (response && response.success) {
-        console.log('Update successful:', response.message);
+        // console.log('Update successful:', response.message);
       } else {
         console.error('Failed to update verification period');
       }
@@ -128,7 +128,7 @@ const PeriodInput: React.FC<PeriodInputProps> = ({ item }) => {
 
     if (inputValue !== `${item.verification_period} ي`) {
       handleUpdatePeriod();
-      console.log('Input Value Updated:', inputValue);
+      // console.log('Input Value Updated:', inputValue);
     }
   }, [
     inputValue,

@@ -12,7 +12,6 @@ const useAllAds = () => {
       try {
         const response = await axiosInstance.get('/api/ads');
         setAds(response.data.data);
-        // console.log('ads', response.data.data);
       } catch (err) {
         setError('Failed to fetch ads');
       } finally {

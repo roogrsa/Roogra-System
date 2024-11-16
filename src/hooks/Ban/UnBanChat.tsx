@@ -20,8 +20,6 @@ const useUnBanChat = () => {
       if (response.status < 200 || response.status >= 300) {
         throw new Error(`Failed to ban user with ID: ${chatId}`);
       }
-      console.log(response.data);
-
       return response.data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
