@@ -2,17 +2,10 @@ import { useEffect } from 'react';
 import useColorMode from '../../hooks/useColorMode';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import LanguageSwitcher from './LanguageSwitcher';
-import { Link } from 'react-router-dom';
-const logoLight = '../../../logo/logoLight.png';
-const logoDark = '../../../logo/logoDark.png';
 
 const LoginHeader = () => {
   const [colorMode, setColorMode] = useColorMode();
   useEffect(() => {
-    // if (typeof setColorMode === 'function') {
-    //   setColorMode(colorMode === 'light' ? 'dark' : 'light');
-    // }
-
   }, [colorMode]);
   return (
     <>
@@ -22,16 +15,9 @@ const LoginHeader = () => {
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
-            <li className=''>
-              <Link to={`/about-us`}>
-    <img src={colorMode=== 'light'?logoLight:logoDark} width={100} height={100} alt="" />
-              </Link>
-            </li>
             <DarkModeSwitcher />
           </ul>
         </div>
-        
-
         <LanguageSwitcher/>
       </div>
     </header>

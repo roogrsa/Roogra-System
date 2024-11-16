@@ -196,6 +196,9 @@
     "title": "sorry, You are not authorized",
     "discribution": "You do not have permission to access this page."
   },
+  "notfound": {
+    "title": "sorry, page not found"
+  },
   "settings": {
     "terms": "Terms & Conditions",
     "comission": "Comission",

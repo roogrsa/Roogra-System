@@ -46,6 +46,7 @@ import BanProdList from './pages/BankList/BanProdList';
 import BanChatsList from './pages/BankList/BanChatsList';
 import UserChats from './pages/chats/UserChats';
 import SingleChat from './pages/chats/SingleChat';
+import Notfound from './pages/notfound/Notfound';
 const storedPermissions: any = store.getState().permissions.permissions;
 // super: permissions[0],
 // charts: permissions[1],
@@ -431,6 +432,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {path: '*',element: <Notfound />},
 ]);
 
 const App: React.FC = () => {
