@@ -46,7 +46,6 @@ const Products: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Refresh products when deletion is successful
     if (isSuccess) {
       refreshProducts();
     }
@@ -54,8 +53,8 @@ const Products: React.FC = () => {
   const totalPages = Math.ceil(productsCount);
 
   // Handle loading and error states for fetching products
-  if (loading) return <p>Loading products...</p>;
-  if (error) return <p>Error fetching products: {error}</p>;
+  // if (loading) return <p>Loading products...</p>;
+  // if (error) return <p>Error fetching products: {error}</p>;
 
   const handleEditClick = (productId: number) => {
     navigate(`/products/${productId}`);

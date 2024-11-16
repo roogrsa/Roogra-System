@@ -1,4 +1,27 @@
 {
+  "cancel": "إلغاء",
+  "Successfully": "بنجاح",
+  "failed": "فشل ",
+  "error": "خطأ غير معروف",
+  "Ban": {
+    "Ban": "حظر",
+    "unBan": "رفع الحظر",
+    "unBanmessageTitle": "تأكيد رفع الحظر",
+    "BanmessageTitle": "تأكيد  الحظر",
+    "unBanmessageText": "هل أنت متأكد من أنك تريد إلغاء حظر ",
+    "BanmessageText": "هل أنت متأكد من أنك تريد  حظر ",
+    "confirmUnBanButtonText": "رفع الحظر",
+    "confirmBanButtonText": "حظر",
+    "reason": "أدخل سبب الحظر/إلغاء الحظر هنا...",
+    "Banned": "تم الحظر",
+    "unBaned": "تم رفع الحظر"
+  },
+  "remove": {
+    "remove": "حذف",
+    "RemovemessageTitle": "تأكيد الحذف",
+    "messageText": "هل أنت متأكد من أنك تريد  حذف الهوية",
+    "removed": "تم الحذف"
+  },
   "sidebar": {
     "charts": "الرسوم البيانية",
     "ads": {
@@ -174,6 +197,24 @@
     "mobileconfirm": "رقم الجوال",
     "emailleconfirm": "البريد الالكتروني",
     "BanStatus": "الحالة"
+  },
+  "ProdDetials": {
+    "label": {
+      "label": "الاعلانات",
+      "pageName": "تحرير"
+    },
+    "form": {
+      "id": "رقم الإعلان",
+      "category": "القسم",
+      "AdsName": "اسم الإعلان",
+      "price": "السعر",
+      "status": "حالة الإعلان",
+      "description": "الوصف",
+      "image": "الصور",
+      "video": "الفيديو",
+      "NoImage": "لا يوجد صور",
+      "NoVideo": "لا يوجد فيديوهات"
+    }
   },
   "products": {
     "label": {

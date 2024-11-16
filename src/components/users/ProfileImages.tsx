@@ -1,6 +1,6 @@
 // ProfileImages.tsx
 import React from 'react';
-import CoverOne from './../../images/cover/cover-01.png';
+import CoverOne from '/cover-01.png';
 import userSix from '/Defualt.png';
 
 interface ProfileImagesProps {

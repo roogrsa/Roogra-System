@@ -1,4 +1,28 @@
 {
+  "cancel": "Cancel",
+  "Successfully": "Successfully",
+  "error": "Unknown error",
+  "failed": "Failed to",
+
+  "Ban": {
+    "Ban": "Ban",
+    "unBan": "Un Ban",
+    "unBanmessageTitle": "Confirm Un Ban",
+    "BanmessageTitle": "Confirm Ban",
+    "unBanmessageText": "Are you sure you want to Un Ban this",
+    "BanmessageText": "Are you sure you want to Ban this ",
+    "confirmUnBanButtonText": "Un Ban",
+    "confirmBanButtonText": " Ban",
+    "reason": "Enter reason for ban/unban here...",
+    "Banned": "Banned",
+    "unBaned": "Unbaned"
+  },
+  "remove": {
+    "remove": "Remove",
+    "RemovemessageTitle": "Confirm Removal",
+    "messageText": "Are you sure you want to remove",
+    "removed": "Removed"
+  },
   "sidebar": {
     "charts": "Charts",
     "ads": {
@@ -191,6 +215,24 @@
     "photo": "Image",
     "Edit": "Show",
     "BanStatus": "Status"
+  },
+  "ProdDetials": {
+    "label": {
+      "label": "Ads",
+      "pageName": "show"
+    },
+    "form": {
+      "id": "ID",
+      "category": "Category",
+      "AdsName": "Ads Name",
+      "price": "Price",
+      "status": "Status",
+      "description": "Description",
+      "image": "Image",
+      "video": "Video",
+      "NoImage": "No images available",
+      "NoVideo": "No video available"
+    }
   },
   "unauthorized": {
     "title": "sorry, You are not authorized",
