@@ -14,7 +14,7 @@ const Header = (props: {
   const { t } = useTranslation();
   const language = useSelector(selectLanguage);
   const navigate = useNavigate();
-
+  const permissions: any = localStorage.getItem('permissions');
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement> | React.MouseEvent<HTMLButtonElement>) => {
     if ((event as React.KeyboardEvent).key === "Enter" || event.type === "click") {
       const target = event.target as HTMLInputElement;
@@ -114,7 +114,9 @@ const Header = (props: {
         </div>
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
+            {permissions[1]==1&&
             <DropdownNotification />
+            }
             <LanguageSwitcher />
           </ul>
         </div>
