@@ -47,33 +47,34 @@ const MainCategories: React.FC = () => {
     };
     fetchCategoriesCount();
   }, []);
-
-  const changeOrder = async (id: number, order: number) => {
+  const changeOrder = async (categories: { id: number; order: number }[]) => {
     try {
-      await axiosInstance.patch(
-        `/api/categories`,
-        { categories: [{ id, order }] },
-        { headers: { 'content-type': 'Application/json' } },
-      );
-      displayCategories();
-      toast.success(t('categoriesPage.categoriesToast'));
+        await axiosInstance.patch(
+            `/api/categories`,
+            { categories },
+            { headers: { 'content-type': 'Application/json' } },
+        );
+        displayCategories();
+        toast.success(t('categoriesPage.categoriesToast'));
     } catch (error) {
-      toast.error(t('categoriesPage.errorUpdatingOrder'));
-      console.error(error);
+        toast.error(t('categoriesPage.errorUpdatingOrder'));
+        console.error("Error updating category order:", error);
     }
-  };
+};
 
-  const handleOnDragEnd = (result: DropResult) => {
+const handleOnDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     if (!destination || destination.index === source.index) return;
-
     const reorderedCategories = Array.from(categories);
     const [movedCategory] = reorderedCategories.splice(source.index, 1);
     reorderedCategories.splice(destination.index, 0, movedCategory);
     setCategories(reorderedCategories);
-
-    changeOrder(movedCategory.parent_id, destination.index);
-  };
+    const updatedCategories = reorderedCategories.map((category, index) => ({
+        id: category.parent_id,
+        order: index
+    }));
+    changeOrder(updatedCategories);
+};
 
   const displayCategories = async () => {
     try {
@@ -168,7 +169,7 @@ const MainCategories: React.FC = () => {
                           }`}
                         >
                           <td className="px-2 py-4 font-[400] text-[17px]">
-                            #{index + 1} {cat.parent_sort_order}
+                            #{index + 1}
                           </td>
                           <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
                             {cat.category_name}

@@ -224,7 +224,6 @@ export default function AddAdmin() {
       }
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
       toast.error(error?.response?.data?.message);
     } finally {
       setSubmitting(false);

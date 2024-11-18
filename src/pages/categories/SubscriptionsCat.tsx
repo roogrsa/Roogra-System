@@ -85,45 +85,44 @@ const SubscriptionsCat: React.FC = () => {
     }
   };
 
-  const changeOrder = async (id: number, order: number) => {
+  const changeOrder = async (categories: { id: number; order: number }[]) => {
     try {
-      await axiosInstance.patch(`/api/categories`, {
-        categories: [{ id, order }],
-      });
-      toast.success(t('categoriesPage.categoriesToast'));
+        await axiosInstance.patch(`/api/categories`, { categories });
+        toast.success(t('categoriesPage.categoriesToast'));
+        displaySubscriptionsCat();
     } catch (error: any) {
-      console.error(error);
-      toast.error(
-        error?.response?.data?.message || t('categoriesPage.orderUpdateError'),
-      );
+        console.error("Error updating category order:", error);
+        toast.error(
+            error?.response?.data?.message || t('categoriesPage.orderUpdateError'),
+        );
     }
-  };
+};
 
-  const handleOnDragEnd = (result: DropResult) => {
+const handleOnDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     if (!destination || destination.index === source.index) return;
-
     const categoryIndex = subscriptionscategories.findIndex(
-      (cat) => cat.parent_id === expandedCategoryId,
+        (cat) => cat.parent_id === expandedCategoryId,
     );
     if (categoryIndex === -1) return;
-
     const reorderedSubcategories = Array.from(
-      subscriptionscategories[categoryIndex].sub,
+        subscriptionscategories[categoryIndex].sub,
     );
     const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
     reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
-    changeOrder(movedSubcategory.category_id, destination.index + 1);
-
     const updatedCategories = [...subscriptionscategories];
     updatedCategories[categoryIndex].sub = reorderedSubcategories;
     setSubscriptionscategories(updatedCategories);
-  };
+    const updatedOrders = reorderedSubcategories.map((subcategory, index) => ({
+        id: subcategory.category_id,
+        order: index + 1
+    }));
+    changeOrder(updatedOrders);
+};
 
   const toggleSubcategories = (parentId: number) => {
     setExpandedCategoryId(expandedCategoryId === parentId ? null : parentId);
   };
-  // console.log(modalType);
 
   const breadcrumbLinks = [
     { label: t('categoriesPage.title'), path: '/categories/main' },
@@ -246,7 +245,8 @@ const SubscriptionsCat: React.FC = () => {
                                                                         }`}
                                   >
                                     <td className="px-2 py-4 font-[400] text-[17px]">
-                                      #{index + 1} {sub.parent_sort_order}
+                                      #{index + 1} 
+                                      {/* {sub.parent_sort_order} */}
                                     </td>
                                     <td className="px-2 py-4"></td>
                                     <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">

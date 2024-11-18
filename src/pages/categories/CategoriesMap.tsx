@@ -51,32 +51,57 @@ const CategoriesMap: React.FC = () => {
             const res = await axiosInstance.get<{ data: CategoryMap[] }>(`/api/map-categories?limit=8&page=${currentPage}`);
             setCategoriesMap(res.data.data.sort((a, b) => a.sort_order - b.sort_order));
         } catch (error: any) {
-            console.error("Failed to fetch categories:", error);
             toast.error(t('categoriesPage.fetchError'));
         }
     };
 
-    const changeOrder = async (id: number, order: number) => {
+    // const changeOrder = async (id: number, order: number) => {
+    //     try {
+    //         await axiosInstance.patch(`/api/categories`, { categories: [{ id: id, order: order }] });
+    //         toast.success(t('categoriesPage.categoriesToast'));
+    //     } catch (error: any) {
+    //         console.error("Failed to change category order:", error);
+    //         toast.error(t('categoriesPage.orderError'));
+    //     }
+    // };
+
+    // const handleOnDragEnd = (result: DropResult) => {
+    //     const { destination, source } = result;
+    //     if (!destination || destination.index === source.index) return;
+    //     const reorderedCategoriesMap = Array.from(categoriesMap);
+    //     const [movedCategory] = reorderedCategoriesMap.splice(source.index, 1);
+    //     reorderedCategoriesMap.splice(destination.index, 0, movedCategory);
+    //     setCategoriesMap(reorderedCategoriesMap);
+    //     changeOrder(movedCategory.map_category_id, destination.index);
+    // };
+
+    const changeOrder = async (categories: { id: number; order: number }[]) => {
         try {
-            await axiosInstance.patch(`/api/categories`, { categories: [{ id: id, order: order }] });
+            await axiosInstance.patch(`/api/categories`, { categories });
+            displayCategoriesMap();
             toast.success(t('categoriesPage.categoriesToast'));
         } catch (error: any) {
             console.error("Failed to change category order:", error);
             toast.error(t('categoriesPage.orderError'));
         }
     };
-
+    
     const handleOnDragEnd = (result: DropResult) => {
         const { destination, source } = result;
         if (!destination || destination.index === source.index) return;
-
         const reorderedCategoriesMap = Array.from(categoriesMap);
         const [movedCategory] = reorderedCategoriesMap.splice(source.index, 1);
         reorderedCategoriesMap.splice(destination.index, 0, movedCategory);
         setCategoriesMap(reorderedCategoriesMap);
-
-        changeOrder(movedCategory.map_category_id, destination.index);
+        const updatedCategories = reorderedCategoriesMap.map((category, index) => ({
+            id: category.map_category_id,
+            order: index
+        }));
+    console.log(updatedCategories);
+        changeOrder(updatedCategories);
     };
+    console.log(categoriesMap);
+    
 
     useEffect(() => {
         displayCategoriesMap();
@@ -127,7 +152,7 @@ const CategoriesMap: React.FC = () => {
                                                         : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'} dark:border-secondaryBG-light
                                                         ${snapshot.isDragging ? "bg-header-inputBorder" : ""}`}
                                                 >
-                                                    <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1} {cat.sort_order}</td>
+                                                    <td className="px-2 py-4 font-[400] text-[17px]">#{index + 1}</td>
                                                     <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
                                                         {cat.name}
                                                     </td>
