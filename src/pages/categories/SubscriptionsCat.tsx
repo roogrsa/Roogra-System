@@ -55,10 +55,29 @@ const SubscriptionsCat: React.FC = () => {
     null,
   );
 
+  // const displaySubscriptionsCat = async () => {
+  //   try {
+  //     const res = await axiosInstance.get(`/api/categories/extensive`);
+  //     setSubscriptionscategories(res.data.data);
+  //   } catch (error: any) {
+  //     console.error(error);
+  //     toast.error(
+  //       error?.response?.data?.message || t('categoriesPage.fetchError'),
+  //     );
+  //   }
+  // };
   const displaySubscriptionsCat = async () => {
     try {
       const res = await axiosInstance.get(`/api/categories/extensive`);
-      setSubscriptionscategories(res.data.data);
+      const categories = res.data.data;
+  
+      // Sort subcategories by parent_sort_order
+      const sortedCategories = categories.map((category: SubscriptionsCategory) => ({
+        ...category,
+        sub: category.sub.sort((a, b) => a.parent_sort_order - b.parent_sort_order),
+      }));
+  
+      setSubscriptionscategories(sortedCategories);
     } catch (error: any) {
       console.error(error);
       toast.error(
@@ -66,7 +85,7 @@ const SubscriptionsCat: React.FC = () => {
       );
     }
   };
-
+  
   useEffect(() => {
     displaySubscriptionsCat();
   }, []);
@@ -243,7 +262,6 @@ const SubscriptionsCat: React.FC = () => {
                                   >
                                     <td className="px-2 py-4 font-[400] text-[17px]">
                                       #{index + 1}
-                                      {/* {sub.parent_sort_order} */}
                                     </td>
                                     <td className="px-2 py-4"></td>
                                     <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
