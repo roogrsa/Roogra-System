@@ -23,6 +23,7 @@ interface SubscriptionsCategory {
   parent_id: number;
   category_name: string;
   parent_image: string;
+  parent_sort_order: number
   sub: {
     parent_sort_order: number;
     category_id: number;
@@ -48,35 +49,16 @@ const SubscriptionsCat: React.FC = () => {
     useState<SubscriptionsCategory | null>(null);
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
-  const [subscriptionscategories, setSubscriptionscategories] = useState<
-    SubscriptionsCategory[]
-  >([]);
-  const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(
-    null,
-  );
-
-  // const displaySubscriptionsCat = async () => {
-  //   try {
-  //     const res = await axiosInstance.get(`/api/categories/extensive`);
-  //     setSubscriptionscategories(res.data.data);
-  //   } catch (error: any) {
-  //     console.error(error);
-  //     toast.error(
-  //       error?.response?.data?.message || t('categoriesPage.fetchError'),
-  //     );
-  //   }
-  // };
+  const [expandedCategoryId, setExpandedCategoryId] = useState<number | null>(null,);
+  const [subscriptionscategories, setSubscriptionscategories] = useState<SubscriptionsCategory[]>([]);
   const displaySubscriptionsCat = async () => {
     try {
       const res = await axiosInstance.get(`/api/categories/extensive`);
-      const categories = res.data.data;
-  
-      // Sort subcategories by parent_sort_order
+      const categories = res.data.data.sort((a: any, b: any) => a.parent_sort_order - b.parent_sort_order);
       const sortedCategories = categories.map((category: SubscriptionsCategory) => ({
         ...category,
         sub: category.sub.sort((a, b) => a.parent_sort_order - b.parent_sort_order),
       }));
-  
       setSubscriptionscategories(sortedCategories);
     } catch (error: any) {
       console.error(error);
@@ -85,7 +67,7 @@ const SubscriptionsCat: React.FC = () => {
       );
     }
   };
-  
+
   useEffect(() => {
     displaySubscriptionsCat();
   }, []);
@@ -118,25 +100,40 @@ const SubscriptionsCat: React.FC = () => {
   };
 
   const handleOnDragEnd = (result: DropResult) => {
-    const { destination, source } = result;
-    if (!destination || destination.index === source.index) return;
-    const categoryIndex = subscriptionscategories.findIndex(
-      (cat) => cat.parent_id === expandedCategoryId,
-    );
-    if (categoryIndex === -1) return;
-    const reorderedSubcategories = Array.from(
-      subscriptionscategories[categoryIndex].sub,
-    );
-    const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
-    reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
-    const updatedCategories = [...subscriptionscategories];
-    updatedCategories[categoryIndex].sub = reorderedSubcategories;
-    setSubscriptionscategories(updatedCategories);
-    const updatedOrders = reorderedSubcategories.map((subcategory, index) => ({
-      id: subcategory.category_id,
-      order: index + 1
-    }));
-    changeOrder(updatedOrders);
+    const { destination, source, type } = result;
+    if (!destination) return;
+
+    if (type === 'table') {
+      // Reorder tables
+      const reorderedTables = Array.from(subscriptionscategories);
+      const [movedTable] = reorderedTables.splice(source.index, 1);
+      reorderedTables.splice(destination.index, 0, movedTable);
+      setSubscriptionscategories(reorderedTables);
+      const updatedOrders = reorderedTables.map((parentCategory, index) => ({
+        id: parentCategory.parent_id,
+        order: index + 1,
+      }));
+      changeOrder(updatedOrders)
+    } else if (type === 'row') {
+      // Reorder rows within a table
+      const categoryIndex = subscriptionscategories.findIndex(
+        (cat) => cat.parent_id === expandedCategoryId,
+      );
+      if (categoryIndex === -1) return;
+      const reorderedSubcategories = Array.from(
+        subscriptionscategories[categoryIndex].sub,
+      );
+      const [movedSubcategory] = reorderedSubcategories.splice(source.index, 1);
+      reorderedSubcategories.splice(destination.index, 0, movedSubcategory);
+      const updatedCategories = [...subscriptionscategories];
+      updatedCategories[categoryIndex].sub = reorderedSubcategories;
+      setSubscriptionscategories(updatedCategories);
+      const updatedOrders = reorderedSubcategories.map((subcategory, index) => ({
+        id: subcategory.category_id,
+        order: index + 1,
+      }));
+      changeOrder(updatedOrders);
+    }
   };
 
   const toggleSubcategories = (parentId: number) => {
@@ -163,148 +160,144 @@ const SubscriptionsCat: React.FC = () => {
         </Link>
       </div>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="supCategories">
+        <Droppable droppableId="all-tables" type="table">
           {(provided) => (
-            <div className="bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-sm">
-              {subscriptionscategories.map((cat) => (
-                <table
-                  key={cat.parent_id}
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  className="w-full text-[20px] text-left rtl:text-right mb-7"
-                >
-                  <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
-                    <tr className="px-2 py-2 text-[18px] font-[400]">
-                      <th
-                        scope="col"
-                        className="px-2 py-3 text-[18px] font-[400] rounded-s-lg"
-                      >
-                        {t('categoriesPage.order')}
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        <img src={cat.parent_image} width={100} alt="" />
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-[18px] font-[400]"
-                      >
-                        {cat.category_name}
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-3"
-                        onClick={() => openModal('AddSub', cat)}
-                      >
-                        <CgAddR
-                          className="text-3xl text-Input-TextGreen"
-                          role="button"
-                        />
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-3"
-                        onClick={() => openModal('EditParent', cat)}
-                      >
-                        <LiaEditSolid
-                          className="text-3xl text-Input-TextGreen"
-                          role="button"
-                        />
-                      </th>
-                      <th
-                        scope="col"
-                        className=" py-3"
-                        onClick={() => openModal('DeleteParent', cat)}
-                        role="button"
-                      >
-                        <RiDeleteBin6Line className="text-3xl text-Input-TextRed" />
-                      </th>
-                      <th
-                        scope="col"
-                        className=" py-3 rounded-e-lg"
-                        role="button"
-                        onClick={() => toggleSubcategories(cat.parent_id)}
-                      >
-                        {expandedCategoryId === cat.parent_id ? (
-                          <IoMdArrowDropdown className="text-3xl" />
-                        ) : (
-                          <IoMdArrowDropup className="text-3xl" />
-                        )}
-                      </th>
-                    </tr>
-                  </thead>
-                  {expandedCategoryId === cat.parent_id && (
-                    <Droppable droppableId={`droppable-${cat.sub}`}>
-                      {(provided) => (
-                        <tbody
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                        >
-                          {cat.sub.length ? (
-                            cat.sub.map((sub, index) => (
-                              <Draggable
-                                key={`sub-${index}`}
-                                draggableId={`sub-${sub.category_id}-${index}`}
-                                index={index}
-                              >
-                                {(provided, snapshot) => (
-                                  <tr
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    className={`${index % 2 !== 0
-                                        ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
-                                        : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
-                                      }
-                                        dark:border-secondaryBG-light ${snapshot.isDragging
-                                        ? 'bg-header-inputBorder'
-                                        : ''
-                                      }`}
-                                  >
-                                    <td className="px-2 py-4 font-[400] text-[17px]">
-                                      #{index + 1}
-                                    </td>
-                                    <td className="px-2 py-4"></td>
-                                    <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
-                                      {sub.category_name}
-                                    </td>
-                                    <td className="px-2 py-4"></td>
-                                    <td
-                                      className="py-4"
-                                      onClick={() => openModal('EditSub', sub)}
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {subscriptionscategories.map((cat, index) => (
+                <Draggable key={cat.parent_id} draggableId={`table-${cat.parent_id}`} index={index}>
+                  {(provided) => (
+                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                      <table className="w-full text-[20px] text-left rtl:text-right mb-7">
+                        <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+                          <tr className="px-2 py-2 text-[18px] font-[400]">
+                            <th
+                              scope="col"
+                              className="px-2 py-3 text-[18px] font-[400] rounded-s-lg"
+                            >
+                              {t('categoriesPage.order')}
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                              <img src={cat.parent_image} width={100} alt="" />
+                            </th>
+                            <th
+                              scope="col"
+                              className="px-6 py-3 text-[18px] font-[400]"
+                            >
+                              {cat.category_name}
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3"
+                              onClick={() => openModal('AddSub', cat)}
+                            >
+                              <CgAddR
+                                className="text-3xl text-Input-TextGreen"
+                                role="button"
+                              />
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3"
+                              onClick={() => openModal('EditParent', cat)}
+                            >
+                              <LiaEditSolid
+                                className="text-3xl text-Input-TextGreen"
+                                role="button"
+                              />
+                            </th>
+                            <th
+                              scope="col"
+                              className=" py-3"
+                              onClick={() => openModal('DeleteParent', cat)}
+                              role="button"
+                            >
+                              <RiDeleteBin6Line className="text-3xl text-Input-TextRed" />
+                            </th>
+                            <th
+                              scope="col"
+                              className=" py-3 rounded-e-lg"
+                              role="button"
+                              onClick={() => toggleSubcategories(cat.parent_id)}
+                            >
+                              {expandedCategoryId === cat.parent_id ? (
+                                <IoMdArrowDropdown className="text-3xl" />
+                              ) : (
+                                <IoMdArrowDropup className="text-3xl" />
+                              )}
+                            </th>
+                          </tr>
+                        </thead>
+                        {expandedCategoryId === cat.parent_id && (
+                          <Droppable droppableId={`droppable-${cat.parent_id}`} type="row">
+                            {(provided) => (
+                              <tbody {...provided.droppableProps} ref={provided.innerRef}>
+                                {cat.sub.length ? (
+                                  cat.sub.map((sub, index) => (
+                                    <Draggable
+                                      key={`sub-${sub.category_id}`}
+                                      draggableId={`sub-${sub.category_id}`}
+                                      index={index}
                                     >
-                                      <FiEdit3
-                                        className="text-xl text-Input-TextGreen"
-                                        role="button"
-                                      />
-                                    </td>
-                                    <td
-                                      className="py-4"
-                                      onClick={() =>
-                                        openModal('DeleteSub', sub)
-                                      }
-                                    >
-                                      <RiDeleteBin6Line
-                                        className="text-xl text-Input-TextRed"
-                                        role="button"
-                                      />
-                                    </td>
-                                    <td className="py-4"></td>
-                                  </tr>
+                                      {(provided, snapshot) => (
+                                        <tr
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          className={`${index % 2 !== 0
+                                            ? 'dark:bg-MainTableBG-OddDark bg-MainTableBG-OddLight'
+                                            : 'dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight'
+                                            } dark:border-secondaryBG-light ${snapshot.isDragging
+                                              ? 'bg-header-inputBorder'
+                                              : ''
+                                            }`}
+                                        >
+                                          <td className="px-2 py-4 font-[400] text-[17px]">
+                                            #{index + 1}
+                                          </td>
+                                          <td className="px-2 py-4"></td>
+                                          <td className="px-6 py-4 font-[400] text-[17px] text-gray-900 whitespace-nowrap dark:text-white">
+                                            {sub.category_name}
+                                          </td>
+                                          <td className="px-2 py-4"></td>
+                                          <td
+                                            className="py-4"
+                                            onClick={() => openModal('EditSub', sub)}
+                                          >
+                                            <FiEdit3
+                                              className="text-xl text-Input-TextGreen"
+                                              role="button"
+                                            />
+                                          </td>
+                                          <td
+                                            className="py-4"
+                                            onClick={() => openModal('DeleteSub', sub)}
+                                          >
+                                            <RiDeleteBin6Line
+                                              className="text-xl text-Input-TextRed"
+                                              role="button"
+                                            />
+                                          </td>
+                                          <td className="py-4"></td>
+                                        </tr>
+                                      )}
+                                    </Draggable>
+                                  ))
+                                ) : (
+                                  <div className="font-semibold text-xl my-5">
+                                    {t('categoriesPage.catSubscriptions.noSub')}
+                                  </div>
                                 )}
-                              </Draggable>
-                            ))
-                          ) : (
-                            <div className="font-semibold text-xl my-5">
-                              {t('categoriesPage.catSubscriptions.noSub')}
-                            </div>
-                          )}
-                          {provided.placeholder}
-                        </tbody>
-                      )}
-                    </Droppable>
+                                {provided.placeholder}
+                              </tbody>
+                            )}
+                          </Droppable>
+                        )}
+                      </table>
+                    </div>
                   )}
-                </table>
+                </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
