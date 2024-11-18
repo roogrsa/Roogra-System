@@ -18,13 +18,13 @@ export default function SingleChat() {
       console.error(error);
     }
   };
-  console.log(chat);
+  // console.log(chat);
 
   useEffect(() => {
     displayChats();
   }, [chatId]);
-  console.log(chat);
-  console.log(chatId);
+  // console.log(chat);
+  // console.log(chatId);
 
   const breadcrumbLinks = [
     { label: t('Reports.label.chat'), path: `/reports/chat` },

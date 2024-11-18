@@ -24,7 +24,7 @@ const useBanProduct = () => {
       return response.data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
-      throw err; // Re-throw the error for external handling
+      throw err;
     } finally {
       setLoadingPrdBan(false);
     }

@@ -12,8 +12,6 @@ const useBannedProducts = () => {
       const response = await axiosInstance.get('/api/products/status/banned');
       if (response.data.success) {
         setBannedProds(response.data.data);
-        // console.log(response.data.data);
-
         setError(null);
       } else {
         throw new Error(

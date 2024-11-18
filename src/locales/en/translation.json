@@ -4,7 +4,11 @@
   "error": "Unknown error",
   "failed": "Failed to",
   "NotData": "Not Found Data yet",
-
+  "toast": {
+    "error": "An unknown error occurred",
+    "deleted": "successfully deleted",
+    "updated": "successfully updated"
+  },
   "Ban": {
     "Ban": "Ban",
     "unBan": "Un Ban",

@@ -13,8 +13,6 @@ const useUserBanHistory = (userId: number) => {
 
       if (response.data.success) {
         setBanHistory(response.data.data);
-        console.log(response.data.data);
-
         setError(null);
       } else {
         throw new Error(
@@ -22,6 +20,8 @@ const useUserBanHistory = (userId: number) => {
         );
       }
     } catch (err) {
+      console.log(err);
+
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);

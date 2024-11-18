@@ -19,9 +19,10 @@ const useCategorySubscriptions = (): UseCategorySubscriptionsReturn => {
         const response = await axiosInstance.get(
           `/api/category_subscription?page=0&limit=8&q=3`,
         );
-        setData(response.data.data); // Assuming data is inside `data`
+        setData(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
+        console.log(err);
       } finally {
         setLoading(false);
       }

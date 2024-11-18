@@ -16,8 +16,6 @@ const useBanAdmin = () => {
       if (response.status < 200 || response.status >= 300) {
         throw new Error(`Failed to ban user with ID: ${adminId}`);
       }
-
-      // console.log('Admin banned:', response.data);
       return response.data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');

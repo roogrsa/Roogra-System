@@ -39,7 +39,6 @@ const EditAddImgPopup = ({
     imageUrl || null,
   );
   const closeModal = () => setIsModalOpen(false);
-  console.log(imagePreview);
   const initialValues: CategoryValues = {
     name: name || '',
     thumbnail: imageUrl || '',
@@ -70,12 +69,8 @@ const EditAddImgPopup = ({
         setFieldValue('thumbnail', base64String);
         setImagePreview(base64String);
       }
-      console.log(base64String);
     }
-
   };
-  console.log(imagePreview);
-
   const handleCategorySubmit = async (
     values: CategoryValues,
     { setSubmitting }: FormikHelpers<CategoryValues>,
@@ -87,14 +82,11 @@ const EditAddImgPopup = ({
         const res = await axiosInstance.put(`api/${url}/${id}`, values, {
           headers: { 'Content-Type': 'application/json' },
         });
-        console.log(res);
-
         toast.success(`${name} ${t('popup.edit_toast')}`);
       } else {
         const res = await axiosInstance.post(`api/${url}`, values, {
           headers: { 'Content-Type': 'application/json' },
         });
-        console.log(res);
         toast.success(`${t('popup.add_toast')}`);
       }
 
@@ -142,7 +134,6 @@ const EditAddImgPopup = ({
                     setFieldValue,
                   }: FormikProps<CategoryValues>) => (
                     <Form>
-                      {/* {console.log(values)} */}
                       <div className="mb-4">
                         <label className="mb-2.5 font-medium text-black dark:text-white flex">
                           {t('popup.category_name')}{' '}

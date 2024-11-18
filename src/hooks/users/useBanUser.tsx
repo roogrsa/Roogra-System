@@ -19,10 +19,10 @@ const useBanUser = () => {
       if (response.status < 200 || response.status >= 300) {
         throw new Error(`Failed to ban user with ID: ${userId}`);
       }
-
-      // console.log('User banned:', response.data);
       return response.data;
     } catch (err) {
+      console.log(err);
+
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);

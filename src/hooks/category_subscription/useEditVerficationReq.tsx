@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 interface EditResponse {
   status: string;
@@ -14,6 +15,7 @@ interface EditVerificationRequestResult {
 }
 
 const useEditVerificationRequest = (): EditVerificationRequestResult => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
@@ -36,12 +38,12 @@ const useEditVerificationRequest = (): EditVerificationRequestResult => {
 
       if (response.status === 200) {
         setSuccess(true);
-        toast.success(`updated sucessfully`);
+        toast.success(t('toast.updated'));
       }
     } catch (err) {
       const axiosError = err as AxiosError;
       setError(axiosError.response?.data?.message || 'An error occurred');
-      toast.error(`Error updating`);
+      toast.error(t('toast.error'));
     } finally {
       setLoading(false);
     }

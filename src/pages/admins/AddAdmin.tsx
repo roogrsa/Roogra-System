@@ -64,11 +64,10 @@ interface Admin {
   };
 }
 
-
 export default function AddAdmin() {
   const { t } = useTranslation();
   const { adminId } = useParams();
-  console.log(adminId);
+  // console.log(adminId);
 
   const [loggedValues, setLoggedValues] = useState<string>('');
   const [admin, setAdmin] = useState<Admin | null>(null);
@@ -77,13 +76,38 @@ export default function AddAdmin() {
     charts: admin?.permissions?.charts || 0,
     admins: admin?.permissions?.admins || 0,
     settings: admin?.permissions?.settings || 0,
-    ads: { all: admin?.permissions?.ads?.all || 0, primary: admin?.permissions?.ads?.primary || 0, subscription: admin?.permissions?.ads?.subscription || 0 },
-    users: { all: admin?.permissions?.users?.all || 0, advertisers: admin?.permissions?.users?.advertisers || 0, customers: admin?.permissions?.users?.customers || 0 },
-    categories: { primary: admin?.permissions?.categories?.primary || 0, subscription: admin?.permissions?.categories?.subscription || 0, region: admin?.permissions?.categories?.region || 0 },
-    requests: { attestation: admin?.permissions?.requests?.attestation || 0, category: admin?.permissions?.requests?.category || 0 },
-    contact: { inquiries: admin?.permissions?.contact?.inquiries || 0, issues: admin?.permissions?.contact?.issues || 0, suggestions: admin?.permissions?.contact?.suggestions || 0 },
-    reports: { chats: admin?.permissions?.reports?.chats || 0, products: admin?.permissions?.reports?.products || 0 },
-    banlist: { chats: admin?.permissions?.banlist?.chats || 0, products: admin?.permissions?.banlist?.products || 0 },
+    ads: {
+      all: admin?.permissions?.ads?.all || 0,
+      primary: admin?.permissions?.ads?.primary || 0,
+      subscription: admin?.permissions?.ads?.subscription || 0,
+    },
+    users: {
+      all: admin?.permissions?.users?.all || 0,
+      advertisers: admin?.permissions?.users?.advertisers || 0,
+      customers: admin?.permissions?.users?.customers || 0,
+    },
+    categories: {
+      primary: admin?.permissions?.categories?.primary || 0,
+      subscription: admin?.permissions?.categories?.subscription || 0,
+      region: admin?.permissions?.categories?.region || 0,
+    },
+    requests: {
+      attestation: admin?.permissions?.requests?.attestation || 0,
+      category: admin?.permissions?.requests?.category || 0,
+    },
+    contact: {
+      inquiries: admin?.permissions?.contact?.inquiries || 0,
+      issues: admin?.permissions?.contact?.issues || 0,
+      suggestions: admin?.permissions?.contact?.suggestions || 0,
+    },
+    reports: {
+      chats: admin?.permissions?.reports?.chats || 0,
+      products: admin?.permissions?.reports?.products || 0,
+    },
+    banlist: {
+      chats: admin?.permissions?.banlist?.chats || 0,
+      products: admin?.permissions?.banlist?.products || 0,
+    },
   });
   useEffect(() => {
     const displayAdmin = async () => {
@@ -93,9 +117,9 @@ export default function AddAdmin() {
       } catch (error: any) {
         console.error(error);
       }
-    }
+    };
     if (adminId) {
-      displayAdmin()
+      displayAdmin();
     }
   }, []);
   const validationSchema = yup.object().shape({
@@ -144,7 +168,7 @@ export default function AddAdmin() {
       settings: yup.boolean(),
     }),
   });
-  console.log(admin);
+  // console.log(admin);
 
   const initialValues: AddAdminValues = {
     email: admin?.email || '',
@@ -157,7 +181,7 @@ export default function AddAdmin() {
     finish_working_hour: admin?.finish_working_hour || '',
     permissions: admin?.permissions || permissions,
   };
-  console.log('initialValues',initialValues);
+  // console.log('initialValues',initialValues);
 
   const logValues = (obj: any): string => {
     let result = '';
@@ -174,7 +198,7 @@ export default function AddAdmin() {
     }
     return result;
   };
-  const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }]
+  const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }];
   const navigate = useNavigate();
   const handleAddAdminSubmit = async (
     values: AddAdminValues,
@@ -187,7 +211,7 @@ export default function AddAdmin() {
           ...values,
           permissions: loggedValues,
         });
-        console.log(res);
+        // console.log(res);
         toast.success(`admin updated successfully`);
         navigate(`/admins`);
       } else if (!adminId) {
@@ -195,7 +219,7 @@ export default function AddAdmin() {
           ...values,
           permissions: loggedValues,
         });
-        console.log(res);
+        // console.log(res);
         toast.success(`admin successfully submitted`);
       }
     } catch (error: any) {
@@ -356,10 +380,13 @@ export default function AddAdmin() {
   ]);
   return (
     <div>
-      <Breadcrumb pageName={t('admins.edit')} breadcrumbLinks={breadcrumbLinks} />
+      <Breadcrumb
+        pageName={t('admins.edit')}
+        breadcrumbLinks={breadcrumbLinks}
+      />
       <Formik
         initialValues={initialValues}
-        validationSchema={!adminId&&validationSchema}
+        validationSchema={!adminId && validationSchema}
         onSubmit={handleAddAdminSubmit}
         enableReinitialize
       >
@@ -397,13 +424,13 @@ export default function AddAdmin() {
                   name={`email`}
                   label={t('admins.form.email')}
                 />
-                {!adminId &&
+                {!adminId && (
                   <InputText
                     type={`password`}
                     name={`password`}
                     label={t('admins.form.Password')}
                   />
-                }
+                )}
                 <SelectTime
                   name={`start_working_hour`}
                   label={t('admins.form.from')}

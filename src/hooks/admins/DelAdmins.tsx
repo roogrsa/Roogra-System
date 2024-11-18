@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../axiosConfig/instanc';
+import { useTranslation } from 'react-i18next';
 
 interface UseDeleteAdminsReturn {
   deleteAdmins: (adminIds: number[]) => Promise<void>;
@@ -10,6 +11,8 @@ interface UseDeleteAdminsReturn {
 }
 
 const useDeleteAdmins = (): UseDeleteAdminsReturn => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -25,14 +28,14 @@ const useDeleteAdmins = (): UseDeleteAdminsReturn => {
     try {
       const response = await axiosInstance.delete(url);
       if (response.status === 204) {
-        toast.success('Admins successfully deleted');
+        toast.success(t('toast.deleted'));
         setIsSuccess(true);
       } else {
         throw new Error('Failed to delete admins');
       }
     } catch (err) {
       console.error(err);
-      toast.error(err.response?.data?.message || 'An unknown error occurred');
+      toast.error(t('toast.error'));
       setError(
         err instanceof Error ? err.message : 'An unknown error occurred',
       );

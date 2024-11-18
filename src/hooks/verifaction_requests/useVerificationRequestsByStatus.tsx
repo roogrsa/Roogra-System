@@ -37,15 +37,14 @@ const useVerificationRequestsByStatus = (
           },
         },
       );
-
-      // Handle the success response
       if (response.data.success) {
         setData(response.data.data);
-        // console.log(response.data.data);
       } else {
         setError(response.data.message);
       }
     } catch (err) {
+      console.log(err);
+
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);

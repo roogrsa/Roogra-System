@@ -22,14 +22,12 @@ const Products: React.FC = () => {
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { products, loading, error, refreshProducts } =
-    useAllProducts(currentPage);
-  const { banProduct, loadingPrdBan, banPrdError } = useBanProduct();
+  const { products, refreshProducts } = useAllProducts(currentPage);
+  const { banProduct, loadingPrdBan } = useBanProduct();
   const { handleAction, loading: actionLoading } = useHandleAction();
   const {
     deleteProducts,
-    isLoading: deleting,
-    error: deleteError,
+
     isSuccess,
   } = useDeleteProducts();
   const [productsCount, setProductsCount] = useState(0);
@@ -245,7 +243,7 @@ const Products: React.FC = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
-      <ToastContainer position="top-right" autoClose={5000} />
+      {/* <ToastContainer position="top-right" autoClose={5000} /> */}
     </>
   );
 };

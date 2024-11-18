@@ -29,7 +29,7 @@ const useToggleVerification = () => {
           verified: newVerificationRequired,
         },
       );
-      toast.success(`updated sucessfully`);
+      toast.success(t('toast.updated'));
       setIsSuccess(true);
 
       return { success: true, message: response.data.message };
@@ -37,7 +37,7 @@ const useToggleVerification = () => {
       console.log(err);
 
       setError((err as Error).message);
-      toast.error(`Error updating`);
+      toast.error(t('toast.error'));
 
       return null;
     } finally {

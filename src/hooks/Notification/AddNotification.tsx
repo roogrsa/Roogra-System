@@ -44,17 +44,14 @@ const useNotificationSubmit = (closeModal: () => void) => {
         supervisors: supervisors ? 1 : 0,
       };
 
-      console.log('payload', payload);
-
       const res = await axiosInstance.post(`api/notifications`, payload);
 
       toast.success(t('notifications.popup.successfully'));
       closeModal();
-      setIsSuccess(true); // Mark as success
-      console.log(res);
+      setIsSuccess(true);
     } catch (error: any) {
       console.error(error);
-      setIsSuccess(false); // Mark as failure
+      setIsSuccess(false);
       toast.error(
         error?.response?.data?.message || t('notifications.popup.error'),
       );

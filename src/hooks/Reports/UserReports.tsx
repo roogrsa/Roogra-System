@@ -14,8 +14,6 @@ interface ApiResponse {
 
 export const useUserReports = (status: number) => {
   const { id } = useParams<{ id: string }>();
-  console.log(id, 'profile');
-
   const [chats, setChats] = useState<ReportData[]>([]);
   const [products, setProducts] = useState<ReportData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,6 +33,8 @@ export const useUserReports = (status: number) => {
         setError('Failed to fetch reports');
       }
     } catch (err) {
+      console.log(err);
+
       setError('An error occurred while fetching the data');
     } finally {
       setLoading(false);

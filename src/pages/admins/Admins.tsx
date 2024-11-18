@@ -1,7 +1,5 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { useTranslation } from 'react-i18next';
-import { CgAddR } from 'react-icons/cg';
-import { Link } from 'react-router-dom';
 import AdminsList from '../../components/admins/AdminList';
 import { useState } from 'react';
 import AddAdmin from './AddAdmin';
