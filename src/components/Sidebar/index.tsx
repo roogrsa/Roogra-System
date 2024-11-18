@@ -258,7 +258,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     )}
                   </div>
                 )}
-                {/* users dropdown */}
                 {(permission.users.all == 1 ||
                   permission.users.advertisers == 1 ||
                   permission.users.customers == 1) && (
@@ -301,7 +300,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     )}
                   </div>
                 )}
-                {/* categories dropdown */}
                 {(permission.categories.primary == 1 ||
                   permission.categories.subscription == 1 ||
                   permission.categories.region == 1) && (
@@ -344,7 +342,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     )}
                   </div>
                 )}
-                {/* subscription dropdown */}
                 {(permission.requests.attestation == 1 ||
                   permission.requests.category == 1) && (
                   <div className="relative">
@@ -380,7 +377,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     )}
                   </div>
                 )}
-                {/* support dropdown */}
                 {(permission.contact.inquiries == 1 ||
                   permission.contact.issues == 1 ||
                   permission.contact.suggestions == 1) && (
@@ -423,7 +419,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     )}
                   </div>
                 )}
-                {/* reports dropdown */}
                 {(permission.reports.chats == 1 ||
                   permission.reports.products == 1) && (
                   <div className="relative">
@@ -459,7 +454,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     )}
                   </div>
                 )}
-                {/* ban list dropdown */}
                 {(permission.banlist.chats == 1 ||
                   permission.banlist.products == 1) && (
                   <div className="relative">
