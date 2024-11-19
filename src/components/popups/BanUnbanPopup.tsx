@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { IoClose } from 'react-icons/io5';
 import axiosInstance from '../../axiosConfig/instanc';
 import { toast, ToastContainer } from 'react-toastify';
-interface DeletePopupProps {
+interface BanPopupProps {
     customerName: string;
     chatId: number;
     isModalOpen: boolean;
     setIsModalOpen: (isModalOpen: boolean) => void;
+    setIsBan: (ban: boolean) => void;
+    isBan:boolean
 }
 
 const BanUnbanPopup = ({
@@ -14,18 +16,23 @@ const BanUnbanPopup = ({
     chatId,
     isModalOpen,
     setIsModalOpen,
-}: DeletePopupProps) => {
+    setIsBan,
+    isBan
+}: BanPopupProps) => {
     const { t } = useTranslation();
     const closeModal = () => setIsModalOpen(false);
+    console.log(isBan);
+    
     const banUnbanChat = async () => {
         try {
             const res = await axiosInstance.patch(`/api/users/${chatId}`);
             setIsModalOpen(false)
-            console.log(res);
-            
+            setIsBan(!isBan)
             toast.success(res.data.message);
         } catch (error: any) {
             console.error(error);
+            setIsModalOpen(false)
+            toast.error(error.response.data.message);
         }
     };
     return (
@@ -63,7 +70,7 @@ const BanUnbanPopup = ({
                                         className="text-white bg-red-600 hover:bg-red-800 focus:outline-none font-medium rounded-lg 
                                                 text-sm px-5 py-2.5 text-center"
                                     >
-                                        {t('Reports.label.ban')}
+                                        {isBan?t('BanList.unBan'):t('BanList.Ban')}
                                     </button>
                                     <button
                                         onClick={closeModal}
