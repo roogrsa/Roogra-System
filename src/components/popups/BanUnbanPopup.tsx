@@ -21,8 +21,10 @@ const BanUnbanPopup = ({
 
     const banUnbanChat = async () => {
         try {
-            const res = await axiosInstance.patch(`/api/chats/${chatId}`);
+            const res = await axiosInstance.patch(`/api/users/${chatId}`);
             setIsModalOpen(false)
+            console.log(res);
+            
             toast.success(res.data.message);
         } catch (error: any) {
             console.error(error);
@@ -48,7 +50,7 @@ const BanUnbanPopup = ({
                             </button>
                             <div className="p-4 md:p-5 text-center">
                                 <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-secondaryBG-light">
-                                    {t('Reports.label.banReason')} {customerName}
+                                    {t('Reports.label.banReason')} {customerName}{chatId}
                                 </h3>
 
                                 <textarea

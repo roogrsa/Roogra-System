@@ -18,14 +18,11 @@ export default function SingleChat() {
       console.error(error);
     }
   };
-  // console.log(chat);
-
+  console.log(chat);
+  
   useEffect(() => {
     displayChats();
   }, [chatId]);
-  // console.log(chat);
-  // console.log(chatId);
-
   const breadcrumbLinks = [
     { label: t('Reports.label.chat'), path: `/reports/chat` },
   ];
@@ -36,7 +33,7 @@ export default function SingleChat() {
         breadcrumbLinks={breadcrumbLinks}
       />
       <div className={`bg-secondaryBG dark:bg-secondaryBG-dark  rounded-md`}>
-        <Chat chatData={chat} displayChats={displayChats} userId={chatId} />
+        <Chat chat={chat} displayChats={displayChats} userId={chatId} chatId={chatId} />
       </div>
     </>
   );

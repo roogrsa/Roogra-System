@@ -422,6 +422,12 @@
     "reply": "Reply",
     "deleteTicket": "Delete ticket"
   },
+  "lastNews": {
+    "title": "Last News",
+    "lastLogin": "Has Logged In",
+    "register": "New Account",
+    "edit": "Acocount updated"
+  },
   "charts": {
     "Active": "Active",
     "Lazy": "Lazy",
@@ -434,7 +440,6 @@
   "BanList": {
     "Ban": "Ban",
     "unBan": "unBan",
-
     "chats": {
       "label": "Banned",
       "pageName": "Chats",
@@ -473,13 +478,6 @@
       "UnBanReason": "UnBan Reason",
       "UnBanDate": "UnBan Date",
       "status": "Status"
-    },
-
-    "lastNews": {
-      "title": "Last News",
-      "lastLogin": "Has Logged In",
-      "register": "New Account",
-      "edit": "Acocount updated"
     },
     "charts": {
       "Active": "Active",
