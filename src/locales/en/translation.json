@@ -384,7 +384,8 @@
       "userChat": "chat",
       "isMsg": "no messages in this chat",
       "banReason": "Ban Reason",
-      "ban": "Ban"
+      "banMassg": "The user has been successfully blocked",
+      "unbanMassg": "The user has been successfully unblocked"
     },
     "titles": {
       "reports": "Report",

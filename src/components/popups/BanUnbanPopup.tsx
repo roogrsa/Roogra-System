@@ -28,7 +28,11 @@ const BanUnbanPopup = ({
             const res = await axiosInstance.patch(`/api/users/${chatId}`);
             setIsModalOpen(false)
             setIsBan(!isBan)
-            toast.success(res.data.message);
+            if(isBan){
+                toast.success(t('Reports.label.unbanMassg'));
+            }else{
+                toast.success(t('Reports.label.banMassg'));
+            }
         } catch (error: any) {
             console.error(error);
             setIsModalOpen(false)
