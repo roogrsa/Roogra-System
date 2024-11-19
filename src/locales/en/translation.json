@@ -11,6 +11,20 @@
     "deleted": "successfully deleted",
     "updated": "successfully updated"
   },
+  "Tickectpopup": {
+    "title": "Edit memory partition",
+    "customername": "Customer Name",
+    "verified_by": "verified by ",
+    "verification_type": " Destination",
+    "verification_type_number": " Destination Num",
+    "verification_type_image": "Destination Image",
+    "transaction_image": "Transaction Image"
+  },
+  "VerificationType": {
+    "Identity": "Identity Document",
+    "Freelancer": "Freelancer Document",
+    "Commercial": "Commercial Register"
+  },
   "Ban": {
     "Ban": "Ban",
     "unBan": "Un Ban",

@@ -2,35 +2,68 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
+import { useTranslation } from 'react-i18next';
 
-const Tickectpopup = ({ item, isModalShow, setIsModalShow }) => {
-  const closeModal = () => setIsModalShow(false);
+// Define the type for 'item'
+interface Item {
+  verification_request_id: string;
+  customer_id: number;
+  customer_name: string;
+  verified_by: string;
+  verification_type: string;
+  verification_type_number: number;
+  verification_type_image: string;
+  transaction_image: string;
+}
+
+// Define the types for the component props
+interface TickectpopupProps {
+  item: Item;
+  isModalShow: boolean;
+  setIsModalShow: (show: boolean) => void;
+}
+
+const Tickectpopup: React.FC<TickectpopupProps> = ({
+  item,
+  isModalShow,
+  setIsModalShow,
+}) => {
+  // console.log(isModalShow);
+
+  const closeModal = () => {
+    // setIsModalShow(false);
+    console.log(isModalShow);
+  };
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const translateVerificationType = (type: string) => {
     switch (type) {
       case 'Identity Document':
-        return 'بطاقة الهوية';
+        return t('VerificationType.Identity');
       case 'Freelancer Document':
-        return 'وثيقة المستقل';
+        return t('VerificationType.Freelancer');
       case 'Commercial Register':
-        return 'السجل التجاري';
+        return t('VerificationType.Commercial');
       default:
         return type;
     }
   };
+
   const handleClickName = (customerId: number) => {
     navigate(`/profile/${customerId}`);
   };
+
   return (
     <div>
       {isModalShow && (
         <div
           id={`popup-modal_add_${item.verification_request_id}`}
-          className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-TheadBorder-light bg-opacity-20"
+          className="fixed py-5 inset-0 z-50 flex justify-center items-center w-full h-screen bg-TheadBorder-light bg-opacity-20"
         >
           <div className="relative p-4 w-full max-w-md max-h-full">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div className="relative bg-white flex flex-col rounded-lg shadow dark:bg-gray-700">
               <button
                 onClick={closeModal}
                 className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900
@@ -38,11 +71,10 @@ const Tickectpopup = ({ item, isModalShow, setIsModalShow }) => {
                  dark:hover:text-white"
               >
                 <IoClose className="text-lg" onClick={closeModal} />
-                {/* <span className="sr-only">Close modal</span> */}
               </button>
               <div className="text-center m-5">
-                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark m-5">
-                  تحرير تذكرة القسم
+                <h3 className="text-xl font-semibold text-text-light dark:text-text-dark my-5">
+                  {t('Tickectpopup.title')}
                   <span className=" mx-4">
                     RD-{item.verification_request_id}
                   </span>
@@ -56,49 +88,48 @@ const Tickectpopup = ({ item, isModalShow, setIsModalShow }) => {
 
                 <div className="grid grid-cols-3 gap-2 w-full">
                   <div className="bg-primaryBG-light dark:bg-primaryBG-dark text-text-light dark:text-text-dark border border-Input-border p-2 rounded-lg">
-                    <span className="block text-lg">بواسطة</span>
+                    <span className="block text-lg">
+                      {t('Tickectpopup.verified_by')}
+                    </span>
                     <span className="text-lg ">{item.verified_by}</span>
                   </div>
                   <div className="text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark p-2 border border-Input-border rounded-lg">
-                    <span className="block text-lg">الجهة</span>
+                    <span className="block text-lg">
+                      {t('Tickectpopup.verification_type')}
+                    </span>
                     <span className="text-lg ">
-                      {/* {item.verification_type} */}
                       {translateVerificationType(item.verification_type)}
                     </span>
                   </div>
                   <div className="text-text-light dark:text-text-dark bg-primaryBG-light dark:bg-primaryBG-dark p-2 border border-Input-border rounded-lg">
-                    <span className="block text-lg">رقم الجهة</span>
+                    <span className="block text-lg">
+                      {t('Tickectpopup.verification_type_number')}
+                    </span>
                     <span className="text-sm ">
-                      {item.verification_type_number}
+                      {item.verification_type_number.toString().slice(0, 12)}
                     </span>
                   </div>
-                  {/* <div className="bg-primaryBG-light dark:bg-primaryBG-dark text-text-light dark:text-text-dark border border-Input-border p-2 rounded-lg">
-                    <span className="block text-lg">رقم التذكرة</span>
-                    <span className="text-lg font-bold">
-                      RD-{item.verification_request_id}
-                    </span>
-                  </div> */}
                 </div>
                 <div className="mt-4 flex justify-center p-2">
-                  <div className="flex gap-2  rounded-lg">
+                  <div className="flex gap-4 rounded-lg">
                     <div className="border border-Input-border rounded-lg">
                       <span className="block text-lg text-text-light dark:text-text-dark mb-2">
-                        صورة الجهة
+                        {t('Tickectpopup.verification_type_image')}
                       </span>
                       <ImageWithFullscreen
-                        src={`${item.verification_type_image}`}
+                        src={item.verification_type_image}
                         alt="Transaction"
-                        className="w-32 h-30 object-cover mx-auto my-2 rounded-md full-screen-image"
+                        className="w-52 h-30 object-cover mx-auto my-2 rounded-md full-screen-image"
                       />
                     </div>
                     <div className="border border-Input-border rounded-lg">
                       <span className="block text-lg text-text-light dark:text-text-dark mb-2">
-                        صورة التحويل
+                        {t('Tickectpopup.transaction_image')}
                       </span>
                       <ImageWithFullscreen
-                        src={`${item.transaction_image}`}
+                        src={item.transaction_image}
                         alt="Transaction"
-                        className="w-32 h-30 object-cover mx-auto my-2 rounded-md full-screen-image"
+                        className="w-52 h-30 object-cover mx-auto my-2 rounded-md full-screen-image"
                       />
                     </div>
                   </div>

@@ -34,13 +34,13 @@ const VerifactionRequestByUserid = () => {
   const translateVerificationType = (type: string) => {
     switch (type) {
       case 'Identity Document':
-        return 'وثيقة معروف';
+        return t('VerificationType.Identity');
       case 'Freelancer Document':
-        return 'عمل حر';
+        return t('VerificationType.Freelancer');
       case 'Commercial Register':
-        return 'سجل تجاري';
+        return t('VerificationType.Commercial');
       default:
-        return type; // Default to the original value if no match is found
+        return type;
     }
   };
   //

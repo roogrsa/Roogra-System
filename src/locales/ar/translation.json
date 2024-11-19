@@ -11,6 +11,20 @@
     "deleted": "تم الحذف بنجاح",
     "updated": "تم التعديل بنجاح "
   },
+  "Tickectpopup": {
+    "title": " تحرير تذكرة القسم",
+    "customername": "الاسم",
+    "verified_by": "بواسطة",
+    "verification_type": "الجهة",
+    "verification_type_number": "رقم الجهة",
+    "verification_type_image": "صورة الجهة",
+    "transaction_image": "صورة  التحويل"
+  },
+  "VerificationType": {
+    "Identity": " وثيقة معروف ",
+    "Freelancer": "عمل حر",
+    "Commercial": "سجل تجاري"
+  },
   "Ban": {
     "Ban": "حظر",
     "unBan": "رفع الحظر",
