@@ -89,6 +89,7 @@ const Products: React.FC = () => {
     deleteProducts(selectedProductIds);
     setSelectedProductIds([]);
   };
+  // console.log(products);
 
   const logs = products.map((product) => {
     const createdAtDate = new Date(product.date);
@@ -120,7 +121,7 @@ const Products: React.FC = () => {
         { key: 'created_at_time', content: timePart, className: 'time-class' },
         {
           key: 'category',
-          content: product.category_name,
+          content: product.category_name || 'N/A',
           className: 'flex justify-center',
         },
         {

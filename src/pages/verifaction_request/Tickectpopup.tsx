@@ -18,9 +18,9 @@ interface Item {
 
 // Define the types for the component props
 interface TickectpopupProps {
-  item: Item;
+  item: any;
   isModalShow: boolean;
-  setIsModalShow: (show: boolean) => void;
+  setIsModalShow: (isModalShow: boolean) => void;
 }
 
 const Tickectpopup: React.FC<TickectpopupProps> = ({
@@ -31,7 +31,7 @@ const Tickectpopup: React.FC<TickectpopupProps> = ({
   // console.log(isModalShow);
 
   const closeModal = () => {
-    // setIsModalShow(false);
+    setIsModalShow(false);
     console.log(isModalShow);
   };
 
@@ -65,12 +65,18 @@ const Tickectpopup: React.FC<TickectpopupProps> = ({
           <div className="relative p-4 w-full max-w-md max-h-full">
             <div className="relative bg-white flex flex-col rounded-lg shadow dark:bg-gray-700">
               <button
-                onClick={closeModal}
+                // onClick={closeModal}
                 className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900
                   rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 
                  dark:hover:text-white"
               >
-                <IoClose className="text-lg" onClick={closeModal} />
+                <IoClose
+                  className="text-lg"
+                  onClick={() => {
+                    setIsModalShow(false);
+                    // closeModal();
+                  }}
+                />
               </button>
               <div className="text-center m-5">
                 <h3 className="text-xl font-semibold text-text-light dark:text-text-dark my-5">
