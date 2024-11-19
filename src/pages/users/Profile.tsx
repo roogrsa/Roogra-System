@@ -57,9 +57,15 @@ const Profile = () => {
             />
           </div> */}
 
-          <div className="bg-BlockIconBg rounded-md">
+          <div
+            className={
+              user?.isBanned
+                ? `bg-BlockIconBg rounded-md`
+                : `bg-gray-400 rounded-md`
+            }
+          >
             <img
-              src={user?.isBanned ? BannedIconSrc : NotBannedIconSrc}
+              src={user?.isBanned ? NotBannedIconSrc : NotBannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
                 !actionLoading &&

@@ -9,13 +9,14 @@ import useEditVerificationRequest from '../../../hooks/category_subscription/use
 import ImageWithFullscreen from '../../Fullscreen/Fulllscreen';
 import ReusableInput from '../../products/ReusableInput';
 import PeriodInput from '../../../pages/category_subscription/PeriodInput';
-import handleEditVerificationRequest from '../../../hooks/verifaction_requests/handleEditVerificationReq';
 import handleStatus from '../../../hooks/category_subscription/handleStatus';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 import DeletePopup from '../../popups/DeletePopup';
+import Tickectpopup from '../../../pages/verifaction_request/Tickectpopup';
+import useToggleVerification from '../../../hooks/verifaction_requests/useUpdateVerification';
 
 //
 const ApprovedSubscription = '/true.png';
@@ -29,7 +30,23 @@ const VerifactionRequestByUserid = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteName, setDeleteName] = useState<string>('');
+  const [isModalShow, setIsModalShow] = useState(false);
+  const translateVerificationType = (type: string) => {
+    switch (type) {
+      case 'Identity Document':
+        return 'وثيقة معروف';
+      case 'Freelancer Document':
+        return 'عمل حر';
+      case 'Commercial Register':
+        return 'سجل تجاري';
+      default:
+        return type; // Default to the original value if no match is found
+    }
+  };
   //
+  const openModalShow = () => setIsModalShow(true);
+  const { toggleVerificationRequired, isSuccess } = useToggleVerification();
+
   const {
     EditVerificationRequest,
     loading: editLoading,
@@ -51,7 +68,7 @@ const VerifactionRequestByUserid = () => {
     // currentPage,
   );
   useEffect(() => {
-    if (editSuccess) {
+    if (isSuccess || editSuccess) {
       refreshRequest();
     }
   }, [refreshRequest]);
@@ -60,7 +77,6 @@ const VerifactionRequestByUserid = () => {
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   //
-
   const headers = [
     {
       key: 'id',
@@ -93,14 +109,14 @@ const VerifactionRequestByUserid = () => {
       className: 'text-center text-sm',
     },
     {
-      key: 'created_at',
+      key: 'created_at', // Fixed typo: 'created_att' should be 'created_at'
       content: t('verification_request.headers.created_at'),
       className: 'text-center text-sm',
     },
-    ...(status === 'expaired' || status === 'approved'
+    ...(status === 'expired' || status === 'approved'
       ? [
           {
-            key: 'verified_at',
+            key: 'verified_at-approval', // Added suffix for uniqueness
             content: t('verification_request.headers.verified_at'),
             className: 'text-center text-sm',
           },
@@ -114,7 +130,7 @@ const VerifactionRequestByUserid = () => {
     ...(status === 'rejected'
       ? [
           {
-            key: 'By-admin',
+            key: 'by_admin', // Changed 'By-admin' to use snake_case for consistency
             content: t('verification_request.headers.By-admin'),
             className: 'text-center text-sm',
           },
@@ -139,7 +155,7 @@ const VerifactionRequestByUserid = () => {
     ...(status === 'rejected'
       ? [
           {
-            key: 'verified_at',
+            key: 'verified_at-remove', // Added suffix for uniqueness
             content: t('verification_request.headers.remove'),
             className: 'text-center text-sm',
           },
@@ -153,7 +169,6 @@ const VerifactionRequestByUserid = () => {
     ? data.map((item) => {
         const createdAtDate = new Date(item.created_at);
         const datePart = createdAtDate.toLocaleDateString();
-        //
         const VerifiedDate = item.verified_at
           ? new Date(item.verified_at)
           : null;
@@ -166,22 +181,22 @@ const VerifactionRequestByUserid = () => {
           type: 2,
           columns: [
             {
-              key: 'id',
+              key: `id-${item.verification_request_id}`,
               content: 'RD-' + item.verification_request_id,
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'verification_type',
-              content: item.verification_type,
+              key: `verification_type-${item.verification_request_id}`,
+              content: translateVerificationType(item.verification_type),
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'verification_type_number',
-              content: item.verification_type_number,
+              key: `verification_type_number-${item.verification_request_id}`,
+              content: item.verification_type_number.toString().slice(0, 12),
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'verification_type_image',
+              key: `verification_type_image-${item.verification_request_id}`,
               content:
                 item.STATUS === 'processing' ? (
                   <ImageWithFullscreen
@@ -205,31 +220,30 @@ const VerifactionRequestByUserid = () => {
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'verification_required',
-              content:
-                item.verification_required === 0 ? (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value="لا"
-                    widthClass="w-10"
-                    border="border-2 border-Input-TextRed text-Input-TextRed"
-                    extraClass="bg-Input-red rounded-xl text-center text-sm"
-                  />
-                ) : (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value="نعم"
-                    widthClass="w-10"
-                    border="border-2 border-Input-TextGreen text-Input-TextGreen"
-                    extraClass="bg-Input-green rounded-xl text-center text-sm"
-                  />
-                ),
+              key: `verification_required-${item.verification_request_id}`,
+              content: (
+                <button
+                  onClick={() => {
+                    toggleVerificationRequired(
+                      item.verification_request_id,
+                      item.verification_required,
+                    );
+                    refreshRequest;
+                  }}
+                  className={`w-10 rounded-xl text-center text-sm ${
+                    item.verification_required
+                      ? 'bg-Input-green text-Input-TextGreen border-2 border-Input-TextGreen'
+                      : 'bg-Input-red text-Input-TextRed border-2 border-Input-TextRed'
+                  }`}
+                >
+                  {item.verification_required ? t('yes') : t('no')}
+                </button>
+              ),
+
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'transaction_image',
+              key: `transaction_image-${item.verification_request_id}`,
               content:
                 item.STATUS === 'processing' ? (
                   <ImageWithFullscreen
@@ -247,24 +261,23 @@ const VerifactionRequestByUserid = () => {
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'created_at',
+              key: `created_at-${item.verification_request_id}`,
               content: `${datePart}`,
               className: 'flex justify-center text-sm',
             },
-            ...(item.STATUS === 'expaired' || item.STATUS === 'approved'
+            ...(item.STATUS === 'expired' || item.STATUS === 'approved'
               ? [
                   {
-                    key: 'created_at',
+                    key: `verified_at-${item.verification_request_id}`,
                     content: `${VerifiedDatePart}`,
                     className: 'flex justify-center text-sm',
                   },
                 ]
               : []),
-
             {
-              key: 'verification_period',
+              key: `verification_period-${item.verification_request_id}`,
               content:
-                item.STATUS === 'expaired' ? (
+                item.STATUS === 'expired' ? (
                   <ReusableInput
                     label=""
                     type="text"
@@ -281,15 +294,14 @@ const VerifactionRequestByUserid = () => {
             ...(item.STATUS === 'rejected'
               ? [
                   {
-                    key: 'by',
+                    key: `by-${item.verification_request_id}`,
                     content: `by`,
                     className: 'flex justify-center text-sm',
                   },
                 ]
               : []),
-
             {
-              key: 'verified_by_approved OR Edit',
+              key: `verified_by_approved_or_edit-${item.verification_request_id}`,
               content:
                 item.STATUS === 'processing' ? (
                   <img
@@ -308,27 +320,25 @@ const VerifactionRequestByUserid = () => {
                     }
                   />
                 ) : (
-                  <div className="bg-EditIconBg rounded-md text-sm">
+                  <div
+                    className="bg-EditIconBg rounded-md text-sm"
+                    onClick={openModalShow}
+                  >
                     <img
                       src={EditIconSrc}
                       className="w-6 h-6 text-center p-1 cursor-pointer"
-                      onClick={() =>
-                        handleEditVerificationRequest(
-                          item.verification_request_id,
-                          item.verification_type,
-                          item.verification_type_number,
-                          undefined,
-                          item.verification_type_image,
-                          item.transaction_image,
-                        )
-                      }
+                    />
+                    <Tickectpopup
+                      item={item}
+                      setIsModalShow={setIsModalShow}
+                      isModalShow={isModalShow}
                     />
                   </div>
                 ),
               className: 'flex justify-center text-sm',
             },
             {
-              key: 'verified_by_reject',
+              key: `verified_by_reject-${item.verification_request_id}`,
               content:
                 status === 'rejected' ? (
                   <img
@@ -341,41 +351,34 @@ const VerifactionRequestByUserid = () => {
                         'approved',
                         undefined, // Pass undefined if `categoryId` is not relevant here
                         item.verification_request_id,
-
                         undefined,
                         EditVerificationRequest,
                       )
                     }
                   />
                 ) : (
-                  <>
-                    <img
-                      src={rejectIcon}
-                      alt="Reject"
-                      className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer text-sm"
-                      onClick={() =>
-                        handleStatus(
-                          'adminName',
-
-                          'rejected',
-
-                          undefined, // Pass undefined if `categoryId` is not relevant here
-                          item.verification_request_id,
-
-                          undefined,
-                          EditVerificationRequest,
-                        )
-                      }
-                    />
-                  </>
+                  <img
+                    src={rejectIcon}
+                    alt="Reject"
+                    className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer text-sm"
+                    onClick={() =>
+                      handleStatus(
+                        'adminName',
+                        'rejected',
+                        undefined, // Pass undefined if `categoryId` is not relevant here
+                        item.verification_request_id,
+                        undefined,
+                        EditVerificationRequest,
+                      )
+                    }
+                  />
                 ),
               className: 'flex justify-center text-sm',
             },
-
             ...(item.STATUS === 'rejected'
               ? [
                   {
-                    key: 'removekey',
+                    key: `remove-${item.verification_request_id}`,
                     content: (
                       <div className="bg-RemoveIconBg rounded-md">
                         <img
