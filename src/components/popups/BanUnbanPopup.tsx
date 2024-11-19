@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { BiErrorCircle } from 'react-icons/bi';
 import { IoClose } from 'react-icons/io5';
 import axiosInstance from '../../axiosConfig/instanc';
 import { toast, ToastContainer } from 'react-toastify';
@@ -18,11 +17,12 @@ const BanUnbanPopup = ({
 }: DeletePopupProps) => {
     const { t } = useTranslation();
     const closeModal = () => setIsModalOpen(false);
-
     const banUnbanChat = async () => {
         try {
-            const res = await axiosInstance.patch(`/api/chats/${chatId}`);
+            const res = await axiosInstance.patch(`/api/users/${chatId}`);
             setIsModalOpen(false)
+            console.log(res);
+            
             toast.success(res.data.message);
         } catch (error: any) {
             console.error(error);
@@ -33,8 +33,7 @@ const BanUnbanPopup = ({
             {isModalOpen && (
                 <div
                     id={`popup-modal_${chatId}`}
-                    className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-TheadBorder-light bg-opacity-25"
-                >
+                    className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-TheadBorder-light bg-opacity-25">
                     <div className="relative p-4 w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button
@@ -48,9 +47,8 @@ const BanUnbanPopup = ({
                             </button>
                             <div className="p-4 md:p-5 text-center">
                                 <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-secondaryBG-light">
-                                    {t('Reports.label.banReason')} {customerName}
+                                    {t('Reports.label.banReason')} {customerName}{chatId}
                                 </h3>
-
                                 <textarea
                                     id="message"
                                     rows={4}
@@ -59,7 +57,6 @@ const BanUnbanPopup = ({
                                     focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                                     dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 />
-
                                 <div className="flex justify-between">
                                     <button
                                         onClick={banUnbanChat}

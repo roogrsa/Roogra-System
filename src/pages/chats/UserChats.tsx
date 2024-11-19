@@ -17,14 +17,13 @@ export default function UserChats() {
   ];
   return (
     <>
+        <Breadcrumb
+          pageName={t('Reports.label.userChat')}
+          breadcrumbLinks={breadcrumbLinks}
+        />
       {chats.length == 0 ? (
         <NotFoundSection data={chats} />
       ) : (
-        <>
-          <Breadcrumb
-            pageName={t('Reports.label.userChat')}
-            breadcrumbLinks={breadcrumbLinks}
-          />
           <div
             className={`bg-secondaryBG dark:bg-secondaryBG-dark  rounded-md`}
           >
@@ -35,10 +34,10 @@ export default function UserChats() {
                 displayChats={displayChats}
                 length={chats.length}
                 userId={userId}
+                chatId={chat.id}
               />
             ))}
           </div>
-        </>
       )}
     </>
   );

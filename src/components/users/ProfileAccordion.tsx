@@ -77,6 +77,7 @@ const ProfileAccordion: React.FC<ProfileAccordionProps> = ({
                   displayChats={displayChats}
                   length={chats.length}
                   userId={id}
+                  chatId={chat.id}
                 />
               ))}
             </div>

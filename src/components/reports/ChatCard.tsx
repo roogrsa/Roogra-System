@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ChatCardProps {
-    id: number;
+    id?: number |string;
     userId?:string;
 }
 interface MessagesValue {
@@ -26,6 +26,7 @@ export default function ChatCard({ id ,userId}: ChatCardProps) {
     const { t } = useTranslation();
     const language = useSelector(selectLanguage);
     const [messages, setMessages] = useState<MessagesValue[]>([]);
+// console.log(id);
 
     const displayChatMsg = async () => {
         try {
@@ -35,7 +36,7 @@ export default function ChatCard({ id ,userId}: ChatCardProps) {
             console.error(error);
         }
     };
-console.log(messages);
+// console.log(messages);
 
     useEffect(() => {
         displayChatMsg();
@@ -45,7 +46,7 @@ console.log(messages);
         <div className="p-3">
             {messages.length > 0 ? (
                 messages.map((msg) => {
-                    const isUserMessage = msg.from_id === Number(userId);
+                    const isUserMessage = msg.from_id === Number(userId) || msg.from_id === msg.customer_id;
                     const bubbleDirection = isUserMessage ? (language === 'ar' ? 'rtl' : 'ltr') : (language === 'ar' ? 'ltr' : 'rtl');
                     return (
                         <div key={msg.message_id} className={`flex mb-6 ${isUserMessage ? 'justify-start' : 'justify-end'}`}>
