@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axiosInstance from '../../axiosConfig/instanc';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 interface UpdateVerificationResponse {
   success: boolean;
@@ -8,6 +9,7 @@ interface UpdateVerificationResponse {
 }
 
 const useToggleVerification = () => {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
