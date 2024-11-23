@@ -33,7 +33,6 @@ const SignIn: React.FC = () => {
       dispatch(setIsLoggedin());
       navigate(`/`);
     } catch (error: any) {
-      console.error(error);
       toast.error(error?.response?.data?.message);
     } finally {
       setSubmitting(false);
