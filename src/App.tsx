@@ -20,7 +20,6 @@ import PrdDetials from './pages/products/PrdDetials';
 import Profile from './pages/users/Profile';
 import CategorySubscription from './pages/category_subscription/CategorySubscription';
 import Admins from './pages/admins/Admins';
-import AddAdmin from './pages/admins/AddAdmin';
 import Unauthorized from './pages/unauthorized/Unauthorized';
 import ProtectedRoute from './components/guards/ProtectedRoute';
 import MainSettings from './pages/settings/MainSettings';
@@ -46,18 +45,8 @@ import SingleChat from './pages/chats/SingleChat';
 import Notfound from './pages/notfound/Notfound';
 import ErrorElement from './pages/errorElement/ErrorElement';
 import LogoutGuards from './components/guards/LogoutGuards';
+import AddAdmin from './pages/admins/AddAdmin';
 const storedPermissions: any = store.getState().permissions.permissions;
-// super: permissions[0],
-// charts: permissions[1],
-// admins: permissions[2],
-// settings: permissions[3],
-// ads: { all: permissions[4], primary: permissions[5], subscription: permissions[6] },
-// users: { all: permissions[7], advertisers: permissions[8], customers: permissions[9] },
-// categories: { primary: permissions[10], subscription: permissions[11], region: permissions[12] },
-// requests: { attestation: permissions[13], category: permissions[14] },
-// contact: { inquiries: permissions[15], issues: permissions[16], suggestions: permissions[17] },
-// reports: { chats: permissions[18], products: permissions[19] },
-// banlist: { chats: permissions[20], products: permissions[21] },
 const router = createBrowserRouter([
   {
     path: '/',
@@ -473,7 +462,6 @@ const router = createBrowserRouter([
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const language = useSelector(selectLanguage);
-  // console.log(localStorage.getItem('token'));
   i18next.init({
     interpolation: { escapeValue: false },
     lng: language,
