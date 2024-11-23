@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import useBanUser from '../../../hooks/users/useBanUser';
 import useHandleAction from '../../../hooks/useHandleAction';
 import useUserBanHistory from '../../../hooks/users/UserBanHistory';
@@ -13,9 +12,7 @@ const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
 
 const BanProfileList: React.FC = ({ user }) => {
-  // console.log(user);
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [status, setStatus] = useState('');
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
@@ -34,10 +31,8 @@ const BanProfileList: React.FC = ({ user }) => {
       refreshBanHistory();
     }
   }, [isSuccess, refreshBanHistory]);
-  // console.log(banHistory);
-
   const userlogs = banHistory.map((ban) => ({
-    id: ban.admin_id, // This should be unique for each user
+    id: ban.admin_id,
     columns: [
       {
         key: 'name',
@@ -124,11 +119,6 @@ const BanProfileList: React.FC = ({ user }) => {
         onClick={(index: number) => setStatus(index === 0 ? 'Ban' : 'UnBan')}
         children={[
           <div key="Ban">
-            {/* {bannedUsersLoading ? (
-              <p>Loading...</p>
-            ) : bannedUsersError ? (
-              <p>Error: {bannedUsersError}</p>
-            ) : ( */}
             <>
               <NotFoundSection data={userlogs} />
 
@@ -136,7 +126,7 @@ const BanProfileList: React.FC = ({ user }) => {
             </>
             {/* )} */}
           </div>,
-          <div key="UnBan">{/* Handle UnBan logic here */}</div>,
+          <div key="UnBan"></div>,
         ]}
         footerItems={[
           <div className="flex gap-5" key="footer">

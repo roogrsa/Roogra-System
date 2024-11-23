@@ -18,7 +18,6 @@ const SignIn: React.FC = () => {
   const initialValues: LoginValues = { email: '', password: '' };
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // console.log(cookies.get('token'));
   const handleRegisterSubmit = async (
     values: LoginValues,
     { setSubmitting }: FormikHelpers<LoginValues>,
@@ -26,7 +25,6 @@ const SignIn: React.FC = () => {
     try {
       setSubmitting(true);
       const res = await axiosInstance.post(`/api/admins/login`, values);
-      // console.log(res.data.data);
       dispatch(setPermissions(res.data.data.permissions));
       localStorage.setItem('token', res.data.data.token);
       localStorage.setItem('email', res.data.data.email);

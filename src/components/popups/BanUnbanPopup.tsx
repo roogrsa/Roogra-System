@@ -21,11 +21,9 @@ const BanUnbanPopup = ({
 }: BanPopupProps) => {
     const { t } = useTranslation();
     const closeModal = () => setIsModalOpen(false);
-    console.log(isBan);
-    
     const banUnbanChat = async () => {
         try {
-            const res = await axiosInstance.patch(`/api/users/${chatId}`);
+            await axiosInstance.patch(`/api/users/${chatId}`);
             setIsModalOpen(false)
             setIsBan(!isBan)
             if(isBan){

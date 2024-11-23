@@ -49,7 +49,6 @@ export default function BanksSetting() {
       setBanks(res.data.data);
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
   useEffect(() => {

@@ -52,19 +52,14 @@ const CategorySubscription = () => {
         );
         setCategorySubscriptionCount(response.data.data.count / 8);
         setCount(response.data.data.count);
-        // console.log(status, response.data.data.count);
       } catch (err) {
-        console.log(err);
       }
     };
     fetchUsersCount();
   }, [Count, status]);
   const totalPages = Math.ceil(categorySubscriptionCount);
-
-  //
   const { data, loading, error, refreshRequest } =
     useCategorySubscriptionsByStatus(status, currentPage, id);
-  // console.log(data);
   useEffect(() => {
     if (editSuccess) {
       refreshRequest();

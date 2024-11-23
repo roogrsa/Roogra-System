@@ -26,8 +26,6 @@ export default function ChatCard({ id ,userId}: ChatCardProps) {
     const { t } = useTranslation();
     const language = useSelector(selectLanguage);
     const [messages, setMessages] = useState<MessagesValue[]>([]);
-// console.log(id);
-
     const displayChatMsg = async () => {
         try {
             const res = await axiosInstance.get(`/api/chats/messages/${id}`);
@@ -36,8 +34,6 @@ export default function ChatCard({ id ,userId}: ChatCardProps) {
             console.error(error);
         }
     };
-// console.log(messages);
-
     useEffect(() => {
         displayChatMsg();
     }, []);

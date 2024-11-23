@@ -28,8 +28,6 @@ const useFetchUsers = (
         setError(response.data.message || 'Error fetching users');
       }
     } catch (err) {
-      console.log(err);
-
       setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);

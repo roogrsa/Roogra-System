@@ -36,8 +36,6 @@ const useToggleVerification = () => {
 
       return { success: true, message: response.data.message };
     } catch (err: unknown) {
-      console.log(err);
-
       setError((err as Error).message);
       toast.error(t('toast.error'));
 

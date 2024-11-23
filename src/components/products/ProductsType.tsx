@@ -59,8 +59,6 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
     }
   }, [isSuccess, refreshProductsType]);
   const totalPages = Math.ceil(productsCount);
-  // console.log(totalPages);
-
   // if (loading) return <p>Loading products...</p>;
   // if (error) return <p>Error fetching products: {error}</p>;
 

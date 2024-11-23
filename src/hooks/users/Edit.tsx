@@ -15,8 +15,6 @@ const useEditUser = () => {
       return response.data;
     } catch (err: any) {
       setError(err.message || 'An error occurred');
-      console.log(err);
-
       setLoading(false);
       throw err;
     }

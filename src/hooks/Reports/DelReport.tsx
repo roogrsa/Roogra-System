@@ -22,7 +22,6 @@ const useDeleteReport = () => {
       }
     } catch (err) {
       setIsDeleted(false);
-      console.log(err);
       toast.error(t('toast.error'));
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

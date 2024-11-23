@@ -18,8 +18,6 @@ export default function SingleChat() {
       console.error(error);
     }
   };
-  console.log(chat);
-  
   useEffect(() => {
     displayChats();
   }, [chatId]);

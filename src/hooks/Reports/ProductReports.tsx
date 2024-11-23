@@ -38,8 +38,6 @@ export const useProductReports = (
         setError('Failed to fetch reports');
       }
     } catch (err) {
-      console.log(err);
-
       setError('An error occurred while fetching the data');
     } finally {
       setLoading(false);

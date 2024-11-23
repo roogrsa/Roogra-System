@@ -19,7 +19,6 @@ const useBannedUsers = () => {
       }
     } catch (err) {
       setError(err.message || 'An error occurred');
-      console.log(err);
     } finally {
       setLoading(false);
     }

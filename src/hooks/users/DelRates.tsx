@@ -37,7 +37,6 @@ const useDeleteRates = (): UseDeleteRatesReturn => {
         throw new Error('Failed to delete rates');
       }
     } catch (err) {
-      console.log(err);
       toast.error(t('toast.error'));
 
       setError(

@@ -24,7 +24,6 @@ export default function VerificationSetting() {
   // const validationSchema = yup.object().shape({
   //     commission: yup.number().required(t('settings.comissionError')),
   // })
-  // console.log(verification);
   const initialValues: VerificationValues = {
     commercial_register_fee: verification.commercial_register_fee,
     identity_document_fee: verification.identity_document_fee,
@@ -39,7 +38,7 @@ export default function VerificationSetting() {
   ) => {
     try {
       setSubmitting(true);
-      const res = await axiosInstance.put(
+      await axiosInstance.put(
         `/api/verification_settings/1`,
         values,
       );
@@ -53,7 +52,6 @@ export default function VerificationSetting() {
   const displayVerification = async () => {
     try {
       const res = await axiosInstance.get(`/api/verification_settings/1`);
-      // console.log(res.data.data);
       setVerification(res.data.data);
     } catch (error: any) {
       console.error(error);

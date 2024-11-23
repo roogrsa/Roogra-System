@@ -37,11 +37,9 @@ export default function ContactUsTable({
       const res = await axiosInstance.get(
         `/api/support/type/${type}/status/open`,
       );
-      // console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
   const displayContactUsByUser = async () => {
@@ -50,11 +48,9 @@ export default function ContactUsTable({
         `/api/support/users/${id}/type/${type}/status/open`,
         {},
       );
-      // console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
   useEffect(() => {
@@ -64,8 +60,6 @@ export default function ContactUsTable({
       displayContactUsByUser();
     }
   }, [type, query, id]);
-  // console.log(contactUs);
-
   return (
     <div>
       <table className="w-full text-[20px] text-left rtl:text-right text-text-light dark:text-text-dark">

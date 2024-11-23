@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
-
 import { useTranslation } from 'react-i18next';
 import useEditCategorySubscriptionStatus from '../../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import CategorySubscriptionsByUserid from '../../../hooks/category_subscription/getCategorySubscriptionByUserId';
@@ -14,32 +13,23 @@ import MainTable from '../../lastnews/MainTable';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
-
-//
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 
 const CategorySubscriptionUserid = () => {
   const { t } = useTranslation();
-
-  //
   const {
     editCategorySubscriptionStatus,
     loading: editLoading,
     error: editError,
     success: editSuccess,
   } = useEditCategorySubscriptionStatus();
-  //
   const breadcrumbLinks = [{ label: '', path: '/' }];
   const [status, setStatus] = useState('processing');
-
-  //
   const { data, loading, error, refreshRequest } =
     CategorySubscriptionsByUserid(
       status,
-      // currentPage,
     );
-  // console.log(data);
   useEffect(() => {
     if (editSuccess) {
       refreshRequest();
@@ -47,7 +37,6 @@ const CategorySubscriptionUserid = () => {
   }, [refreshRequest]);
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
-  //
   const headers = [
     {
       key: 'id',
@@ -97,8 +86,6 @@ const CategorySubscriptionUserid = () => {
       className: 'text-center',
     },
   ];
-  //
-
   const logs = Array.isArray(data)
     ? data.map((item) => {
         const createdAtDate = new Date(item.created_at);
@@ -190,14 +177,12 @@ const CategorySubscriptionUserid = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName', // Pass the admin name
-                        'approved', // Set the new status
-                        undefined, // Pass the verification request ID
-                        item.category_subscription_id, // Pass category subscription ID if needed
-
-                        undefined, // Pass undefined if EditVerificationRequest is not used
-
-                        editCategorySubscriptionStatus, // Function for updating category subscription status
+                        'adminName',
+                        'approved',
+                        undefined,
+                        item.category_subscription_id,
+                        undefined,
+                        editCategorySubscriptionStatus,
                       )
                     }
                   />
@@ -229,14 +214,12 @@ const CategorySubscriptionUserid = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName', // Pass the admin name
-                        'approved', // Set the new status
-                        undefined, // Pass the verification request ID
-                        item.category_subscription_id, // Pass category subscription ID if needed
-
-                        undefined, // Pass undefined if EditVerificationRequest is not used
-
-                        editCategorySubscriptionStatus, // Function for updating category subscription status
+                        'adminName',
+                        'approved',
+                        undefined,
+                        item.category_subscription_id,
+                        undefined,
+                        editCategorySubscriptionStatus,
                       )
                     }
                   />
@@ -248,12 +231,12 @@ const CategorySubscriptionUserid = () => {
                       className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer"
                       onClick={() =>
                         handleStatus(
-                          'adminName', // Pass the admin name
-                          'rejected', // Set the new status
-                          undefined, // Pass the verification request ID
-                          item.category_subscription_id, // Pass category subscription ID if needed
+                          'adminName',
+                          'rejected',
+                          undefined,
+                          item.category_subscription_id,
 
-                          undefined, // Pass undefined if EditVerificationRequest is not used
+                          undefined,
 
                           editCategorySubscriptionStatus,
                         )

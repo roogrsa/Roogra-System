@@ -33,7 +33,6 @@ export default function ComissionSetting() {
   const displayComission = async () => {
     try {
       const res = await axiosInstance.get(`/api/commission/1`);
-      // console.log(res.data.data);
       setCommission(res.data.data.commission);
     } catch (error: any) {
       console.error(error);

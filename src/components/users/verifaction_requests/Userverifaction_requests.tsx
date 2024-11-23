@@ -72,7 +72,6 @@ const VerifactionRequestByUserid = () => {
       refreshRequest();
     }
   }, [refreshRequest]);
-  // console.log(data);
 
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
@@ -130,7 +129,7 @@ const VerifactionRequestByUserid = () => {
     ...(status === 'rejected'
       ? [
           {
-            key: 'by_admin', // Changed 'By-admin' to use snake_case for consistency
+            key: 'by_admin',
             content: t('verification_request.headers.By-admin'),
             className: 'text-center text-sm',
           },
@@ -155,7 +154,7 @@ const VerifactionRequestByUserid = () => {
     ...(status === 'rejected'
       ? [
           {
-            key: 'verified_at-remove', // Added suffix for uniqueness
+            key: 'verified_at-remove',
             content: t('verification_request.headers.remove'),
             className: 'text-center text-sm',
           },

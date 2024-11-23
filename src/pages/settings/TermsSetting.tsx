@@ -14,7 +14,6 @@ const TermsSetting: React.FC = () => {
       setMetaDescription(res.data.data.meta_description);
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
   const body = {
@@ -30,7 +29,7 @@ const TermsSetting: React.FC = () => {
 
   const updateTerms = async () => {
     try {
-      const res = await axiosInstance.put(`/api/information/5`, body, {
+      await axiosInstance.put(`/api/information/5`, body, {
         method: 'PUT',
         headers: {
           'content-type': 'Application/json',
@@ -39,7 +38,6 @@ const TermsSetting: React.FC = () => {
       displayTearms();
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
 

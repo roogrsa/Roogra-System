@@ -30,7 +30,6 @@ const useUsers = (page: number = 0, userName: string = '') => {
       }
     } catch (err) {
       setError('Error fetching data');
-      console.log(err);
     } finally {
       setLoading(false);
     }

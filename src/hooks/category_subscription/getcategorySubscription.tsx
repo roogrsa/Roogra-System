@@ -22,7 +22,6 @@ const useCategorySubscriptions = (): UseCategorySubscriptionsReturn => {
         setData(response.data.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
-        console.log(err);
       } finally {
         setLoading(false);
       }

@@ -21,8 +21,6 @@ const useBanUser = () => {
       }
       return response.data;
     } catch (err) {
-      console.log(err);
-
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);

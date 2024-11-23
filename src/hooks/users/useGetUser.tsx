@@ -25,8 +25,6 @@ const useUser = (id: number): UseUserResponse => {
         setError('Failed to fetch user data');
       }
     } catch (err: any) {
-      console.log(err);
-
       setError(err.message || 'Failed to fetch product');
     } finally {
       setLoading(false);

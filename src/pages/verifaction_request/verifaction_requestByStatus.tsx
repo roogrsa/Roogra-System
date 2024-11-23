@@ -69,7 +69,6 @@ const verifaction_requestByStatus = () => {
         setverificationRequestCount(response.data.data.count / 8);
         setCount(response.data.data.count);
       } catch (err) {
-        console.log(err);
       }
     };
     fetchUsersCount();
@@ -189,8 +188,6 @@ const verifaction_requestByStatus = () => {
 
   const logs = Array.isArray(data)
     ? data.map((item, index) => {
-        // console.log(item);
-
         const createdAtDate = new Date(item.created_at);
         const datePart = createdAtDate.toLocaleDateString();
         const VerifiedDate = item.verified_at

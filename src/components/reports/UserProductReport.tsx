@@ -16,8 +16,6 @@ const UserProductReport: React.FC<{ query?: string }> = ({ query, user }) => {
   const [status, setStatus] = useState(0);
   const navigate = useNavigate();
   const { products, refreshUserReports } = useUserReports(status);
-  // console.log(products);
-
   const { isSuccess, toggleStatus, setIsSuccess } = useToggleReportStatus();
   const { deleteReport, isDeleted, resetDeleteStatus } = useDeleteReport();
 

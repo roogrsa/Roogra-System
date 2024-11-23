@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChatCard from "./ChatCard";
-import { TfiAngleDown, TfiAngleUp } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../store/slices/language";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -10,7 +9,6 @@ import { ToastContainer } from "react-toastify";
 import BanUnbanPopup from "../popups/BanUnbanPopup";
 import { ChatValue } from "../../types/ChatValue";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "../../axiosConfig/instanc";
 import BanImage from "./BanImage";
 interface ChatProps {
     chat: ChatValue;
@@ -33,14 +31,6 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setٍelectedChat(chat);
         setModalType(type);
     };
-    // console.log(chat?.id);
-
-    // const toggleShowMessages = (chatId: number) => {
-    //     setShowMassages((prevState) => ({
-    //         ...prevState,
-    //         [chatId]: !prevState[chatId]
-    //     }));
-    // };
     return (
         <div className="border-[#DBD5D5] dark:border-[#413F5C] border-2 rounded-md mb-3">
             <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${length && length > 1 ? 'mb-5' : ''} p-3 flex flex-col`}>

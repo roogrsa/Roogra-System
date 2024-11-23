@@ -28,11 +28,9 @@ const Tickectpopup: React.FC<TickectpopupProps> = ({
   isModalShow,
   setIsModalShow,
 }) => {
-  // console.log(isModalShow);
 
   const closeModal = () => {
     setIsModalShow(false);
-    console.log(isModalShow);
   };
 
   const navigate = useNavigate();

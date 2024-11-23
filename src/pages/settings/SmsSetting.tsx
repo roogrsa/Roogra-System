@@ -40,7 +40,6 @@ export default function SmsSetting() {
   const displaySms = async () => {
     try {
       const res = await axiosInstance.get(`/api/sms`);
-      console.log(res.data);
       setSms(res.data.data);
     } catch (error: any) {
       console.error(error);

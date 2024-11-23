@@ -48,8 +48,6 @@ const useEditCategorySubscriptionStatus =
       } catch (err) {
         const axiosError = err as AxiosError;
         toast.error(t('toast.error'));
-        console.log(err);
-
         setError(axiosError.response?.data?.message || 'An error occurred');
       } finally {
         setLoading(false);

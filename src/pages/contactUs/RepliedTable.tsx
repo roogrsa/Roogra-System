@@ -17,8 +17,6 @@ export default function RepliedTable({
   query,
   id,
 }: ContactUsTableProps) {
-  // console.log(query);
-
   const { t } = useTranslation();
   const [contactUs, setContactUs] = useState<ContactUsType[]>([]);
   const [selectedSupport, setSelectedSupport] = useState<ContactUsType>();
@@ -40,11 +38,9 @@ export default function RepliedTable({
       const res = await axiosInstance.get(
         `/api/support/type/${type}/status/closed`,
       );
-      console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
   const displayContactUsByUser = async () => {
@@ -53,11 +49,9 @@ export default function RepliedTable({
         `/api/support/users/${id}/type/${type}/status/closed`,
         {},
       );
-      console.log(res.data.data);
       setContactUs(res.data.data);
     } catch (error: any) {
       console.error(error);
-      console.log(error?.response?.data?.message);
     }
   };
   useEffect(() => {
@@ -67,7 +61,6 @@ export default function RepliedTable({
       displayContactUsByUser();
     }
   }, [type, query, id]);
-  console.log(contactUs);
   return (
     <div>
       <table className="w-full text-[20px] text-left rtl:text-right text-text-light dark:text-text-dark">

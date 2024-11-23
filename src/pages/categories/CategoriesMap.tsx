@@ -97,12 +97,8 @@ const CategoriesMap: React.FC = () => {
             id: category.map_category_id,
             order: index
         }));
-    console.log(updatedCategories);
         changeOrder(updatedCategories);
     };
-    console.log(categoriesMap);
-    
-
     useEffect(() => {
         displayCategoriesMap();
     }, [currentPage]);

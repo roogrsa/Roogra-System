@@ -40,8 +40,6 @@ const BannerPopup = ({
     period: duration || 0,
     image: image || '',
   };
-  // console.log(image);
-
   const handleCategorySubmit = async (
     values: BannerValues,
     { setSubmitting }: FormikHelpers<BannerValues>,
@@ -49,18 +47,14 @@ const BannerPopup = ({
     try {
       setSubmitting(true);
       if (id) {
-        const res = await axiosInstance.put(`api/ads/${id}`, values, {
+        await axiosInstance.put(`api/ads/${id}`, values, {
           headers: { 'Content-Type': 'application/json' },
         });
-        console.log(res);
-        // console.log(`id`);
         toast.success(` ${name} ${t('popup.edit_toast')}`);
       } else if (!id) {
-        const res = await axiosInstance.post(`api/ads`, values, {
+        await axiosInstance.post(`api/ads`, values, {
           headers: { 'Content-Type': 'application/json' },
         });
-        console.log(res);
-        // console.log(`!id`);
         toast.success(`${t('popup.add_toast')}`);
       }
       display();

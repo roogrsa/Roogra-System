@@ -37,7 +37,6 @@ const useDeleteFollowers = (): UseDeleteFollowersReturn => {
         throw new Error('Failed to delete followers');
       }
     } catch (err: any) {
-      console.log(err);
       toast.error(t('toast.error'));
       setError(
         err instanceof Error ? err.message : 'An unknown error occurred',

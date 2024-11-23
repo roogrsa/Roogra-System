@@ -32,8 +32,6 @@ const useDeleteVerificationRequest = (): UseDeleteVerificationRequestResult => {
         setSuccess(true);
       }
     } catch (err) {
-      console.log(err);
-
       const axiosError = err as AxiosError;
       setError(axiosError.response?.data?.message || 'An error occurred');
     } finally {

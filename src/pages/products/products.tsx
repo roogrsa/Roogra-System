@@ -89,8 +89,6 @@ const Products: React.FC = () => {
     deleteProducts(selectedProductIds);
     setSelectedProductIds([]);
   };
-  // console.log(products);
-
   const logs = products.map((product) => {
     const createdAtDate = new Date(product.date);
     const datePart = createdAtDate.toLocaleDateString();

@@ -24,7 +24,6 @@ const useUserProducts = (userId: number) => {
       }
     } catch (err) {
       setError(err.message || 'An error occurred while fetching products.');
-      console.log(err);
     } finally {
       setLoading(false);
     }
