@@ -29,12 +29,12 @@ const CheckboxGroup = ({ checks, setChecks, setFieldValue, label }: CheckboxItem
         setFieldValue(newChecks[index].name, newChecks[index].isChecked);
     };
     const allChecked = checks.every(item => item.isChecked);
-// console.log(checks ,'allChecked');
+console.log(checks ,'allChecked');
 
     return (
         <div>
             <div className="md:mb-1 md:mt-0 mt-4 font-semibold text-lg">
-                <Checkbox value={``} name={`selectAll`} label={label} checked={checks.every(item => item.isChecked)}
+                <Checkbox value={``} name={`selectAll`} label={label} checked={allChecked}
                     change={handleMainCheckboxChange} />
             </div>
             <div>
