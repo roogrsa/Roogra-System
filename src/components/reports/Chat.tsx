@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChatCard from "./ChatCard";
-import { TfiAngleDown, TfiAngleUp } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../store/slices/language";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -10,7 +9,6 @@ import { ToastContainer } from "react-toastify";
 import BanUnbanPopup from "../popups/BanUnbanPopup";
 import { ChatValue } from "../../types/ChatValue";
 import { useTranslation } from "react-i18next";
-import axiosInstance from "../../axiosConfig/instanc";
 import BanImage from "./BanImage";
 interface ChatProps {
     chat: ChatValue;
@@ -33,7 +31,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setٍelectedChat(chat);
         setModalType(type);
     };
-    // console.log(chat?.id);
+    console.log(chat?.advertizer_image);
 
     // const toggleShowMessages = (chatId: number) => {
     //     setShowMassages((prevState) => ({
@@ -49,9 +47,11 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                         <div onClick={() => openBanModal('customer')}>
                             <BanImage id={chat?.customer_id} isBan={isBan} setIsBan={setIsBan}/>
                         </div>
-                        <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light mx-2"></div>
+                        <div className="w-8 h-8 rounded-full mx-2">
+                        <img src={chat?.customer_image} alt="customer_image" className="rounded-full"/>
+                        </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
-                            {chat?.customer_first_name || 'customer_first_name'}
+                            {chat?.customer_first_name || ''} {chat?.customer_last_name}
                         </Link>
 
                     </div>
@@ -61,9 +61,11 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                         <div onClick={() => openBanModal('advertizer')}>
                             <BanImage id={chat?.advertizer_id} isBan={isBan} setIsBan={setIsBan}/>
                         </div>
-                        <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light mx-2"></div>
+                        <div className="w-8 h-8 rounded-full mx-2">
+                        <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full"/>
+                        </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
-                            {chat?.advertizer_first_name || 'advertizer_first_name'}
+                            {chat?.advertizer_first_name || ''} {chat?.advertizer_last_name}
                         </Link>
                     </div>
                 </div>
@@ -79,7 +81,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                     </div> */}
             </div>
             {/* {showMassages[chat?.id] && <> */}
-            <ChatCard id={chatId} userId={userId} />
+            <ChatCard id={chatId} userId={userId} advertizer_image={chat?.advertizer_image} customer_image={chat?.customer_image}/>
             <div className="flex justify-center p-4 bg-[#F7F5F9] dark:bg-[#2E2D3D]">
                 <div className="flex gap-10">
                     <RiDeleteBin6Line className="text-2xl text-Input-TextRed" role="button"

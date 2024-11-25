@@ -7,4 +7,6 @@ export type ChatValue ={
     advertizer_id: number;
     advertizer_first_name: string;
     advertizer_last_name: string;
+    advertizer_image:string;
+    customer_image:string;
 }
