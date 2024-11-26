@@ -19,8 +19,8 @@ interface ChatProps {
 }
 type ModalType = 'delete' | 'customer' | 'advertizer' | null;
 export default function Chat({ chat, displayChats, length, userId, chatId }: ChatProps) {
-    const [isCustomerBan, setIsCustomerBan]=useState<boolean>(chat?.customer_banned==1);
-    const [isAdvertizerBan, setIsAdvertizerBan]=useState<boolean>(chat?.advertizer_banned==1);
+    const [isCustomerBan, setIsCustomerBan] = useState<boolean>(chat?.customer_banned == 1);
+    const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned == 1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
     const { t } = useTranslation();
@@ -38,10 +38,10 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                 <div className="flex justify-between">
                     <div className="flex items-center" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                         <div onClick={() => openBanModal('customer')}>
-                            <BanImage id={chat?.customer_id} isBan={isCustomerBan} setIsBan={setIsCustomerBan}/>
+                            <BanImage isBan={isCustomerBan} />
                         </div>
                         <div className="w-8 h-8 rounded-full mx-2">
-                        <img src={chat?.customer_image} alt="customer_image" className="rounded-full"/>
+                            <img src={chat?.customer_image} alt="customer_image" className="rounded-full" />
                         </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
                             {chat?.customer_first_name || ''} {chat?.customer_last_name}
@@ -52,29 +52,18 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                         bg-[#DCECF5] rounded-md px-3">{t('Reports.headers.id')} RC-{reportId}</div>
                     <div className="flex items-center" dir={language === 'ar' ? 'ltr' : 'rtl'}>
                         <div onClick={() => openBanModal('advertizer')}>
-                            <BanImage id={chat?.advertizer_id} isBan={isAdvertizerBan} setIsBan={setIsAdvertizerBan}/>
+                            <BanImage isBan={isAdvertizerBan} />
                         </div>
                         <div className="w-8 h-8 rounded-full mx-2">
-                        <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full"/>
+                            <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full" />
                         </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
                             {chat?.advertizer_first_name || ''} {chat?.advertizer_last_name}
                         </Link>
                     </div>
                 </div>
-                {/* <div className="flex justify-between mx-[5px] mt-4">
-                        
-                        <div
-                            onClick={() => toggleShowMessages(chat?.id)}
-                            role="button"
-                            className="dark:text-secondaryBG text-secondaryBG-dark text-xl cursor-pointer"
-                        >
-                            {showMassages[chat?.id] ? <TfiAngleUp /> : <TfiAngleDown />}
-                        </div>
-                    </div> */}
             </div>
-            {/* {showMassages[chat?.id] && <> */}
-            <ChatCard id={chatId} userId={userId} advertizer_image={chat?.advertizer_image} customer_image={chat?.customer_image}/>
+            <ChatCard id={chatId} userId={userId} advertizer_image={chat?.advertizer_image} customer_image={chat?.customer_image} />
             <div className="flex justify-center p-4 bg-[#F7F5F9] dark:bg-[#2E2D3D]">
                 <div className="flex gap-10">
                     <RiDeleteBin6Line className="text-2xl text-Input-TextRed" role="button"
@@ -82,15 +71,11 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
 
                 </div>
             </div>
-            {/* </>
-                } */}
             {selectedChat && modalType === 'delete' && (
                 <DeletePopup
                     deleteName={`${selectedChat.customer_first_name} ${selectedChat.id}`}
                     deleteId={selectedChat.id}
                     url={`chats`}
-                    // isModalOpen={isModalOpen}
-                    // setIsModalOpen={setIsModalOpen}
                     isModalOpen={modalType === 'delete'}
                     setIsModalOpen={() => setModalType(null)}
                     display={displayChats}
