@@ -32,8 +32,8 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setModalType(type);
     };
     useEffect(() => {
-        setIsCustomerBan(chat?.customer_banned == 1 ? true : false)
-        setIsAdvertizerBan(chat?.advertizer_banned == 1 ? true : false)
+        setIsCustomerBan(chat?.customer_banned == 1)
+        setIsAdvertizerBan(chat?.advertizer_banned == 1)
     }, [chat]);
     console.log(isCustomerBan);
     console.log(isAdvertizerBan);
