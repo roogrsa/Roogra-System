@@ -19,8 +19,8 @@ interface ChatProps {
 }
 type ModalType = 'delete' | 'customer' | 'advertizer' | null;
 export default function Chat({ chat, displayChats, length, userId, chatId }: ChatProps) {
-    const [isCustomerBan, setIsCustomerBan] = useState<boolean>(chat?.customer_banned == 1);
-    const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned == 1);
+    const [isCustomerBan, setIsCustomerBan] = useState<boolean>(chat?.customer_banned === 1);
+    const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned === 1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
     const { t } = useTranslation();
