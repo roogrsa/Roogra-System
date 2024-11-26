@@ -4,6 +4,8 @@ interface BanImageProps {
 }
 
 export default function BanImage({ isBan }: BanImageProps) {
+    console.log(isBan);
+    
     return (
         <div
             className={`${isBan ? "bg-[#FA9623]" : "bg-[#767876]"} p-1 rounded-md flex items-center justify-center`}>

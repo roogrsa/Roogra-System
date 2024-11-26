@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatCard from "./ChatCard";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../store/slices/language";
@@ -19,8 +19,8 @@ interface ChatProps {
 }
 type ModalType = 'delete' | 'customer' | 'advertizer' | null;
 export default function Chat({ chat, displayChats, length, userId, chatId }: ChatProps) {
-    const [isCustomerBan, setIsCustomerBan] = useState<boolean>(chat?.customer_banned === 1);
-    const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned === 1);
+    const [isCustomerBan, setIsCustomerBan] = useState<boolean>(chat?.customer_banned == 1);
+    const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned == 1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
     const { t } = useTranslation();
@@ -31,6 +31,13 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setٍelectedChat(chat);
         setModalType(type);
     };
+    useEffect(() => {
+        setIsCustomerBan(chat?.customer_banned == 1 ? true : false)
+        setIsAdvertizerBan(chat?.advertizer_banned == 1 ? true : false)
+    }, [chat]);
+    console.log(isCustomerBan);
+    console.log(isAdvertizerBan);
+    
     console.log(chat);
     return (
         <div className="border-[#DBD5D5] dark:border-[#413F5C] border-2 rounded-md mb-3">
