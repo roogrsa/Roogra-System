@@ -29,20 +29,22 @@ const CheckboxGroup = ({ checks, setChecks, setFieldValue, label }: CheckboxItem
         setFieldValue(newChecks[index].name, newChecks[index].isChecked);
     };
     const allChecked = checks.every(item => item.isChecked);
+// console.log(checks ,'allChecked');
 
     return (
         <div>
             <div className="md:mb-1 md:mt-0 mt-4 font-semibold text-lg">
-                <Checkbox value={``} name={``} label={label} checked={allChecked}
+                <Checkbox value={``} name={`selectAll`} label={label} checked={checks.every(item => item.isChecked)}
                     change={handleMainCheckboxChange} />
             </div>
             <div>
                 {checks.map((item, index) => (
                     <label className={`custom-checkbox`} key={index}>
+                        {/* {console.log(item.isChecked, index)} */}
                         <input
                             type="checkbox"
                             name={item.name}
-                            value={item.value}
+                            value={item.isChecked?'1':'0'}
                             onChange={() => handleCheckboxChange(index)}
                             checked={item.isChecked}
                         />
@@ -51,6 +53,7 @@ const CheckboxGroup = ({ checks, setChecks, setFieldValue, label }: CheckboxItem
                             {t(item.label)}
                         </span>
                     </label>
+                    
                 ))}
             </div>
         </div>
