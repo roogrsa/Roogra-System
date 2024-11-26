@@ -35,10 +35,6 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setIsCustomerBan(chat?.customer_banned == 1)
         setIsAdvertizerBan(chat?.advertizer_banned == 1)
     }, [chat]);
-    console.log(isCustomerBan);
-    console.log(isAdvertizerBan);
-    
-    console.log(chat);
     return (
         <div className="border-[#DBD5D5] dark:border-[#413F5C] border-2 rounded-md mb-3">
             <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${length && length > 1 ? 'mb-5' : ''} p-3 flex flex-col`}>
