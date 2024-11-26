@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { ChatValue } from '../../types/ChatValue';
 
 interface ChatCardProps {
-    id?: number |string;
-    userId?:string;
-    advertizer_image:string;
-    customer_image:string;
+    id?: number | string;
+    userId?: string;
+    advertizer_image: string;
+    customer_image: string;
 }
 interface MessagesValue {
     customer_id: number;
@@ -25,7 +25,7 @@ interface MessagesValue {
     length: number;
 }
 
-export default function ChatCard({ id ,userId,customer_image, advertizer_image}: ChatCardProps) {
+export default function ChatCard({ id, userId, customer_image, advertizer_image }: ChatCardProps) {
     const { t } = useTranslation();
     const language = useSelector(selectLanguage);
     const [messages, setMessages] = useState<MessagesValue[]>([]);
@@ -35,12 +35,12 @@ export default function ChatCard({ id ,userId,customer_image, advertizer_image}:
             const res = await axiosInstance.get(`/api/chats/messages/${id}`);
             setMessages(res.data.data);
             console.log(res.data.data);
-            
+
         } catch (error: any) {
             console.error(error);
         }
     };
-// console.log(messages);
+    // console.log(messages);
 
     useEffect(() => {
         displayChatMsg();
@@ -61,7 +61,10 @@ export default function ChatCard({ id ,userId,customer_image, advertizer_image}:
                                 {isUserMessage && (
                                     <>
                                         <div className="w-8 h-8 rounded-full">
-                                            <img src={customer_image} alt="customer_image" className="rounded-full"/>
+                                            {customer_image?
+                                            <img src={customer_image} alt="customer_image" className="rounded-full" />:
+                                            <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
+                                            }
                                         </div>
                                         <div
                                             className={`w-64 p-4 rounded-xl leading-1.5 border-gray-200 bg-[#335E86] dark:[#335E86]`}
@@ -74,7 +77,10 @@ export default function ChatCard({ id ,userId,customer_image, advertizer_image}:
                                 {!isUserMessage && (
                                     <>
                                         <div className="w-8 h-8 rounded-full">
-                                        <img src={advertizer_image} alt="advertizer_image" className="rounded-full"/>
+                                            {advertizer_image ?
+                                                <img src={advertizer_image} alt="advertizer_image" className="rounded-full" /> :
+                                                <img src={`/person.jpeg`} alt="advertizer_image" className="rounded-full" />
+                                            }
                                         </div>
                                         <div
                                             className={`w-64 p-4 rounded-xl leading-1.5 border-gray-200 bg-[#9D9D9D] dark:[#9D9D9D]`}

@@ -44,7 +44,10 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                             <BanImage isBan={isCustomerBan} />
                         </div>
                         <div className="w-8 h-8 rounded-full mx-2">
-                            <img src={chat?.customer_image} alt="customer_image" className="rounded-full" />
+                            {chat?.customer_image?
+                            <img src={chat?.customer_image} alt="customer_image" className="rounded-full" />:
+                            <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
+                            }
                         </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
                             {chat?.customer_first_name || ''} {chat?.customer_last_name}
@@ -58,7 +61,10 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                             <BanImage isBan={isAdvertizerBan} />
                         </div>
                         <div className="w-8 h-8 rounded-full mx-2">
-                            <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full" />
+                            {chat?.advertizer_image?
+                            <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full" />:
+                            <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
+                            }
                         </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
                             {chat?.advertizer_first_name || ''} {chat?.advertizer_last_name}
