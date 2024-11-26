@@ -19,7 +19,8 @@ interface ChatProps {
 }
 type ModalType = 'delete' | 'customer' | 'advertizer' | null;
 export default function Chat({ chat, displayChats, length, userId, chatId }: ChatProps) {
-    const [isBan, setIsBan]=useState<boolean>(false);
+    const [isCustomerBan, setIsCustomerBan]=useState<boolean>(chat?.customer_banned==1);
+    const [isAdvertizerBan, setIsAdvertizerBan]=useState<boolean>(chat?.advertizer_banned==1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
     // const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
@@ -31,7 +32,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setٍelectedChat(chat);
         setModalType(type);
     };
-    console.log(chat?.advertizer_image);
+    console.log(chat);
 
     // const toggleShowMessages = (chatId: number) => {
     //     setShowMassages((prevState) => ({
@@ -45,7 +46,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                 <div className="flex justify-between">
                     <div className="flex items-center" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                         <div onClick={() => openBanModal('customer')}>
-                            <BanImage id={chat?.customer_id} isBan={isBan} setIsBan={setIsBan}/>
+                            <BanImage id={chat?.customer_id} isBan={isCustomerBan} setIsBan={setIsCustomerBan}/>
                         </div>
                         <div className="w-8 h-8 rounded-full mx-2">
                         <img src={chat?.customer_image} alt="customer_image" className="rounded-full"/>
@@ -59,7 +60,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                         bg-[#DCECF5] rounded-md px-3">{t('Reports.headers.id')} RC-{reportId}</div>
                     <div className="flex items-center" dir={language === 'ar' ? 'ltr' : 'rtl'}>
                         <div onClick={() => openBanModal('advertizer')}>
-                            <BanImage id={chat?.advertizer_id} isBan={isBan} setIsBan={setIsBan}/>
+                            <BanImage id={chat?.advertizer_id} isBan={isAdvertizerBan} setIsBan={setIsAdvertizerBan}/>
                         </div>
                         <div className="w-8 h-8 rounded-full mx-2">
                         <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full"/>
@@ -109,8 +110,8 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                     chatId={selectedChat.advertizer_id}
                     isModalOpen={modalType === 'advertizer'}
                     setIsModalOpen={() => setModalType(null)}
-                    setIsBan={setIsBan}
-                    isBan={isBan}
+                    setIsBan={setIsAdvertizerBan}
+                    isBan={isAdvertizerBan}
                 />
             )}
             {selectedChat && modalType === 'customer' && (
@@ -119,8 +120,8 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                     chatId={selectedChat.customer_id}
                     isModalOpen={modalType === 'customer'}
                     setIsModalOpen={() => setModalType(null)}
-                    setIsBan={setIsBan}
-                    isBan={isBan}
+                    setIsBan={setIsCustomerBan}
+                    isBan={isCustomerBan}
                 />
             )}
             <ToastContainer position="top-right" autoClose={5000} />

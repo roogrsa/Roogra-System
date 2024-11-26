@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axiosInstance from "../../axiosConfig/instanc";
 
 interface BanImageProps {
@@ -8,23 +8,20 @@ interface BanImageProps {
 }
 
 export default function BanImage({ id, setIsBan, isBan }: BanImageProps) {
-    const [loading, setLoading] = useState<boolean>(true);
 
-    const fetchUser = async () => {
-        try {
-            const response = await axiosInstance.get(`/api/users/${id}`);
-            const isBanned = response.data.data.isBanned;
-            setIsBan(isBanned == 1);
-        } catch (err) {
-            console.error("Error fetching user data:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
+    // const fetchUser = async () => {
+    //     try {
+    //         const response = await axiosInstance.get(`/api/users/${id}`);
+    //         const isBanned = response.data.data.isBanned;
+    //         setIsBan(isBanned == 1);
+    //     } catch (err) {
+    //         console.error("Error fetching user data:", err);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchUser();
-    }, [id]);
+    // useEffect(() => {
+    //     fetchUser();
+    // }, [id]);
 
     return (
         <div
