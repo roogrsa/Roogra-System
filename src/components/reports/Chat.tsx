@@ -23,7 +23,6 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
     const [isAdvertizerBan, setIsAdvertizerBan]=useState<boolean>(chat?.advertizer_banned==1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
-    // const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
     const { t } = useTranslation();
     const location = useLocation();
     const reportId = location.state?.reportId;
@@ -33,13 +32,6 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setModalType(type);
     };
     console.log(chat);
-
-    // const toggleShowMessages = (chatId: number) => {
-    //     setShowMassages((prevState) => ({
-    //         ...prevState,
-    //         [chatId]: !prevState[chatId]
-    //     }));
-    // };
     return (
         <div className="border-[#DBD5D5] dark:border-[#413F5C] border-2 rounded-md mb-3">
             <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${length && length > 1 ? 'mb-5' : ''} p-3 flex flex-col`}>
