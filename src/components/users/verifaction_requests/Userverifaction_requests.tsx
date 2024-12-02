@@ -31,6 +31,8 @@ const VerifactionRequestByUserid = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteName, setDeleteName] = useState<string>('');
   const [isModalShow, setIsModalShow] = useState(false);
+  const [item, setItem] = useState();
+
   const translateVerificationType = (type: string) => {
     switch (type) {
       case 'Identity Document':
@@ -43,8 +45,11 @@ const VerifactionRequestByUserid = () => {
         return type;
     }
   };
+  const openModalShow = (item) => {
+    setIsModalShow(true);
+    setItem(item);
+  };
   //
-  const openModalShow = () => setIsModalShow(true);
   const { toggleVerificationRequired, isSuccess } = useToggleVerification();
 
   const {
@@ -321,16 +326,13 @@ const VerifactionRequestByUserid = () => {
                 ) : (
                   <div
                     className="bg-EditIconBg rounded-md text-sm"
-                    onClick={openModalShow}
+                    onClick={() => {
+                      openModalShow(item);
+                    }}
                   >
                     <img
                       src={EditIconSrc}
                       className="w-6 h-6 text-center p-1 cursor-pointer"
-                    />
-                    <Tickectpopup
-                      item={item}
-                      setIsModalShow={setIsModalShow}
-                      isModalShow={isModalShow}
                     />
                   </div>
                 ),
@@ -450,6 +452,11 @@ const VerifactionRequestByUserid = () => {
           display={display}
         />
       )}
+      <Tickectpopup
+        item={item}
+        setIsModalShow={setIsModalShow}
+        isModalShow={isModalShow}
+      />
     </div>
   );
 };

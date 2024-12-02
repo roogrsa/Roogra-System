@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatCard from "./ChatCard";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../store/slices/language";
@@ -19,10 +19,10 @@ interface ChatProps {
 }
 type ModalType = 'delete' | 'customer' | 'advertizer' | null;
 export default function Chat({ chat, displayChats, length, userId, chatId }: ChatProps) {
-    const [isBan, setIsBan]=useState<boolean>(false);
+    const [isCustomerBan, setIsCustomerBan] = useState<boolean>(chat?.customer_banned == 1);
+    const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned == 1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
-    // const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
     const { t } = useTranslation();
     const location = useLocation();
     const reportId = location.state?.reportId;
@@ -31,17 +31,26 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
         setٍelectedChat(chat);
         setModalType(type);
     };
+    useEffect(() => {
+        setIsCustomerBan(chat?.customer_banned == 1)
+        setIsAdvertizerBan(chat?.advertizer_banned == 1)
+    }, [chat]);
     return (
         <div className="border-[#DBD5D5] dark:border-[#413F5C] border-2 rounded-md mb-3">
             <div className={`bg-[#F7F5F9] dark:bg-[#2E2D3D] rounded-md ${length && length > 1 ? 'mb-5' : ''} p-3 flex flex-col`}>
                 <div className="flex justify-between">
                     <div className="flex items-center" dir={language === 'ar' ? 'rtl' : 'ltr'}>
                         <div onClick={() => openBanModal('customer')}>
-                            <BanImage id={chat?.customer_id} isBan={isBan} setIsBan={setIsBan}/>
+                            <BanImage isBan={isCustomerBan} />
                         </div>
-                        <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light mx-2"></div>
+                        <div className="w-8 h-8 rounded-full mx-2">
+                            {chat?.customer_image?
+                            <img src={chat?.customer_image} alt="customer_image" className="rounded-full" />:
+                            <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
+                            }
+                        </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
-                            {chat?.customer_first_name || 'customer_first_name'}
+                            {chat?.customer_first_name || ''} {chat?.customer_last_name}
                         </Link>
 
                     </div>
@@ -49,27 +58,21 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                         bg-[#DCECF5] rounded-md px-3">{t('Reports.headers.id')} RC-{reportId}</div>
                     <div className="flex items-center" dir={language === 'ar' ? 'ltr' : 'rtl'}>
                         <div onClick={() => openBanModal('advertizer')}>
-                            <BanImage id={chat?.advertizer_id} isBan={isBan} setIsBan={setIsBan}/>
+                            <BanImage isBan={isAdvertizerBan} />
                         </div>
-                        <div className="w-8 h-8 rounded-full bg-secondaryBG-dark dark:bg-secondaryBG-light mx-2"></div>
+                        <div className="w-8 h-8 rounded-full mx-2">
+                            {chat?.advertizer_image?
+                            <img src={chat?.advertizer_image} alt="customer_image" className="rounded-full" />:
+                            <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
+                            }
+                        </div>
                         <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
-                            {chat?.advertizer_first_name || 'advertizer_first_name'}
+                            {chat?.advertizer_first_name || ''} {chat?.advertizer_last_name}
                         </Link>
                     </div>
                 </div>
-                {/* <div className="flex justify-between mx-[5px] mt-4">
-                        
-                        <div
-                            onClick={() => toggleShowMessages(chat?.id)}
-                            role="button"
-                            className="dark:text-secondaryBG text-secondaryBG-dark text-xl cursor-pointer"
-                        >
-                            {showMassages[chat?.id] ? <TfiAngleUp /> : <TfiAngleDown />}
-                        </div>
-                    </div> */}
             </div>
-            {/* {showMassages[chat?.id] && <> */}
-            <ChatCard id={chatId} userId={userId} />
+            <ChatCard id={chatId} userId={userId} advertizer_image={chat?.advertizer_image} customer_image={chat?.customer_image} />
             <div className="flex justify-center p-4 bg-[#F7F5F9] dark:bg-[#2E2D3D]">
                 <div className="flex gap-10">
                     <RiDeleteBin6Line className="text-2xl text-Input-TextRed" role="button"
@@ -77,15 +80,11 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
 
                 </div>
             </div>
-            {/* </>
-                } */}
             {selectedChat && modalType === 'delete' && (
                 <DeletePopup
                     deleteName={`${selectedChat.customer_first_name} ${selectedChat.id}`}
                     deleteId={selectedChat.id}
                     url={`chats`}
-                    // isModalOpen={isModalOpen}
-                    // setIsModalOpen={setIsModalOpen}
                     isModalOpen={modalType === 'delete'}
                     setIsModalOpen={() => setModalType(null)}
                     display={displayChats}
@@ -97,8 +96,8 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                     chatId={selectedChat.advertizer_id}
                     isModalOpen={modalType === 'advertizer'}
                     setIsModalOpen={() => setModalType(null)}
-                    setIsBan={setIsBan}
-                    isBan={isBan}
+                    setIsBan={setIsAdvertizerBan}
+                    isBan={isAdvertizerBan}
                 />
             )}
             {selectedChat && modalType === 'customer' && (
@@ -107,8 +106,8 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                     chatId={selectedChat.customer_id}
                     isModalOpen={modalType === 'customer'}
                     setIsModalOpen={() => setModalType(null)}
-                    setIsBan={setIsBan}
-                    isBan={isBan}
+                    setIsBan={setIsCustomerBan}
+                    isBan={isCustomerBan}
                 />
             )}
             <ToastContainer position="top-right" autoClose={5000} />

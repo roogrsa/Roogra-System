@@ -35,7 +35,12 @@ const verifaction_requestByStatus = () => {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteName, setDeleteName] = useState<string>('');
   const [isModalShow, setIsModalShow] = useState(false);
-  const openModalShow = () => setIsModalShow(true);
+  const [item, setItem] = useState();
+
+  const openModalShow = (item) => {
+    setIsModalShow(true);
+    setItem(item);
+  };
 
   const location = useLocation();
   const { id } = location.state || {};
@@ -100,67 +105,152 @@ const verifaction_requestByStatus = () => {
     { label: t('verification_request.label.label'), path: '/' },
   ];
 
+  // const headers = [
+  //   {
+  //     key: 'header_id',
+  //     content: t('verification_request.headers.id'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_verification_type',
+  //     content: t('verification_request.headers.verification_type'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_verification_type_number',
+  //     content: t('verification_request.headers.verification_type_number'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_verification_type_image',
+  //     content: t('verification_request.headers.verification_type_image'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_verification_required',
+  //     content: t('verification_request.headers.verification_required'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_transaction_image',
+  //     content: t('verification_request.headers.transaction_image'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_created_at',
+  //     content: t('verification_request.headers.created_at'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   ...(status === 'expaired' || status === 'approved'
+  //     ? [
+  //         {
+  //           key: 'header_verified_at',
+  //           content: t('verification_request.headers.verified_at'),
+  //           className: 'text-center text-sm',
+  //         },
+  //       ]
+  //     : []),
+  //   {
+  //     key: 'header_verification_period',
+  //     content: t('verification_request.headers.verification_period'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   ...(status === 'rejected'
+  //     ? [
+  //         {
+  //           key: 'header_By_admin',
+  //           content: t('verification_request.headers.By-admin'),
+  //           className: 'text-center text-sm',
+  //         },
+  //       ]
+  //     : []),
+  //   {
+  //     key: 'header_verified_by_accept',
+  //     content:
+  //       status === 'processing'
+  //         ? t('subscriptions.headers.verified_by_accept')
+  //         : t('subscriptions.headers.edit'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   {
+  //     key: 'header_verified_by_reject',
+  //     content:
+  //       status === 'rejected'
+  //         ? t('verification_request.headers.verified_by_accept')
+  //         : t('verification_request.headers.verified_by_reject'),
+  //     className: 'text-center text-sm',
+  //   },
+  //   ...(status === 'rejected'
+  //     ? [
+  //         {
+  //           key: 'header_verified_at_remove',
+  //           content: t('verification_request.headers.remove'),
+  //           className: 'text-center text-sm',
+  //         },
+  //       ]
+  //     : []),
+  // ];
   const headers = [
     {
-      key: 'header_id',
+      key: `header_id-${status}`,
       content: t('verification_request.headers.id'),
       className: 'text-center text-sm',
     },
     {
-      key: 'header_verification_type',
+      key: `header_verification_type-${status}`,
       content: t('verification_request.headers.verification_type'),
       className: 'text-center text-sm',
     },
     {
-      key: 'header_verification_type_number',
+      key: `header_verification_type_number-${status}`,
       content: t('verification_request.headers.verification_type_number'),
       className: 'text-center text-sm',
     },
     {
-      key: 'header_verification_type_image',
+      key: `header_verification_type_image-${status}`,
       content: t('verification_request.headers.verification_type_image'),
       className: 'text-center text-sm',
     },
     {
-      key: 'header_verification_required',
+      key: `header_verification_required-${status}`,
       content: t('verification_request.headers.verification_required'),
       className: 'text-center text-sm',
     },
     {
-      key: 'header_transaction_image',
+      key: `header_transaction_image-${status}`,
       content: t('verification_request.headers.transaction_image'),
       className: 'text-center text-sm',
     },
     {
-      key: 'header_created_at',
+      key: `header_created_at-${status}`,
       content: t('verification_request.headers.created_at'),
       className: 'text-center text-sm',
     },
     ...(status === 'expaired' || status === 'approved'
       ? [
           {
-            key: 'header_verified_at',
+            key: `header_verified_at-${status}`,
             content: t('verification_request.headers.verified_at'),
             className: 'text-center text-sm',
           },
         ]
       : []),
     {
-      key: 'header_verification_period',
+      key: `header_verification_period-${status}`,
       content: t('verification_request.headers.verification_period'),
       className: 'text-center text-sm',
     },
     ...(status === 'rejected'
       ? [
           {
-            key: 'header_By_admin',
+            key: `header_By_admin-${status}`,
             content: t('verification_request.headers.By-admin'),
             className: 'text-center text-sm',
           },
         ]
       : []),
     {
-      key: 'header_verified_by_accept',
+      key: `header_verified_by_accept-${status}`,
       content:
         status === 'processing'
           ? t('subscriptions.headers.verified_by_accept')
@@ -168,7 +258,7 @@ const verifaction_requestByStatus = () => {
       className: 'text-center text-sm',
     },
     {
-      key: 'header_verified_by_reject',
+      key: `header_verified_by_reject-${status}`,
       content:
         status === 'rejected'
           ? t('verification_request.headers.verified_by_accept')
@@ -178,13 +268,93 @@ const verifaction_requestByStatus = () => {
     ...(status === 'rejected'
       ? [
           {
-            key: 'header_verified_at_remove',
+            key: `header_verified_at_remove-${status}`,
             content: t('verification_request.headers.remove'),
             className: 'text-center text-sm',
           },
         ]
       : []),
   ];
+
+  // const logs = Array.isArray(data)
+  //   ? data.map((item, index) => {
+  //       const createdAtDate = new Date(item.created_at);
+  //       const datePart = createdAtDate.toLocaleDateString();
+  //       const VerifiedDate = item.verified_at
+  //         ? new Date(item.verified_at)
+  //         : null;
+  //       const VerifiedDatePart = VerifiedDate
+  //         ? VerifiedDate.toLocaleDateString()
+  //         : 'N/A';
+
+  //       const uniqueKey = `${
+  //         item.verification_request_id
+  //       }-${index}-${new Date().getTime()}`;
+
+  //       return {
+  //         id: item.verification_request_id,
+  //         type: 2,
+  //         columns: [
+  //           {
+  //             key: `id-${uniqueKey}`,
+  //             content: 'RD-' + item.verification_request_id,
+  //             className: 'flex justify-center text-sm',
+  //           },
+  //           {
+  //             key: `verification_type-${uniqueKey}`,
+  //             content: translateVerificationType(item.verification_type),
+  //             className: 'flex justify-center text-sm',
+  //           },
+  //           {
+  //             key: `verification_type_number-${uniqueKey}`,
+  //             content: item.verification_type_number.toString().slice(0, 12),
+  //             className: 'flex justify-center text-sm',
+  //           },
+  //           {
+  //             key: `transaction_image-${uniqueKey}`,
+  //             content:
+  //               item.STATUS === 'processing' ? (
+  //                 <ImageWithFullscreen
+  //                   src={item.verification_type_image}
+  //                   alt="Transaction"
+  //                   className="w-10 h-10 object-cover"
+  //                 />
+  //               ) : (
+  //                 <img
+  //                   src={ApprovedSubscription}
+  //                   alt="Approved"
+  //                   className="w-6 h-6 text-center"
+  //                 />
+  //               ),
+  //             className: 'flex justify-center text-sm',
+  //           },
+  //           {
+  //             key: `verification_required-${uniqueKey}`,
+  //             content: (
+  //               <button
+  //                 onClick={() => {
+  //                   toggleVerificationRequired(
+  //                     item.verification_request_id,
+  //                     item.verification_required,
+  //                   );
+  //                   refreshRequest;
+  //                 }}
+  //                 className={`w-10 rounded-xl text-center text-sm ${
+  //                   item.verification_required
+  //                     ? 'bg-Input-green text-Input-TextGreen border-2 border-Input-TextGreen'
+  //                     : 'bg-Input-red text-Input-TextRed border-2 border-Input-TextRed'
+  //                 }`}
+  //               >
+  //                 {item.verification_required ? t('yes') : t('no')}
+  //               </button>
+  //             ),
+  //             className: 'flex justify-center text-sm',
+  //           },
+  //           // Additional keys with the same `uniqueKey` pattern...
+  //         ],
+  //       };
+  //     })
+  //   : [];
 
   const logs = Array.isArray(data)
     ? data.map((item, index) => {
@@ -336,16 +506,13 @@ const verifaction_requestByStatus = () => {
                 ) : (
                   <div
                     className="bg-EditIconBg rounded-md text-sm"
-                    onClick={openModalShow}
+                    onClick={() => {
+                      openModalShow(item);
+                    }}
                   >
                     <img
                       src={EditIconSrc}
                       className="w-6 h-6 text-center p-1 cursor-pointer"
-                    />
-                    <Tickectpopup
-                      item={item}
-                      setIsModalShow={setIsModalShow}
-                      isModalShow={isModalShow}
                     />
                   </div>
                 ),
@@ -474,6 +641,11 @@ const verifaction_requestByStatus = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
+      />
+      <Tickectpopup
+        item={item}
+        setIsModalShow={setIsModalShow}
+        isModalShow={isModalShow}
       />
       {/* <ToastContainer position="top-right" autoClose={5000} /> */}
     </div>
