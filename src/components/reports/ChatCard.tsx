@@ -43,7 +43,7 @@ export default function ChatCard({ id, userId, customer_image, advertizer_image 
     }, []);
 
     return (
-        <div className="p-3">
+        <div className="p-3 h-70 overflow-y-scroll">
             {messages.length > 0 ? (
                 messages.map((msg) => {
                     const isUserMessage = msg.from_id === msg.customer_id;
