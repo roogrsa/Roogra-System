@@ -11,6 +11,7 @@ import useHandleAction from '../../hooks/useHandleAction';
 import useBanAdmin from '../../hooks/admins/useBanAdmin';
 import useDeleteAdmins from '../../hooks/admins/DelAdmins';
 import { toast, ToastContainer } from 'react-toastify';
+import { useAdminState } from '../../hooks/admins/successadd';
 
 //
 const NotBannedIconSrc = '/unblock.svg';
@@ -32,14 +33,14 @@ const AdminsList: React.FC = () => {
     supervisor: 3,
     delegates: 1,
   };
-  const { admins: observers, refreshAdminsByType: refreshObservers } =
-    useAdminsByType(roleTypeMap['observer']);
 
   const { deleteAdmins, isSuccess: AdminDeleted } = useDeleteAdmins();
+  const { isSuccessAdd, setIsSuccessAdd } = useAdminState();
 
+  const { admins: observers, refreshAdminsByType: refreshObservers } =
+    useAdminsByType(roleTypeMap['observer']);
   const { admins: supervisors, refreshAdminsByType: refreshSupervisors } =
     useAdminsByType(roleTypeMap['supervisor']);
-
   const { admins: delegates, refreshAdminsByType: refreshDelegates } =
     useAdminsByType(roleTypeMap['delegates']);
 
@@ -61,12 +62,12 @@ const AdminsList: React.FC = () => {
     refreshFunction();
   }, [adminType]);
   useEffect(() => {
-    if (AdminDeleted) {
+    if (AdminDeleted || isSuccessAdd) {
       refreshSupervisors();
       refreshDelegates();
       refreshObservers();
     }
-  }, [AdminDeleted, refreshSupervisors, refreshDelegates, refreshObservers]);
+  }, [AdminDeleted, isSuccessAdd]);
 
   const handleAdminesSelection = (adminId: number) => {
     setSelectedAdminIds((prev) =>
@@ -104,6 +105,7 @@ const AdminsList: React.FC = () => {
   const mapAdminLogs = (admins: any) =>
     admins.map((admin: any) => ({
       id: admin.id,
+      key: admin.id,
       columns: [
         {
           key: 'name',
@@ -302,28 +304,28 @@ const AdminsList: React.FC = () => {
           setAdminType(types[index]);
         }}
         children={[
-          <>
+          <div key="observer-section">
             <NotFoundSection data={logsObserver} />
             <MainTable logs={logsObserver} header2={true} headers={headers} />
-          </>,
-          <>
+          </div>,
+          <div key="supervisor-section">
             <NotFoundSection data={logsSupervisor} />
             <MainTable logs={logsSupervisor} header2={true} headers={headers} />
-          </>,
-          <>
+          </div>,
+          <div key="delegate-section">
             <NotFoundSection data={logsDelegates} />
             <MainTable logs={logsDelegates} header2={true} headers={headers} />
-          </>,
+          </div>,
         ]}
         footerItems={[
-          <div className="flex gap-5">
-            <span key="1">({logsObserver.length || 0})</span>
+          <div className="flex gap-5" key="observer-footer">
+            <span>({logsObserver.length || 0})</span>
           </div>,
-          <div className="flex gap-5">
-            <span key="1">({logsSupervisor.length || 0})</span>
+          <div className="flex gap-5" key="supervisor-footer">
+            <span>({logsSupervisor.length || 0})</span>
           </div>,
-          <div className="flex gap-5">
-            <span key="1">({logsDelegates.length || 0})</span>
+          <div className="flex gap-5" key="delegate-footer">
+            <span>({logsDelegates.length || 0})</span>
           </div>,
         ]}
       />

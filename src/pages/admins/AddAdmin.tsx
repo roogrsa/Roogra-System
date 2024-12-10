@@ -10,6 +10,8 @@ import CheckboxGroup from './CheckboxGroup';
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import useAdminsByType from '../../hooks/admins/AbminType';
+import { useAdminState } from '../../hooks/admins/successadd';
 
 export interface CheckboxItem {
   isChecked: boolean;
@@ -30,7 +32,12 @@ interface AddAdminValues {
   start_working_hour: string;
   finish_working_hour: string;
   permissions: {
-    adminspermissions: { super: number; charts: number; admins: number; settings: number; }
+    adminspermissions: {
+      super: number;
+      charts: number;
+      admins: number;
+      settings: number;
+    };
     ads: { all: number; primary: number; subscription: number };
     users: { all: number; advertisers: number; customers: number };
     categories: { primary: number; subscription: number; region: number };
@@ -106,14 +113,39 @@ export default function AddAdmin() {
               admins: res.data.data?.permissions[2],
               settings: res.data.data?.permissions[3],
             },
-            ads: { all: res.data.data?.permissions[4], primary: res.data.data?.permissions[5], subscription: res.data.data?.permissions[6], },
-            users: { all: res.data.data?.permissions[7], advertisers: res.data.data?.permissions[8], customers: res.data.data?.permissions[9], },
-            categories: { primary: res.data.data?.permissions[10], subscription: res.data.data?.permissions[11], region: res.data.data?.permissions[12], },
-            requests: { attestation: res.data.data?.permissions[13], category: res.data.data?.permissions[14], },
-            contact: { inquiries: res.data.data?.permissions[15], issues: res.data.data?.permissions[16], suggestions: res.data.data?.permissions[17], },
-            reports: { chats: res.data.data?.permissions[18], products: res.data.data?.permissions[19], },
-            banlist: { chats: res.data.data?.permissions[20], products: res.data.data?.permissions[21], },
-          }
+            ads: {
+              all: res.data.data?.permissions[4],
+              primary: res.data.data?.permissions[5],
+              subscription: res.data.data?.permissions[6],
+            },
+            users: {
+              all: res.data.data?.permissions[7],
+              advertisers: res.data.data?.permissions[8],
+              customers: res.data.data?.permissions[9],
+            },
+            categories: {
+              primary: res.data.data?.permissions[10],
+              subscription: res.data.data?.permissions[11],
+              region: res.data.data?.permissions[12],
+            },
+            requests: {
+              attestation: res.data.data?.permissions[13],
+              category: res.data.data?.permissions[14],
+            },
+            contact: {
+              inquiries: res.data.data?.permissions[15],
+              issues: res.data.data?.permissions[16],
+              suggestions: res.data.data?.permissions[17],
+            },
+            reports: {
+              chats: res.data.data?.permissions[18],
+              products: res.data.data?.permissions[19],
+            },
+            banlist: {
+              chats: res.data.data?.permissions[20],
+              products: res.data.data?.permissions[21],
+            },
+          },
         });
       } catch (error: any) {
         console.error(error);
@@ -196,12 +228,32 @@ export default function AddAdmin() {
     return result;
   };
   const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }];
-  const navigate = useNavigate();
+  // const [isSuccessAdd, setIsSuccessAdd] = useState<boolean>(false);
+  const { isSuccessAdd, setIsSuccessAdd } = useAdminState();
+
+  // const navigate = useNavigate();
+  // const roleTypeMap = {
+  //   observer: 2,
+  //   supervisor: 3,
+  //   delegates: 1,
+  // };
+
+  // const { refreshAdminsByType: refreshObservers } = useAdminsByType(
+  //   roleTypeMap['observer'],
+  // );
+  // const { refreshAdminsByType: refreshSupervisors } = useAdminsByType(
+  //   roleTypeMap['supervisor'],
+  // );
+  // const { refreshAdminsByType: refreshDelegates } = useAdminsByType(
+  //   roleTypeMap['delegates'],
+  // );
+
   const handleAddAdminSubmit = async (
     values: AddAdminValues,
     { setSubmitting }: FormikHelpers<AddAdminValues>,
   ) => {
     try {
+      setIsSuccessAdd(false);
       setSubmitting(true);
       if (adminId) {
         await axiosInstance.put(`/api/admins/${adminId}`, {
@@ -209,14 +261,22 @@ export default function AddAdmin() {
           permissions: loggedValues,
         });
         toast.success(`admin updated successfully`);
-        navigate(`/admins`);
+        setIsSuccessAdd(true);
+        // navigate(`/admins`);
       } else if (!adminId) {
         await axiosInstance.post(`/api/admins`, {
           ...values,
           permissions: loggedValues,
         });
+        // refreshSupervisors();
+        // refreshDelegates();
+        // refreshObservers();
         toast.success(`admin successfully submitted`);
+        setIsSuccessAdd(true);
       }
+      // if (isSuccessAdd) {
+      window.location.reload();
+      // }
     } catch (error: any) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -224,6 +284,15 @@ export default function AddAdmin() {
       setSubmitting(false);
     }
   };
+
+  // useEffect(() => {
+  //   if (isSuccessAdd) {
+  //     refreshSupervisors();
+  //     refreshDelegates();
+  //     refreshObservers();
+  //   }
+  // }, [isSuccessAdd]);
+
   const [checkAdvertisments, setCheckAdvertisments] = useState<CheckboxItem[]>([
     {
       isChecked: false,
@@ -352,95 +421,144 @@ export default function AddAdmin() {
   ]);
   useEffect(() => {
     if (admin) {
-      type PermissionKeyAds = keyof typeof admin.permissions.ads
-      type PermissionAdmin = keyof typeof admin.permissions.adminspermissions
-      type PermissionUsers = keyof typeof admin.permissions.users
-      type PermissionCategories = keyof typeof admin.permissions.categories
-      type PermissionContact = keyof typeof admin.permissions.contact
-      type PermissionRequests = keyof typeof admin.permissions.requests
-      type PermissionReports = keyof typeof admin.permissions.reports
-      type PermissionBanlist = keyof typeof admin.permissions.banlist
-      const permissionAds: Record<PermissionKeyAds, number> = { all: 0, primary: 1, subscription: 2 };
-      const permissionAdmin: Record<PermissionAdmin, number> = { super: 0, admins: 1, settings: 2, charts: 3 };
-      const permissionUsers: Record<PermissionUsers, number> = { all: 0, advertisers: 1, customers: 2 };
-      const permissionCategories: Record<PermissionCategories, number> = { primary: 0, subscription: 1, region: 2 };
-      const permissionContact: Record<PermissionContact, number> = { inquiries: 0, issues: 1, suggestions: 2 };
-      const permissionRequests: Record<PermissionRequests, number> = { attestation: 0, category: 1 };
-      const permissionReports: Record<PermissionReports, number> = { chats: 0, products: 1 };
-      const permissionBanlist: Record<PermissionBanlist, number> = { chats: 0, products: 1 };
-      (Object.keys(permissionAds) as PermissionKeyAds[]).forEach(key => {
+      type PermissionKeyAds = keyof typeof admin.permissions.ads;
+      type PermissionAdmin = keyof typeof admin.permissions.adminspermissions;
+      type PermissionUsers = keyof typeof admin.permissions.users;
+      type PermissionCategories = keyof typeof admin.permissions.categories;
+      type PermissionContact = keyof typeof admin.permissions.contact;
+      type PermissionRequests = keyof typeof admin.permissions.requests;
+      type PermissionReports = keyof typeof admin.permissions.reports;
+      type PermissionBanlist = keyof typeof admin.permissions.banlist;
+      const permissionAds: Record<PermissionKeyAds, number> = {
+        all: 0,
+        primary: 1,
+        subscription: 2,
+      };
+      const permissionAdmin: Record<PermissionAdmin, number> = {
+        super: 0,
+        admins: 1,
+        settings: 2,
+        charts: 3,
+      };
+      const permissionUsers: Record<PermissionUsers, number> = {
+        all: 0,
+        advertisers: 1,
+        customers: 2,
+      };
+      const permissionCategories: Record<PermissionCategories, number> = {
+        primary: 0,
+        subscription: 1,
+        region: 2,
+      };
+      const permissionContact: Record<PermissionContact, number> = {
+        inquiries: 0,
+        issues: 1,
+        suggestions: 2,
+      };
+      const permissionRequests: Record<PermissionRequests, number> = {
+        attestation: 0,
+        category: 1,
+      };
+      const permissionReports: Record<PermissionReports, number> = {
+        chats: 0,
+        products: 1,
+      };
+      const permissionBanlist: Record<PermissionBanlist, number> = {
+        chats: 0,
+        products: 1,
+      };
+      (Object.keys(permissionAds) as PermissionKeyAds[]).forEach((key) => {
         if (admin?.permissions?.ads[key] == 1) {
-          setCheckAdvertisments(prevChecks =>
+          setCheckAdvertisments((prevChecks) =>
             prevChecks.map((check, index) =>
-              index === permissionAds[key] ? { ...check, isChecked: true } : check
-            )
+              index === permissionAds[key]
+                ? { ...check, isChecked: true }
+                : check,
+            ),
           );
         }
       });
-      (Object.keys(permissionAdmin) as PermissionAdmin[]).forEach(key => {
+      (Object.keys(permissionAdmin) as PermissionAdmin[]).forEach((key) => {
         if (admin?.permissions?.adminspermissions[key] == 1) {
-          setCheckPermissions(prevChecks =>
+          setCheckPermissions((prevChecks) =>
             prevChecks.map((check, index) =>
-              index === permissionAdmin[key] ? { ...check, isChecked: true } : check
-            )
+              index === permissionAdmin[key]
+                ? { ...check, isChecked: true }
+                : check,
+            ),
           );
         }
       });
-      (Object.keys(permissionUsers) as PermissionUsers[]).forEach(key => {
+      (Object.keys(permissionUsers) as PermissionUsers[]).forEach((key) => {
         if (admin?.permissions?.users[key] == 1) {
-          setCheckUsers(prevChecks =>
+          setCheckUsers((prevChecks) =>
             prevChecks.map((check, index) =>
-              index === permissionUsers[key] ? { ...check, isChecked: true } : check
-            )
+              index === permissionUsers[key]
+                ? { ...check, isChecked: true }
+                : check,
+            ),
           );
         }
       });
-      (Object.keys(permissionCategories) as PermissionCategories[]).forEach(key => {
-        if (admin?.permissions?.categories[key] == 1) {
-          setCheckCategories(prevChecks =>
-            prevChecks.map((check, index) =>
-              index === permissionCategories[key] ? { ...check, isChecked: true } : check
-            )
-          );
-        }
-      });
-      (Object.keys(permissionContact) as PermissionContact[]).forEach(key => {
+      (Object.keys(permissionCategories) as PermissionCategories[]).forEach(
+        (key) => {
+          if (admin?.permissions?.categories[key] == 1) {
+            setCheckCategories((prevChecks) =>
+              prevChecks.map((check, index) =>
+                index === permissionCategories[key]
+                  ? { ...check, isChecked: true }
+                  : check,
+              ),
+            );
+          }
+        },
+      );
+      (Object.keys(permissionContact) as PermissionContact[]).forEach((key) => {
         if (admin?.permissions?.contact[key] == 1) {
-          setCheckSupport(prevChecks =>
+          setCheckSupport((prevChecks) =>
             prevChecks.map((check, index) =>
-              index === permissionContact[key] ? { ...check, isChecked: true } : check
-            )
+              index === permissionContact[key]
+                ? { ...check, isChecked: true }
+                : check,
+            ),
           );
         }
       });
-      (Object.keys(permissionRequests) as PermissionRequests[]).forEach(key => {
-        if (admin?.permissions?.requests[key] == 1) {
-          setCheckRequests(prevChecks =>
-            prevChecks.map((check, index) =>
-              index === permissionRequests[key] ? { ...check, isChecked: true } : check
-            )
-          );
-        }
-      });
-      (Object.keys(permissionReports) as PermissionReports[]).forEach(key => {
+      (Object.keys(permissionRequests) as PermissionRequests[]).forEach(
+        (key) => {
+          if (admin?.permissions?.requests[key] == 1) {
+            setCheckRequests((prevChecks) =>
+              prevChecks.map((check, index) =>
+                index === permissionRequests[key]
+                  ? { ...check, isChecked: true }
+                  : check,
+              ),
+            );
+          }
+        },
+      );
+      (Object.keys(permissionReports) as PermissionReports[]).forEach((key) => {
         if (admin?.permissions?.reports[key] == 1) {
-          setCheckReports(prevChecks =>
+          setCheckReports((prevChecks) =>
             prevChecks.map((check, index) =>
-              index === permissionReports[key] ? { ...check, isChecked: true } : check
-            )
+              index === permissionReports[key]
+                ? { ...check, isChecked: true }
+                : check,
+            ),
           );
         }
       });
-      (Object.keys(permissionBanlist) as PermissionBanlist[]).forEach(key => {
+      (Object.keys(permissionBanlist) as PermissionBanlist[]).forEach((key) => {
         if (admin?.permissions?.banlist[key] == 1) {
-          setCheckBanlist(prevChecks =>
+          setCheckBanlist((prevChecks) =>
             prevChecks.map((check, index) =>
-              index === permissionBanlist[key] ? { ...check, isChecked: true } : check
-            )
+              index === permissionBanlist[key]
+                ? { ...check, isChecked: true }
+                : check,
+            ),
           );
         }
       });
-
     }
   }, [admin?.permissions]);
   return (
@@ -572,7 +690,6 @@ export default function AddAdmin() {
           );
         }}
       </Formik>
-      <ToastContainer position="top-right" autoClose={5000} />
     </div>
   );
 }

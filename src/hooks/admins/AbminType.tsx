@@ -31,7 +31,6 @@ const useAdminsByType = (adminType: number) => {
   const fetchAdminsByType = async () => {
     setLoading(true);
     setError(null);
-
     try {
       const response = await axiosInstance.get<AdminResponse>(
         `/api/admins/type/${adminType}`,
