@@ -79,7 +79,7 @@ const handleOnDragEnd = (result: DropResult) => {
   const displayCategories = async () => {
     try {
       const res = await axiosInstance.get(
-        `/api/categories?page=${currentPage}&limit=8`,
+        `/api/categories?page=${currentPage}&limit=1000`,
       );
       setCategories(
         res.data.data.sort(
@@ -229,11 +229,11 @@ const handleOnDragEnd = (result: DropResult) => {
         />
       )}
 
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={categoriesCount}
         setCurrentPage={setCurrentPage}
-      />
+      /> */}
     </div>
   );
 };

@@ -48,7 +48,7 @@ const CategoriesMap: React.FC = () => {
 
     const displayCategoriesMap = async () => {
         try {
-            const res = await axiosInstance.get<{ data: CategoryMap[] }>(`/api/map-categories?limit=8&page=${currentPage}`);
+            const res = await axiosInstance.get<{ data: CategoryMap[] }>(`/api/map-categories?limit=1000&page=${currentPage}`);
             setCategoriesMap(res.data.data.sort((a, b) => a.sort_order - b.sort_order));
         } catch (error: any) {
             toast.error(t('categoriesPage.fetchError'));
@@ -197,11 +197,11 @@ const CategoriesMap: React.FC = () => {
             )}
 
             {/* Pagination */}
-            <Pagination
+            {/* <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 setCurrentPage={setCurrentPage}
-            />
+            /> */}
         </div>
     );
 };
