@@ -21,7 +21,7 @@ export default function InputText({ type, name, label, min,isReq, flex}: InputTe
                 <FaAsterisk className='text-[8px] text-[#E02828]' />
                     }
                 </label>
-                <Field type={type} min={min} name={name} id={name} className="md:w-50 w-full shadow-sm border border-gray-300 text-gray-900 
+                <Field type={type} min={min} name={name} id={name} className="md:w-36 w-full shadow-sm border border-gray-300 text-gray-900 
                 text-sm rounded-md block  p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light"
                 placeholder={t('admins.form.placeholder')} />
             </div>

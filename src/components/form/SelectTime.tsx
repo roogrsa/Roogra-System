@@ -61,7 +61,7 @@ export default function SelectTime({name, label}:SelectTimeProps) {
         <div className="md:mb-4 md:mt-1 mt-4 font-semibold text-lg">{t('admins.form.shift')} {label}</div>
         <Field as={`select`} name={name} id={name}
         className="shadow-sm border border-gray-300 text-gray-900 
-        text-sm rounded-md md:w-50 w-full p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">
+        text-sm rounded-md md:w-36 w-full p-2 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light">
             <option value="" hidden>{t('admins.form.select-time')}</option>
             {hours.map((hour)=>(
                 <option value={`${hour}:00`}>{hour}</option>

@@ -28,8 +28,8 @@ const MainSettings: React.FC = () => {
                 pageName={translatedTabLabel}
                 breadcrumbLinks={breadcrumbLinks}
             />
-            <div className="md:flex bg-secondaryBG-light dark:bg-secondaryBG-dark p-8 rounded">
-                <ul className={`flex-column space-y space-y-4 ${language === 'ar' ? 'w-52' : 'w-64'} text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0`}>
+            <div className="md:flex bg-secondaryBG-light dark:bg-secondaryBG-dark p-4 rounded">
+                <ul className={`flex-column space-y space-y-2 ${language === 'ar' ? 'w-52' : 'w-64'} text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0`}>
                     <TabButton btnTab="terms" label={t('settings.terms')} activeTab={activeTab} setActiveTab={setActiveTab} />
                     <TabButton btnTab="comission" label={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab} />
                     <TabButton btnTab="banks" label={t('settings.banks')} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -37,7 +37,7 @@ const MainSettings: React.FC = () => {
                     <TabButton btnTab="verification" label={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
                     <TabButton btnTab="banners" label={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 </ul>
-                <div className="p-6 text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
+                <div className="text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
                     {activeTab === 'terms' && <TermsSetting />}
                     {activeTab === 'comission' && <ComissionSetting />}
                     {activeTab === 'banks' && <BanksSetting />}
