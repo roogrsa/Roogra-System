@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosConfig/instanc';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -7,10 +8,10 @@ const useRemoveUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const removeUser = async (userId: number) => {
-    const { t } = useTranslation();
-
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -18,21 +19,30 @@ const useRemoveUser = () => {
     try {
       const response = await axiosInstance.delete(`/api/users/${userId}`);
 
-      if (response.status < 200 || response.status >= 300) {
-        throw new Error(`Failed to remove user with ID: ${userId}`);
+      if (
+        !response?.status ||
+        response.status < 200 ||
+        response.status >= 300
+      ) {
+        throw new Error(t('toast.error_delete', { id: userId }));
       }
 
       const responseData = response.data;
 
-      if (responseData.success) {
+      if (responseData?.success) {
         setSuccess(true);
         toast.success(t('toast.deleted'));
+        navigate('/users'); // Navigate after successful deletion
       } else {
-        throw new Error(`API response unsuccessful: ${responseData.message}`);
+        throw new Error(
+          t('toast.api_failed', { message: responseData?.message || '' }),
+        );
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error occurred');
-      toast.error(t('toast.error'));
+      const errorMessage =
+        err instanceof Error ? err.message : t('toast.unknown_error');
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

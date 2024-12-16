@@ -8,6 +8,7 @@ import { MdOutlineWatchLater } from 'react-icons/md';
 import Pagination from '../../components/pagination/Pagination';
 import axiosInstance from '../../axiosConfig/instanc';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Charts = () => {
   const nameClass = 'dark:text-[#32E26B] text-[#0E1FB2]';
@@ -18,6 +19,7 @@ const Charts = () => {
   const iconClass = 'mx-3 mt-1';
   const [currentPage, setCurrentPage] = useState(0);
   const [logsCount, setLogsCount] = useState(0);
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -31,21 +33,16 @@ const Charts = () => {
     fetchLogsCount();
   }, []);
   // Fetch data using the custom hook for logs
-  const { logs, loading: logsLoading, error: logsError } = useLogs(currentPage);
+  const { logs } = useLogs(currentPage);
   const totalPages = Math.ceil(logsCount);
 
   // Fetch chart data using the custom hook for charts
-  const {
-    customerChartData,
-    advertiserChartData,
-    loading: chartsLoading,
-    error: chartsError,
-  } = useChartData();
+  const { customerChartData, advertiserChartData } = useChartData();
 
   // Handle loading and error states for both hooks
-  if (logsLoading || chartsLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (logsLoading || chartsLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
   // if (logsError) {
   //   return <p>Error loading logs: {logsError}</p>;
@@ -59,18 +56,26 @@ const Charts = () => {
   if (!customerChartData || !advertiserChartData) {
     return <p>No chart data available</p>;
   }
-
+  const handleClickName = (customerId: number) => {
+    navigate(`/profile/${customerId}`);
+  };
   // Generate columns dynamically from the logs data
   const dynamicColumns = logs.map((log, index) => {
     const logType =
-      log.type === 1 ? t('charts.customer') : t('charts.advertiser'); // Check if type is customer (1) or advertiser (2)
-
+      log.type === 1 ? t('charts.customer') : t('charts.advertiser');
     return {
       customer_activity_id: log.customer_activity_id,
       columns: [
         {
           key: 'name',
-          content: JSON.parse(log.data).name.split(' ')[0],
+          content: (
+            <span
+              onClick={() => handleClickName(log.customer_id)}
+              className={`cursor-pointer ${nameClass}`}
+            >
+              {JSON.parse(log.data).name.split(' ')[0]}
+            </span>
+          ),
           className: nameClass,
         },
 

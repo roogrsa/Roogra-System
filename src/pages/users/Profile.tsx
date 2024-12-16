@@ -7,111 +7,96 @@ import ProfileImages from '../../components/users/ProfileImages';
 import useUser from '../../hooks/users/useGetUser';
 import useBanUser from '../../hooks/users/useBanUser';
 import useRemoveUser from '../../hooks/users/useRemoveUser';
-import { ToastContainer } from 'react-toastify';
+import NotfoundUser from '../notfound/notfoundUser';
+import Notfound from '../notfound/Notfound';
 
-const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/whiteblock.png';
 const RemoveIconSrc = '/remove.svg';
 
 const Profile = () => {
   const { id } = useParams<{ id: string }>();
-  const { user, loading, error, refreshProfile } = useUser(Number(id));
-  const { banUser, isSuccess } = useBanUser();
+  const userId = Number(id);
+
+  const { user, loading, error, refreshProfile } = useUser(userId);
+  const { banUser, isSuccess: banSuccess } = useBanUser();
   const { removeUser, success: removeSuccess } = useRemoveUser();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (error) {
-  //   return <p>Error: {error}</p>;
-  // }
   useEffect(() => {
-    if (isSuccess || removeSuccess) {
+    if (banSuccess || removeSuccess) {
       refreshProfile();
     }
-  }, [isSuccess, refreshProfile]);
+  }, [banSuccess, removeSuccess]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error || !user || user.success === false) {
+    return <NotfoundUser />;
+  }
+
   return (
-    <>
-      <div className="overflow-hidden">
-        {/* image section */}
-        <ProfileImages user={user} />
+    <div className="overflow-hidden">
+      {/* Image Section */}
+      <ProfileImages user={user} />
 
-        {/* Rating section */}
-        <div className="mx-auto text-center my-4">
-          <div className="flex justify-end gap-x-3 text-xl">
-            <span className="text-gray-500">
-              {user?.rating ? parseFloat(user?.rating).toFixed(1) : '0.0'}
-            </span>
-            <StarRating rating={user?.rating ? user.rating : 0} />{' '}
-          </div>
+      {/* Rating Section */}
+      <div className="mx-auto text-center my-4">
+        <div className="flex justify-end gap-x-3 text-xl">
+          <span className="text-gray-500">
+            {user?.rating ? parseFloat(user.rating).toFixed(1) : '0.0'}
+          </span>
+          <StarRating rating={user?.rating || 0} />
         </div>
-        {/* icons section */}
-        <div className=" mx-auto flex justify-end gap-x-8">
-          {/* <div className="bg-SaveIconBg rounded-md">
-            <img
-              src={SaveIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              // onClick={() => handleEditClick(user.id)}
-            />
-          </div> */}
-
-          <div
-            className={
-              user?.isBanned
-                ? `bg-BlockIconBg rounded-md`
-                : `bg-gray-400 rounded-md`
-            }
-          >
-            <img
-              src={user?.isBanned ? NotBannedIconSrc : NotBannedIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() =>
-                !actionLoading &&
-                user?.id &&
-                handleAction(
-                  user.id,
-                  user.isBanned === 1,
-                  'ban',
-                  banUser,
-                  {
-                    confirmButtonClass: 'bg-BlockIconBg ',
-                    cancelButtonClass: '',
-                  },
-                  refreshProfile,
-                )
-              }
-            />
-          </div>
-
-          <div className="bg-RemoveIconBg rounded-md">
-            <img
-              src={RemoveIconSrc}
-              className="w-6 h-6 text-center p-1 cursor-pointer"
-              onClick={() =>
-                !actionLoading &&
-                user?.id &&
-                handleAction(
-                  user.id,
-                  false,
-                  'remove',
-                  removeUser,
-                  {
-                    confirmButtonClass: 'bg-RemoveIconBg ',
-                    cancelButtonClass: '',
-                  },
-                  refreshProfile,
-                )
-              }
-            />
-          </div>
-        </div>
-        {/* accordion section */}
-        <ProfileAccordion user={user} loading={loading} error={error} />
       </div>
-      {/* <ToastContainer position="top-right" autoClose={5000} /> */}
-    </>
+
+      {/* Action Icons */}
+      <div className="mx-auto flex justify-end gap-x-8">
+        {/* Ban/Unban User */}
+        <div
+          className={
+            user?.isBanned
+              ? `bg-BlockIconBg rounded-md`
+              : `bg-gray-400 rounded-md`
+          }
+        >
+          <img
+            src={NotBannedIconSrc}
+            className="w-6 h-6 text-center p-1 cursor-pointer"
+            onClick={() =>
+              !actionLoading &&
+              user?.id &&
+              handleAction(user.id, user.isBanned === 1, 'ban', banUser, {
+                confirmButtonClass: 'bg-BlockIconBg',
+                cancelButtonClass: '',
+              })
+            }
+            alt="Ban/Unban"
+          />
+        </div>
+
+        {/* Remove User */}
+        <div className="bg-RemoveIconBg rounded-md">
+          <img
+            src={RemoveIconSrc}
+            className="w-6 h-6 text-center p-1 cursor-pointer"
+            onClick={() =>
+              !actionLoading &&
+              user?.id &&
+              handleAction(user.id, false, 'remove', removeUser, {
+                confirmButtonClass: 'bg-RemoveIconBg',
+                cancelButtonClass: '',
+              })
+            }
+            alt="Remove"
+          />
+        </div>
+      </div>
+
+      {/* Accordion Section */}
+      <ProfileAccordion user={user} loading={loading} error={error} />
+    </div>
   );
 };
 

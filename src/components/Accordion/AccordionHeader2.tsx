@@ -29,13 +29,24 @@ const AccordionHeader2: React.FC<AccordionProps> = ({
     <>
       <div className="mb-5b my-3 dark:bg-MainTableBG-EvenDark bg-MainTableBG-EvenLight">
         <div className="mx-4 flex justify-between cursor-pointer">
-          <div className="py-2 flex justify-start gap-0.5 cursor-pointer">
+          {/* <div className="py-2 flex justify-start gap-0.5 cursor-pointer">
             {titles?.map((title, index) => (
               <AccordionTitle
                 key={index}
                 title={title}
                 isOpen={openIndex === index}
                 onToggle={() => toggleAccordion(index)}
+              />
+            ))}
+          </div> */}
+          <div className="py-2 flex flex-wrap justify-start gap-1 sm:gap-3 md:gap-0.5 cursor-pointer">
+            {titles?.map((title, index) => (
+              <AccordionTitle
+                key={index}
+                title={title}
+                isOpen={openIndex === index}
+                onToggle={() => toggleAccordion(index)}
+                className="flex-1 min-w-[150px] sm:min-w-[200px] md:min-w-[250px]" // Adjusts width per screen size
               />
             ))}
           </div>

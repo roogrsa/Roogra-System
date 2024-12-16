@@ -228,25 +228,7 @@ export default function AddAdmin() {
     return result;
   };
   const breadcrumbLinks = [{ label: t('admins.label'), path: '/admins' }];
-  // const [isSuccessAdd, setIsSuccessAdd] = useState<boolean>(false);
   const { isSuccessAdd, setIsSuccessAdd } = useAdminState();
-
-  // const navigate = useNavigate();
-  // const roleTypeMap = {
-  //   observer: 2,
-  //   supervisor: 3,
-  //   delegates: 1,
-  // };
-
-  // const { refreshAdminsByType: refreshObservers } = useAdminsByType(
-  //   roleTypeMap['observer'],
-  // );
-  // const { refreshAdminsByType: refreshSupervisors } = useAdminsByType(
-  //   roleTypeMap['supervisor'],
-  // );
-  // const { refreshAdminsByType: refreshDelegates } = useAdminsByType(
-  //   roleTypeMap['delegates'],
-  // );
 
   const handleAddAdminSubmit = async (
     values: AddAdminValues,
@@ -268,9 +250,7 @@ export default function AddAdmin() {
           ...values,
           permissions: loggedValues,
         });
-        // refreshSupervisors();
-        // refreshDelegates();
-        // refreshObservers();
+
         toast.success(`admin successfully submitted`);
         setIsSuccessAdd(true);
       }
@@ -284,14 +264,6 @@ export default function AddAdmin() {
       setSubmitting(false);
     }
   };
-
-  // useEffect(() => {
-  //   if (isSuccessAdd) {
-  //     refreshSupervisors();
-  //     refreshDelegates();
-  //     refreshObservers();
-  //   }
-  // }, [isSuccessAdd]);
 
   const [checkAdvertisments, setCheckAdvertisments] = useState<CheckboxItem[]>([
     {

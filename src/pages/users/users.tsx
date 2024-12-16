@@ -23,14 +23,15 @@ const Users: React.FC = () => {
   const [usersCount, setUsersCount] = useState(0);
   const location = useLocation();
   const { userName } = location.state || {};
-  const { users, loading, error, refreshUsers } = useUsers(currentPage, userName);
+  const { users, refreshUsers } = useUsers(currentPage, userName);
   const { handleAction, loading: actionLoading } = useHandleAction();
   useEffect(() => {
     const fetchUsersCount = async () => {
       try {
         const response = await axiosInstance.get(`/api/users/count`);
+        // console.log(response);
         setUsersCount(response.data.data.count / 8);
-      } catch (err) { }
+      } catch (err) {}
     };
     fetchUsersCount();
   }, []);

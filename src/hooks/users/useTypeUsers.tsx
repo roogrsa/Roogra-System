@@ -15,6 +15,8 @@ const useFetchUsers = (
 ) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [usersCount, setUsersCount] = useState(0);
+
   const [error, setError] = useState<string | null>(null);
   const fetchUsers = async () => {
     setLoading(true);
@@ -24,6 +26,8 @@ const useFetchUsers = (
       );
       if (response.data.success) {
         setUsers(response.data.data);
+        // console.log(response);
+        setUsersCount(response.data.data.count / 10);
       } else {
         setError(response.data.message || 'Error fetching users');
       }
@@ -41,7 +45,7 @@ const useFetchUsers = (
     fetchUsers();
   };
 
-  return { users, loading, error, refreshUserType };
+  return { users, loading, error, refreshUserType, usersCount };
 };
 
 export default useFetchUsers;

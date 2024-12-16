@@ -111,7 +111,7 @@ const AdminsList: React.FC = () => {
           key: 'name',
           content: (
             <span
-              className="cursor-pointer dark:text-TextGreen text-TextBlue"
+              className="cursor-pointer dark:text-TextGreen text-TextBlue text-center"
               onClick={() => handleClickName(admin.id)}
             >
               {admin.first_name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
@@ -125,26 +125,27 @@ const AdminsList: React.FC = () => {
           content: admin.phone
             ? admin.phone.split(' ').slice(0, 2).join(' ').slice(0, 12)
             : '00000000000',
-          className: 'dark:text-white text-black',
+          className: 'dark:text-white text-black text-center',
         },
-        {
-          key: 'status',
-          content: (
-            <div className="flex items-center justify-center">
-              <span
-                className={`w-3 h-3 rounded-full mr-2 ${
-                  admin.status === 1 ? 'bg-TextGreen' : 'bg-gray-400'
-                }`}
-              ></span>
-            </div>
-          ),
-          className: 'text-center',
-        },
+        // {
+        //   key: 'status',
+        //   content: (
+        //     <div className="flex items-center justify-center">
+        //       <span
+        //         className={`w-3 h-3 rounded-full mr-2 ${
+        //           admin.status === 1 ? 'bg-TextGreen' : 'bg-gray-400'
+        //         }`}
+        //       ></span>
+        //     </div>
+        //   ),
+        //   className: 'text-center',
+        // },
         {
           key: 'date_added',
           content: new Date(admin.date_added).toLocaleDateString(),
 
-          className: 'flex dark:text-white text-black',
+          className:
+            'flex dark:text-white text-black text-center flex items-center justify-center',
         },
         {
           key: 'start_working_hour',
@@ -153,7 +154,8 @@ const AdminsList: React.FC = () => {
                 `1970-01-01T${admin.start_working_hour}`,
               ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             : 'N/A',
-          className: 'flex dark:text-white text-black text-center',
+          className:
+            'flex dark:text-white text-black text-center flex items-center justify-center',
         },
         {
           key: 'finish_working_hour',
@@ -163,7 +165,8 @@ const AdminsList: React.FC = () => {
                 `1970-01-01T${admin.finish_working_hour}`,
               ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             : 'N/A',
-          className: 'flex dark:text-white text-black text-center',
+          className:
+            'flex dark:text-white text-black text-center flex items-center justify-center',
         },
         {
           key: 'Edit',
@@ -172,12 +175,12 @@ const AdminsList: React.FC = () => {
               <Link to={`/admins/edit-admin/${admin.id}`}>
                 <img
                   src={EditIconSrc}
-                  className="w-6 h-6 text-center p-1 cursor-pointer"
+                  className="w-6 h-6 text-center p-1 cursor-pointer "
                 />
               </Link>
             </div>
           ),
-          className: 'flex justify-center',
+          className: 'flex justify-center text-center',
         },
         {
           key: 'isBanned',
@@ -185,7 +188,7 @@ const AdminsList: React.FC = () => {
             <img
               src={admin.is_banned ? BannedIconSrc : NotBannedIconSrc}
               alt={admin.is_banned ? t('admins.banned') : t('admins.notBanned')}
-              className={`w-6 h-6 text-center cursor-pointer ${
+              className={`w-6 h-6 text-center cursor-pointer text-center ${
                 actionLoading ? 'opacity-50' : ''
               }`}
               onClick={() => {
@@ -207,7 +210,7 @@ const AdminsList: React.FC = () => {
               }}
             />
           ),
-          className: 'flex justify-center',
+          className: 'flex justify-center text-center',
         },
 
         {
@@ -227,7 +230,7 @@ const AdminsList: React.FC = () => {
               }}
             />
           ),
-          className: 'flex justify-center',
+          className: 'flex justify-center text-center',
         },
       ],
     }));
@@ -247,11 +250,11 @@ const AdminsList: React.FC = () => {
       content: t('admins.adminList.phone'),
       className: 'text-center',
     },
-    {
-      key: 'status',
-      content: t('admins.adminList.status'),
-      className: 'text-center',
-    },
+    // {
+    //   key: 'status',
+    //   content: t('admins.adminList.status'),
+    //   className: 'text-center',
+    // },
     {
       key: 'date_added',
       content: t('admins.adminList.dateAdded'),

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainTable from '../../components/lastnews/MainTable';
 
 import Breadcrumb from '../Breadcrumbs/Breadcrumb';
@@ -7,6 +7,7 @@ import useHandleAction from '../../hooks/useHandleAction';
 import { useTranslation } from 'react-i18next';
 import useFetchUsers from '../../hooks/users/useTypeUsers';
 import useBanUser from '../../hooks/users/useBanUser';
+import Pagination from '../pagination/Pagination';
 // import { useTranslation } from 'react-i18next';
 
 const BannedIconSrc = '/block.svg';
@@ -22,10 +23,11 @@ interface UserTypeProps {
 
 const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const { t } = useTranslation();
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const { users, loading, error, refreshUserType } = useFetchUsers(
+  const { users, loading, error, refreshUserType, usersCount } = useFetchUsers(
     userType,
-    0,
+    currentPage,
     10,
   );
   const {
@@ -48,6 +50,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
   };
+  const totalPages = Math.ceil(usersCount);
 
   const logs = users.map((user) => ({
     id: user.id,
@@ -169,7 +172,6 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       className: 'text-center',
     },
   ];
-
   const breadcrumbLinks = [{ label: t('users.label.label'), path: '/' }];
 
   return (
@@ -182,6 +184,11 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
       {banLoading && <p>{t('users.banningUser')}...</p>}
       {banError && <p>{banError}</p>}
       <MainTable logs={logs} headers={headers} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 };

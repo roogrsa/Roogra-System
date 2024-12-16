@@ -196,10 +196,10 @@
       "email": "Email",
       "phone": "Phone",
       "status": "Active",
-      "dateAdded": "Date Added",
+      "dateAdded": "Added At",
       "lastLogin": "Last Login",
-      "finish_working_hour": "Logout Time",
-      "start_working_hour": "Logout Time",
+      "finish_working_hour": "Logout At",
+      "start_working_hour": "Login At",
       "edit": "Edit",
       "BanStatus": "BanStatus"
     }
@@ -260,7 +260,8 @@
     "discribution": "You do not have permission to access this page."
   },
   "notfound": {
-    "title": "sorry, page not found"
+    "title": "sorry, page not found",
+    "user": "sorry, user not found"
   },
   "errorElement": {
     "title": "sorry, we have some error please try again later"
