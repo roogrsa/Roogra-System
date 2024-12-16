@@ -49,20 +49,20 @@ const MainCategories: React.FC = () => {
   }, []);
   const changeOrder = async (categories: { id: number; order: number }[]) => {
     try {
-        await axiosInstance.patch(
-            `/api/categories`,
-            { categories },
-            { headers: { 'content-type': 'Application/json' } },
-        );
-        displayCategories();
-        toast.success(t('categoriesPage.categoriesToast'));
+      await axiosInstance.patch(
+        `/api/categories`,
+        { categories },
+        { headers: { 'content-type': 'Application/json' } },
+      );
+      displayCategories();
+      toast.success(t('categoriesPage.categoriesToast'));
     } catch (error) {
-        toast.error(t('categoriesPage.errorUpdatingOrder'));
-        console.error("Error updating category order:", error);
+      toast.error(t('categoriesPage.errorUpdatingOrder'));
+      console.error('Error updating category order:', error);
     }
-};
+  };
 
-const handleOnDragEnd = (result: DropResult) => {
+  const handleOnDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     if (!destination || destination.index === source.index) return;
     const reorderedCategories = Array.from(categories);
@@ -70,11 +70,11 @@ const handleOnDragEnd = (result: DropResult) => {
     reorderedCategories.splice(destination.index, 0, movedCategory);
     setCategories(reorderedCategories);
     const updatedCategories = reorderedCategories.map((category, index) => ({
-        id: category.parent_id,
-        order: index
+      id: category.parent_id,
+      order: index,
     }));
     changeOrder(updatedCategories);
-};
+  };
 
   const displayCategories = async () => {
     try {
@@ -143,7 +143,7 @@ const handleOnDragEnd = (result: DropResult) => {
                     <th className="py-6 text-[20px] font-[400]">
                       {t('categoriesPage.edit')}
                     </th>
-                    <th className="py-3 rounded-e-lg">
+                    <th className="py-3 ">
                       <RiDeleteBin6Line className="text-xl text-Input-TextRed" />
                     </th>
                   </tr>
