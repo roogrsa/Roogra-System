@@ -26,17 +26,18 @@ import OutsideClickHandler from 'react-outside-click-handler';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (arg: boolean) => void;
 }
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProps) => {
+  // const [isOpen, setIsOpen] = useState(true);
   const { t } = useTranslation();
   const language = useSelector(selectLanguage);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
   const dispatch = useDispatch();
-
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
   type DropdownListType =
@@ -52,9 +53,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const toggleMenu = (type: DropdownListType) => {
     setDropdownList(type);
+    setIsOpen(true)
     setOpen(!open);
   };
-
+ const closeSideBar =() => {
+  setDropdownList(null);
+  setIsOpen(false)
+    setOpen(false);
+ }
   const handleClickOutside = () => {
     setDropdownList(null);
   };
@@ -175,8 +181,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <aside
         ref={sidebar}
         className={` ${
-          isOpen ? 'w-55' : 'closed'
-        } absolute left-0 top-0 z-9999 flex h-screen  flex-col overflow-y-scroll
+          isOpen ? 'md:w-55 w-[100vw]' : 'md:w-22 w-0'
+        } absolute left-0 top-0 z-9999 flex h-screen  flex-col
         duration-300 ease-linear bg-boxdark lg:static lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
@@ -186,8 +192,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             className={`absolute bg-sidebarHover  top-[1vh] rounded-[10px] p-2
               ${
                 isOpen
-                  ? 'ltr:left-[180px] rtl:right-[175px]'
-                  : 'ltr:left-[30px] rtl:right-[50px]'
+                  ? 'md:ltr:left-[180px] md:rtl:right-[175px]'
+                  : 'md:ltr:left-[30px] md:rtl:right-[50px] hidden md:block'
               }
                 rtl:rotate-180 z-50 text-lg transition-all duration-300 text-white`}
             onClick={toggleSidebar}
@@ -214,6 +220,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     isOpen={isOpen}
                     text={'sidebar.charts'}
                     icon={<PiChartDonutFill className="text-2xl" />}
+                    closeSideBar={closeSideBar}
                   />
                 )}
                 {(permission.ads.all == 1 ||
@@ -237,18 +244,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.ads.all == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/products`}
                               text={'sidebar.ads.all'}
                             />
                           )}
                           {permission.ads.primary == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/products/main`}
                               text={'sidebar.ads.main'}
                             />
                           )}
                           {permission.ads.subscription == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/products/subscriptions`}
                               text={'sidebar.ads.subscriptions'}
                             />
@@ -279,18 +289,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.users.all == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/users`}
                               text={'sidebar.users.all'}
                             />
                           )}
                           {permission.users.advertisers == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/users/advertiser`}
                               text={'sidebar.users.advertisers'}
                             />
                           )}
                           {permission.users.customers == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/users/customer`}
                               text={'sidebar.users.customers'}
                             />
@@ -321,18 +334,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.categories.primary == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/categories/main`}
                               text={'sidebar.categories.main'}
                             />
                           )}
                           {permission.categories.subscription == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/categories/subscriptions`}
                               text={'sidebar.categories.subscriptions'}
                             />
                           )}
                           {permission.categories.region == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/categories/map`}
                               text={'sidebar.categories.map'}
                             />
@@ -362,12 +378,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.requests.attestation == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/confirm/subscription`}
                               text={'sidebar.requests.attestation'}
                             />
                           )}
                           {permission.requests.category == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/part/subscription`}
                               text={'sidebar.requests.category'}
                             />
@@ -398,18 +416,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.contact.inquiries == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/contact-us/inquiries`}
                               text={'sidebar.support.inquiries'}
                             />
                           )}
                           {permission.contact.issues == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/contact-us/issues`}
                               text={'sidebar.support.issues'}
                             />
                           )}
                           {permission.contact.suggestions == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/contact-us/suggestions`}
                               text={'sidebar.support.suggestions'}
                             />
@@ -439,12 +460,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.reports.chats == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/reports/chat`}
                               text={'sidebar.reports.chat'}
                             />
                           )}
                           {permission.reports.products == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/reports/product`}
                               text={'sidebar.reports.product'}
                             />
@@ -474,18 +497,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         >
                           {permission.banlist.chats == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/Ban/users`}
                               text={'sidebar.ban-list.users'}
                             />
                           )}
                           {permission.banlist.products == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/Ban/products`}
                               text={'sidebar.ban-list.products'}
                             />
                           )}
                           {permission.banlist.products == 1 && (
                             <DropLink
+                            closeSideBar={closeSideBar}
                               to={`/Ban/chats`}
                               text={'sidebar.ban-list.chats'}
                             />
@@ -501,6 +527,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     isOpen={isOpen}
                     text={'sidebar.admins'}
                     icon={<PiUsersThreeFill className="text-2xl" />}
+                    closeSideBar={closeSideBar}
                   />
                 )}
                 {permission.settings == 1 && (
@@ -509,6 +536,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     isOpen={isOpen}
                     text={'sidebar.settings'}
                     icon={<PiGearFineFill className="text-2xl" />}
+                    closeSideBar={closeSideBar}
                   />
                 )}
               </ul>
@@ -518,9 +546,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               onClick={logout}
               className={`bg-[#E02828] ${
                 isOpen
-                  ? 'brightness-150 w-full flex justify-around'
-                  : 'hover:brightness-150'
-              } text-white text-[20px] p-3 rounded-xl transition-all duration-300`}
+                  ? 'brightness-150 w-full flex md:justify-evenly justify-center'
+                  : 'hover:brightness-150 w-auto'
+              } text-white text-[20px] p-2 rounded-xl transition-all duration-300`}
             >
               <PiPowerFill className="text-2xl" />
               {isOpen && <div> {t('sidebar.sign-out')} </div>}
