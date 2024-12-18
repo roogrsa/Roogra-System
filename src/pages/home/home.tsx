@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChartThree from '../../components/Charts/ChartThree';
 import useLogs from '../../hooks/getLogs';
 import MainTable from '../../components/lastnews/MainTable';
