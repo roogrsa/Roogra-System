@@ -187,9 +187,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between gap-2 px-6 py-4 lg:py-4">
+        <div className="flex items-center justify-between px-6 py-4 lg:py-4">
           <button
-            className={`absolute bg-sidebarHover  top-[1vh] rounded-[10px] p-2
+            className={`absolute bg-sidebarHover top-[1vh] rounded-[10px] p-2
               ${
                 isOpen
                   ? 'md:ltr:left-[180px] md:rtl:right-[175px]'
@@ -209,11 +209,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
           <nav className="px-4 lg:px-6">
             <div>
               {isOpen && (
-                <h2 className="mb-4 text-center flex text-xl font-[400] text-[#70F1EB]">
+                <div className="text-center flex text-2xl font-[400] text-[#70F1EB]">
                   <Link to={`/`}>{fName}</Link>
-                </h2>
+                </div>
               )}
-              <ul className="mb-6 flex flex-col gap-1.5">
+              <ul className="my-6 flex flex-col gap-1.5">
                 {permission.charts == 1 && (
                   <SidebarLink
                     to={`/charts`}
