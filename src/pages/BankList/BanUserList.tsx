@@ -10,7 +10,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useBanUser from '../../hooks/users/useBanUser';
 import useBannedUsers from '../../hooks/Ban/UserBanList';
 
-const BannedIconSrc = '/block.svg';
+const BannedIconSrc = '/whiteblock.png';
 const EditIconSrc = '/Edit.svg';
 
 const BanUserList: React.FC = () => {
@@ -19,7 +19,7 @@ const BanUserList: React.FC = () => {
   const [status, setStatus] = useState('');
   const breadcrumbLinks = [{ label: t('BanList.users.label'), path: '/' }];
 
-  const { banUser, loading: unbanLoading, error: unbanError } = useBanUser();
+  const { banUser } = useBanUser();
   const { handleAction, loading: actionLoading } = useHandleAction();
 
   const {
@@ -76,7 +76,7 @@ const BanUserList: React.FC = () => {
       {
         key: 'is_banned',
         content: (
-          <div className="bg-BlockIconBg rounded-md">
+          <div className="bg-BlockIconBg rounded-md ">
             <img
               src={BannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"

@@ -25,12 +25,8 @@ const CategorySubscription = () => {
   const { t } = useTranslation();
 
   //
-  const {
-    editCategorySubscriptionStatus,
-    loading: editLoading,
-    error: editError,
-    success: editSuccess,
-  } = useEditCategorySubscriptionStatus();
+  const { editCategorySubscriptionStatus, success: editSuccess } =
+    useEditCategorySubscriptionStatus();
   //
   const breadcrumbLinks = [
     { label: t('verification_request.label.label'), path: '/' },
@@ -52,19 +48,21 @@ const CategorySubscription = () => {
         );
         setCategorySubscriptionCount(response.data.data.count / 8);
         setCount(response.data.data.count);
-      } catch (err) {
-      }
+      } catch (err) {}
     };
     fetchUsersCount();
   }, [Count, status]);
   const totalPages = Math.ceil(categorySubscriptionCount);
-  const { data, loading, error, refreshRequest } =
-    useCategorySubscriptionsByStatus(status, currentPage, id);
+  const { data, refreshRequest } = useCategorySubscriptionsByStatus(
+    status,
+    currentPage,
+    id,
+  );
   useEffect(() => {
     if (editSuccess) {
       refreshRequest();
     }
-  }, [refreshRequest]);
+  }, [editSuccess]);
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   //
@@ -184,17 +182,16 @@ const CategorySubscription = () => {
             },
             {
               key: 'verification_period',
+
               content:
-                item.STATUS === 'expired' ? (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value={`منتهية`}
-                    widthClass="w-20"
-                    extraClass="bg-Input-red text-Input-TextRed  w-40"
+                status === 'expired' ? (
+                  <PeriodInput
+                    item={item}
+                    ItemStatus="expired"
+                    refreshRequest={refreshRequest}
                   />
                 ) : (
-                  <PeriodInput item={item} />
+                  <PeriodInput item={item} refreshRequest={refreshRequest} />
                 ),
 
               className: 'flex justify-center',
@@ -336,7 +333,6 @@ const CategorySubscription = () => {
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
-      {/* <ToastContainer position="top-right" autoClose={5000} /> */}
     </div>
   );
 };

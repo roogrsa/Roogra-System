@@ -39,7 +39,7 @@ const useVerificationRequestsByStatus = (
       );
       if (response.data.success) {
         setData(response.data.data);
-        // console.log(response.data.data);
+        // console.log(response.data);
       } else {
         setError(response.data.message);
       }

@@ -35,7 +35,7 @@ const verifaction_requestByStatus = () => {
   const [deleteName, setDeleteName] = useState<string>('');
   const [isModalShow, setIsModalShow] = useState(false);
   const [item, setItem] = useState();
-
+  const fName = localStorage.getItem('first_name');
   const openModalShow = (item) => {
     setIsModalShow(true);
     setItem(item);
@@ -292,16 +292,13 @@ const verifaction_requestByStatus = () => {
               key: `verification_period-${item.verification_request_id}-${index}`,
               content:
                 status === 'expired' ? (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value={`منتهية`}
-                    widthClass="w-15"
-                    border="border-2 border-Input-TextRed text-Input-TextRed"
-                    extraClass="bg-Input-red text-Input-TextRed text-center "
+                  <PeriodInput
+                    item={item}
+                    ItemStatus="expired"
+                    refreshRequest={refreshRequest}
                   />
                 ) : (
-                  <PeriodInput item={item} />
+                  <PeriodInput item={item} refreshRequest={refreshRequest} />
                 ),
               className: 'flex justify-center text-sm',
             },
@@ -309,7 +306,7 @@ const verifaction_requestByStatus = () => {
               ? [
                   {
                     key: `by-${item.verification_request_id}-${index}`,
-                    content: `by`,
+                    content: `item.rejected-by`,
                     className: 'flex justify-center text-sm',
                   },
                 ]
@@ -324,9 +321,9 @@ const verifaction_requestByStatus = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer text-sm"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        `${fName}`,
                         'approved',
-                        undefined,
+                        item.verification_request_id,
                         item.verification_request_id,
                         undefined,
                         EditVerificationRequest,
@@ -358,9 +355,9 @@ const verifaction_requestByStatus = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer text-sm"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        `${fName}`,
                         'approved',
-                        undefined,
+                        item.verification_request_id,
                         item.verification_request_id,
                         undefined,
                         EditVerificationRequest,

@@ -60,6 +60,51 @@ const Charts = () => {
     navigate(`/profile/${customerId}`);
   };
   // Generate columns dynamically from the logs data
+  // const dynamicColumns = logs.map((log, index) => {
+  //   const logType =
+  //     log.type === 1 ? t('charts.customer') : t('charts.advertiser');
+  //   return {
+  //     customer_activity_id: log.customer_activity_id,
+  //     columns: [
+  //       {
+  //         key: 'name',
+  //         content: (
+  //           <span
+  //             onClick={() => handleClickName(log.customer_id)}
+  //             className={`cursor-pointer ${nameClass}`}
+  //           >
+  //             {JSON.parse(log.data).name.split(' ')[0]}
+  //           </span>
+  //         ),
+  //         className: nameClass,
+  //       },
+
+  //       {
+  //         key: 'key',
+  //         content:
+  //           log.key === 'login'
+  //             ? t('lastNews.lastLogin')
+  //             : log.key === 'register'
+  //             ? t('lastNews.register')
+  //             : t('lastNews.edit'),
+  //         className: index % 2 === 0 ? colorEvenClass : colorOddClass,
+  //       },
+  //       {
+  //         key: 'type',
+  //         content: logType, // Show 'customer' or 'advertiser' based on log type
+  //         className: TypeClass,
+  //       },
+  //       {
+  //         key: 'date_added',
+  //         content: log.date_added,
+  //         className: timeClass,
+  //         isIcon: true,
+  //         iconClass: iconClass,
+  //         IconComponent: MdOutlineWatchLater, // WatchLater icon for date
+  //       },
+  //     ],
+  //   };
+  // });
   const dynamicColumns = logs.map((log, index) => {
     const logType =
       log.type === 1 ? t('charts.customer') : t('charts.advertiser');
@@ -67,7 +112,7 @@ const Charts = () => {
       customer_activity_id: log.customer_activity_id,
       columns: [
         {
-          key: 'name',
+          key: `name-${log.customer_activity_id}`,
           content: (
             <span
               onClick={() => handleClickName(log.customer_id)}
@@ -78,9 +123,8 @@ const Charts = () => {
           ),
           className: nameClass,
         },
-
         {
-          key: 'key',
+          key: `key-${log.customer_activity_id}`,
           content:
             log.key === 'login'
               ? t('lastNews.lastLogin')
@@ -90,12 +134,12 @@ const Charts = () => {
           className: index % 2 === 0 ? colorEvenClass : colorOddClass,
         },
         {
-          key: 'type',
+          key: `type-${log.customer_activity_id}`,
           content: logType, // Show 'customer' or 'advertiser' based on log type
           className: TypeClass,
         },
         {
-          key: 'date_added',
+          key: `date_added-${log.customer_activity_id}`,
           content: log.date_added,
           className: timeClass,
           isIcon: true,

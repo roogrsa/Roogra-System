@@ -25,7 +25,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(0);
 
-  const { users, loading, error, refreshUserType, usersCount } = useFetchUsers(
+  const { users, refreshUserType, usersCount } = useFetchUsers(
     userType,
     currentPage,
     10,
@@ -43,7 +43,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
     if (isSuccess) {
       refreshUserType();
     }
-  }, [isSuccess, refreshUserType]);
+  }, [isSuccess]);
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>{error}</p>;
 

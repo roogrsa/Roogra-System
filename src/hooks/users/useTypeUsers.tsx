@@ -26,8 +26,10 @@ const useFetchUsers = (
       );
       if (response.data.success) {
         setUsers(response.data.data);
-        // console.log(response);
-        setUsersCount(response.data.data.count / 10);
+        const getUsersCount = await axiosInstance.get<ApiResponse>(
+          `/api/users/type/${type}/count`,
+        );
+        setUsersCount(getUsersCount.data.data.count / 10);
       } else {
         setError(response.data.message || 'Error fetching users');
       }
