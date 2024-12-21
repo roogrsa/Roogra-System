@@ -306,7 +306,7 @@ const verifaction_requestByStatus = () => {
               ? [
                   {
                     key: `by-${item.verification_request_id}-${index}`,
-                    content: `item.rejected-by`,
+                    content: item?.name?.split(' ')[0],
                     className: 'flex justify-center text-sm',
                   },
                 ]

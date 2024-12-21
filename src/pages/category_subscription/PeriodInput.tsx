@@ -100,7 +100,10 @@ const PeriodInput: React.FC<PeriodInputProps> = ({
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const handleUpdatePeriod = async () => {
-    const numericValue = parseInt(inputValue.replace(/\D/g, ''), 10); // Extract numeric value
+    const numericValue = parseInt(
+      (ItemStatus === 'expired' ? expiredValue : inputValue).replace(/\D/g, ''),
+      10,
+    ); // Extract numeric value
     let response;
 
     if (item.category_subscription_id) {
@@ -165,7 +168,7 @@ const PeriodInput: React.FC<PeriodInputProps> = ({
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          widthClass="w-20"
+          widthClass="w-15"
           extraClass="bg-Input-blue text-center"
         />
       )}
