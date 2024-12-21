@@ -110,7 +110,7 @@ const Products: React.FC = () => {
               className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
               onClick={() => handleClickName(product.author_id)}
             >
-              {product.author.split(' ').slice(0, 2).join(' ').slice(0, 12)}
+              {product.author?.split(' ').slice(0, 2).join(' ').slice(0, 12)}
             </span>
           ),
           className: 'text-TextBlue dark:text-TextGreen',
@@ -125,7 +125,7 @@ const Products: React.FC = () => {
         {
           key: 'product_name',
           content: product.product_name
-            .split(' ')
+            ?.split(' ')
             .slice(0, 2)
             .join(' ')
             .slice(0, 12),

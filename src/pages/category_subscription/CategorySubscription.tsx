@@ -138,7 +138,7 @@ const CategorySubscription = () => {
                   label=""
                   type="text"
                   value={item.category_name}
-                  widthClass="w-20"
+                  widthClass="w-15"
                   extraClass="bg-Input-blue text-center"
                 />
               ),
@@ -151,7 +151,7 @@ const CategorySubscription = () => {
                   label=""
                   type="text"
                   value={item.sub_name}
-                  widthClass="w-20"
+                  widthClass="w-15"
                   extraClass="bg-Input-blue text-center"
                 />
               ),

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Loader from './common/Loader';
 import DefaultLayout from './layout/DefaultLayout';
 import Guard from './components/guards/Guards';
@@ -47,16 +47,19 @@ import ErrorElement from './pages/errorElement/ErrorElement';
 import LogoutGuards from './components/guards/LogoutGuards';
 import AddAdmin from './pages/admins/AddAdmin';
 const storedPermissions: any = store.getState().permissions.permissions;
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <LoginLayout />,
     children: [
       {
-        path: '/auth/login', element: (
+        path: '/auth/login',
+        element: (
           <LogoutGuards>
             <SignIn />
-          </LogoutGuards>), errorElement: <ErrorElement />
+          </LogoutGuards>
+        ),
+        errorElement: <ErrorElement />,
       },
     ],
   },
@@ -78,7 +81,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'charts',
@@ -90,7 +93,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'users',
@@ -102,7 +105,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'profile/:id',
@@ -111,7 +114,7 @@ const router = createBrowserRouter([
             <Profile />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'users/customer',
@@ -123,7 +126,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'users/advertiser',
@@ -135,7 +138,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'ads',
@@ -147,7 +150,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: '/part/subscription',
@@ -159,7 +162,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: '/confirm/subscription',
@@ -171,7 +174,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'products',
@@ -183,7 +186,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'products/main',
@@ -195,7 +198,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'products/subscriptions',
@@ -207,7 +210,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'products',
@@ -216,7 +219,7 @@ const router = createBrowserRouter([
             <Products />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         // Make the path relative, as it's nested under 'products'
@@ -226,7 +229,7 @@ const router = createBrowserRouter([
             <PrdDetials />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'admins',
@@ -238,7 +241,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'admins/edit-admin/:adminId',
@@ -250,7 +253,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'settings',
@@ -262,7 +265,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'categories/main',
@@ -274,7 +277,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'categories/subscriptions',
@@ -286,7 +289,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'categories/map',
@@ -298,7 +301,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'contact-us/inquiries',
@@ -310,7 +313,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'contact-us/issues',
@@ -322,7 +325,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'contact-us/suggestions',
@@ -334,7 +337,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'reports',
@@ -346,7 +349,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'reports/product',
@@ -358,7 +361,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'reports/chat',
@@ -370,7 +373,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'reports/chat/search/:rc_search',
@@ -382,7 +385,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'reports/chats/:userId',
@@ -394,7 +397,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'reports/chat/:chatId',
@@ -406,7 +409,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'Ban/users',
@@ -418,7 +421,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'Ban/chats',
@@ -430,7 +433,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
       {
         path: 'Ban/products',
@@ -442,7 +445,7 @@ const router = createBrowserRouter([
             />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
 
       {
@@ -452,7 +455,7 @@ const router = createBrowserRouter([
             <Unauthorized />
           </Guard>
         ),
-        errorElement: <ErrorElement />
+        errorElement: <ErrorElement />,
       },
     ],
   },

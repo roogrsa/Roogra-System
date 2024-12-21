@@ -118,7 +118,7 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
               className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
               onClick={() => handleClickName(product.author_id)}
             >
-              {product.author.split(' ').slice(0, 2).join(' ').slice(0, 10) +
+              {product.author?.split(' ').slice(0, 2).join(' ').slice(0, 10) +
                 '..'}
             </span>
           ),
@@ -134,8 +134,11 @@ const ProductsType: React.FC<ProductsTypeProps> = ({ ProductsSType }) => {
         {
           key: 'product_name',
           content:
-            product.product_name.split(' ').slice(0, 2).join(' ').slice(0, 12) +
-            '..',
+            product.product_name
+              ?.split(' ')
+              .slice(0, 2)
+              .join(' ')
+              .slice(0, 12) + '..',
           className: 'flex justify-center',
         },
         {
