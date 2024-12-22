@@ -75,14 +75,14 @@ const CategoriesMap: React.FC = () => {
     //     changeOrder(movedCategory.map_category_id, destination.index);
     // };
 
-    const changeOrder = async (categories: { id: number; order: number }[]) => {
+    const changeOrder = async (maps: { id: number; order: number }[]) => {
         try {
-            await axiosInstance.patch(`/api/categories`, { categories });
+            await axiosInstance.patch(`/api/map-categories`, { maps });
             displayCategoriesMap();
             toast.success(t('categoriesPage.categoriesToast'));
         } catch (error: any) {
             console.error("Failed to change category order:", error);
-            toast.error(t('categoriesPage.orderError'));
+            toast.error(t(error.response.data.error));
         }
     };
     
