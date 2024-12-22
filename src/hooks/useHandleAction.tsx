@@ -50,8 +50,8 @@ const useHandleAction = () => {
           'bg-secondaryBG-light dark:bg-secondaryBG-dark shadow-lg rounded-lg p-3',
         title: 'text-xl font-bold dark:text-white text-black',
         input: 'border-Input-border block sm:text-sm border p-2 rounded-md',
-        confirmButton: `text-white font-bold py-2 px-4 rounded ${buttonClasses.confirmButtonClass}`,
-        cancelButton: `bg-gray-300 text-black font-bold py-2 px-4 rounded ${buttonClasses.cancelButtonClass}`,
+        confirmButton: `text-secondaryBG-light dark:text-secondaryBG-dark font-bold py-2 px-4 bg-secondaryBG-dark dark:bg-secondaryBG-light rounded ${buttonClasses.confirmButtonClass}`,
+        cancelButton: `text-secondaryBG-light dark:text-secondaryBG-dark font-bold py-2 px-4 bg-secondaryBG-dark dark:bg-secondaryBG-light rounded  ${buttonClasses.cancelButtonClass}`,
       },
     });
 
@@ -80,7 +80,10 @@ const useHandleAction = () => {
             : t('remove.removed')
         }${actionType === 'ban' ? ` ${reason}` : ''}`,
         customClass: {
-          popup: 'bg-white shadow-lg rounded-lg p-6',
+          popup:
+            'bg-secondaryBG-light dark:bg-secondaryBG-dark shadow-lg rounded-lg p-3',
+          title: 'text-xl font-bold dark:text-white text-black',
+          confirmButton: `text-secondaryBG-light dark:text-secondaryBG-dark font-bold py-2 px-4 bg-secondaryBG-dark dark:bg-secondaryBG-light rounded ${buttonClasses.confirmButtonClass}`,
         },
       });
 
