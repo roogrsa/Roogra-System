@@ -34,8 +34,8 @@ const MainSettings: React.FC = () => {
                     <TabButton btnTab="comission" label={t('settings.comission')} activeTab={activeTab} setActiveTab={setActiveTab} />
                     <TabButton btnTab="banks" label={t('settings.banks')} activeTab={activeTab} setActiveTab={setActiveTab} />
                     <TabButton btnTab="sms" label={t('settings.sms')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab="verification" label={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <TabButton btnTab="banners" label={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="verification" label={t('settings.banners')} activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <TabButton btnTab="banners"  label={t('settings.verification')} activeTab={activeTab} setActiveTab={setActiveTab} />
                 </ul>
                 <div className="text-medium text-gray-500 dark:text-gray-400 dark:bg-secondaryBG-dark rounded-lg w-full">
                     {activeTab === 'terms' && <TermsSetting />}
