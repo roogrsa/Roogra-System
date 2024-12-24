@@ -13,7 +13,7 @@
 
 * {
   font-family: 'Cairo', sans-serif;
-  font-size: medium !important;
+  /* font-size: medium !important; */
 }
 
 ::-webkit-scrollbar {
