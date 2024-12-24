@@ -37,7 +37,7 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
     if (isSuccess) {
       refreshProductsUser();
     }
-  }, [isSuccess, refreshProductsUser]);
+  }, [isSuccess]);
   const handleBan = (productId: number, isBanned: boolean) => {
     handleAction(
       productId,
@@ -100,8 +100,8 @@ const UserProducts: React.FC<ProfileAccordionProps> = ({ user }) => {
         },
         {
           key: 'product_name',
-          content: product.product_name
-            .split(' ')
+          content: product?.product_name
+            ?.split(' ')
             .slice(0, 2)
             .join(' ')
             .slice(0, 12),

@@ -13,28 +13,32 @@ import MainTable from '../../lastnews/MainTable';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import Breadcrumb from '../../Breadcrumbs/Breadcrumb';
+import CategoryPopup from '../../../pages/category_subscription/categoryPopup';
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 
 const CategorySubscriptionUserid = () => {
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [item, setItem] = useState(null);
+  const openModalShow = (item: any) => {
+    setIsModalShow(true);
+    setItem(item);
+    // console.log('item', item);
+  };
   const { t } = useTranslation();
   const {
     editCategorySubscriptionStatus,
-    loading: editLoading,
-    error: editError,
+
     success: editSuccess,
   } = useEditCategorySubscriptionStatus();
   const breadcrumbLinks = [{ label: '', path: '/' }];
   const [status, setStatus] = useState('processing');
-  const { data, loading, error, refreshRequest } =
-    CategorySubscriptionsByUserid(
-      status,
-    );
+  const { data, refreshRequest } = CategorySubscriptionsByUserid(status);
   useEffect(() => {
     if (editSuccess) {
       refreshRequest();
     }
-  }, [refreshRequest]);
+  }, [editSuccess]);
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   const headers = [
@@ -152,18 +156,15 @@ const CategorySubscriptionUserid = () => {
             {
               key: 'verification_period',
               content:
-                item.STATUS === 'expired' ? (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value={`منتهية`}
-                    widthClass="w-20"
-                    extraClass="bg-Input-red text-Input-TextRed  w-40"
+                status === 'expired' ? (
+                  <PeriodInput
+                    item={item}
+                    ItemStatus="expired"
+                    refreshRequest={refreshRequest}
                   />
                 ) : (
-                  <PeriodInput item={item} />
+                  <PeriodInput item={item} refreshRequest={refreshRequest} />
                 ),
-
               className: 'flex justify-center',
             },
 
@@ -191,14 +192,17 @@ const CategorySubscriptionUserid = () => {
                     <img
                       src={EditIconSrc}
                       className="w-6 h-6 text-center p-1 cursor-pointer"
-                      onClick={() =>
-                        handleEditSubscribtionClick(
-                          item.category_subscription_id,
-                          datePart,
-                          item.name || item.category_name,
-                          item.transaction_image,
-                        )
-                      }
+                      onClick={() => {
+                        openModalShow(item);
+                      }}
+                      // onClick={() =>
+                      //   handleEditSubscribtionClick(
+                      //     item.category_subscription_id,
+                      //     datePart,
+                      //     item.name || item.category_name,
+                      //     item.transaction_image,
+                      //   )
+                      // }
                     />
                   </div>
                 ),
@@ -288,6 +292,11 @@ const CategorySubscriptionUserid = () => {
             <NotFoundSection data={logs} />
           </div>,
         ]}
+      />
+      <CategoryPopup
+        item={item}
+        setIsModalShow={setIsModalShow}
+        isModalShow={isModalShow}
       />
     </div>
   );

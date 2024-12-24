@@ -20,6 +20,14 @@
     "verification_type_image": "صورة الجهة",
     "transaction_image": "صورة  التحويل"
   },
+  "CategoryPopup": {
+    "id": "رقم التذكره",
+    "title": " تحرير تذكرة القسم",
+    "customername": "الاسم",
+    "verified_by": "بواسطة",
+    "date": "تاريخ التفعيل",
+    "transaction_image": "صورة  التحويل"
+  },
   "VerificationType": {
     "Identity": " وثيقة معروف ",
     "Freelancer": "عمل حر",

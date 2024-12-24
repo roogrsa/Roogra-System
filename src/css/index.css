@@ -1,43 +1,56 @@
+@font-face {
+  font-family: 'Cairo';
+  src: url('/fonts/static/Cairo-Regular.ttf') format('truetype'); /* Correct format for TTF */
+  font-style: normal;
+  /* font-size: 10px; */
+}
+
+@font-face {
+  font-family: 'CairoBold';
+  src: url('/fonts/static/Cairo-Bold.ttf') format('truetype'); /* Correct format for TTF */
+  font-style: normal;
+}
+
 * {
-    font-family: Inter;
+  font-family: 'Cairo', sans-serif;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #1E1E26;
-    border-radius: 10px;
+  background-color: #1e1e26;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #f7f6f6;
+  background-color: #f7f6f6;
 }
 
 .bgColor {
-    background: #022E47;
+  background: #022e47;
 }
 
 .bg-darkColor {
-    background: #1E1E26 !important;
+  background: #1e1e26 !important;
 }
 
 .bgActiveSidebar {
-    background: #2E2D3D;
+  background: #2e2d3d;
 }
 
 .textColor {
-    color: #022E47;
+  color: #022e47;
 }
 
 .errorColor {
-    color: #E02828;
+  color: #e02828;
 }
 
 .borderColor {
-    border: 1px solid #022E47;
+  border: 1px solid #022e47;
 }
 
 /* input{
@@ -47,81 +60,81 @@
 } */
 
 input::placeholder {
-    font-size: 20px;
-    font-weight: 400;
-    color: #BFBFBF;
+  font-size: 20px;
+  font-weight: 400;
+  color: #bfbfbf;
 }
 
 /* Container for custom radio */
 .custom-radio {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 /* Hide the default radio button */
 .custom-radio input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
 /* Create a custom radio button */
 .custom-radio .radiomark {
-    width: 21px;
-    height: 20px;
-    background-color: #fff;
-    border: solid 1px #dfdfdf;
-    border-radius: 50%;
-    display: inline-block;
-    position: relative;
+  width: 21px;
+  height: 20px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
 }
 
 /* Create the green circle inside when selected */
-.custom-radio input:checked+.radiomark::before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: #40C734;
-    border-radius: 50%;
+.custom-radio input:checked + .radiomark::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: #40c734;
+  border-radius: 50%;
 }
 
 /* Container for custom checkbox */
 .custom-checkbox {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 /* Hide the default checkbox */
 .custom-checkbox input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
 }
 
 /* Create a custom checkbox */
 .custom-checkbox .checkmark {
-    width: 21px;
-    height: 20px;
-    background-color: #fff;
-    border: solid 1px #dfdfdf;
-    border-radius: 50%;
-    display: inline-block;
-    position: relative;
+  width: 21px;
+  height: 20px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
 }
 
 /* Create the green circle inside when checked */
-.custom-checkbox input:checked+.checkmark::before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: #40C734;
-    border-radius: 50%;
+.custom-checkbox input:checked + .checkmark::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: #40c734;
+  border-radius: 50%;
 }

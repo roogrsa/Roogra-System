@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import axiosInstance from '../../axiosConfig/instanc';
 import { FiEdit3 } from 'react-icons/fi';
+// import Pagination from '../../components/pagination/Pagination';
 import DeletePopup from '../../components/popups/DeletePopup';
 import EditAddPopup from '../../components/popups/EditAddPopup';
 import { toast } from 'react-toastify';
@@ -87,17 +88,6 @@ const CategoriesMap: React.FC = () => {
   //     changeOrder(movedCategory.map_category_id, destination.index);
   // };
 
-  // const changeOrder = async (categories: { id: number; order: number }[]) => {
-  //   try {
-  //     await axiosInstance.patch(`/api/categories`, { categories });
-  //     displayCategoriesMap();
-  //     toast.success(t('categoriesPage.categoriesToast'));
-  //   } catch (error: any) {
-  //     console.error('Failed to change category order:', error);
-  //     toast.error(t('categoriesPage.orderError'));
-  //   }
-  // };
-
   const changeOrder = async (maps: { id: number; order: number }[]) => {
     try {
       await axiosInstance.patch(`/api/map-categories`, { maps });
@@ -125,7 +115,11 @@ const CategoriesMap: React.FC = () => {
   };
   console.log(categoriesMap);
 
-  const totalPages = Math.ceil(categoriesCount);
+  useEffect(() => {
+    displayCategoriesMap();
+  }, [currentPage]);
+
+  // const totalPages = Math.ceil(categoriesCount);
   const breadcrumbLinks = [
     { label: t('categoriesPage.title'), path: '/categories/main' },
   ];
@@ -154,11 +148,11 @@ const CategoriesMap: React.FC = () => {
                 ref={provided.innerRef}
                 className="w-full text-[20px] text-left rtl:text-right"
               >
-                <thead className="bg-[#EDEDED]  dark:bg-[#3E3E46]">
-                  <tr className="px-2 py-8 text-[20px] font-[400]">
+                <thead className="bg-[#EDEDED] dark:bg-[#3E3E46]">
+                  <tr className="px-2 py-2 text-[18px] font-[400]">
                     <th
                       scope="col"
-                      className="px-2 py-6 text-[18px] font-[400] dark:text-secondaryBG-light"
+                      className="px-2 py-6  text-[18px] font-[400] dark:text-secondaryBG-light"
                     >
                       {t('categoriesPage.order')}
                     </th>

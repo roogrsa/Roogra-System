@@ -76,7 +76,7 @@ const VerifactionRequestByUserid = () => {
     if (isSuccess || editSuccess) {
       refreshRequest();
     }
-  }, [refreshRequest]);
+  }, [isSuccess, editSuccess]);
 
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
@@ -281,18 +281,28 @@ const VerifactionRequestByUserid = () => {
             {
               key: `verification_period-${item.verification_request_id}`,
               content:
-                item.STATUS === 'expired' ? (
-                  <ReusableInput
-                    label=""
-                    type="text"
-                    value={`منتهية`}
-                    widthClass="w-15"
-                    border="border-2 border-Input-TextRed text-Input-TextRed"
-                    extraClass="bg-Input-red text-Input-TextRed text-center "
+                status === 'expired' ? (
+                  <PeriodInput
+                    item={item}
+                    ItemStatus="expired"
+                    refreshRequest={refreshRequest}
                   />
                 ) : (
-                  <PeriodInput item={item} />
+                  <PeriodInput item={item} refreshRequest={refreshRequest} />
                 ),
+              // content:
+              //   item.STATUS === 'expired' ? (
+              //     <ReusableInput
+              //       label=""
+              //       type="text"
+              //       value={`منتهية`}
+              //       widthClass="w-15"
+              //       border="border-2 border-Input-TextRed text-Input-TextRed"
+              //       extraClass="bg-Input-red text-Input-TextRed text-center "
+              //     />
+              //   ) : (
+              //     <PeriodInput item={item} />
+              //   ),
               className: 'flex justify-center text-sm',
             },
             ...(item.STATUS === 'rejected'

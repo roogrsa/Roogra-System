@@ -9,15 +9,18 @@ import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import useEditCategorySubscriptionStatus from '../../hooks/category_subscription/useEditCategorySubscriptionStatus';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
-import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
+// import handleEditSubscribtionClick from '../../hooks/category_subscription/handleEditSubscribtionClick';
 import { useTranslation } from 'react-i18next';
 import PeriodInput from './PeriodInput';
 import Pagination from '../../components/pagination/Pagination';
 import axiosInstance from '../../axiosConfig/instanc';
 import handleStatus from '../../hooks/category_subscription/handleStatus';
 import { useLocation } from 'react-router-dom';
+
 // import { ToastContainer } from 'react-toastify';
-//
+import categoryPopup from './categoryPopup';
+import CategoryPopup from './categoryPopup';
+
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
 
@@ -37,6 +40,13 @@ const CategorySubscription = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
   const [Count, setCount] = useState(0);
+  const [isModalShow, setIsModalShow] = useState(false);
+  const [item, setItem] = useState(null);
+  const openModalShow = (item: any) => {
+    setIsModalShow(true);
+    setItem(item);
+    // console.log('item', item);
+  };
   const location = useLocation();
   const { id } = location.state || {};
   //
@@ -223,14 +233,17 @@ const CategorySubscription = () => {
                     <img
                       src={EditIconSrc}
                       className="w-6 h-6 text-center p-1 cursor-pointer"
-                      onClick={() =>
-                        handleEditSubscribtionClick(
-                          item.category_subscription_id,
-                          datePart,
-                          item.name || item.category_name,
-                          item.transaction_image,
-                        )
-                      }
+                      onClick={() => {
+                        openModalShow(item);
+                      }}
+                      // onClick={() =>
+                      //   handleEditSubscribtionClick(
+                      //     item.category_subscription_id,
+                      //     datePart,
+                      //     item.name || item.category_name,
+                      //     item.transaction_image,
+                      //   )
+                      // }
                     />
                   </div>
                 ),
@@ -270,9 +283,9 @@ const CategorySubscription = () => {
                           undefined, // Pass the verification request ID
                           item.category_subscription_id, // Pass category subscription ID if needed
 
-                          undefined, // Pass undefined if EditVerificationRequest is not used
+                          undefined,
 
-                          editCategorySubscriptionStatus, // Function for updating category subscription status
+                          editCategorySubscriptionStatus,
                         )
                       }
                     />
@@ -332,6 +345,11 @@ const CategorySubscription = () => {
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
+      />
+      <CategoryPopup
+        item={item}
+        setIsModalShow={setIsModalShow}
+        isModalShow={isModalShow}
       />
     </div>
   );

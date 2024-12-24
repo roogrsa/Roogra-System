@@ -23,7 +23,7 @@ const AdminsList: React.FC = () => {
   // const [currentPage, setCurrentPage] = useState(0);
   const [adminsCount, setAdminsCount] = useState(0);
   const [adminType, setAdminType] = useState('observer');
-  const { banAdmin } = useBanAdmin();
+  const { banAdmin, isSuccess: isSuccessBan } = useBanAdmin();
   const { handleAction, loading: actionLoading } = useHandleAction();
   const [selectedAdminIds, setSelectedAdminIds] = useState<number[]>([]);
 
@@ -62,12 +62,12 @@ const AdminsList: React.FC = () => {
     refreshFunction();
   }, [adminType]);
   useEffect(() => {
-    if (AdminDeleted || isSuccessAdd) {
+    if (AdminDeleted || isSuccessAdd || isSuccessBan) {
       refreshSupervisors();
       refreshDelegates();
       refreshObservers();
     }
-  }, [AdminDeleted, isSuccessAdd]);
+  }, [AdminDeleted, isSuccessAdd, isSuccessBan]);
 
   const handleAdminesSelection = (adminId: number) => {
     setSelectedAdminIds((prev) =>
@@ -188,7 +188,7 @@ const AdminsList: React.FC = () => {
             <img
               src={admin.is_banned ? BannedIconSrc : NotBannedIconSrc}
               alt={admin.is_banned ? t('admins.banned') : t('admins.notBanned')}
-              className={`w-6 h-6 text-center cursor-pointer text-center ${
+              className={`w-6 h-6 text-center cursor-pointer  ${
                 actionLoading ? 'opacity-50' : ''
               }`}
               onClick={() => {

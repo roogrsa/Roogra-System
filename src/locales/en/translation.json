@@ -16,8 +16,16 @@
     "customername": "Customer Name",
     "verified_by": "verified by ",
     "verification_type": " Destination",
-    "verification_type_number": " Destination Num",
+    "verification_type_number": "Destination Num",
     "verification_type_image": "Destination Image",
+    "transaction_image": "Transaction Image"
+  },
+  "CategoryPopup": {
+    "id": "ID",
+    "title": "Show Ticket partition",
+    "customername": "Customer Name",
+    "verified_by": "verified by ",
+    "date": "Date",
     "transaction_image": "Transaction Image"
   },
   "VerificationType": {
