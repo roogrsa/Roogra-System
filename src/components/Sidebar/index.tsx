@@ -546,7 +546,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
               onClick={logout}
               className={`bg-[#E02828] ${
                 isOpen
-                  ? 'brightness-150 w-full flex justify-center'
+                  ? 'brightness-150 w-full flex justify-evenly'
                   : 'hover:brightness-150 w-auto'
               } text-white text-[20px] p-2 rounded-xl transition-all duration-300`}
             >
