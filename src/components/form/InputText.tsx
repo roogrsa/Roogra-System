@@ -28,15 +28,15 @@ export default function InputText({
           className="flex mb-2 text-md font-semibold text-gray-900 dark:text-white"
         >
           {label}
-          {isReq ? '' : <FaAsterisk className="text-[8px] text-[#E02828]" />}
+          {isReq ? '' : <FaAsterisk className="text-[4px] text-[#E02828]" />}
         </label>
         <Field
           type={type}
           min={min}
           name={name}
           id={name}
-          className="md:w-36 w-full shadow-sm border border-gray-300 text-gray-900 px-2
-              text-sm   rounded-md block  p- outline-0 dark:placeholder-gray-400 dark:shadow-sm-light placeholder:text-xs"
+          className="md:w-36 w-full shadow-sm border border-gray-300 text-gray-900
+              text-sm rounded-md block  p-1 outline-0 dark:placeholder-gray-400 dark:shadow-sm-light placeholder:text-xs"
           placeholder={t('admins.form.placeholder')}
         />
       </div>
