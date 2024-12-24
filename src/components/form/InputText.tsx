@@ -35,7 +35,7 @@ export default function InputText({
           min={min}
           name={name}
           id={name}
-          className="md:w-36 w-full shadow-sm border border-gray-300 text-gray-900 
+          className="md:w-36 w-full shadow-sm border border-gray-300 text-gray-900 px-2
               text-sm   rounded-md block  p- outline-0 dark:placeholder-gray-400 dark:shadow-sm-light placeholder:text-xs"
           placeholder={t('admins.form.placeholder')}
         />
