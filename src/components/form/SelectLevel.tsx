@@ -10,7 +10,7 @@ export default function SelectLevel({ name }: SelectLevelProps) {
     <div className="">
       <div className="md:mb-3 md:mt-0 mt-4 font-semibold text-md flex">
         {t('admins.form.level')}
-        <FaAsterisk className="text-[8px] text-[#E02828]" />
+        <FaAsterisk className="text-[4px] text-[#E02828]" />
       </div>
       <Field
         as={`select`}
