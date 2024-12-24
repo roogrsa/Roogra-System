@@ -238,9 +238,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'Ads' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.ads.all == 1 && (
                             <DropLink
@@ -283,9 +283,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'User' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.users.all == 1 && (
                             <DropLink
@@ -328,9 +328,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'Categories' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.categories.primary == 1 && (
                             <DropLink
@@ -372,9 +372,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'Subscription' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.requests.attestation == 1 && (
                             <DropLink
@@ -410,9 +410,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'Support' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.contact.inquiries == 1 && (
                             <DropLink
@@ -454,9 +454,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'Reports' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.reports.chats == 1 && (
                             <DropLink
@@ -491,9 +491,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, setIsOpen, isOpen }: SidebarProp
                     {dropdownList == 'BanList' && open && (
                       <OutsideClickHandler onOutsideClick={handleClickOutside}>
                         <ul
-                          className={`bg-sidebarHover p-2 absolute w-full ${
-                            language == 'ar' ? '-left-6' : '-right-6'
-                          } top-12 z-10 rounded-xl`}
+                          className={`bg-sidebarHover p-2 absolute w-30 ${
+                            language == 'ar' ? 'left-6' : 'right-8'
+                          } top-11 z-10 rounded-xl`}
                         >
                           {permission.banlist.chats == 1 && (
                             <DropLink
