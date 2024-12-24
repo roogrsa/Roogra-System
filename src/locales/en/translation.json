@@ -514,5 +514,6 @@
       "customers": "Number of customers",
       "advertisers": "Number of advertisers"
     }
-  }
+  },
+  "alert":"Please enter full admin permissions first before any field"
 }

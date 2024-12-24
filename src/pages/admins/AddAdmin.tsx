@@ -535,10 +535,15 @@ export default function AddAdmin() {
   }, [admin?.permissions]);
   return (
     <div>
-      <Breadcrumb
+      {/* <Breadcrumb
         pageName={t('admins.edit')}
         breadcrumbLinks={breadcrumbLinks}
-      />
+      /> */}
+      {!adminId &&
+        <div className="p-5 text-sm text-blue-800 rounded-lg bg-Input-green dark:bg-gray-800 dark:text-blue-400" role="alert">
+          {t("alert")}
+        </div>
+      }
       <Formik
         initialValues={initialValues}
         validationSchema={!adminId && validationSchema}
