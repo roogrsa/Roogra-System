@@ -10,9 +10,8 @@ import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 import useBannedUserProducts from '../../../hooks/users/UserBanProduct';
 
-const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
-const NotBannedIconSrc = '/unblock.svg';
+const NotBannedIconSrc = '/whiteblock.png';
 
 const UserBanProdList: React.FC = () => {
   const { id } = useParams();
@@ -30,7 +29,7 @@ const UserBanProdList: React.FC = () => {
     if (isSuccess) {
       refreshBannedUserProds();
     }
-  }, [isSuccess, refreshBannedUserProds]);
+  }, [isSuccess]);
   const handleClickName = (prodId: number) => {
     navigate(`/products/${prodId}`);
   };
@@ -59,40 +58,6 @@ const UserBanProdList: React.FC = () => {
     {
       key: 'banReason',
       content: t('BanList.products.banReason'),
-      className: 'text-center',
-    },
-
-    {
-      key: 'show',
-      content: t('BanList.products.show'),
-      className: 'text-center',
-    },
-    {
-      key: 'BanStatus',
-      content: t('BanList.products.status'),
-      className: 'text-center',
-    },
-  ];
-  const UnBanheaders = [
-    {
-      key: 'ChatId',
-      content: t('BanList.products.ChatId'),
-      className: 'text-center',
-    },
-
-    {
-      key: 'UnBanDate',
-      content: t('BanList.products.UnBanDate'),
-      className: 'text-center',
-    },
-    {
-      key: 'UnBanbyAdmin',
-      content: t('BanList.products.UnBanbyAdmin'),
-      className: 'text-center',
-    },
-    {
-      key: 'UnBanbanReason',
-      content: t('BanList.products.UnBanReason'),
       className: 'text-center',
     },
 
@@ -155,9 +120,16 @@ const UserBanProdList: React.FC = () => {
       {
         key: 'is_banned',
         content: (
-          <div className="bg-BlockIconBg rounded-md">
+          <div
+            // className="bg-BlockIconBg rounded-md"
+            className={
+              prod?.is_banned
+                ? `bg-BlockIconBg rounded-md`
+                : `bg-gray-400 rounded-md`
+            }
+          >
             <img
-              src={prod.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
+              src={NotBannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
                 // !actionLoading &&

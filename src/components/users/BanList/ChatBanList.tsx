@@ -9,9 +9,8 @@ import useUnBanChat from '../../../hooks/Ban/UnBanChat';
 import useHandleAction from '../../../hooks/useHandleAction';
 import useChatUserHistory from '../../../hooks/users/UserBanChats';
 
-const BannedIconSrc = '/block.svg';
 const EditIconSrc = '/Edit.svg';
-const NotBannedIconSrc = '/unblock.svg';
+const NotBannedIconSrc = '/whiteblock.png';
 
 const UserChatBanList: React.FC = ({ user }) => {
   const { t } = useTranslation();
@@ -31,7 +30,7 @@ const UserChatBanList: React.FC = ({ user }) => {
     if (isSuccess) {
       refreshChatHistory();
     }
-  }, [isSuccess, refreshChatHistory]);
+  }, [isSuccess]);
 
   // if (bannedChatsLoading) return <p>Loading...</p>;
   // if (bannedChatsError) return <p>Error: {bannedChatsError}</p>;
@@ -77,12 +76,20 @@ const UserChatBanList: React.FC = ({ user }) => {
         ),
         className: 'flex justify-center',
       },
+
       {
         key: 'is_banned',
         content: (
-          <div className="bg-BlockIconBg rounded-md">
+          <div
+            // className="bg-BlockIconBg rounded-md"
+            className={
+              user?.isBanned
+                ? `bg-BlockIconBg rounded-md`
+                : `bg-gray-400 rounded-md`
+            }
+          >
             <img
-              src={chat.banned === 0 ? NotBannedIconSrc : BannedIconSrc}
+              src={NotBannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
                 !actionLoading &&
@@ -139,40 +146,6 @@ const UserChatBanList: React.FC = ({ user }) => {
       className: 'text-center',
     },
   ];
-  // const UnBanheaders = [
-  //   {
-  //     key: 'ChatId',
-  //     content: t('BanList.chats.ChatId'),
-  //     className: 'text-center',
-  //   },
-
-  //   {
-  //     key: 'UnBanDate',
-  //     content: t('BanList.chats.UnBanDate'),
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'UnBanbyAdmin',
-  //     content: t('BanList.chats.UnBanbyAdmin'),
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'UnBanbanReason',
-  //     content: t('BanList.chats.UnBanReason'),
-  //     className: 'text-center',
-  //   },
-
-  //   {
-  //     key: 'show',
-  //     content: t('BanList.chats.show'),
-  //     className: 'text-center',
-  //   },
-  //   {
-  //     key: 'BanStatus',
-  //     content: t('BanList.chats.status'),
-  //     className: 'text-center',
-  //   },
-  // ];
   return (
     <>
       <Breadcrumb
