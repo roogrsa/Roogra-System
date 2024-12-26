@@ -22,7 +22,7 @@ const UserBanProdList: React.FC = () => {
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
   const { banProduct, isSuccess } = useBanProduct();
-  const { handleAction, loading: actionLoading } = useHandleAction();
+  const { handleAction } = useHandleAction();
 
   const { bannedUserProds, refreshBannedUserProds } = useBannedUserProducts(id);
   useEffect(() => {
