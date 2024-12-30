@@ -300,7 +300,8 @@
     "bannerName": "اسم الاعلان",
     "bannerurl": "رابط الموقع",
     "duration": "المدة",
-    "bannerImage": "شعار الاعلان"
+    "bannerImage": "شعار الاعلان",
+    "other":"أخرى"
   },
   "categoriesPage": {
     "title": "الأقسام",
