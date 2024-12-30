@@ -8,8 +8,7 @@ import AccordionHeader2 from '../../Accordion/AccordionHeader2';
 import NotFoundSection from '../../Notfound/NotfoundSection';
 import MainTable from '../../lastnews/MainTable';
 
-const BannedIconSrc = '/block.svg';
-const NotBannedIconSrc = '/unblock.svg';
+const NotBannedIconSrc = '/whiteblock.png';
 
 const BanProfileList: React.FC = ({ user }) => {
   const { t } = useTranslation();
@@ -17,20 +16,15 @@ const BanProfileList: React.FC = ({ user }) => {
   const breadcrumbLinks = [{ label: '', path: '/' }];
 
   const { banUser, isSuccess } = useBanUser();
-  const { handleAction, loading: actionLoading } = useHandleAction();
+  const { handleAction } = useHandleAction();
 
-  const {
-    banHistory,
-    loading: bannedUsersLoading,
-    error: bannedUsersError,
-    refreshBanHistory,
-  } = useUserBanHistory(user.id);
+  const { banHistory, refreshBanHistory } = useUserBanHistory(user.id);
 
   useEffect(() => {
     if (isSuccess) {
       refreshBanHistory();
     }
-  }, [isSuccess, refreshBanHistory]);
+  }, [isSuccess]);
   const userlogs = banHistory.map((ban) => ({
     id: ban.admin_id,
     columns: [
@@ -61,9 +55,16 @@ const BanProfileList: React.FC = ({ user }) => {
       {
         key: 'is_banned',
         content: (
-          <div className="bg-BlockIconBg rounded-md">
+          <div
+            // className="bg-BlockIconBg rounded-md"
+            className={
+              ban?.is_banned
+                ? `bg-BlockIconBg rounded-md`
+                : `bg-gray-400 rounded-md`
+            }
+          >
             <img
-              src={ban.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
+              src={NotBannedIconSrc}
               className="w-6 h-6 text-center p-1 cursor-pointer"
               onClick={() =>
                 // !actionLoading &&

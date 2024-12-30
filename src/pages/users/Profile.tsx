@@ -8,7 +8,6 @@ import useUser from '../../hooks/users/useGetUser';
 import useBanUser from '../../hooks/users/useBanUser';
 import useRemoveUser from '../../hooks/users/useRemoveUser';
 import NotfoundUser from '../notfound/notfoundUser';
-import Notfound from '../notfound/Notfound';
 
 const NotBannedIconSrc = '/whiteblock.png';
 const RemoveIconSrc = '/remove.svg';

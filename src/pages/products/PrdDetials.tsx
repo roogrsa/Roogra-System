@@ -10,7 +10,7 @@ const NotBannedIconSrc = '/whiteblock.png';
 const BannedIconSrc = '/block.svg';
 const PrdDetials: React.FC = () => {
   const { t } = useTranslation();
-  const { product, error, refreshProduct } = useProduct();
+  const { product, refreshProduct } = useProduct();
 
   // if (loading) return <p>Loading product...</p>;
   // if (error) return <p>Error loading product: {error}</p>;
@@ -38,12 +38,19 @@ const PrdDetials: React.FC = () => {
         />
         {product && (
           <div
+            // className={
+            //   user?.isBanned
+            //     ? `bg-BlockIconBg rounded-md`
+            //     : `bg-gray-400 rounded-md`
+            // }
             className={`${
-              product.is_banned === 0 ? 'bg-BlockIconBg' : 'bg-BlockIconBg'
+              product.is_banned === 0
+                ? `bg-gray-400 rounded-md`
+                : `bg-BlockIconBg rounded-md`
             } w-7 h-7  rounded-md`}
           >
             <img
-              src={product.is_banned === 0 ? NotBannedIconSrc : BannedIconSrc}
+              src={NotBannedIconSrc}
               className={`w-8 h-7 text-center p-1 cursor-pointer ${
                 loading ? 'opacity-50' : ''
               }`}

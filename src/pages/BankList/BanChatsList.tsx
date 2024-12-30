@@ -10,7 +10,7 @@ import useBannedChats from '../../hooks/Ban/BanChatList';
 import useUnBanChat from '../../hooks/Ban/UnBanChat';
 import useHandleAction from '../../hooks/useHandleAction';
 
-const BannedIconSrc = '/block.svg';
+const BannedIconSrc = '/whiteblock.png';
 const EditIconSrc = '/Edit.svg';
 
 const BanListType: React.FC = () => {

@@ -10,7 +10,8 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import useBanProduct from '../../hooks/products/useBanProduct';
 import useBannedProducts from './../../hooks/Ban/ProdBanList';
 
-const BannedIconSrc = '/block.svg';
+const BannedIconSrc = '/whiteblock.png';
+
 const EditIconSrc = '/Edit.svg';
 
 const BanProdList: React.FC = () => {
@@ -142,40 +143,7 @@ const BanProdList: React.FC = () => {
       className: 'text-center',
     },
   ];
-  const UnBanheaders = [
-    {
-      key: 'ChatId',
-      content: t('BanList.products.ChatId'),
-      className: 'text-center',
-    },
 
-    {
-      key: 'UnBanDate',
-      content: t('BanList.products.UnBanDate'),
-      className: 'text-center',
-    },
-    {
-      key: 'UnBanbyAdmin',
-      content: t('BanList.products.UnBanbyAdmin'),
-      className: 'text-center',
-    },
-    {
-      key: 'UnBanbanReason',
-      content: t('BanList.products.UnBanReason'),
-      className: 'text-center',
-    },
-
-    {
-      key: 'show',
-      content: t('BanList.products.show'),
-      className: 'text-center',
-    },
-    {
-      key: 'BanStatus',
-      content: t('BanList.products.status'),
-      className: 'text-center',
-    },
-  ];
   return (
     <>
       <Breadcrumb
