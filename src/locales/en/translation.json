@@ -301,7 +301,12 @@
     "bannerurl": "Banner URL",
     "duration": "Duration",
     "bannerImage": "Bank Logo",
-    "other":"other"
+    "other":"other",
+    "appStatus":"app Status",
+    "inquiries":"inquiries",
+    "issues":"issues",
+    "suggestions":"suggestions",
+    "Alerts":"Alerts"
   },
   "categoriesPage": {
     "title": "categories",
