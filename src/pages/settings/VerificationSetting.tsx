@@ -38,10 +38,7 @@ export default function VerificationSetting() {
   ) => {
     try {
       setSubmitting(true);
-      await axiosInstance.put(
-        `/api/verification_settings/1`,
-        values,
-      );
+      await axiosInstance.put(`/api/verification_settings/1`, values);
     } catch (error: any) {
       console.error(error);
       toast.error(error?.response?.data?.message);
@@ -99,14 +96,14 @@ export default function VerificationSetting() {
                 isReq
                 min={0}
                 name="verification_fee"
-                label={t(`settings.subscription`)}
+                label={t(`settings.verification-check-fees`)}
               />
               <InputText
                 type="number"
                 isReq
                 min={0}
                 name="subscription_fee"
-                label={t(`settings.verification-check-fees`)}
+                label={t(`settings.subscription`)}
               />
             </div>
             <div className="flex justify-center">

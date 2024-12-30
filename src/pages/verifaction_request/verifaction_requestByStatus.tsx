@@ -36,7 +36,7 @@ const verifaction_requestByStatus = () => {
   const [isModalShow, setIsModalShow] = useState(false);
   const [item, setItem] = useState();
   const fName = localStorage.getItem('first_name');
-  const openModalShow = (item) => {
+  const openModalShow = (item: any) => {
     setIsModalShow(true);
     setItem(item);
   };

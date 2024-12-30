@@ -20,9 +20,11 @@ import { useLocation } from 'react-router-dom';
 // import { ToastContainer } from 'react-toastify';
 import categoryPopup from './categoryPopup';
 import CategoryPopup from './categoryPopup';
+import DeletePopup from '../../components/popups/DeletePopup';
 
 const ApprovedSubscription = '/true.png';
 const EditIconSrc = '/Edit.svg';
+const RemoveIconSrc = '/remove.svg';
 
 const CategorySubscription = () => {
   const { t } = useTranslation();
@@ -40,6 +42,9 @@ const CategorySubscription = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [categorySubscriptionCount, setCategorySubscriptionCount] = useState(0);
   const [Count, setCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteName, setDeleteName] = useState<string>('');
   const [isModalShow, setIsModalShow] = useState(false);
   const [item, setItem] = useState(null);
   const openModalShow = (item: any) => {
@@ -68,11 +73,21 @@ const CategorySubscription = () => {
     currentPage,
     id,
   );
+
+  const handleOpenDeleteModal = (id: number, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     if (editSuccess) {
       refreshRequest();
     }
   }, [editSuccess]);
+  const display = () => {
+    refreshRequest();
+  };
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   //
@@ -124,9 +139,17 @@ const CategorySubscription = () => {
           : t('subscriptions.headers.verified_by_reject'),
       className: 'text-center',
     },
+    ...(status === 'rejected'
+      ? [
+          {
+            key: `header_verified_at_remove-${status}`,
+            content: t('verification_request.headers.remove'),
+            className: 'text-center text-sm',
+          },
+        ]
+      : []),
   ];
   //
-
   const logs = Array.isArray(data)
     ? data.map((item) => {
         const createdAtDate = new Date(item.created_at);
@@ -217,14 +240,14 @@ const CategorySubscription = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName', // Pass the admin name
-                        'approved', // Set the new status
-                        undefined, // Pass the verification request ID
-                        item.category_subscription_id, // Pass category subscription ID if needed
+                        'adminName',
+                        'approved',
+                        undefined,
+                        item.category_subscription_id,
 
-                        undefined, // Pass undefined if EditVerificationRequest is not used
+                        undefined,
 
-                        editCategorySubscriptionStatus, // Function for updating category subscription status
+                        editCategorySubscriptionStatus,
                       )
                     }
                   />
@@ -236,14 +259,6 @@ const CategorySubscription = () => {
                       onClick={() => {
                         openModalShow(item);
                       }}
-                      // onClick={() =>
-                      //   handleEditSubscribtionClick(
-                      //     item.category_subscription_id,
-                      //     datePart,
-                      //     item.name || item.category_name,
-                      //     item.transaction_image,
-                      //   )
-                      // }
                     />
                   </div>
                 ),
@@ -259,14 +274,14 @@ const CategorySubscription = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName', // Pass the admin name
-                        'approved', // Set the new status
-                        undefined, // Pass the verification request ID
-                        item.category_subscription_id, // Pass category subscription ID if needed
+                        'adminName',
+                        'approved',
+                        undefined,
+                        item.category_subscription_id,
 
-                        undefined, // Pass undefined if EditVerificationRequest is not used
+                        undefined,
 
-                        editCategorySubscriptionStatus, // Function for updating category subscription status
+                        editCategorySubscriptionStatus,
                       )
                     }
                   />
@@ -278,10 +293,10 @@ const CategorySubscription = () => {
                       className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer"
                       onClick={() =>
                         handleStatus(
-                          'adminName', // Pass the admin name
-                          'rejected', // Set the new status
-                          undefined, // Pass the verification request ID
-                          item.category_subscription_id, // Pass category subscription ID if needed
+                          'adminName',
+                          'rejected',
+                          undefined,
+                          item.category_subscription_id,
 
                           undefined,
 
@@ -293,6 +308,28 @@ const CategorySubscription = () => {
                 ),
               className: 'flex justify-center',
             },
+            ...(item.STATUS === 'rejected'
+              ? [
+                  {
+                    key: `remove-${item.category_subscription_id}-category`,
+                    content: (
+                      <div className="bg-RemoveIconBg rounded-md">
+                        <img
+                          src={RemoveIconSrc}
+                          className="w-6 h-6 text-center p-1 cursor-pointer"
+                          onClick={() =>
+                            handleOpenDeleteModal(
+                              item.category_subscription_id,
+                              `RD-${item.category_subscription_id}`,
+                            )
+                          }
+                        />
+                      </div>
+                    ),
+                    className: 'flex justify-center text-sm',
+                  },
+                ]
+              : []),
           ],
         };
       })
@@ -341,6 +378,17 @@ const CategorySubscription = () => {
           </div>,
         ]}
       />
+      {/* Delete Popup */}
+      {deleteId && (
+        <DeletePopup
+          deleteName={deleteName}
+          deleteId={deleteId}
+          url="category_subscription"
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          display={display}
+        />
+      )}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

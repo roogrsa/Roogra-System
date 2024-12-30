@@ -46,6 +46,9 @@ import Notfound from './pages/notfound/Notfound';
 import ErrorElement from './pages/errorElement/ErrorElement';
 import LogoutGuards from './components/guards/LogoutGuards';
 import AddAdmin from './pages/admins/AddAdmin';
+import activeUsers from './pages/users/activeUsers';
+import unactiveUsers from './pages/users/unactiveUsers';
+import lazyUsers from './pages/users/lazyUsers';
 const storedPermissions: any = store.getState().permissions.permissions;
 const router = createHashRouter([
   {
@@ -129,12 +132,48 @@ const router = createHashRouter([
         errorElement: <ErrorElement />,
       },
       {
+        path: 'activeUsers',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={activeUsers}
+              hasPermission={storedPermissions[8]}
+            />
+          </Guard>
+        ),
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: 'unactiveUsers',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={unactiveUsers}
+              hasPermission={storedPermissions[9]}
+            />
+          </Guard>
+        ),
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: 'lazyUsers',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={lazyUsers}
+              hasPermission={storedPermissions[9]}
+            />
+          </Guard>
+        ),
+        errorElement: <ErrorElement />,
+      },
+      {
         path: 'users/advertiser',
         element: (
           <Guard>
             <ProtectedRoute
               component={Advertiser}
-              hasPermission={storedPermissions[8]}
+              hasPermission={storedPermissions[9]}
             />
           </Guard>
         ),
