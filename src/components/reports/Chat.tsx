@@ -10,6 +10,7 @@ import BanUnbanPopup from "../popups/BanUnbanPopup";
 import { ChatValue } from "../../types/ChatValue";
 import { useTranslation } from "react-i18next";
 import BanImage from "./BanImage";
+import { TfiAngleDown, TfiAngleUp } from "react-icons/tfi";
 interface ChatProps {
     chat: ChatValue;
     length?: number | undefined;
@@ -23,6 +24,15 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
     const [isAdvertizerBan, setIsAdvertizerBan] = useState<boolean>(chat?.advertizer_banned == 1);
     const [selectedChat, setٍelectedChat] = useState<ChatValue | null>(null);
     const [modalType, setModalType] = useState<ModalType>(null);
+    const [showMassages, setShowMassages] = useState<{ [key: number]: boolean }>({});
+    const toggleShowMessages = (chatId: number) => {
+        setShowMassages((prevState) => ({
+            ...prevState,
+            [chatId]: !prevState[chatId]
+        }));
+        console.log(chat);
+        
+    };
     const { t } = useTranslation();
     const location = useLocation();
     const reportId = location.state?.reportId;
@@ -54,8 +64,11 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                         </Link>
 
                     </div>
-                    <div className="text-secondaryBG-dark border-[#D6D4D4] border-2 pt-1
-                        bg-[#DCECF5] rounded-md px-3">{t('Reports.headers.id')} RC-{reportId}</div>
+                    <div className="text-secondaryBG-dark border-[#D6D4D4] border-2 pt-1 flex
+                        bg-[#DCECF5] rounded-md px-3" onClick={() => toggleShowMessages(chat.id)} role="button">
+                            {t('Reports.headers.id')} RC-{reportId}
+                            {/* {showMassages[chat?.id] ? <TfiAngleUp /> : <TfiAngleDown />}  */}
+                        </div>
                     <div className="flex items-center" dir={language === 'ar' ? 'ltr' : 'rtl'}>
                         <div onClick={() => openBanModal('advertizer')}>
                             <BanImage isBan={isAdvertizerBan} />
@@ -72,12 +85,15 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                     </div>
                 </div>
             </div>
+            {showMassages[chat?.id] &&
+                <>
             <ChatCard id={chatId} userId={userId} advertizer_image={chat?.advertizer_image} customer_image={chat?.customer_image} />
+                </>
+            }
             <div className="flex justify-center p-4 bg-[#F7F5F9] dark:bg-[#2E2D3D]">
                 <div className="flex gap-10">
                     <RiDeleteBin6Line className="text-2xl text-Input-TextRed" role="button"
                         onClick={() => openBanModal('delete')} />
-
                 </div>
             </div>
             {selectedChat && modalType === 'delete' && (
