@@ -10,6 +10,7 @@ import BannersSetting from './BannersSetting';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import { selectLanguage } from '../../store/slices/language';
 import { useSelector } from 'react-redux';
+import Other from './Other';
 
 const MainSettings: React.FC = () => {
   const { t } = useTranslation();
@@ -61,14 +62,20 @@ const MainSettings: React.FC = () => {
             setActiveTab={setActiveTab}
           />
           <TabButton
+            btnTab="verification"
+            label={t('settings.verification')}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <TabButton
             btnTab="banners"
             label={t('settings.banners')}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
           <TabButton
-            btnTab="verification"
-            label={t('settings.verification')}
+            btnTab="other"
+            label={t('settings.other')}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
@@ -80,6 +87,7 @@ const MainSettings: React.FC = () => {
           {activeTab === 'sms' && <SmsSetting />}
           {activeTab === 'verification' && <VerificationSetting />}
           {activeTab === 'banners' && <BannersSetting />}
+          {activeTab === 'other' && <Other />}
         </div>
       </div>
     </>

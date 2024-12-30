@@ -300,7 +300,13 @@
     "bannerName": "اسم الاعلان",
     "bannerurl": "رابط الموقع",
     "duration": "المدة",
-    "bannerImage": "شعار الاعلان"
+    "bannerImage": "شعار الاعلان",
+    "other":"أخرى",
+    "appStatus":"حالة التطبيق",
+    "inquiries":"الاستفسارات",
+    "issues":"المشاكل",
+    "suggestions":"الاقتراحات",
+    "Alerts":"التنبيهات"
   },
   "categoriesPage": {
     "title": "الأقسام",
