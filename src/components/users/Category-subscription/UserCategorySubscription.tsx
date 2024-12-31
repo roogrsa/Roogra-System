@@ -39,6 +39,8 @@ const CategorySubscriptionUserid = () => {
       refreshRequest();
     }
   }, [editSuccess]);
+  const fName: string = localStorage.getItem('first_name') || '';
+
   // if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;
   const headers = [
@@ -178,7 +180,7 @@ const CategorySubscriptionUserid = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        fName,
                         'approved',
                         undefined,
                         item.category_subscription_id,
@@ -218,7 +220,7 @@ const CategorySubscriptionUserid = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        fName,
                         'approved',
                         undefined,
                         item.category_subscription_id,
@@ -235,7 +237,7 @@ const CategorySubscriptionUserid = () => {
                       className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer"
                       onClick={() =>
                         handleStatus(
-                          'adminName',
+                          fName,
                           'rejected',
                           undefined,
                           item.category_subscription_id,

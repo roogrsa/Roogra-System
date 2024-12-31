@@ -54,6 +54,8 @@ const CategorySubscription = () => {
   };
   const location = useLocation();
   const { id } = location.state || {};
+  const fName: string = localStorage.getItem('first_name') || '';
+
   //
   useEffect(() => {
     const fetchUsersCount = async () => {
@@ -240,7 +242,7 @@ const CategorySubscription = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        fName,
                         'approved',
                         undefined,
                         item.category_subscription_id,
@@ -274,7 +276,7 @@ const CategorySubscription = () => {
                     className="w-6 h-6 bg-ConfirmIconBg p-1 rounded-lg cursor-pointer"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        fName,
                         'approved',
                         undefined,
                         item.category_subscription_id,
@@ -293,7 +295,7 @@ const CategorySubscription = () => {
                       className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer"
                       onClick={() =>
                         handleStatus(
-                          'adminName',
+                          fName,
                           'rejected',
                           undefined,
                           item.category_subscription_id,
@@ -346,11 +348,11 @@ const CategorySubscription = () => {
         titles={[
           t('subscriptions.titles.processing'),
           t('subscriptions.titles.approved'),
-          t('subscriptions.titles.rejected'),
           t('subscriptions.titles.expired'),
+          t('subscriptions.titles.rejected'),
         ]}
         onTitleClick={(index) => {
-          const statusMap = ['processing', 'approved', 'rejected', 'expired'];
+          const statusMap = ['processing', 'approved', 'expired', 'rejected'];
           setStatus(statusMap[index]);
         }}
         footerItems={[

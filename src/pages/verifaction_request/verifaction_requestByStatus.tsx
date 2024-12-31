@@ -3,7 +3,6 @@ import MainTable from '../../components/lastnews/MainTable';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import cofirmIcon from '/true2.svg';
 import rejectIcon from '/false2.svg';
-import ReusableInput from '../../components/products/ReusableInput';
 import NotFoundSection from '../../components/Notfound/NotfoundSection';
 import AccordionHeader2 from '../../components/Accordion/AccordionHeader2';
 import ImageWithFullscreen from '../../components/Fullscreen/Fulllscreen';
@@ -35,7 +34,8 @@ const verifaction_requestByStatus = () => {
   const [deleteName, setDeleteName] = useState<string>('');
   const [isModalShow, setIsModalShow] = useState(false);
   const [item, setItem] = useState();
-  const fName = localStorage.getItem('first_name');
+  const fName: string = localStorage.getItem('first_name') || '';
+
   const openModalShow = (item: any) => {
     setIsModalShow(true);
     setItem(item);
@@ -371,7 +371,7 @@ const verifaction_requestByStatus = () => {
                     className="w-6 h-6 bg-RejectIconBg p-1 rounded-lg cursor-pointer text-sm"
                     onClick={() =>
                       handleStatus(
-                        'adminName',
+                        fName,
                         'rejected',
                         undefined,
                         item.verification_request_id,
@@ -421,11 +421,11 @@ const verifaction_requestByStatus = () => {
         titles={[
           t('verification_request.titles.processing'),
           t('verification_request.titles.approved'),
-          t('verification_request.titles.rejected'),
           t('verification_request.titles.expired'),
+          t('verification_request.titles.rejected'),
         ]}
         onTitleClick={(index) => {
-          const statusMap = ['processing', 'approved', 'rejected', 'expired'];
+          const statusMap = ['processing', 'approved', 'expired', 'rejected'];
           setStatus(statusMap[index]);
         }}
         footerItems={[
