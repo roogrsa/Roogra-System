@@ -59,7 +59,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                             <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
                             }
                         </div>
-                        <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
+                        <Link to={`/profile/${chat?.customer_id}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
                             {chat?.customer_first_name || ''} {chat?.customer_last_name}
                         </Link>
 
@@ -79,7 +79,7 @@ export default function Chat({ chat, displayChats, length, userId, chatId }: Cha
                             <img src={`/person.jpeg`} alt="customer_image" className="rounded-full" />
                             }
                         </div>
-                        <Link to={`/profile/${userId}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
+                        <Link to={`/profile/${chat?.advertizer_id}`} className="dark:text-secondaryBG text-secondaryBG-dark mx-3">
                             {chat?.advertizer_first_name || ''} {chat?.advertizer_last_name}
                         </Link>
                     </div>
