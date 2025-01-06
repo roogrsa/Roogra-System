@@ -39,20 +39,7 @@ const Charts = () => {
   // Fetch chart data using the custom hook for charts
   const { customerChartData, advertiserChartData } = useChartData();
 
-  // Handle loading and error states for both hooks
-  // if (logsLoading || chartsLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (logsError) {
-  //   return <p>Error loading logs: {logsError}</p>;
-  // }
-
-  // if (chartsError) {
-  //   return <p>Error loading chart data: {chartsError}</p>;
-  // }
-
-  // Fallback if chart data is not available
+ 
   if (!customerChartData || !advertiserChartData) {
     return <p>No chart data available</p>;
   }
