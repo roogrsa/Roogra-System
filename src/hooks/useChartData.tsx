@@ -25,7 +25,7 @@ const useChartData = () => {
             {
               label: 'Active',
               count: customer.active,
-              color: '#019CF6',
+              color: '#5FDD54',
               link: '/activeUsers', // Add link here
             },
             {
