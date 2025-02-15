@@ -39,7 +39,6 @@ const Charts = () => {
   // Fetch chart data using the custom hook for charts
   const { customerChartData, advertiserChartData } = useChartData();
 
- 
   if (!customerChartData || !advertiserChartData) {
     return <p>No chart data available</p>;
   }
@@ -91,6 +90,7 @@ const Charts = () => {
       ],
     };
   });
+  // console.log(customerChartData, advertiserChartData);
 
   return (
     <>

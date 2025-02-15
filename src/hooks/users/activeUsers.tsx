@@ -8,21 +8,32 @@ interface ApiResponse {
   data: User[];
 }
 
-const useActiveUsers = (page: number = 0, userName: string = '') => {
+const useStateUsers = (
+  UserType: string,
+  state: number,
+  currentPage: number = 0,
+  limit: number = 8,
+  userName: string = '',
+) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchUsers = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const response = await axiosInstance.get<ApiResponse>(
-        `/api/users?page=${page}&limit=8`,
+        `/api/users/type/${UserType}/state/${state}`,
         {
           params: {
+            page: currentPage,
+            limit,
             q: userName || '',
           },
         },
       );
+
       if (response.data.success) {
         setUsers(response.data.data);
       } else {
@@ -34,9 +45,11 @@ const useActiveUsers = (page: number = 0, userName: string = '') => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchUsers();
-  }, [page, userName]);
+  }, [UserType, state, currentPage, userName]);
+
   const refreshUsers = () => {
     fetchUsers();
   };
@@ -44,4 +57,4 @@ const useActiveUsers = (page: number = 0, userName: string = '') => {
   return { users, loading, error, refreshUsers };
 };
 
-export default useActiveUsers;
+export default useStateUsers;

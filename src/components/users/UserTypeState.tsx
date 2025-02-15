@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import useUsers from '../../hooks/users/useAllusers';
 import MainTable from '../../components/lastnews/MainTable';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useHandleAction from '../../hooks/useHandleAction';
-import axiosInstance from '../../axiosConfig/instanc';
-import Pagination from '../../components/pagination/Pagination';
 import { useTranslation } from 'react-i18next';
 import useBanUser from '../../hooks/users/useBanUser';
-import useLazyUsers from '../../hooks/users/lazy';
+import useActiveUsers from '../../hooks/users/activeUsers';
+import Pagination from '../../components/pagination/Pagination';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import useUsersStateCount from '../../hooks/users/usersStateCount';
+import useStateUsers from '../../hooks/users/activeUsers';
+// import { useTranslation } from 'react-i18next';
 
 const BannedIconSrc = '/block.svg';
 const NotBannedIconSrc = '/unblock.svg';
@@ -17,80 +18,79 @@ const NotActivatedEmailIconSrc = '/x.png';
 const ActivatedAccountIconSrc = '/true.png';
 const NotActivatedAccountIconSrc = '/x.png';
 
-const lazyUsers: React.FC = () => {
-  const { t } = useTranslation();
+interface UserTypeProps {
+  UserType: 'customer' | 'advertiser';
+  state: 1 | 2 | 3;
+}
 
+const UserTypeState: React.FC<UserTypeProps> = ({ UserType, state }) => {
+  const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(0);
-  const [usersCount, setUsersCount] = useState(0);
-  const location = useLocation();
-  const { userName } = location.state || {};
-  const { users, refreshUsers } = useLazyUsers(currentPage, userName);
-  const { handleAction, loading: actionLoading } = useHandleAction();
-  useEffect(() => {
-    const fetchUsersCount = async () => {
-      try {
-        const response = await axiosInstance.get(`/api/users/count`);
-        // console.log(response);
-        setUsersCount(response.data.data.count / 8);
-      } catch (err) {}
-    };
-    fetchUsersCount();
-  }, []);
-  const totalPages = Math.ceil(usersCount);
+
+  const { users, refreshUsers } = useStateUsers(
+    UserType,
+    state,
+    currentPage,
+    10,
+  );
+  const usersCount = useUsersStateCount(UserType, state);
+  // console.log('usersCount', usersCount);
+  // console.log('users', users);
+  const totalPages = Math.ceil(usersCount / 10);
+  console.log('totalPages', totalPages);
+  console.log('currentPage', currentPage);
+
   const {
     banUser,
-    loading: banUserLoading,
+    loading: banLoading,
     error: banError,
     isSuccess,
   } = useBanUser();
+  const { handleAction, loading: actionLoading } = useHandleAction();
+
   const navigate = useNavigate();
   useEffect(() => {
     if (isSuccess) {
       refreshUsers();
     }
-  }, [isSuccess, refreshUsers]);
+  }, [isSuccess]);
   // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
-  //
+  // if (error) return <p>{error}</p>;
+
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
   };
-  //
-  const logs = users?.map((user) => ({
+
+  const logs = users.map((user) => ({
     id: user.id,
-    type: user.type === 'customer' ? 1 : 2,
+    type: user.type === 'advertiser' ? 2 : 1, // 2 for advertiser, 1 for customer
     columns: [
       {
         key: 'id',
         content: user.id,
-        className: 'dark:text-white text-black text-center',
+        className: 'dark:text-white text-center text-black',
       },
       {
         key: 'name',
         content: (
           <span
-            className="cursor-pointer dark:text-TextGreen text-TextBlue"
+            className="cursor-pointer dark:text-[#32E26B] text-[#0E1FB2]"
             onClick={() => handleClickName(user.id)}
           >
             {user.name.split(' ').slice(0, 2).join(' ').slice(0, 12)}
           </span>
         ),
-        className: 'dark:text-[#32E26B] text-[#0E1FB2]',
+        className: 'dark:text-[#32E26B] text-center text-[#0E1FB2]',
       },
       {
         key: 'alias',
-        content: user.alias.split(' '),
-        className: 'dark:text-white text-black',
-      },
-      {
-        key: 'type',
-        content: user.type === 'customer' ? 'Customer' : 'Advertiser',
-        className: 'dark:text-white text-black text-right',
+        content: user.alias.split(' ').slice(0, 2).join(' ').slice(0, 12),
+        className: 'dark:text-white text-center text-black',
       },
       {
         key: 'regDate',
         content: user.regDate.split(' ')[0],
-        className: 'flex dark:text-white text-black',
+        className: 'flex dark:text-white text-center text-black',
       },
       {
         key: 'isActivatedAccount',
@@ -103,8 +103,8 @@ const lazyUsers: React.FC = () => {
             }
             alt={
               user.isActivated.account
-                ? 'Account Activated'
-                : 'Account Not Activated'
+                ? t('users.accountActivated')
+                : t('users.accountNotActivated')
             }
             className="w-6 h-6 text-center"
           />
@@ -121,7 +121,9 @@ const lazyUsers: React.FC = () => {
                 : NotActivatedEmailIconSrc
             }
             alt={
-              user.isActivated.email ? 'Email Activated' : 'Email Not Activated'
+              user.isActivated.email
+                ? t('users.emailActivated')
+                : t('users.emailNotActivated')
             }
             className="w-6 h-6 text-center"
           />
@@ -133,8 +135,10 @@ const lazyUsers: React.FC = () => {
         content: (
           <img
             src={user.isBanned ? BannedIconSrc : NotBannedIconSrc}
-            alt={user.isBanned ? 'Banned' : 'Not Banned'}
-            className="w-6 h-6 text-center cursor-pointer"
+            alt={user.isBanned ? t('users.banned') : t('users.notBanned')}
+            className={`w-6 h-6 text-center cursor-pointer ${
+              actionLoading ? 'opacity-50' : ''
+            }`}
             onClick={() =>
               !actionLoading &&
               user?.id &&
@@ -144,7 +148,7 @@ const lazyUsers: React.FC = () => {
                 'ban',
                 banUser,
                 {
-                  confirmButtonClass: 'bg-BlockIconBg ',
+                  confirmButtonClass: 'bg-BlockIconBg',
                   cancelButtonClass: '',
                 },
                 refreshUsers,
@@ -156,13 +160,10 @@ const lazyUsers: React.FC = () => {
       },
     ],
   }));
-
   const headers = [
     { key: 'id', content: t('users.id'), className: 'text-center' },
     { key: 'name', content: t('users.name'), className: 'text-center' },
     { key: 'alias', content: t('users.alias'), className: 'text-center' },
-    { key: 'type', content: t('users.type'), className: 'text-' },
-
     { key: 'regDate', content: t('users.regDate'), className: 'text-center' },
     {
       key: 'mobileconfirm',
@@ -180,23 +181,25 @@ const lazyUsers: React.FC = () => {
       className: 'text-center',
     },
   ];
-
   const breadcrumbLinks = [{ label: t('users.label.label'), path: '/' }];
+
   return (
-    <div>
+    <>
       <Breadcrumb
         breadcrumbLinks={breadcrumbLinks}
-        pageName={t('users.label.allusers')}
+        pageName={t(`users.label.${UserType}`)}
       />
+
+      {banLoading && <p>{t('users.banningUser')}...</p>}
+      {banError && <p>{banError}</p>}
       <MainTable logs={logs} headers={headers} />
-      {banUserLoading && <p>Processing ban action...</p>}{' '}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
-    </div>
+    </>
   );
 };
 
-export default lazyUsers;
+export default UserTypeState;

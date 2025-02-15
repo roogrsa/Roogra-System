@@ -16,13 +16,14 @@ const useUsers = (page: number = 0, userName: string = '') => {
   const fetchUsers = async () => {
     try {
       const response = await axiosInstance.get<ApiResponse>(
-        `/api/users?page=${page}&limit=8`,
+        `/api/users?page=${page}&limit=10`,
         {
           params: {
             q: userName || '',
           },
         },
       );
+      // console.log('response', response.data);
       if (response.data.success) {
         setUsers(response.data.data);
       } else {

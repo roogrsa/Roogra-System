@@ -50,7 +50,7 @@ const UserType: React.FC<UserTypeProps> = ({ userType }) => {
   const handleClickName = (userId: number) => {
     navigate(`/profile/${userId}`);
   };
-  const totalPages = Math.ceil(usersCount);
+  const totalPages = Math.ceil(usersCount / 10);
 
   const logs = users.map((user) => ({
     id: user.id,

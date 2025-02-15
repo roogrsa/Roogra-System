@@ -30,7 +30,7 @@ const Users: React.FC = () => {
       try {
         const response = await axiosInstance.get(`/api/users/count`);
         // console.log(response);
-        setUsersCount(response.data.data.count / 8);
+        setUsersCount(response.data.data.count / 10);
       } catch (err) {}
     };
     fetchUsersCount();

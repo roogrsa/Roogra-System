@@ -17,6 +17,7 @@ const useChartData = () => {
         const response = await axiosInstance.get('/api/users/chart');
 
         const { customer, advertisers } = response.data.data;
+        // console.log(response);
 
         const customerData: ChartData = {
           series: [customer.active, customer.lazy, customer.inactive],
@@ -26,19 +27,19 @@ const useChartData = () => {
               label: 'Active',
               count: customer.active,
               color: '#5FDD54',
-              link: '/activeUsers', // Add link here
+              link: '/activeCustomers', // Add link here
             },
             {
               label: 'Lazy',
               count: customer.lazy,
               color: '#019CF6',
-              link: '/lazyUsers', // Add link here
+              link: '/unactiveCustomers', // Add link here
             },
             {
               label: 'Inactive',
               count: customer.inactive,
               color: '#D0D0D0',
-              link: '/unactiveUsers', // Add link here
+              link: '/lazyCustomers', // Add link here
             },
           ],
           total: customer.total, // Include total here
@@ -54,19 +55,19 @@ const useChartData = () => {
               label: 'Active',
               count: advertisers.active,
               color: '#5FDD54',
-              link: '/activeUsers',
+              link: '/activeAdvertiser',
             },
             {
               label: 'Lazy',
               count: advertisers.lazy,
               color: '#019CF6',
-              link: '/lazyUsers',
+              link: '/lazyAdvertiser',
             },
             {
               label: 'Inactive',
               count: advertisers.inactive,
               color: '#D0D0D0',
-              link: '/unactiveUsers',
+              link: '/unactiveAdvertiser',
             },
           ],
           total: advertisers.total, // Include total here

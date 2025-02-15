@@ -301,12 +301,12 @@
     "bannerurl": "رابط الموقع",
     "duration": "المدة",
     "bannerImage": "شعار الاعلان",
-    "other":"أخرى",
-    "appStatus":"حالة التطبيق",
-    "inquiries":"الاستفسارات",
-    "issues":"المشاكل",
-    "suggestions":"الاقتراحات",
-    "Alerts":"التنبيهات"
+    "other": "أخرى",
+    "appStatus": "حالة التطبيق",
+    "inquiries": "الاستفسارات",
+    "issues": "المشاكل",
+    "suggestions": "الاقتراحات",
+    "Alerts": "التنبيهات"
   },
   "categoriesPage": {
     "title": "الأقسام",
@@ -432,7 +432,7 @@
       "advertisers": "المعلنين",
       "successfully": "تم إضافة الإشعار بنجاح",
       "error": "خطأ أثناء الاضافه",
-      "Delegates": "المندوبون",
+      "Delegates": "النائبون",
       "Observers": "المراقبون",
       "Supervisors": "المشرفون"
     }

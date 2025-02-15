@@ -7,9 +7,7 @@ const useBannedUsers = () => {
   const [error, setError] = useState<string | null>(null);
   const fetchBannedUsers = async () => {
     try {
-      const response = await axiosInstance.get(
-        '/api/users/banned?page=0&limit=8',
-      );
+      const response = await axiosInstance.get('/api/users/banned?page=0');
       if (response.data.success) {
         setBannedUsers(response.data.data.banned);
       } else {

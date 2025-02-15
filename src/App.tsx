@@ -46,9 +46,15 @@ import Notfound from './pages/notfound/Notfound';
 import ErrorElement from './pages/errorElement/ErrorElement';
 import LogoutGuards from './components/guards/LogoutGuards';
 import AddAdmin from './pages/admins/AddAdmin';
-import activeUsers from './pages/users/activeUsers';
-import unactiveUsers from './pages/users/unactiveUsers';
-import lazyUsers from './pages/users/lazyUsers';
+import activeUsers from './pages/users/activeCustomers';
+import unactiveUsers from './pages/users/unactiveCustomers';
+import lazyUsers from './pages/users/lazyCustomers';
+import activeCustomers from './pages/users/activeCustomers';
+import unactiveCustomers from './pages/users/unactiveCustomers';
+import lazyCustomers from './pages/users/lazyCustomers';
+import activeAdvertiser from './pages/users/activeAdvertiser';
+import unactiveAdvertiser from './pages/users/unactiveAdvertiser';
+import lazyAdvertiser from './pages/users/lazyAdvertiser';
 const storedPermissions: any = store.getState().permissions.permissions;
 const router = createHashRouter([
   {
@@ -132,11 +138,11 @@ const router = createHashRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: 'activeUsers',
+        path: 'activeCustomers',
         element: (
           <Guard>
             <ProtectedRoute
-              component={activeUsers}
+              component={activeCustomers}
               hasPermission={storedPermissions[8]}
             />
           </Guard>
@@ -144,11 +150,11 @@ const router = createHashRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: 'unactiveUsers',
+        path: 'unactiveCustomers',
         element: (
           <Guard>
             <ProtectedRoute
-              component={unactiveUsers}
+              component={unactiveCustomers}
               hasPermission={storedPermissions[9]}
             />
           </Guard>
@@ -156,11 +162,48 @@ const router = createHashRouter([
         errorElement: <ErrorElement />,
       },
       {
-        path: 'lazyUsers',
+        path: 'lazyCustomers',
         element: (
           <Guard>
             <ProtectedRoute
-              component={lazyUsers}
+              component={lazyCustomers}
+              hasPermission={storedPermissions[9]}
+            />
+          </Guard>
+        ),
+        errorElement: <ErrorElement />,
+      },
+
+      {
+        path: 'activeAdvertiser',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={activeAdvertiser}
+              hasPermission={storedPermissions[8]}
+            />
+          </Guard>
+        ),
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: 'unactiveAdvertiser',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={unactiveAdvertiser}
+              hasPermission={storedPermissions[9]}
+            />
+          </Guard>
+        ),
+        errorElement: <ErrorElement />,
+      },
+      {
+        path: 'lazyAdvertiser',
+        element: (
+          <Guard>
+            <ProtectedRoute
+              component={lazyAdvertiser}
               hasPermission={storedPermissions[9]}
             />
           </Guard>
