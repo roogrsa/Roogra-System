@@ -11,6 +11,7 @@ const BannedIconSrc = '/block.svg';
 const PrdDetials: React.FC = () => {
   const { t } = useTranslation();
   const { product, refreshProduct } = useProduct();
+  console.log(product);
 
   // if (loading) return <p>Loading product...</p>;
   // if (error) return <p>Error loading product: {error}</p>;

@@ -539,11 +539,14 @@ export default function AddAdmin() {
         pageName={t('admins.edit')}
         breadcrumbLinks={breadcrumbLinks}
       /> */}
-      {!adminId &&
-        <div className="p-5 text-sm text-blue-800 rounded-lg bg-Input-green dark:bg-gray-800 dark:text-blue-400" role="alert">
-          {t("alert")}
+      {!adminId && (
+        <div
+          className="p-5 text-sm text-blue-800 rounded-lg bg-Input-green dark:bg-gray-800 dark:text-blue-400"
+          role="alert"
+        >
+          {t('alert')}
         </div>
-      }
+      )}
       <Formik
         initialValues={initialValues}
         validationSchema={!adminId && validationSchema}
@@ -560,46 +563,6 @@ export default function AddAdmin() {
           setLoggedValues(result);
           return (
             <Form className="bg-secondaryBG-light dark:bg-secondaryBG-dark p-6 rounded-sm">
-              <div className="md:flex justify-between md:mb-6">
-                <SelectLevel name={`type`} />
-                <InputText
-                  type={`text`}
-                  name={`name`}
-                  label={t('admins.form.name')}
-                />
-                <InputText
-                  type={`text`}
-                  name={`username`}
-                  label={t('admins.form.userName')}
-                />
-                <InputText
-                  type={`text`}
-                  name={`phone`}
-                  label={t('admins.form.phone')}
-                />
-              </div>
-              <div className="md:flex justify-between md:mb-16">
-                <InputText
-                  type={`email`}
-                  name={`email`}
-                  label={t('admins.form.email')}
-                />
-                {!adminId && (
-                  <InputText
-                    type={`password`}
-                    name={`password`}
-                    label={t('admins.form.Password')}
-                  />
-                )}
-                <SelectTime
-                  name={`start_working_hour`}
-                  label={t('admins.form.from')}
-                />
-                <SelectTime
-                  name={`finish_working_hour`}
-                  label={t('admins.form.to')}
-                />
-              </div>
               <div className="md:flex justify-between md:mb-16">
                 <CheckboxGroup
                   setFieldValue={setFieldValue}
@@ -654,6 +617,48 @@ export default function AddAdmin() {
                   label={t('admins.form.categories')}
                 />
               </div>
+
+              <div className="md:flex justify-between md:mb-6">
+                <SelectLevel name={`type`} />
+                <InputText
+                  type={`text`}
+                  name={`name`}
+                  label={t('admins.form.name')}
+                />
+                <InputText
+                  type={`text`}
+                  name={`username`}
+                  label={t('admins.form.userName')}
+                />
+                <InputText
+                  type={`text`}
+                  name={`phone`}
+                  label={t('admins.form.phone')}
+                />
+              </div>
+              <div className="md:flex justify-between md:mb-16">
+                <InputText
+                  type={`email`}
+                  name={`email`}
+                  label={t('admins.form.email')}
+                />
+                {!adminId && (
+                  <InputText
+                    type={`password`}
+                    name={`password`}
+                    label={t('admins.form.Password')}
+                  />
+                )}
+                <SelectTime
+                  name={`start_working_hour`}
+                  label={t('admins.form.from')}
+                />
+                <SelectTime
+                  name={`finish_working_hour`}
+                  label={t('admins.form.to')}
+                />
+              </div>
+
               <div className="flex justify-center mt-4">
                 <button
                   type="submit"

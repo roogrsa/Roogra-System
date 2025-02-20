@@ -58,7 +58,7 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({ product }) => {
         extraClass="bg-Input-gray w-30"
       />
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <ReusableSelect
+        {/* <ReusableSelect
           label={t('ProdDetials.form.category')}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -69,14 +69,14 @@ const AdvertisementForm: React.FC<AdvertisementFormProps> = ({ product }) => {
             { value: 'Clothing', label: 'ملابس' },
           ]}
           extraClass="bg-Input-blue text-black border border-Input-border"
-        />
-        {/* <ReusableInput
+        /> */}
+        <ReusableInput
           label={t('ProdDetials.form.category')}
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           type="text"
           extraClass="bg-Input-blue text-black border border-Input-border"
-        /> */}
+        />
         <ReusableInput
           label={t('ProdDetials.form.AdsName')}
           type="text"
